@@ -1,0 +1,11 @@
+<div>
+	<form>
+		<input type="text" ng-focus="focusInput=true" ng-blur="focusInput=false" placeholder="{{suggestedInput}}" ng-keyup="keyup($event)" ng-model="input"> </input>
+		<input type="submit"> </input>
+	</form>
+	<div style="position: absolute;  top: 30px;  background-color: white;  border: 1px solid black;"  ng-show="suggestInput && focusInput">
+		<p style="margin: 0;  padding: 0;">
+		{{ suggestInput }}
+		</p>
+	</div>
+</div>

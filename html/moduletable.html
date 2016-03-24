@@ -1,0 +1,32 @@
+<div>
+	<form>
+		<input type="submit" ng-repeat="(typeID, typeName) in types" value="{{typeName}}" ng-click="switchType(typeID)"> </input>
+	</form>
+	<p style="border: 1px solid black;">
+	{{ types[selectedType] }}
+	</p>
+	<table style="width: 100vw;">
+		<tr>
+			<td ng-repeat="field in fields">
+				{{ field }}
+			</td>
+		</tr>
+		<tr ng-repeat="module in visibleModules[selectedType]">
+			<td>
+				{{ $index + 1 }}
+			</td>
+			<td>
+				{{ module.type }}
+			</td>
+			<td>
+				{{ module.code }}
+			</td>
+			<td>
+				{{ module.title }}
+			</td>
+			<td>
+				<input type="submit" value="Remove" ng-click="removeModule(module.type, module.code)"> </input>
+			</td>
+		</tr>
+	</table>
+</div>

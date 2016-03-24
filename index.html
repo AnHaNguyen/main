@@ -10,8 +10,13 @@
 	</head>
 	<body ng-app="core">
 		<section ng-controller="mainController">
-			{{ msg }}
+			<search select="addModule" items="modules"> </search>
+			<hr>
+			<moduletable list="modules" add="addModule"> </moduletable>
 		</section>
 		<script type="text/javascript" src="js/core.js"> </script>
+		<script type="text/javascript" src="js/modules.service.js"> </script>
+		<script type="text/javascript" src="js/search.directive.js"> </script>
+		<script type="text/javascript" src="js/moduletable.directive.js"> </script>
 	</body>
 </html>
