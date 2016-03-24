@@ -5,9 +5,15 @@ p:hover {
 
 .search-input {
 	width: 500px;
+	height: 20px;
+}
+.search-input:focus {
+	outline: none;
 }
 .angucomplete-dropdown {
 	overflow-y: auto;
-	width: 500px;
-	max-height: 200px;
+	position: absolute;
+	top: 33px;
+	width: 490px !important;
+	max-height: 190px;
 }
