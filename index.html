@@ -7,10 +7,22 @@
 
 		<!-- Include angularjs -->
 		<script type="text/javascript" src="node_modules/angular/angular.min.js"> </script>
+		<link rel="stylesheet" type="text/css" href="css/core.css">
+		<link rel="stylesheet" type="text/css" href="node_modules/angucomplete-alt/angucomplete-alt.css">
 	</head>
 	<body ng-app="core">
 		<section ng-controller="mainController">
-			<search select="addModule" items="modules"> </search>
+			<div angucomplete-alt id="module-search" 
+					selected-object="selected"
+					local-data="modules"
+					pause="0"
+					minlength="1"
+					maxlength="50"
+					title-field="code,title"
+					search-fields="code,title"
+					input-class="search-input"
+					match-class="highlight"
+					placeholder="Search modules"> </div>
 			<hr>
 			<moduletable list="modules" add="addModule"> </moduletable>
 		</section>
@@ -18,5 +30,7 @@
 		<script type="text/javascript" src="js/modules.service.js"> </script>
 		<script type="text/javascript" src="js/search.directive.js"> </script>
 		<script type="text/javascript" src="js/moduletable.directive.js"> </script>
+		<script type="text/javascript" src="js/autocomplete.service.js"> </script>
+		<script type="text/javascript" src="node_modules/angucomplete-alt/dist/angucomplete-alt.min.js"> </script>
 	</body>
 </html>

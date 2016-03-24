@@ -1,8 +1,8 @@
 'use strict';
 
 // This directive controls search input
-angular.module('core').directive('search', [
-	function () {
+angular.module('core').directive('search', ['Autocomplete',
+	function (Autocomplete) {
 		return {
 			restrict: 'E',
 			templateUrl: 'html/search.html',
@@ -11,56 +11,45 @@ angular.module('core').directive('search', [
 				items: '=items'
 			},
 			link: function(scope, element, attrs) {
-				scope.suggestInput = '';
 				scope.input = '';
 				scope.focusInput = false;
+				scope.autocomplete = Autocomplete;
 
-				// Find the item that is closest to user's input
-				var getClosestMatch = function (pattern) {
-					// Search through the list of items
-					for(var i in scope.items) {
-						var item = scope.items[i];
-						var code = item.code.toUpperCase(), title = item.title.toUpperCase();
+				// Initiate autocomplete with items
+				Autocomplete.init(scope.items);
 
-						// Check if module's code and title match user's input
-						if ((code.search(pattern) === 0) || (title.search(pattern) === 0)) {
-							return item;
-						}
-					}
+				scope.$watch(function (scope) {
+					return scope.items;
+				}, function () {
+					Autocomplete.init(scope.items);
+				}, false);
 
-					return null;
-				};
-
-				// Autocomplete
 				scope.updateSuggestInput = function () {
-					if (!scope.input) {
-						scope.suggestInput = '';
-						return;
-					}
-
-					var suggestion = getClosestMatch(scope.input.toUpperCase());
-
-					if (suggestion) {
-						scope.suggestInput = suggestion.code.toUpperCase() + ' ' + suggestion.title.toUpperCase();
-					} else {
-						scope.suggestInput = '';
-					}
+					Autocomplete.update(scope.input);
 				}
 
 				scope.resetInput = function () {
 					scope.input = '';
-					scope.suggestInput = '';
+					Autocomplete.update(scope.input);
 				}
 
 				scope.enterInput = function () {
-					var selection = getClosestMatch(scope.input.toUpperCase());
+					var selections = Autocomplete.update(scope.input);
 
-					if (selection) {
+					if (selections && selections.length) {
+						var selection = selections[0].value;
+
 						scope.select(selection.type, selection.code);
 					}
 
 					// Reset input after enter
 					scope.resetInput();
+				}
+
+				scope.changeInput = function (newValue) {
+					console.log(newValue);
+					scope.input = newValue;
+					scope.updateSuggestInput();
 				}
 
 				scope.keyup = function (event) {

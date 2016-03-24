@@ -1,0 +1,13 @@
+p:hover {
+	background-color: #4aa3df;
+	cursor: pointer;
+}
+
+.search-input {
+	width: 500px;
+}
+.angucomplete-dropdown {
+	overflow-y: auto;
+	width: 500px;
+	max-height: 200px;
+}
