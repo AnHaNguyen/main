@@ -16,11 +16,11 @@
 
 #main-section{
 	float: right;
-	width: 85%;
+	width: 80%;
 }
 
 .side-nav {
-	width: 15%;
+	width: 20%;
 	z-index: 0!important;
 }
 
