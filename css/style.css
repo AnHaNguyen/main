@@ -2,6 +2,14 @@
 	font-weight: bold;
 }
 
+.no-padding {
+	padding: 0 !important;
+}
+
+.no-margin {
+	margin: 0 !important;
+}
+
 .black-font {
 	color: black !important;
 }
@@ -22,10 +30,6 @@
 .side-nav {
 	width: 20%;
 	z-index: 0!important;
-}
-
-li {
-	padding: 0 !important;
 }
 
 .main-table {
@@ -52,7 +56,7 @@ nav {
 .item {
 	border-right: 1px solid black;
 	border-bottom: 1px solid black;
-    padding: 10px !important;
+	padding: 10px !important;
 }
 
 .mod-type-table {
@@ -78,4 +82,22 @@ nav {
 
 .text-mc {
 	text-align: right;
+}
+
+/*------------------Drag & Drop--------------------*/
+.plan-mod-row {
+	border-top: solid 1px;
+	border-right: solid 1px;
+}
+
+.drag-n-drop-tbl {
+	border-left: solid 1px;
+	border-bottom: solid 1px;
+}
+
+.default {
+	background: #cedc98;
+	border: 1px solid #DDDDDD;
+	border-radius: 5px;
+	padding: 10px;
 }
