@@ -13,9 +13,14 @@ angular.module('core').directive('search', [
 			link: function(scope, element, attrs) {
 
 				scope.enterInput = function ($item) {
-					var selectedModule = $item.originalObject;
 
-					scope.select(selectedModule.type, selectedModule.code);
+					if ($item) {
+						var selectedModule = $item.originalObject;
+
+						if (selectedModule) {
+							scope.select(selectedModule.type, selectedModule.code);
+						}
+					}
 				}
 			}
 		}
