@@ -14,7 +14,7 @@ angular.module('core').service('Modules', ['$http',
 					callback(res.data);
 				}
 			}, function errorCallback(err) {
-				console.log('ERROR: Getting requirements - ' + err);
+				console.log('ERROR: Getting modules - ' + err);
 			});
 		};
 	}
