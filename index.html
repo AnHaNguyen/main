@@ -1,16 +1,453 @@
 <!DOCTYPE html>
-
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title> Capstone Project </title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>SoC FFG Verifier</title>
 
-		<!-- Include angularjs -->
-		<script type="text/javascript" src="node_modules/angular/angular.min.js"> </script>
-		<link rel="stylesheet" type="text/css" href="css/core.css">
-		<link rel="stylesheet" type="text/css" href="node_modules/angucomplete-alt/angucomplete-alt.css">
-	</head>
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Include angularjs -->
+	<script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/core.css">
+	<link rel="stylesheet" type="text/css" href="node_modules/angucomplete-alt/angucomplete-alt.css">
+
+	<link rel="stylesheet" href="css/style.css">
+</head>
 	<body ng-app="core">
+		<!-- Modal Structure -->
+	<div id="search-modal" class="modal">
+		<div class="modal-content">
+			<div class="row">
+				<form class="col s12 black-font">
+					<div class="row">
+						<div class="col s3">Module Type</div>
+						<div class="col s9">
+							<input type="text" class="validate">
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col s3">Semester</div>
+						<div class="col s9">
+							<input type="text" class="validate">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<a href="#main" class="close-btn modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+			<a href="#main" class="close-btn modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+		</div>
+	</div>
+
+	<!-- Modal Structure -->
+	<div id="modal-advanced" class="modal">
+		<div class="modal-content">
+			<h4>Advanced Search</h4>
+			<br>
+			<form class="col s12 black-font">
+				<div class="row">
+					<div class="col s3">Module Type</div>
+					<div class="col s9">
+						<input type="text" class="validate">
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="modal-footer">
+			<a href="#main" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+			<a href="#main" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+		</div>
+	</div>
+
+	<header>
+		<!--TOP NAVIGATION BAR-->
+		<div class="navbar-fixed" id="top-nav">
+			<nav class="orange darken-1">
+				<div class="nav-wrapper">
+					<div class="row">
+						<div class="col s2">
+							<div class="row">
+								<a href="#home-page" class="brand-logo">SOCPlanner</a>
+							</div>
+						</div>
+
+						<!--Search bar-->
+						<div class="col s6">
+							<form class="col s12">
+								<div class="row">
+									<div class="col s8">
+										<input id="search-box" class="black-font" type="text" name="search" placeholder="Add/Search modules">
+									</div>
+									<div class="col s4">
+										<!-- Modal Trigger -->
+										<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a>
+									</div>
+								</div>
+							</form>
+						</div>
+
+						<div class="col s4">
+							<ul id="nav-mobile" class="right hide-on-med-and-down">
+								<li id="deg-req-nav" class="waves-effect waves-light"><a href="#main">Degree Requirement</a></li>
+								<li><a class= "dropdown-button waves-effect waves-light" data-beloworigin="true" data-hover="true" href='#' data-activates='dropdown1'>Graduation Verifier</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+
+		<!--Dropdown Structure-->
+		<ul id='dropdown1' class='dropdown-content'>
+			<li id="taken-mod-nav" class="waves-effect waves-light"><a href="#main">Modules Taken</a></li>
+			<li class="divider"></li>
+			<li id="plan-mod-nav" class="waves-effect waves-light"><a href="#main">Modules Planner</a></li>
+			<li class="divider"></li>
+			<li id="exempt-mod-nav" class="waves-effect waves-light"><a href="#main">Modules Exemption</a></li>
+		</ul>
+
+		<!--SIDE BAR NAV-->
+		<ul id="nav-mobile" class="side-nav fixed">
+			<li><a></a></li>
+			<li>
+				<a class="bold waves-effect waves-red tooltipped active" href="#ulr" data-position="right" data-delay="100" data-tooltip="University Level Requirements" id="ulr-sidebar">ULR</a>
+			</li>
+			<li>
+				<a class="bold waves-effect waves-red tooltipped" href="#prog-req" data-position="right" data-delay="100" data-tooltip="Programme Requirements" id="prog-sidebar">Programme</a>
+			</li>
+			<li>
+				<a class="bold waves-effect waves-red tooltipped" href="#ue" data-position="right" data-delay="100" data-tooltip="Unrestricted Elective" id="ue-sidebar">UE</a>
+			</li>
+		</ul>
+	</header>
+	
+	<main id="main-section" class="basic-padding">
+		<!--HOME PAGE-->
+		<div id="home-page-div">
+		</div>
+
+		<!--DEGREE REQUIREMENT-->
+		<div id="deg-req-div" class="basic-padding">
+			<div class="z-depth-1 main-table">
+				<!--Search bar-->
+				<div class="col s12">
+					<div class="row">
+						<form class="col s12">
+							<div class="row">
+								<div class="input-field col s6">
+									<i class="material-icons prefix">search</i>
+									<input id="icon_prefix" type="text" class="validate">
+									<label for="icon_prefix">Add modules to table</label>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+
+				<!--ULR content-->
+				<div id="ulr-taken" class="row mod-type-table">
+					<div class="col s12 content-row">
+						<div class="col s2 header item">Type</div>
+						<div class="col s2 header item">Code</div>
+						<div class="col s6 header item">Title</div>
+						<div class="col s1 header item">MC</div>
+						<div class="col s1 header item">Actions</div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">ULR</div>
+						<div class="col s2 item">GEM</div>
+						<div class="col s6 item">1 GEM A + 1 GEM B</div>
+						<div class="col s1 item">8</div>
+						<div class="col s1 item"><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">ULR</div>
+						<div class="col s2 item">SSA</div>
+						<div class="col s6 item">1 SSA</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total Module Credits</div>
+						<div class="col s1 mc-item item">8</div>
+						<div class="col s1 mc-item item"></div>
+					</div>
+				</div>
+
+				<!--Porgramme Requirements content-->
+				<div id="prog-req-taken" class="row mod-type-table">
+					<div class="col s12 content-row">
+						<div class="col s2 header item">Type</div>
+						<div class="col s2 header item">Code</div>
+						<div class="col s6 header item">Title</div>
+						<div class="col s1 header item">MC</div>
+						<div class="col s1 header item">Actions</div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">CS Foundation</div>
+						<div class="col s2 item">CS3226</div>
+						<div class="col s6 item">Web Programming And Application</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total Module Credits</div>
+						<div class="col s1 mc-item item">4</div>
+						<div class="col s1 mc-item item"></div>
+					</div>
+				</div>
+
+				<!--UE content-->
+				<div id="ue-taken" class="row mod-type-table">
+					<div class="col s12 content-row">
+						<div class="col s2 header item">Type</div>
+						<div class="col s2 header item">Code</div>
+						<div class="col s6 header item">Title</div>
+						<div class="col s1 header item">MC</div>
+						<div class="col s1 header item">Actions</div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">UE</div>
+						<div class="col s2 item">CS2107</div>
+						<div class="col s6 item">Introduction to Security</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total Module Credits</div>
+						<div class="col s1 mc-item item">4</div>
+						<div class="col s1 mc-item item"></div>
+					</div>
+				</div>
+
+				<!--All Mods content-->
+				<div id="all-mods-taken" class="row mod-type-table">
+					<div class="col s12 content-row">
+						<div class="col s2 header item">Type</div>
+						<div class="col s2 header item">Code</div>
+						<div class="col s6 header item">Title</div>
+						<div class="col s1 header item">MC</div>
+						<div class="col s1 header item">Actions</div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">ULR</div>
+						<div class="col s2 item">GEK1505</div>
+						<div class="col s6 item">Living With Math</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">CS Foundation</div>
+						<div class="col s2 item">CS2102</div>
+						<div class="col s6 item">Database Systems</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total Module Credits</div>
+						<div class="col s1 mc-item item">120</div>
+						<div class="col s1 mc-item item"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!--GRADUATION VERIFIER-->
+		<div id="taken-mod-div" class="basic-padding">
+			<div class="z-depth-1 main-table">
+				<!--ULR content-->
+				<div id="ulr" class="row mod-type-table">
+					<div class="col s12 header item">
+						University Level Requirements (ULR)
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 header item">Type</div>
+						<div class="col s2 header item">Code</div>
+						<div class="col s6 header item">Title</div>
+						<div class="col s1 header item">MC</div>
+						<div class="col s1 header item">Actions</div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">GEM A</div>
+						<div class="col s8 item">Add your required module</div>
+						<div class="col s1 item">0</div>
+						<div class="col s1 item"><button></button><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">GEM B</div>
+						<div class="col s8 item">Add your required module</div>
+						<div class="col s1 item">0</div>
+						<div class="col s1 item"><button></button><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">SSA</div>
+						<div class="col s8 item">Add your required module</div>
+						<div class="col s1 item">0</div>
+						<div class="col s1 item"><button></button><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total MC Required</div>
+						<div class="col s1 mc-item item">12</div>
+						<div class="col s1 mc-item item"></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total MC Fulfilled</div>
+						<div class="col s1 mc-item item">12</div>
+						<div class="col s1 mc-item item"></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total MC Taken</div>
+						<div class="col s1 mc-item item">20</div>
+						<div class="col s1 mc-item item"></div>
+					</div>
+				</div>
+
+
+				<!--Programme Requirement content-->
+				<div id="prog-req" class="row mod-type-table">
+					<div class="col s12 content-row">
+						<div class="col s2 header item">Type</div>
+						<div class="col s2 header item">Code</div>
+						<div class="col s6 header item">Title</div>
+						<div class="col s1 header item">MC</div>
+						<div class="col s1 header item">Actions</div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">CS Foundation</div>
+						<div class="col s2 item">CS2105</div>
+						<div class="col s6 item">Introduction to Computer Networks</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">CS Depth - Breadth</div>
+						<div class="col s2 item">CS3226</div>
+						<div class="col s6 item">Web Programming And Application</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">CS Depth - Breadth</div>
+						<div class="col s2 item">CS3226</div>
+						<div class="col s6 item">Web Programming And Application</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">CS Depth - Breadth</div>
+						<div class="col s2 item">CS3226</div>
+						<div class="col s6 item">Web Programming And Application</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">CS Depth - Breadth</div>
+						<div class="col s2 item">CS3226</div>
+						<div class="col s6 item">Web Programming And Application</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">CS Depth - Breadth</div>
+						<div class="col s2 item">CS3226</div>
+						<div class="col s6 item">Web Programming And Application</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">CS Depth - Breadth</div>
+						<div class="col s2 item">CS3226</div>
+						<div class="col s6 item">Web Programming And Application</div>
+						<div class="col s1 item">4</div>
+						<div class="col s1 item"><button></button><button></button></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total MC Required</div>
+						<div class="col s1 mc-item item">120</div>
+						<div class="col s1 mc-item item"></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total MC Fulfilled</div>
+						<div class="col s1 mc-item item">20</div>
+						<div class="col s1 mc-item item"></div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total MC Taken</div>
+						<div class="col s1 mc-item item">20</div>
+						<div class="col s1 mc-item item"></div>
+					</div>
+				</div>
+
+
+				<!--Unrestricted Elective content-->
+				<div id="ue" class="row mod-type-table">
+					<div class="col s12 content-row">
+						<div class="col s2 header item">Type</div>
+						<div class="col s2 header item">Code</div>
+						<div class="col s6 header item">Title</div>
+						<div class="col s2 header item">MC</div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s2 item">UE</div>
+						<div class="col s2 item">MA2213</div>
+						<div class="col s6 item">Numerical Analysis</div>
+						<div class="col s2 item">4</div>
+					</div>
+
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">Total Module Credits</div>
+						<div class="col s2 mc-item item">4</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="plan-mod-div" class="basic-padding">
+		</div>
+
+		<div id="exempt-mod-div" class="basic-padding">
+		</div>
+
+		<hr>
+		<footer align="center">Copyright © 2016 SOCPlanner. All rights reserved</footer>
+	</main>
+
 		<section ng-controller="mainController">
 			<search select="addModule" items="modules"> </search>
 			<hr>
@@ -21,5 +458,10 @@
 		<script type="text/javascript" src="js/search.directive.js"> </script>
 		<script type="text/javascript" src="js/moduletable.directive.js"> </script>
 		<script type="text/javascript" src="node_modules/angucomplete-alt/dist/angucomplete-alt.min.js"> </script>
+		<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+		<!-- Compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/frontend-js.js"></script>
 	</body>
 </html>
