@@ -13,6 +13,11 @@
 	<link rel="stylesheet" type="text/css" href="css/core.css">
 	<link rel="stylesheet" type="text/css" href="node_modules/angucomplete-alt/angucomplete-alt.css">
 
+	<!--Drag and drop-->
+	<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
 	<link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -113,8 +118,8 @@
 
 		<!--SIDE BAR NAV-->
 		<ul id="nav-mobile" class="side-nav fixed">
-			<li><a href="#home-page" class="brand-logo">SOCPlanner</a></li>
-			<li>
+			<li class="no-padding"><a href="#home-page" class="brand-logo">SOCPlanner</a></li>
+			<li class="no-padding">
 				<ul class="collapsible collapsible-accordion">
 					<li>
 						<a id="deg-req-nav" class="bold waves-effect waves-red collapsible-header" href="#main">Degree Requirement</a>
@@ -139,14 +144,14 @@
 					</li>
 
 					<li>
-						<a id="planner-mod-nav" class="bold waves-effect waves-red collapsible-header" href="#main">Modules Planner</a>
-						<div class="collapsible-body">
+						<a id="plan-mod-nav" class="bold waves-effect waves-red collapsible-header" href="#main">Modules Planner</a>
+						<!--<div class="collapsible-body">
 							<ul>
 								<li><a href="#ulr-taken">ULR</a></li>
 								<li><a href="#prog-req-taken">Programme</a></li>
 								<li><a href="#ue-taken">UE</a></li>
 							</ul>
-						</div>
+						</div>-->
 					</li>
 
 					<li>
@@ -281,6 +286,25 @@
 
 			<!--TAKEN MODULES-->
 			<div id="taken-mod-div" class="basic-padding">
+				<!--Search bar-->
+				<div class="row">
+					<div class="col s10">
+						<form class="col s10">
+							<div class="row">
+								<div class="col s8">
+									<input id="search-box" class="black-font" type="text" name="search" placeholder="Add modules to table">
+								</div>
+								<div class="col s4">
+									<!-- Modal Trigger -->
+									<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="col s2"></div>
+				</div>
+
 				<div class="z-depth-1 main-table">
 					<!--ULR content-->
 					<div id="ulr-taken" class="row mod-type-table">
@@ -300,21 +324,21 @@
 							<div class="col s2 item">GEM A</div>
 							<div class="col s8 item">Add your required module</div>
 							<div class="col s1 item">0</div>
-							<div class="col s1 item"><button></button><button></button></div>
+							<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
 						</div>
 
 						<div class="col s12 content-row">
 							<div class="col s2 item">GEM B</div>
 							<div class="col s8 item">Add your required module</div>
 							<div class="col s1 item">0</div>
-							<div class="col s1 item"><button></button><button></button></div>
+							<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
 						</div>
 
 						<div class="col s12 content-row">
 							<div class="col s2 item">SSA</div>
 							<div class="col s8 item">Add your required module</div>
 							<div class="col s1 item">0</div>
-							<div class="col s1 item"><button></button><button></button></div>
+							<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
 						</div>
 
 						<div class="col s12 content-row">
@@ -340,6 +364,10 @@
 					<!--Programme Requirement content-->
 					<div id="prog-req-taken" class="row mod-type-table">
 						<div class="col s12 content-row">
+							<div class="col s12 header item">Programme Requirements</div>
+						</div>
+
+						<div class="col s12 content-row">
 							<div class="col s2 header item">Type</div>
 							<div class="col s2 header item">Code</div>
 							<div class="col s6 header item">Title</div>
@@ -352,7 +380,7 @@
 							<div class="col s2 item">CS2105</div>
 							<div class="col s6 item">Introduction to Computer Networks</div>
 							<div class="col s1 item">4</div>
-							<div class="col s1 item"><button></button><button></button></div>
+							<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
 						</div>
 
 						<div class="col s12 content-row">
@@ -360,47 +388,15 @@
 							<div class="col s2 item">CS3226</div>
 							<div class="col s6 item">Web Programming And Application</div>
 							<div class="col s1 item">4</div>
-							<div class="col s1 item"><button></button><button></button></div>
+							<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
 						</div>
 
 						<div class="col s12 content-row">
-							<div class="col s2 item">CS Depth - Breadth</div>
-							<div class="col s2 item">CS3226</div>
-							<div class="col s6 item">Web Programming And Application</div>
+							<div class="col s2 item">CS Foundation</div>
+							<div class="col s2 item">CS2103</div>
+							<div class="col s6 item">Software Engineering</div>
 							<div class="col s1 item">4</div>
-							<div class="col s1 item"><button></button><button></button></div>
-						</div>
-
-						<div class="col s12 content-row">
-							<div class="col s2 item">CS Depth - Breadth</div>
-							<div class="col s2 item">CS3226</div>
-							<div class="col s6 item">Web Programming And Application</div>
-							<div class="col s1 item">4</div>
-							<div class="col s1 item"><button></button><button></button></div>
-						</div>
-
-						<div class="col s12 content-row">
-							<div class="col s2 item">CS Depth - Breadth</div>
-							<div class="col s2 item">CS3226</div>
-							<div class="col s6 item">Web Programming And Application</div>
-							<div class="col s1 item">4</div>
-							<div class="col s1 item"><button></button><button></button></div>
-						</div>
-
-						<div class="col s12 content-row">
-							<div class="col s2 item">CS Depth - Breadth</div>
-							<div class="col s2 item">CS3226</div>
-							<div class="col s6 item">Web Programming And Application</div>
-							<div class="col s1 item">4</div>
-							<div class="col s1 item"><button></button><button></button></div>
-						</div>
-
-						<div class="col s12 content-row">
-							<div class="col s2 item">CS Depth - Breadth</div>
-							<div class="col s2 item">CS3226</div>
-							<div class="col s6 item">Web Programming And Application</div>
-							<div class="col s1 item">4</div>
-							<div class="col s1 item"><button></button><button></button></div>
+							<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
 						</div>
 
 						<div class="col s12 content-row">
@@ -426,17 +422,23 @@
 					<!--Unrestricted Elective content-->
 					<div id="ue-taken" class="row mod-type-table">
 						<div class="col s12 content-row">
+							<div class="col s12 header item">Unrestricted Electives</div>
+						</div>
+
+						<div class="col s12 content-row">
 							<div class="col s2 header item">Type</div>
 							<div class="col s2 header item">Code</div>
 							<div class="col s6 header item">Title</div>
-							<div class="col s2 header item">MC</div>
+							<div class="col s1 header item">MC</div>
+							<div class="col s1 header item">Actions</div>
 						</div>
 
 						<div class="col s12 content-row">
 							<div class="col s2 item">UE</div>
 							<div class="col s2 item">MA2213</div>
 							<div class="col s6 item">Numerical Analysis</div>
-							<div class="col s2 item">4</div>
+							<div class="col s1 item">4</div>
+							<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
 						</div>
 
 						<div class="col s12 content-row">
@@ -447,8 +449,101 @@
 				</div>
 			</div>
 
-			<div id="plan-mod-div" class="basic-padding">
+			<!--PLANNER MODULES-->
+			<div id="plan-mod-div">
+				<div class="row plan-mod-row">
+					<div class="row no-margin center">
+					<div class="col s6 no-padding drag-n-drop-tbl">
+								<p>Semester 1</p>
+					</div>
+					<div class="col s6 no-padding drag-n-drop-tbl">
+								<p>Semester 2</p>
+					</div>
+				</div>
+				
+
+				<div class="row no-margin">
+					<div class="col s6 no-padding">
+						<div class="row no-margin">
+							<div class="col s12 drag-n-drop-tbl">
+								<ul id="sortable-1">
+									<li class="default z-depth-2">CS3226<br>
+										Web Programming & Application<br>
+										Depth & Breadth<br>
+										4MC<br>
+									</li>
+									<li class="default z-depth-2">CS3241<br>
+										Computer Graphics<br>
+										Depth & Breadth<br>
+										4MC<br>
+									</li>
+									<li class="default z-depth-2">CS3233<br>
+										Competitive Programming<br>
+										Depth & Breadth<br>
+										4MC<br>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="col s6 no-padding">
+						<div class="row no-margin">
+							<div class="col s12 drag-n-drop-tbl">
+								<ul id="sortable-2">
+									<li class="default z-depth-2">CS3103<br>
+										Computer Networks Practice<br>
+										Depth & Breadth<br>
+										4MC<br>
+									</li>
+									<li class="default">CS2102<br>
+										Database Systems<br>
+										UE<br>
+										4MC<br>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
+
+			<div class="row plan-mod-row">
+				<div class="row no-margin center">
+					<div class="col s6 no-padding drag-n-drop-tbl">
+								<p>Semester 3</p>
+					</div>
+					<div class="col s6 no-padding drag-n-drop-tbl">
+								<p>Semester 4</p>
+					</div>
+				</div>
+
+				<div class="col s6 no-padding">
+						<div class="row no-margin">
+							<div class="col s12 drag-n-drop-tbl">
+								<ul id="sortable-3">
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="col s6 no-padding">
+						<div class="row no-margin">
+							<div class="col s12 drag-n-drop-tbl">
+								<ul id="sortable-4">
+									<li class="default z-depth-2">MA2213<br>
+										Numerical Analysis<br>
+										Science Module<br>
+										4MC<br>
+									</li>
+								
+								</ul>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
 
 			<div id="exempt-mod-div" class="basic-padding">
 			</div>
@@ -470,7 +565,6 @@
 		<script type="text/javascript" src="js/search.directive.js"> </script>
 		<script type="text/javascript" src="js/moduletable.directive.js"> </script>
 		<script type="text/javascript" src="node_modules/angucomplete-alt/dist/angucomplete-alt.min.js"> </script>
-		<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
 
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
