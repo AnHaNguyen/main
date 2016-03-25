@@ -4,27 +4,31 @@ import getopt
 
 
 def main():
-	module_file = load_args()
-	simplify(module_file)
+	module_file, semester_file = load_args()
+	mod_dict = simplify(module_file)
+	mod_dict = include_semester_info(mod_dict, semester_file)
+	create_json_file(mod_dict)
 
 
 def load_args():
-	module_file = None
+	module_file = semester_file = None
 
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'm:')
+		opts, args = getopt.getopt(sys.argv[1:], 'm:s:')
 	except getopt.GetoptError, err:
 		usage()
 		sys.exit(2)
 	for o, a in opts:
 		if o == '-m':
 			module_file = a
+		elif o == '-s':
+			semester_file = a
 		else:
 			assert False, "unhandled option"
 	if module_file is None:
 		usage()
 		sys.exit(2)
-	return module_file
+	return module_file, semester_file
 
 
 def usage():
@@ -35,12 +39,15 @@ def usage():
 def simplify(module_file):
 	"""wanna get "ModuleCode", "ModuleTitle", "ModuleCredit", "ParsedPreclusion", "Prerequisite", "Corequisite"
 	TODO Semesters
+	TODO Parse prereqs
+	list of dicts -> dict of dicts
 
 	:param module_file:
 	:return:
 	"""
 	with open(module_file) as json_file:
 		modules = json.load(json_file)
+		mod_dict = {}
 
 		for module in modules:
 			keys = module.keys()
@@ -48,8 +55,7 @@ def simplify(module_file):
 				if key not in {"ModuleCode", "ModuleTitle", "ModuleCredit", "ParsedPreclusion", "Prerequisite", "Corequisite"}:
 					module.pop(key, None)
 
-			# Shorten keys
-			module["CD"] = module.pop("ModuleCode")
+			# Shorten name of keys
 			module["NM"] = module.pop("ModuleTitle")
 			module["MC"] = module.pop("ModuleCredit")
 			temp = module.pop("ParsedPreclusion", None)
@@ -62,7 +68,19 @@ def simplify(module_file):
 			if temp is not None:
 				module["CR"] = temp
 
-		create_json_file(modules)
+			mod_dict[module.pop("ModuleCode")] = module
+
+		return mod_dict
+
+
+def include_semester_info(mod_dict, semester_file):
+	with open(semester_file) as json_file:
+		mod_sems = json.load(json_file)
+
+		for module in mod_sems:
+			mod_dict[str(module["ModuleCode"])]["SM"] = module["Semesters"]
+
+		return mod_dict
 
 
 def create_json_file(modules):
