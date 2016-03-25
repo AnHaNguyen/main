@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('core').directive('moduletable', [
-	function () {
+angular.module('core').directive('moduletable', ['$cookies',
+	function ($cookies) {
 		return {
 			restrict: 'E',
 			templateUrl: 'html/moduletable.html',
@@ -10,8 +10,6 @@ angular.module('core').directive('moduletable', [
 				addModule: '=add'
 			},
 			link: function(scope, element, attrs) {
-				// Visible Modules, Modules in the list
-				scope.visibleModules = {};
 
 				// Module fields
 				scope.fields = ['Order', 'Type', 'Code', 'Title'];
@@ -24,6 +22,66 @@ angular.module('core').directive('moduletable', [
 					'ALL': 'All modules'
 				};
 
+				scope.saveSelectedModulesToCookies = function () {
+					var data = JSON.stringify(scope.visibleModules['ALL']);
+
+					// Expire date is ten years from now
+					var expireDate = new Date();
+					expireDate.setDate(expireDate.getDate() + 10 * 365);
+
+					var cookieOption = {
+						expires: expireDate
+					}; 
+
+					$cookies.put('data', data, cookieOption);
+				};
+
+				// Update visibleModules.all
+				scope.updateAllSelectedModules = function () {
+					scope.visibleModules['ALL'] = [];
+
+					for(var type in scope.types) {
+						if (type === 'ALL') continue;
+
+						for(var i in scope.visibleModules[type]) {
+							var module = scope.visibleModules[type][i];
+
+							scope.visibleModules['ALL'].push(module);
+						}
+					}
+
+					scope.saveSelectedModulesToCookies();
+				};
+
+				// Add modules
+				scope.addModule = function (modType, modCode) {
+					for(var i in scope.modules) {
+						var module = scope.modules[i];
+
+						if ((module.type === modType) && (module.code === modCode)) {
+							console.log(modType, modCode);
+							scope.visibleModules[modType].push(module);
+						}
+					}
+
+					scope.updateAllSelectedModules();
+				}
+
+				// Load saved data from cookie
+				scope.reload = function () {
+					var data = $cookies.get('data');
+
+					if (data) {
+						data = JSON.parse(data);
+
+						for(var i in data) {
+							var module = data[i];
+
+							scope.addModule(module.type, module.code);
+						}
+					}
+				};
+
 				// Reset table, remove all modules 
 				scope.resetTable = function () {
 					for(var type in scope.types) {
@@ -32,6 +90,24 @@ angular.module('core').directive('moduletable', [
 
 					scope.selectedType = 'ALL';
 				};
+
+				// Init moduletable if module list is changed
+				scope.init = function () {
+					// Visible Modules = selected Modules
+					scope.visibleModules = {};
+					scope.resetTable();
+
+					scope.reload();
+				};
+
+				scope.$watch(function () {
+					return scope.modules;
+				}, function (modules) {
+					if (modules && modules.length) {
+						// valid set of modules
+						scope.init();
+					}
+				});
 
 				// Switch type of modules to be displayed
 				scope.switchType = function (type) {
@@ -49,21 +125,6 @@ angular.module('core').directive('moduletable', [
 					return false;
 				};
 
-				// Add modules
-				scope.addModule = function (modType, modCode) {
-					for(var i in scope.modules) {
-						var module = scope.modules[i];
-						
-						if ((module.type === modType) && (module.code === modCode)) {
-							if (!added(module)) {
-								scope.visibleModules[modType].push(module);
-							}
-						}
-					}
-
-					scope.updateAllModules();
-				};
-
 				// Remove modules
 				scope.removeModule = function (modType, modCode) {
 					for(var i in scope.visibleModules[modType]) {
@@ -74,25 +135,8 @@ angular.module('core').directive('moduletable', [
 						}
 					}
 
-					scope.updateAllModules();
+					scope.updateAllSelectedModules();
 				};
-
-				// Update visibleModules.all
-				scope.updateAllModules = function () {
-					scope.visibleModules['ALL'] = [];
-
-					for(var type in scope.types) {
-						if (type === 'ALL') continue;
-
-						for(var i in scope.visibleModules[type]) {
-							var module = scope.visibleModules[type][i];
-
-							scope.visibleModules['ALL'].push(module);
-						}
-					}
-				};
-
-				scope.resetTable();
 			}
 		}
 	}
