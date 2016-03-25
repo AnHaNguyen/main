@@ -1,11 +1,23 @@
 <div>
-	<form>
-		<input type="text" ng-focus="focusInput=true" ng-blur="focusInput=false" placeholder="{{suggestedInput}}" ng-keyup="keyup($event)" ng-model="input"> </input>
+	<div angucomplete-alt id="module-search" 
+		selected-object="enterInput"
+		local-data="items"
+		pause="0"
+		minlength="1"
+		maxlength="50"
+		text-no-results="false"
+		title-field="code,title"
+		search-fields="code,title"
+		input-class="search-input"
+		match-class="highlight"
+		placeholder="Search modules"> </div>
+	<!--<form>
+		<input type="text" ng-focus="focusInput=true" ng-blur="focusInput=false" ng-keyup="keyup($event)" ng-model="input"> </input>
 		<input type="submit"> </input>
 	</form>
-	<div style="position: absolute;  top: 30px;  background-color: white;  border: 1px solid black;"  ng-show="suggestInput && focusInput">
-		<p style="margin: 0;  padding: 0;">
-		{{ suggestInput }}
+	<div style="max-height: 90px;  overflow-y: scroll;  position: absolute;  top: 30px;  background-color: white;  border: 1px solid black;"  ng-show="autocomplete.suggestions && autocomplete.suggestions.length && focusInput">
+		<p style="margin: 0;  padding: 0;" ng-repeat="suggestion in autocomplete.suggestions" ng-mouseover="suggestion.highlight()" ng-mousedown="suggestion.select()">
+			{{ suggestion.state }}
 		</p>
-	</div>
+	</div> -->
 </div>

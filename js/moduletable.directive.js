@@ -53,7 +53,7 @@ angular.module('core').directive('moduletable', [
 				scope.addModule = function (modType, modCode) {
 					for(var i in scope.modules) {
 						var module = scope.modules[i];
-
+						
 						if ((module.type === modType) && (module.code === modCode)) {
 							if (!added(module)) {
 								scope.visibleModules[modType].push(module);
