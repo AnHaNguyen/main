@@ -59,8 +59,9 @@ angular.module('core').directive('moduletable', ['$cookies',
 						var module = scope.modules[i];
 
 						if ((module.type === modType) && (module.code === modCode)) {
-							console.log(modType, modCode);
-							scope.visibleModules[modType].push(module);
+							if (!added(module)) {
+								scope.visibleModules[modType].push(module);
+							}
 						}
 					}
 
