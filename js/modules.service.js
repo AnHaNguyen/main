@@ -5,7 +5,7 @@ angular.module('core').service('Modules', ['$http',
 		this.init = function (admissionYear, callback) {
 			$http({
 				method: 'GET',
-				url: '/main/php/getrequirements.php',
+				url: '/main/php/getmodules.php',
 				params: {
 					ay: admissionYear
 				}
