@@ -1,0 +1,19 @@
+p:hover {
+	background-color: #4aa3df;
+	cursor: pointer;
+}
+
+.search-input {
+	width: 500px;
+	height: 20px;
+}
+.search-input:focus {
+	outline: none;
+}
+.angucomplete-dropdown {
+	overflow-y: auto;
+	position: absolute;
+	top: 33px;
+	width: 490px !important;
+	max-height: 190px;
+}
