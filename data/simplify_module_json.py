@@ -12,11 +12,23 @@ import re
 debug_mode = True
 
 
+minify = {
+	"ModuleCode": "CD",
+	"ModuleTitle": "MT",
+	"ModuleCredit": "MC",
+	"ParsedPreclusion": "PPP",
+	"Prerequisite": "RQ",
+	"ParsedPrerequisite": "PRQ",
+	"Corequisite": "CR",
+	"ParsedCorequisite": "PCR"
+}
+
+
 def main():
 	module_file, semester_file = load_args()
 	mod_dict = simplify(module_file)
-	mod_dict = include_semester_info(mod_dict, semester_file)
 	mod_dict = parse_corequisites(mod_dict)
+	mod_dict = include_semester_info(mod_dict, semester_file)
 	create_json_file(mod_dict)
 
 	if debug_mode:
@@ -60,7 +72,7 @@ def load_args():
 
 def usage():
 	"""Prints the proper format for calling this script."""
-	print "usage: " + sys.argv[0] + " -m module_file"
+	print "usage: " + sys.argv[0] + " -m module_file -s semester_file"
 
 
 def simplify(module_file):
@@ -84,61 +96,19 @@ def simplify(module_file):
 		mod_dict = {}
 
 		for module in modules:
-			keys = module.keys()
-			for key in keys:
-				if key not in {"ModuleCode", "ModuleTitle", "ModuleCredit", "ParsedPreclusion",
-							"Prerequisite", "ParsedPrerequisite", "Corequisite"}:
-					module.pop(key, None)
+			simplified_info = {}
 
 			# Shorten name of keys
-			module["NM"] = module.pop("ModuleTitle")
-			module["MC"] = module.pop("ModuleCredit")
-			temp = module.pop("ParsedPreclusion", None)
-			if temp is not None:
-				module["PC"] = temp
-			temp = module.pop("Prerequisite", None)
-			if temp is not None:
-				module["PR"] = temp
-			temp = module.pop("ParsedPrerequisite", None)
-			if temp is not None:
-				module["PP"] = temp
-			temp = module.pop("Corequisite", None)
-			if temp is not None:
-				module["CR"] = temp
+			for key in module:
+				if key in minify:
+					simplified_info[minify[key]] = module[key]
 
-			mod_dict[module.pop("ModuleCode")] = module
+			mod_dict[module["ModuleCode"]] = simplified_info
 
 		# Handle exceptions
-		mod_dict["CS2020"].pop("CR") # Incorrectly listed corequisite
+		mod_dict["CS2020"].pop("CR", None) # Incorrectly listed corequisite
 
 		return mod_dict
-
-
-def include_semester_info(mod_dict, semester_file):
-	"""Extracts info about which semesters modules are offered in, and includes this info in the dictionary of modules
-
-	:param mod_dict: A dictionary (that uses module codes as keys) of dictionaries (containing certain module information).
-	:param semester_file: File containing info about which semesters modules are offered in, kindly provided by NUSMods' API.
-	:return: mod_dict updated with info about which semesters modules are offered in
-	"""
-	with open(semester_file) as json_file:
-		mod_sems = json.load(json_file)
-
-		for module in mod_sems:
-			mod_dict[str(module["ModuleCode"])]["SM"] = module["Semesters"]
-
-		return mod_dict
-
-
-def create_json_file(mod_dict):
-	"""Writes the dictionary (that uses module codes as keys) of dictionaries (containing certain module information),
-	to a JSON file on disk.
-
-	:param mod_dict: A dictionary (that uses module codes as keys) of dictionaries (containing certain module information).
-	"""
-	module_file = file("simplified.json", 'w')
-	json.dump(mod_dict, module_file)
-	module_file.close()
 
 
 def parse_corequisites(mod_dict):
@@ -172,6 +142,33 @@ def parse_corequisites(mod_dict):
 		= {" or ": ["EN2201", "EN2202", "EN2203", "EN2204"]}
 
 	return mod_dict
+
+
+def include_semester_info(mod_dict, semester_file):
+	"""Extracts info about which semesters modules are offered in, and includes this info in the dictionary of modules
+
+	:param mod_dict: A dictionary (that uses module codes as keys) of dictionaries (containing certain module information).
+	:param semester_file: File containing info about which semesters modules are offered in, kindly provided by NUSMods' API.
+	:return: mod_dict updated with info about which semesters modules are offered in
+	"""
+	with open(semester_file) as json_file:
+		mod_sems = json.load(json_file)
+
+		for module in mod_sems:
+			mod_dict[str(module["ModuleCode"])]["SM"] = module["Semesters"]
+
+		return mod_dict
+
+
+def create_json_file(mod_dict):
+	"""Writes the dictionary (that uses module codes as keys) of dictionaries (containing certain module information),
+	to a JSON file on disk.
+
+	:param mod_dict: A dictionary (that uses module codes as keys) of dictionaries (containing certain module information).
+	"""
+	module_file = file("simplified.json", 'w')
+	json.dump(mod_dict, module_file)
+	module_file.close()
 
 
 if __name__ == "__main__":
