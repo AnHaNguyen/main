@@ -4,8 +4,9 @@ p:hover {
 }
 
 .search-input {
-	width: 500px;
+	width: 500px !important;
 	height: 20px;
+	margin: 0!important;
 }
 .search-input:focus {
 	outline: none;
@@ -13,7 +14,9 @@ p:hover {
 .angucomplete-dropdown {
 	overflow-y: auto;
 	position: absolute;
-	top: 33px;
 	width: 490px !important;
 	max-height: 190px;
+}
+.float-right {
+	float: right;
 }
