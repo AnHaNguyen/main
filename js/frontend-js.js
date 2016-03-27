@@ -1,3 +1,9 @@
+$(function() {
+	$("#sortable-1, #sortable-2, #sortable-3, #sortable-4").sortable({
+		connectWith: "#sortable-1, #sortable-2, #sortable-3, #sortable-4"
+	});
+});
+
 $(document).ready(function() {
 	$("#deg-req-div").hide();
 	$("#taken-mod-div").hide();
@@ -5,20 +11,20 @@ $(document).ready(function() {
 	$("#exempt-mod-div").hide();
 
 	 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $(".modal-trigger").leanModal();
+	 $(".modal-trigger").leanModal();
 
-	$("#search-box").focus(function(){
-		$("#search-box").keypress(function(e) {
-    		if(e.which == 13) {
-        		$("#search-modal").openModal();
+	 $("#search-box").focus(function(){
+	 	$("#search-box").keypress(function(e) {
+	 		if(e.which == 13) {
+	 			$("#search-modal").openModal();
 
-        		$(".close-btn").on("click", function() {
-        			  $("#search-modal").closeModal();
-        		});
-    		}
-		});
+	 			$(".close-btn").on("click", function() {
+	 				$("#search-modal").closeModal();
+	 			});
+	 		}
+	 	});
+	 });
 	});
-});
 
 $("#deg-req-nav").on("click", function (){
 	$("#deg-req-div").show();
