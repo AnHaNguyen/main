@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
-angular.module('core').service('Modules', ['$http',
+angular.module('core').service('User', ['$http',
 	function ($http) {
-		this.init = function (admissionYear, callback) {
+/*		this.init = function (admissionYear, callback) {
 			$http({
 				method: 'GET',
 				url: '/main/php/getmodules.php',
@@ -16,6 +16,13 @@ angular.module('core').service('Modules', ['$http',
 			}, function errorCallback(err) {
 				console.log('ERROR: Getting modules - ' + err);
 			});
+		}; */
+		var service = {};
+
+		service.login = function (username, password) {
+			console.log(username, password);
 		};
+
+		return service;
 	}
 ]);

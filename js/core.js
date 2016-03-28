@@ -18,3 +18,16 @@ angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Mod
 	}
 ]);
 
+angular.module('core').controller('loginController', [ '$scope', 'User',
+	function ($scope, User) {
+		$scope.Input = {
+			username: '',
+			password: ''
+		};
+
+		$scope.login = function (Input) {
+			User.login(Input.username, Input.password);
+		};
+	}
+]);
+
