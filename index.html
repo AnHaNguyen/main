@@ -70,81 +70,63 @@
 			<a href="#main" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
 		</div>
 	</div>
-		<!--TOP NAVIGATION BAR
-		<div class="navbar-fixed" id="top-nav">
-			<nav class="orange darken-1">
-				<div class="nav-wrapper">
-					<div class="row">
-						<div class="col s2">
-							<div class="row">
-								<a href="#home-page" class="brand-logo">SOCPlanner</a>
-							</div>
-						</div>
 
-						<!--Search bar
-						<div class="col s6">
-							<form class="col s12">
-								<div class="row">
-									<div class="col s8">
-										<input id="search-box" class="black-font" type="text" name="search" placeholder="Add/Search modules">
-									</div>
-									<div class="col s4">
-										<!-- Modal Trigger
-										<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a>
-									</div>
-								</div>
-							</form>
-						</div>
-
-						<div class="col s4">
-							<ul id="nav-mobile" class="right hide-on-med-and-down">
-								<li id="deg-req-nav" class="waves-effect waves-light"><a href="#main">Degree Requirement</a></li>
-								<li><a class= "dropdown-button waves-effect waves-light" data-beloworigin="true" data-hover="true" href='#' data-activates='dropdown1'>Graduation Verifier</a></li>
-							</ul>
-						</div>
+	<!--Modal Structure of Planner-->
+	<div id="modal-advanced-planner" class="modal">
+		<div class="modal-content">
+			<h4>Advanced Search</h4>
+			<br>
+			<form class="col s12 black-font">
+				<div class="row">
+					<div class="col s3">Module Type</div>
+					<div class="col s9">
+						<input type="text" class="validate">
 					</div>
 				</div>
-			</nav>
+				<div class="row">
+					<div class="col s3">Academic Year</div>
+					<div class="col s9">
+						<input type="text" class="validate">
+					</div>
+				</div>
+			</form>
 		</div>
 
-		<!--Dropdown Structure
-		<ul id='dropdown1' class='dropdown-content'>
-			<li id="taken-mod-nav" class="waves-effect waves-light"><a href="#main">Modules Taken</a></li>
-			<li class="divider"></li>
-			<li id="plan-mod-nav" class="waves-effect waves-light"><a href="#main">Modules Planner</a></li>
-			<li class="divider"></li>
-			<li id="exempt-mod-nav" class="waves-effect waves-light"><a href="#main">Modules Exemption</a></li>
-		</ul>-->
+		<div class="modal-footer">
+			<a href="#main" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+			<a href="#main" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+		</div>
+	</div>
 
-		<!--SIDE BAR NAV-->
-		<ul id="nav-mobile" class="side-nav fixed">
-			<li class="no-padding"><a href="#home-page" class="brand-logo">SOCPlanner</a></li>
-			<li class="no-padding">
-				<ul class="collapsible collapsible-accordion">
-					<li>
-						<a id="deg-req-nav" class="bold waves-effect waves-red collapsible-header" href="#main">Degree Requirement</a>
-						<div class="collapsible-body">
-							<ul>
-								<li><a href="#ulr-deg-req">ULR</a></li>
-								<li><a href="#prog-req-deg-req">Programme</a></li>
-								<li><a href="#ue-deg-req">UE</a></li>
-							</ul>
-						</div>
-					</li>
-					
-					<li>
-						<a id="taken-mod-nav" class="bold waves-effect waves-red collapsible-header" href="#main">Modules Taken</a>
-						<div class="collapsible-body">
-							<ul>
-								<li><a href="#ulr-taken">ULR</a></li>
-								<li><a href="#prog-req-taken">Programme</a></li>
-								<li><a href="#ue-taken">UE</a></li>
-							</ul>
-						</div>
-					</li>
+	<!--SIDE BAR NAV-->
+	<ul id="nav-mobile" class="side-nav fixed">
+		<li class="no-padding"><a href="#home-page" class="brand-logo">SOCPlanner</a></li>
+		<li class="no-padding">
+			<ul class="collapsible collapsible-accordion">
+				<li>
+					<a id="deg-req-nav" class="bold waves-effect waves-red collapsible-header" href="#main">Degree Requirement</a>
+					<div class="collapsible-body">
+						<ul>
+							<li><a href="#ulr-deg-req">ULR</a></li>
+							<li><a href="#prog-req-deg-req">Programme</a></li>
+							<li><a href="#ue-deg-req">UE</a></li>
+						</ul>
+					</div>
+				</li>
 
-					<li>
-						<a id="plan-mod-nav" class="bold waves-effect waves-red collapsible-header" href="#main">Modules Planner</a>
+				<li>
+					<a id="taken-mod-nav" class="bold waves-effect waves-red collapsible-header" href="#main">Modules Taken</a>
+					<div class="collapsible-body">
+						<ul>
+							<li><a href="#ulr-taken">ULR</a></li>
+							<li><a href="#prog-req-taken">Programme</a></li>
+							<li><a href="#ue-taken">UE</a></li>
+						</ul>
+					</div>
+				</li>
+
+				<li>
+					<a id="plan-mod-nav" class="bold waves-effect waves-red collapsible-header" href="#main">Modules Planner</a>
 						<!--<div class="collapsible-body">
 							<ul>
 								<li><a href="#ulr-taken">ULR</a></li>
@@ -171,7 +153,30 @@
 		<!--Main Section-->
 		<main id="main-section" class="basic-padding">
 			<!--HOME PAGE-->
-			<div id="home-page-div">
+			<div id="home-page-div" class="row z-depth-1">
+				<form class="col s12">
+					<div class="row">
+						<div class="input-field col s6">
+							<input id="major" type="text" class="validate">
+							<label for="major">Major</label>
+						</div>
+						<div class="input-field col s6">
+							<input id="admission-year" type="text" class="validate">
+							<label for="admission-year">Admission Year</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s6">
+							<input id="focus-area" type="text" class="validate">
+							<label for="focus-area">Focus Area</label>
+						</div>
+						<div class="col s6 center">
+							<button class="btn waves-effect waves-light" type="submit" name="submit" id="homepage-btn">Submit
+								<i class="material-icons right">send</i>
+							</button>
+						</div>
+					</div>
+				</form>
 			</div>
 
 			<!--DEGREE REQUIREMENT-->
@@ -451,123 +456,205 @@
 
 			<!--PLANNER MODULES-->
 			<div id="plan-mod-div">
+				<!--Search bar-->
+				<div class="row">
+					<div class="col s10">
+						<form class="col s10">
+							<div class="row">
+								<div class="col s8">
+									<input id="search-box" class="black-font" type="text" name="search" placeholder="Add modules to table">
+								</div>
+								<div class="col s4">
+									<!-- Modal Trigger -->
+									<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced-planner">Advanced</a>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="col s2"></div>
+				</div>
+
 				<div class="row plan-mod-row">
 					<div class="row no-margin center">
-					<div class="col s6 no-padding drag-n-drop-tbl">
-								<p>Semester 1</p>
+						<div class="col s3 no-padding drag-n-drop-tbl">
+							<p>Semester 1</p>
+						</div>
+						<div class="col s3 no-padding drag-n-drop-tbl">
+							<p>Semester 2</p>
+						</div>
+						<div class="col s3 no-padding drag-n-drop-tbl">
+							<p>Semester 3</p>
+						</div>
+						<div class="col s3 no-padding drag-n-drop-tbl">
+							<p>Semester 4</p>
+						</div>
 					</div>
-					<div class="col s6 no-padding drag-n-drop-tbl">
-								<p>Semester 2</p>
+
+
+					<div class="row no-margin">
+						<div class="col s3 no-padding">
+							<div class="row no-margin">
+								<div class="col s12 drag-n-drop-tbl">
+									<ul id="sortable-1">
+										<li class="default z-depth-2">
+											<div class="row">
+												<div class="col s10">
+													CS3226<br>
+													Web Programming & Application<br>
+													Depth & Breadth<br>
+													4MC<br>
+												</div>
+
+												<div class="col s2">
+													<a href="#main" class="right">X</a>
+												</div>
+											</div>
+										</li>
+										<li class="default z-depth-2">
+											<div class="row">
+												<div class="col s10">
+													CS3241<br>
+													Computer Graphics<br>
+													Depth & Breadth<br>
+													4MC<br>
+												</div>
+
+												<div class="col s2">
+													<a href="#main" class="right">X</a>
+												</div>
+											</div>
+										</li>
+										<li class="default z-depth-2">
+											<div class="row">
+												<div class="col s10">
+													CS3233<br>
+													Competitive Programming<br>
+													Depth & Breadth<br>
+													4MC<br>
+												</div>
+
+												<div class="col s2">
+													<a href="#main" class="right">X</a>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="col s3 no-padding">
+							<div class="row no-margin">
+								<div class="col s12 drag-n-drop-tbl">
+									<ul id="sortable-2">
+										<li class="default z-depth-2">
+											<div class="row">
+												<div class="col s10">
+													CS3103<br>
+													Computer Networks Practice<br>
+													Depth & Breadth<br>
+													4MC<br>
+												</div>
+
+												<div class="col s2">
+													<a href="#main" class="right">X</a>
+												</div>
+											</div>
+										</li>
+										<li class="default z-depth-2">
+											<div class="row">
+												<div class="col s10">
+													CS2102<br>
+													Database Systems<br>
+													UE<br>
+													4MC<br>
+												</div>
+
+												<div class="col s2">
+													<a href="#main" class="right">X</a>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="col s3 no-padding">
+							<div class="row no-margin">
+								<div class="col s12 drag-n-drop-tbl">
+									<ul id="sortable-3">
+										<li class="default z-depth-2">
+											<div class="row">
+												<div class="col s10">
+													CS3240<br>
+													Interaction Design<br>
+													Depth & Breadth<br>
+													4MC<br>
+												</div>
+
+												<div class="col s2">
+													<a href="#main" class="right">X</a>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="col s3 no-padding">
+							<div class="row no-margin">
+								<div class="col s12 drag-n-drop-tbl">
+									<ul id="sortable-4">
+										<li class="default z-depth-2">
+											<div class="row">
+												<div class="col s10">
+													MA2213<br>
+													Numerical Analysis<br>
+													Science Module<br>
+													4MC<br>
+												</div>
+
+												<div class="col s2">
+													<a href="#main" class="right">X</a>
+												</div>
+											</div>
+										</li>
+									</div>
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
-				
-
-				<div class="row no-margin">
-					<div class="col s6 no-padding">
-						<div class="row no-margin">
-							<div class="col s12 drag-n-drop-tbl">
-								<ul id="sortable-1">
-									<li class="default z-depth-2">CS3226<br>
-										Web Programming & Application<br>
-										Depth & Breadth<br>
-										4MC<br>
-									</li>
-									<li class="default z-depth-2">CS3241<br>
-										Computer Graphics<br>
-										Depth & Breadth<br>
-										4MC<br>
-									</li>
-									<li class="default z-depth-2">CS3233<br>
-										Competitive Programming<br>
-										Depth & Breadth<br>
-										4MC<br>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-
-					<div class="col s6 no-padding">
-						<div class="row no-margin">
-							<div class="col s12 drag-n-drop-tbl">
-								<ul id="sortable-2">
-									<li class="default z-depth-2">CS3103<br>
-										Computer Networks Practice<br>
-										Depth & Breadth<br>
-										4MC<br>
-									</li>
-									<li class="default">CS2102<br>
-										Database Systems<br>
-										UE<br>
-										4MC<br>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row plan-mod-row">
-				<div class="row no-margin center">
-					<div class="col s6 no-padding drag-n-drop-tbl">
-								<p>Semester 3</p>
-					</div>
-					<div class="col s6 no-padding drag-n-drop-tbl">
-								<p>Semester 4</p>
-					</div>
-				</div>
-
-				<div class="col s6 no-padding">
-						<div class="row no-margin">
-							<div class="col s12 drag-n-drop-tbl">
-								<ul id="sortable-3">
-									
-								</ul>
-							</div>
-						</div>
-					</div>
-
-					<div class="col s6 no-padding">
-						<div class="row no-margin">
-							<div class="col s12 drag-n-drop-tbl">
-								<ul id="sortable-4">
-									<li class="default z-depth-2">MA2213<br>
-										Numerical Analysis<br>
-										Science Module<br>
-										4MC<br>
-									</li>
-								
-								</ul>
-							</div>
-						</div>
-					</div>
 			</div>
 		</div>
+	</div>
 
-			<div id="exempt-mod-div" class="basic-padding">
-			</div>
+	<div id="exempt-mod-div" class="basic-padding">
+	</div>
 
-			<hr>
-			<footer align="center">Copyright © 2016 SOCPlanner. All rights reserved</footer>
-		</main>
+	<hr>
+	<footer align="center">Copyright © 2016 SOCPlanner. All rights reserved</footer>
+</main>
 
 
-		<section ng-controller="mainController">
-			<search select="addModule" items="modules"> </search>
-			<hr>
-			<moduletable list="modules" add="addModule"> </moduletable>
-		</section>
-		<script type="text/javascript" src="bower_components/angular/angular.js"> </script>
-		<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"> </script>
-		<script type="text/javascript" src="js/core.js"> </script>
-		<script type="text/javascript" src="js/modules.service.js"> </script>
-		<script type="text/javascript" src="js/search.directive.js"> </script>
-		<script type="text/javascript" src="js/moduletable.directive.js"> </script>
-		<script type="text/javascript" src="node_modules/angucomplete-alt/dist/angucomplete-alt.min.js"> </script>
+<section ng-controller="mainController">
+	<search select="addModule" items="modules"> </search>
+	<hr>
+	<moduletable list="modules" add="addModule"> </moduletable>
+</section>
+<script type="text/javascript" src="bower_components/angular/angular.js"> </script>
+<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"> </script>
+<script type="text/javascript" src="js/core.js"> </script>
+<script type="text/javascript" src="js/modules.service.js"> </script>
+<script type="text/javascript" src="js/search.directive.js"> </script>
+<script type="text/javascript" src="js/moduletable.directive.js"> </script>
+<script type="text/javascript" src="node_modules/angucomplete-alt/dist/angucomplete-alt.min.js"> </script>
 
-		<!-- Compiled and minified JavaScript -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-		<script type="text/javascript" src="js/frontend-js.js"></script>
-	</body>
-	</html>
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+<script type="text/javascript" src="js/frontend-js.js"></script>
+</body>
+</html>

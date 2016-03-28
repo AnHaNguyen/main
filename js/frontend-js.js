@@ -24,7 +24,12 @@ $(document).ready(function() {
 	 		}
 	 	});
 	 });
+
+	$("#homepage-btn").on("click", function() {
+		$("#home-page-div").hide();
+		$("#deg-req-div").show();
 	});
+});
 
 $("#deg-req-nav").on("click", function (){
 	$("#deg-req-div").show();
