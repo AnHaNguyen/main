@@ -6,13 +6,15 @@ angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Mod
 	function($scope, $cookies, Modules) { 
 		$scope.selected = '';
 
+		$scope.modulesController = Modules;
+
 		$scope.initModules = function (admissionYear) {
-			Modules.init(admissionYear, function (data) {
+			Modules.fetchData(admissionYear, function (data) {
 				$scope.modules = data;
 			});
 		};
 
-		$scope.addModule = function () {};
+		$scope.addModule = Modules.addModule;
 
 		$scope.initModules();
 	}
