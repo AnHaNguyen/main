@@ -42,8 +42,10 @@
 	z-index: 0!important;
 }
 
-.side-bar:hover {
-	background-color: white !important;
+.side-nav a {
+	line-height: 45px !important;
+	height: 45px !important;
+	font-size: 14px;
 }
 
 .main-table {
@@ -114,4 +116,5 @@ nav {
 	border: 1px solid #DDDDDD;
 	border-radius: 5px;
 	padding: 10px;
+>>>>>>> 420309c700223f4c3f413c5627c09a99983bbd36
 }
