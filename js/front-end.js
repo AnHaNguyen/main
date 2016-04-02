@@ -13,18 +13,25 @@ $(document).ready(function() {
 	 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
 	 $(".modal-trigger").leanModal();
 
-	 $("#search-box").focus(function(){
-	 	$("#search-box").keypress(function(e) {
-	 		if(e.which == 13) {
+	 $("#taken-search-box").focus(function(){
+	 	$("#taken-search-box").keypress(function(e) {
+	 		if(e.which == 13) {		// pressing enter button
 	 			$("#search-modal").openModal();
 
 	 			$(".close-btn").on("click", function() {
 	 				$("#search-modal").closeModal();
 	 			});
+
+	 			Materialize.toast(' is added into ', 4000);
 	 		}
 	 	});
 	 });
+
+	$("#homepage-btn").on("click", function() {
+		$("#home-page-div").hide();
+		$("#deg-req-div").show();
 	});
+});
 
 $("#deg-req-nav").on("click", function (){
 	$("#deg-req-div").show();
