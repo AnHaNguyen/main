@@ -213,10 +213,35 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 				}
 			};
 
+			var pickType = function (s) {
+				if (s.search('CS') != -1) return 'PR';
+				else if (s.search('MA') != -1) return 'UE';
+				else return 'ULR';
+			};
+
+			service.preprocess = function (input) {
+				var data = [];
+
+				for(var i in input) {
+					var module = input[i];
+					module.code = i;
+					data.push({
+						code: i,
+						type: pickType(module.code),
+						title: module.ModuleTitle,
+						mc: module.ModuleCredit,
+						semester: module.Semester,
+						prerequisites: module.Prerequisites
+					});
+				}
+
+				return data;
+			};
+
 			service.fetchData = function (admissionYear, major, callback) {
 				$http({
 					method: 'GET',
-					url: '/main/php/getmodules.php',
+					url: '/main/data/simplified.json',
 					params: {
 						adm_year: admissionYear,
 						major: major,
@@ -224,21 +249,14 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 					}
 				}).then(function successCallback(res) {
 
-					service.modules = res.data;
-					console.log('fetch>>', res.data);
+					var data = service.preprocess(res.data);
 
-					// Hardcode MC
-					for(var i in res.data) {
-						var module = res.data[i];
-
-						module.mc = 4;
-						module.state = 'unselected';
-					}
+					service.modules = data;
 
 					service.init();
 
 					if (callback) {
-						callback(res.data);
+						callback(data);
 					}
 				}, function errorCallback(err) {
 					console.log('ERROR: Getting modules - ' + err);
