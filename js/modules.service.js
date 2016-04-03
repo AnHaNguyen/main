@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module('core').service('Modules', ['$http', '$cookies',
-		function ($http, $cookies) {
+angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
+		function ($http, $cookies, Transport) {
 			var service = {};
+
+			service.plannedModules = [];
 
 			// Module fields
 			service.fields = ['Order', 'Type', 'Code', 'Title'];
@@ -14,6 +16,29 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 				'PR': 'Programme Requirements',
 				'ALL': 'All modules'
 			};
+			
+			// Module subtypes
+			service.subtypes = {
+				'ULR': [{
+					name: 'GEM A',
+					fulfilled: false
+				}, {
+					name: 'GEM B',
+					fulfilled: false
+				}, {
+					name: 'SSA',
+					fulfilled: false
+				}],
+				'PR': [{
+					name: 'CS - FOUNDATION',
+					fulfilled: false
+				}, {
+					name: 'CS - BREADTH & DEPTH',
+					fulfilled: false
+				}],
+				'UE': []
+			};
+			console.log(service.subtypes);
 
 			service.saveSelectedModulesToCookies = function () {
 				var data = JSON.stringify(service.visibleModules['ALL']);
@@ -32,6 +57,7 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 			// Update visibleModules.all
 			service.updateAllSelectedModules = function () {
 				service.visibleModules['ALL'] = [];
+				service.plannedModules.splice(0, service.plannedModules.length);
 
 				for(var type in service.types) {
 					if (type === 'ALL') continue;
@@ -40,14 +66,44 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 						var module = service.visibleModules[type][i];
 
 						service.visibleModules['ALL'].push(module);
+
+						// Update planned modules
+						if (module.state === 'planned') {
+							service.plannedModules.push(module);
+						}
+
+						// Update fulfilled subtypes
+						/*for(var type in service.types) {
+							for(var subtype in service.types[type]) {
+
+							}
+						} */
 					}
 				}
 
 				service.saveSelectedModulesToCookies();
 			};
 
+
+			// Add planned module
+			service.addPlannedModule = function (module) {
+				module.state = 'planned';
+				
+				if (Transport.addPlannedModule) {
+					Transport.addPlannedModule(module);
+				}
+			}
+
+			service.removePlannedModule = function (module) {
+				module.state = 'taken';
+				
+				if (Transport.removePlannedModule) {
+					Transport.removePlannedModule(module);
+				}
+			}
+
 			// Add modules
-			service.addModule = function (modType, modCode) {
+			service.addModule = function (modType, modCode, origin) {
 				for(var i in service.modules) {
 					var module = service.modules[i];
 
@@ -55,6 +111,11 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 						if (!added(module)) {
 							service.totalMCs[modType] += module.mc;
 							service.visibleModules[modType].push(module);
+
+							if ((!origin) || (origin !== 'auto')) {
+								service.addPlannedModule(module);
+							}
+							module.state = 'planned';
 						}
 					}
 				}
@@ -65,14 +126,17 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 			// Load saved data from cookie
 			service.reload = function () {
 				var data = $cookies.get('data');
+				var plan = $cookies.get('plan');
 
 				if (data) {
 					data = JSON.parse(data);
 
 					for(var i in data) {
 						var module = data[i];
+						var cmd = 'auto';
+						if (!plan) cmd = 'manu';
 
-						service.addModule(module.type, module.code);
+						service.addModule(module.type, module.code, cmd);
 					}
 				}
 			};
@@ -123,16 +187,61 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 					if (module.code === modCode) {
 						service.totalMCs[modType] -= module.mc;
 						service.visibleModules[modType].splice(i, 1);
+
+						// Mark this module as unselected
+						service.removePlannedModule(module);
+						module.state = 'unselected';
 					}
 				}
 
 				service.updateAllSelectedModules();
 			};
 
+			// Change state between unselected, planned, taken
+			service.changeState = function (modType, modCode) {
+				for(var i in service.visibleModules['ALL']) {
+					var module = service.visibleModules['ALL'][i];
+
+					if ((module.type === modType) && (module.code === modCode)) {
+						console.log(modType, modCode);
+						if (module.state === 'taken') {
+							service.addPlannedModule(module);
+						} else {
+							service.removePlannedModule(module);
+						}
+					}
+				}
+			};
+
+			var pickType = function (s) {
+				if (s.search('CS') != -1) return 'PR';
+				else if (s.search('MA') != -1) return 'UE';
+				else return 'ULR';
+			};
+
+			service.preprocess = function (input) {
+				var data = [];
+
+				for(var i in input) {
+					var module = input[i];
+					module.code = i;
+					data.push({
+						code: i,
+						type: pickType(module.code),
+						title: module.ModuleTitle,
+						mc: module.ModuleCredit,
+						semester: module.Semester,
+						prerequisites: module.Prerequisites
+					});
+				}
+
+				return data;
+			};
+
 			service.fetchData = function (admissionYear, major, callback) {
 				$http({
 					method: 'GET',
-					url: '/main/php/getmodules.php',
+					url: '/main/data/simplified.json',
 					params: {
 						adm_year: admissionYear,
 						major: major,
@@ -140,19 +249,14 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 					}
 				}).then(function successCallback(res) {
 
-					service.modules = res.data;
+					var data = service.preprocess(res.data);
 
-					// Hardcode MC
-					for(var i in res.data) {
-						var module = res.data[i];
-
-						module.mc = 4;
-					}
+					service.modules = data;
 
 					service.init();
 
 					if (callback) {
-						callback(res.data);
+						callback(data);
 					}
 				}, function errorCallback(err) {
 					console.log('ERROR: Getting modules - ' + err);
@@ -161,7 +265,7 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 
 			// Gather all selected modules and send it to back-end
 			service.submit = function (admissionYear, major, focusArea, callback) {
-				var modules = service.visibleModules['all'];
+				var modules = service.visibleModules['ALL'];
 				var selectedModules = [];
 
 				for(var i in modules) {
