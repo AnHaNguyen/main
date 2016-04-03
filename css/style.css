@@ -50,8 +50,8 @@ body {
 .grad-cer-text {
 	color: red;
 }
-/*---------------------------------------*/
 
+/*---------------------------------------*/
 .logo {
 	font-family: 'Indie Flower', cursive;
 	font-size: 40px !important;
@@ -82,12 +82,12 @@ body {
 
 #main-section {
 	background-color: #F7F7F7;
-	padding-left: 240px;
+	padding-left: 17%;
 }
 
 /*---------------------------Side Bar--------------------------*/
 .side-nav {
-	width: 240px;
+	width: 17%;
 	z-index: 0!important;
 }
 
@@ -102,27 +102,25 @@ body {
 }
 
 /*---------------------------------------------------------------*/
-#page-title {
+.page-title {
 	background-color: #fb8c00;
 	color: white;
-	font-size: 30px;
-	padding: 15px 40px 15px 40px;
+	padding: 15px 15px 5px 15px;
 
 	/*---Fixed Nav Bar---*/
-	/*position: fixed;
+	position: fixed;
 	top: 0;
-  	left: 240px;
   	z-index: 9999;
-  	width: 100%;*/
+  	width: 83%;
 }
 
-.no-navbar-hide {
-	padding-top: ;
+.large-text {
+	font-size: 30px !important;
 }
 
 .main-table {
 	background-color: white;
-	padding: 10px;
+	padding-top: 80px !important;
 }
 
 #search-box {

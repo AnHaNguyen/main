@@ -6,14 +6,13 @@ $(function() {
 });
 
 function showDegReq() {
-	$("#page-title span").html("Degree Requirement");
-
 	$("#deg-req-div").show();
 	$("#taken-mod-div").hide();
 	$("#plan-mod-div").hide();
 	$("#exempt-mod-div").hide();
 }
 
+/*-----------------------Start-page--------------------------*/
 $("#get-started-btn").on("click", function() {
 	$("#start-text-div").hide();
 	$("#grad-cer-div").show();
@@ -58,6 +57,28 @@ $(document).ready(function() {
 		$(selector).removeClass("active");
 		$(this).addClass("active");
 	});
+
+
+	//$(".collapsible-body ul li.active a").click(function(e) { 
+		// Add smooth scrolling to all links
+  $("a").on('click', function(event) {
+
+    // Prevent default anchor click behavior
+    event.preventDefault();
+
+    // Store hash
+    var hash = this.hash;
+
+    // Using jQuery's animate() method to add smooth page scroll
+    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+    $('html, body').animate({
+      scrollTop: $(hash).offset().top - 80
+    }, 800, function(){
+   
+      // Add hash (#) to URL when done scrolling (default click behavior)
+      window.location.hash = hash;
+    });
+  });
 });
 
 $("#deg-req-nav").on("click", function (){
@@ -65,8 +86,6 @@ $("#deg-req-nav").on("click", function (){
 });
 
 $("#taken-mod-nav").on("click", function (){
-	$("#page-title span").html("Modules Taken");
-
 	$("#deg-req-div").hide();
 	$("#taken-mod-div").show();
 	$("#plan-mod-div").hide();
@@ -74,8 +93,6 @@ $("#taken-mod-nav").on("click", function (){
 });
 
 $("#plan-mod-nav").on("click", function (){
-	$("#page-title span").html("Modules Planner");
-
 	$("#deg-req-div").hide();
 	$("#taken-mod-div").hide();
 	$("#plan-mod-div").show();
@@ -83,8 +100,6 @@ $("#plan-mod-nav").on("click", function (){
 });
 
 $("#exempt-mod-nav").on("click", function (){
-	$("#page-title span").html("Modules Exemption");
-
 	$("#deg-req-div").hide();
 	$("#taken-mod-div").hide();
 	$("#plan-mod-div").hide();
