@@ -189,6 +189,7 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 						service.visibleModules[modType].splice(i, 1);
 
 						// Mark this module as unselected
+						service.removePlannedModule(module);
 						module.state = 'unselected';
 					}
 				}
