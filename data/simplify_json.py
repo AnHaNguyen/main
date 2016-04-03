@@ -1,48 +1,47 @@
 """
 TODO:
-- Deal with "strings or lists or dictionaries" issue. Standardize data structure across prerequisites and corequisites
+- Deal with "strings or lists or dictionaries" issue. Standardize data structure across prerequisites and corequisites?
+- Add documentation to minify dictionary
+- Update documentation (outdated)
 """
 
 import json
-import sys
-import getopt
 import re
+import os
 
 
 debug_mode = True
 
 
+def console_print(txt):
+	if debug_mode:
+		print(txt)
+
+
+# Translates original key value in json file to shorter key
 minify = {
-	"ModuleCode": "CD",
-	"ModuleTitle": "MT",
-	"ModuleCredit": "MC",
-	"ParsedPreclusion": "PPP",
-	"Prerequisite": "RQ",
-	"ParsedPrerequisite": "PRQ",
-	"Corequisite": "CR",
-	"ParsedCorequisite": "PCR"
+	"ModuleTitle": "ModuleTitle",
+	"ModuleCredit": "ModuleCredit",
+	"Semester": "Semester",
+	"Preclusion": "Preclusion",
+	"Prerequisite": "Prerequisites",
+	"Corequisite": "Corequisites",
+	"ParsedPreclusion": "ParsedPreclusion",
+	"ParsedPrerequisite": "ParsedPrerequisites",
+	"ParsedCorequisite": "ParsedCorequisites"
 }
 
 
 def main():
 	module_file, semester_file = load_args()
 	mod_dict = simplify(module_file)
-	mod_dict = parse_corequisites(mod_dict)
+	# mod_dict = parse_prerequisites(mod_dict)
+	# mod_dict = parse_corequisites(mod_dict)
 	mod_dict = include_semester_info(mod_dict, semester_file)
 	create_json_file(mod_dict)
 
 	if debug_mode:
 		print len(mod_dict)
-		cr_file = file("corequisites.json", 'w')
-		for module_code, module_info in mod_dict.iteritems():
-			if "CR" in module_info:
-				cr_file.write(module_code)
-				cr_file.write("\n")
-				cr_file.write(module_info["CR"].encode('ascii', 'ignore'))
-				cr_file.write("\n")
-				json.dump(module_info["PCR"], cr_file)
-				cr_file.write("\n\n")
-		cr_file.close()
 
 
 def load_args():
@@ -50,29 +49,20 @@ def load_args():
 
 	:return: module_file and semester_file variables
 	"""
-	module_file = semester_file = None
+	module_file = "moduleInformation.json"
+	semester_file = "moduleList.json"
 
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], 'm:s:')
-	except getopt.GetoptError, err:
-		usage()
-		sys.exit(2)
-	for o, a in opts:
-		if o == '-m':
-			module_file = a
-		elif o == '-s':
-			semester_file = a
+		if os.stat(module_file).st_size > 0 and os.stat(semester_file).st_size > 0:
+			console_print("Files found and are not empty")
+		elif os.stat(module_file).st_size == 0:
+			console_print("'" + module_file + "'is empty or missing")
 		else:
-			assert False, "unhandled option"
-	if module_file is None:
-		usage()
-		sys.exit(2)
+			console_print("'" + semester_file + "'is empty or missing")
+	except OSError:
+		print "No files found"
+
 	return module_file, semester_file
-
-
-def usage():
-	"""Prints the proper format for calling this script."""
-	print "usage: " + sys.argv[0] + " -m module_file -s semester_file"
 
 
 def simplify(module_file):
@@ -96,6 +86,7 @@ def simplify(module_file):
 		mod_dict = {}
 
 		for module in modules:
+			module_code = module["ModuleCode"]
 			simplified_info = {}
 
 			# Shorten name of keys
@@ -103,12 +94,20 @@ def simplify(module_file):
 				if key in minify:
 					simplified_info[minify[key]] = module[key]
 
-			mod_dict[module["ModuleCode"]] = simplified_info
+			# Cast MC into int type to reduce file size
+			simplified_info[minify["ModuleCredit"]] = int(simplified_info[minify["ModuleCredit"]])
+
+			mod_dict[module_code] = simplified_info
+
 
 		# Handle exceptions
-		mod_dict["CS2020"].pop("CR", None) # Incorrectly listed corequisite
+		mod_dict["CS2020"].pop(minify["Corequisite"], None) # Incorrectly listed corequisite
 
 		return mod_dict
+
+
+def parse_prerequisites(mod_dict):
+	return None
 
 
 def parse_corequisites(mod_dict):
@@ -122,23 +121,26 @@ def parse_corequisites(mod_dict):
 	verify_re = re.compile(mod_string)
 
 	for module_code, module_info in mod_dict.iteritems():
-		if "CR" in module_info:
-			corequisites = verify_re.findall(module_info["CR"])
-			module_info["PCR"] = corequisites if len(corequisites) <= 1 else {" or ": corequisites}
+		if minify["Corequisite"] in module_info:
+			corequisites = verify_re.findall(module_info[minify["Corequisite"]])
+			if corequisites:
+				module_info[minify["ParsedCorequisite"]] = corequisites if len(corequisites) <= 1 else {" or ": corequisites}
 
 	# Handle exceptions
-	mod_dict["IE4220E"]["PCR"] = {" and ": mod_dict["IE4220E"]["PCR"][" or "]}
-	mod_dict["IE4230E"]["PCR"] = {" and ": mod_dict["IE4230E"]["PCR"][" or "]}
-	mod_dict["YID3201"]["PCR"] = ["YID1201"]
-	mod_dict["BMA5011"]["PCR"] = ["BMA5001"]
-	mod_dict["FE5218"]["PCR"] = ["FE5102"]
-	mod_dict["NUR1119"]["PCR"] = {" or ": ["NUR1120", {" and ": ["NUR2106", "NUR2117"]}]}
-	mod_dict["FIN3120E"]["PCR"] = []
-	mod_dict["FIN3120D"]["PCR"] = []
-	mod_dict["EN3222"]["PCR"] = mod_dict["EN3223"]["PCR"] = mod_dict["EN3224"]["PCR"]\
-		= mod_dict["EN3225"]["PCR"] = mod_dict["EN3229"]["PCR"] = mod_dict["EN3241"]["PCR"]\
-		= mod_dict["EN3245"]["PCR"] = mod_dict["EN3249"]["PCR"] = mod_dict["EN3263"]["PCR"]\
-		= mod_dict["EN3264"]["PCR"] = mod_dict["EN3265"]["PCR"] = mod_dict["EN3271"]["PCR"]\
+	mod_dict["IE4220E"][minify["ParsedCorequisite"]] = {" and ": mod_dict["IE4220E"][minify["ParsedCorequisite"]][" or "]}
+	mod_dict["IE4230E"][minify["ParsedCorequisite"]] = {" and ": mod_dict["IE4230E"][minify["ParsedCorequisite"]][" or "]}
+	mod_dict["YID3201"][minify["ParsedCorequisite"]] = ["YID1201"]
+	mod_dict["BMA5011"][minify["ParsedCorequisite"]] = ["BMA5001"]
+	mod_dict["FE5218"][minify["ParsedCorequisite"]] = ["FE5102"]
+	mod_dict["NUR1119"][minify["ParsedCorequisite"]] = {" or ": ["NUR1120", {" and ": ["NUR2106", "NUR2117"]}]}
+	mod_dict["FIN3120E"].pop(minify["ParsedCorequisite"], None) # Not required
+	mod_dict["FIN3120D"].pop(minify["ParsedCorequisite"], None) # Not required
+	mod_dict["EN3222"][minify["ParsedCorequisite"]] = mod_dict["EN3223"][minify["ParsedCorequisite"]]\
+		= mod_dict["EN3224"][minify["ParsedCorequisite"]] = mod_dict["EN3225"][minify["ParsedCorequisite"]]\
+		= mod_dict["EN3229"][minify["ParsedCorequisite"]] = mod_dict["EN3241"][minify["ParsedCorequisite"]]\
+		= mod_dict["EN3245"][minify["ParsedCorequisite"]] = mod_dict["EN3249"][minify["ParsedCorequisite"]]\
+		= mod_dict["EN3263"][minify["ParsedCorequisite"]] = mod_dict["EN3264"][minify["ParsedCorequisite"]]\
+		= mod_dict["EN3265"][minify["ParsedCorequisite"]] = mod_dict["EN3271"][minify["ParsedCorequisite"]]\
 		= {" or ": ["EN2201", "EN2202", "EN2203", "EN2204"]}
 
 	return mod_dict
@@ -152,10 +154,10 @@ def include_semester_info(mod_dict, semester_file):
 	:return: mod_dict updated with info about which semesters modules are offered in
 	"""
 	with open(semester_file) as json_file:
-		mod_sems = json.load(json_file)
+		modules = json.load(json_file)
 
-		for module in mod_sems:
-			mod_dict[str(module["ModuleCode"])]["SM"] = module["Semesters"]
+		for module in modules:
+			mod_dict[str(module["ModuleCode"])][minify["Semester"]] = module["Semesters"]
 
 		return mod_dict
 
