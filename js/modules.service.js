@@ -53,6 +53,7 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 
 					if ((module.type === modType) && (module.code === modCode)) {
 						if (!added(module)) {
+							service.totalMCs[modType] += module.mc;
 							service.visibleModules[modType].push(module);
 						}
 					}
@@ -79,9 +80,11 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 			// Reset table, remove all modules 
 			service.resetTable = function () {
 				service.visibleModules = {};
+				service.totalMCs = {};
 
 				for(var type in service.types) {
 					service.visibleModules[type] = [];
+					service.totalMCs[type] = 0;
 				}
 
 				service.selectedType = 'ALL';
@@ -118,6 +121,7 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 					var module = service.visibleModules[modType][i];
 
 					if (module.code === modCode) {
+						service.totalMCs[modType] -= module.mc;
 						service.visibleModules[modType].splice(i, 1);
 					}
 				}
@@ -125,16 +129,26 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 				service.updateAllSelectedModules();
 			};
 
-			service.fetchData = function (admissionYear, callback) {
+			service.fetchData = function (admissionYear, major, callback) {
 				$http({
 					method: 'GET',
-				url: '/main/php/getmodules.php',
-				params: {
-					ay: admissionYear
-				}
+					url: '/main/php/getmodules.php',
+					params: {
+						adm_year: admissionYear,
+						major: major,
+						cmd: 'getreq'
+					}
 				}).then(function successCallback(res) {
 
 					service.modules = res.data;
+
+					// Hardcode MC
+					for(var i in res.data) {
+						var module = res.data[i];
+
+						module.mc = 4;
+					}
+
 					service.init();
 
 					if (callback) {
@@ -142,6 +156,36 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 					}
 				}, function errorCallback(err) {
 					console.log('ERROR: Getting modules - ' + err);
+				});
+			};
+
+			// Gather all selected modules and send it to back-end
+			service.submit = function (admissionYear, major, focusArea, callback) {
+				var modules = service.visibleModules['all'];
+				var selectedModules = [];
+
+				for(var i in modules) {
+					var module = modules[i];
+
+					selectedModules.push([module.code, module.type, '4']);
+				}
+
+				$http({
+					method: 'GET',
+					url: '/main/php/getrequirements.php',
+					params: {
+						adm_year: admissionYear,
+						major: major,
+						focus_area: focusArea,
+						cmd: 'verify'
+					}
+				}).then(function successCallback(res) {
+
+					if (callback) {
+						callback(res.data);
+					}
+				}, function errorCallback(err) { 
+					console.log('ERROR: Sending modules ' + err);
 				});
 			};
 

@@ -191,7 +191,7 @@
 							<form class="col s10">
 								<div class="row">
 									<div class="col s8">
-										<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table">
+										<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table"> 
 									</div>
 									<div class="col s4">
 										<!-- Modal Trigger -->
@@ -300,7 +300,8 @@
 						<form class="col s10">
 							<div class="row">
 								<div class="col s8">
-									<input id="taken-search-box" class="black-font" type="text" name="search" placeholder="Add modules to table">
+									<!--<input id="taken-search-box" class="black-font" type="text" name="search" placeholder="Add modules to table">-->
+									<search select="addModule" items="modulesController.modules"> </search>
 								</div>
 								<div class="col s4">
 									<!-- Modal Trigger -->
@@ -353,7 +354,7 @@
 							<div class="col s2 item">{{ module.type }}</div>
 							<div class="col s2 item">{{ module.code }}</div>
 							<div class="col s6 item">{{ module.title }}</div>
-							<div class="col s1 item">4</div>
+							<div class="col s1 item">{{ module.mc }}</div>
 							<div class="col s1 item center">
 								<a ng-click="modulesController.removeModule(module.type, module.code)" class="btn-floating waves-effect waves-light red">X</a>
 							</div>
@@ -367,7 +368,7 @@
 
 						<div class="col s12 content-row">
 							<div class="col s10 mc-item item text-mc">Total MC Fulfilled</div>
-							<div class="col s1 mc-item item">12</div>
+							<div class="col s1 mc-item item" ng-bind="modulesController.totalMCs['ULR']"></div>
 							<div class="col s1 mc-item item"></div>
 						</div>
 
@@ -397,7 +398,7 @@
 							<div class="col s2 item">{{ module.type }}</div>
 							<div class="col s2 item">{{ module.code }}</div>
 							<div class="col s6 item">{{ module.title }}</div>
-							<div class="col s1 item">4</div>
+							<div class="col s1 item">{{ module.mc }}</div>
 							<div class="col s1 item center">
 								<a ng-click="modulesController.removeModule(module.type, module.code)" class="btn-floating waves-effect waves-light red">X</a>
 							</div>
@@ -435,7 +436,7 @@
 
 						<div class="col s12 content-row">
 							<div class="col s10 mc-item item text-mc">Total MC Fulfilled</div>
-							<div class="col s1 mc-item item">20</div>
+							<div class="col s1 mc-item item" ng-bind="modulesController.totalMCs['PR']"></div>
 							<div class="col s1 mc-item item"></div>
 						</div>
 
@@ -465,7 +466,7 @@
 							<div class="col s2 item">{{ module.type }}</div>
 							<div class="col s2 item">{{ module.code }}</div>
 							<div class="col s6 item">{{ module.title }}</div>
-							<div class="col s1 item">4</div>
+							<div class="col s1 item">{{ module.mc }}</div>
 							<div class="col s1 item center">
 								<a ng-click="modulesController.removeModule(module.type, module.code)" class="btn-floating waves-effect waves-light red">X</a>
 							</div>
@@ -481,7 +482,7 @@
 
 						<div class="col s12 content-row">
 							<div class="col s10 mc-item item text-mc">Total Module Credits</div>
-							<div class="col s2 mc-item item">4</div>
+							<div class="col s2 mc-item item" ng-bind="modulesController.totalMCs['UE']"></div>
 						</div>
 					</div>
 				</div>
