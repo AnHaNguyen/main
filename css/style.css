@@ -1,13 +1,69 @@
 @import url(https://fonts.googleapis.com/css?family=Indie+Flower);
-.brand-logo {
+/*-------------Start Page---------------*/
+body {
+	margin: 0px !important;
+}
+
+#start-page {
+	/*-----------Fit in 1 page, no scrolling---------*/
+    height: 100vh;
+	min-height: 100vh;
+    width: 100%;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
+    background: #1a82f7; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); /* Standard syntax (must be last) */
+}
+
+#start-wrapper {
+	margin: 0 20% 0 20%;
+	padding: 10px 0 10px 0;
+	height: 10vh;
+}
+
+#grad-cer-div {
+	border: 1px solid black;
+	padding: 20px;
+	background-color: white;
+	text-align: center;
+	height: 70vh;
+}
+
+#grad-cer-div img {
+	height: 50px !important;
+}
+
+#start-text-div {
+	height: 70vh;
+}
+
+#starter-footer {
+	height: 10vh;
+}
+
+.input-size {
+	width: 30% !important;
+}
+
+.grad-cer-text {
+	color: red;
+}
+/*---------------------------------------*/
+
+.logo {
 	font-family: 'Indie Flower', cursive;
 	font-size: 40px !important;
+	color: white;
+	text-shadow: 2px 2px black;
 }
 
 .none-hover:hover {
 	background-color: white !important;
 }
 
+/*-------------Basic CSS----------------*/
 .bold {
 	font-weight: bold;
 }
@@ -24,21 +80,14 @@
 	color: black !important;
 }
 
-.basic-padding {
-	padding: 20px;
-}
-
 #main-section {
 	background-color: #F7F7F7;
+	padding-left: 240px;
 }
 
-#main-section{
-	float: right;
-	width: 84%;
-}
-
+/*---------------------------Side Bar--------------------------*/
 .side-nav {
-	width: 16%;
+	width: 240px;
 	z-index: 0!important;
 }
 
@@ -48,13 +97,32 @@
 	font-size: 14px;
 }
 
+.sidebar-item {
+	margin: 0 10px 0 10px;
+}
+
+/*---------------------------------------------------------------*/
+#page-title {
+	background-color: #fb8c00;
+	color: white;
+	font-size: 30px;
+	padding: 15px 40px 15px 40px;
+
+	/*---Fixed Nav Bar---*/
+	/*position: fixed;
+	top: 0;
+  	left: 240px;
+  	z-index: 9999;
+  	width: 100%;*/
+}
+
+.no-navbar-hide {
+	padding-top: ;
+}
+
 .main-table {
 	background-color: white;
 	padding: 10px;
-}
-
-nav {
-	padding: 0 10px 0 10px;
 }
 
 #search-box {
