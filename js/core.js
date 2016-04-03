@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module('core', ['angucomplete-alt', 'ngCookies']);
+angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable']);
 
-angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Modules',
-	function($scope, $cookies, Modules) { 
+angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Modules', 'Transport',
+	function($scope, $cookies, Modules, Transport) { 
 		$scope.selected = '';
 
 		$scope.modulesController = Modules;
+
+		Transport.plannedModules = Modules.plannedModules;
 
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
@@ -72,6 +74,81 @@ angular.module('core').controller('loginController', [ '$scope', 'User',
 
 		$scope.login = function (Input) {
 			User.login(Input.username, Input.password);
+		};
+	}
+]);
+
+angular.module('core').controller('planController', [ '$scope', 'Transport', '$cookies',
+	function ($scope, Transport, $cookies) {
+		// CHeck the cookie first
+		var plan = $cookies.get('plan');
+
+		$scope.save = function () {
+			// Update by save it to cookies
+			var plan = JSON.stringify($scope.modules);
+
+			// Expire date is ten years from now
+			var expireDate = new Date();
+			expireDate.setDate(expireDate.getDate() + 10 * 365);
+
+			var cookieOption = {
+				expires: expireDate
+			}; 
+
+			$cookies.put('plan', plan, cookieOption);
+		};
+
+		if (plan) {
+			var plan = JSON.parse(plan);
+
+			$scope.modules = plan;
+		} else {
+			$scope.modules = [ [], [], [], [] ];
+		}
+
+		$scope.addPlannedModule = function (module) {
+			$scope.modules[0].push(module);
+			$scope.save();
+		};
+
+		$scope.removePlannedModule = function (mod) {
+			for(var s in $scope.modules) {
+				var modules = $scope.modules[s];
+
+				for(var i in modules) {
+					var module = modules[i];
+
+					if (module.code === mod.code) {
+						modules.splice(i, 1);
+						$scope.save();
+						return;
+					}
+				}
+			}
+		};
+
+		Transport.removePlannedModule = $scope.removePlannedModule;
+		Transport.addPlannedModule = $scope.addPlannedModule;
+
+		$scope.semester = [];
+		$scope.semester[0] = $scope.modules[0];
+		$scope.semester[1] = $scope.modules[1];
+		$scope.semester[2] = $scope.modules[2];
+		$scope.semester[3] = $scope.modules[3];
+
+		$scope.sortingLog = [];
+
+		$scope.sortableOptions = {
+			placeholder: "modholder",
+			connectWith: ".semester",
+			tolerance: 'intersect',
+			update: function () {
+				$scope.save();
+			}
+		};
+
+		$scope.log = function () {
+			console.log($scope.modules);
 		};
 	}
 ]);

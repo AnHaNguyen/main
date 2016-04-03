@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module('core').service('Modules', ['$http', '$cookies',
-		function ($http, $cookies) {
+angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
+		function ($http, $cookies, Transport) {
 			var service = {};
+
+			service.plannedModules = [];
 
 			// Module fields
 			service.fields = ['Order', 'Type', 'Code', 'Title'];
@@ -55,6 +57,7 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 			// Update visibleModules.all
 			service.updateAllSelectedModules = function () {
 				service.visibleModules['ALL'] = [];
+				service.plannedModules.splice(0, service.plannedModules.length);
 
 				for(var type in service.types) {
 					if (type === 'ALL') continue;
@@ -63,6 +66,11 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 						var module = service.visibleModules[type][i];
 
 						service.visibleModules['ALL'].push(module);
+
+						// Update planned modules
+						if (module.state === 'planned') {
+							service.plannedModules.push(module);
+						}
 
 						// Update fulfilled subtypes
 						/*for(var type in service.types) {
@@ -76,8 +84,26 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 				service.saveSelectedModulesToCookies();
 			};
 
+
+			// Add planned module
+			service.addPlannedModule = function (module) {
+				module.state = 'planned';
+				
+				if (Transport.addPlannedModule) {
+					Transport.addPlannedModule(module);
+				}
+			}
+
+			service.removePlannedModule = function (module) {
+				module.state = 'taken';
+				
+				if (Transport.removePlannedModule) {
+					Transport.removePlannedModule(module);
+				}
+			}
+
 			// Add modules
-			service.addModule = function (modType, modCode) {
+			service.addModule = function (modType, modCode, origin) {
 				for(var i in service.modules) {
 					var module = service.modules[i];
 
@@ -86,6 +112,9 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 							service.totalMCs[modType] += module.mc;
 							service.visibleModules[modType].push(module);
 
+							if ((!origin) || (origin !== 'auto')) {
+								service.addPlannedModule(module);
+							}
 							module.state = 'planned';
 						}
 					}
@@ -97,14 +126,17 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 			// Load saved data from cookie
 			service.reload = function () {
 				var data = $cookies.get('data');
+				var plan = $cookies.get('plan');
 
 				if (data) {
 					data = JSON.parse(data);
 
 					for(var i in data) {
 						var module = data[i];
+						var cmd = 'auto';
+						if (!plan) cmd = 'manu';
 
-						service.addModule(module.type, module.code);
+						service.addModule(module.type, module.code, cmd);
 					}
 				}
 			};
@@ -172,9 +204,9 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 					if ((module.type === modType) && (module.code === modCode)) {
 						console.log(modType, modCode);
 						if (module.state === 'taken') {
-							module.state = 'planned';
+							service.addPlannedModule(module);
 						} else {
-							module.state = 'taken';
+							service.removePlannedModule(module);
 						}
 					}
 				}
