@@ -56,7 +56,7 @@
 	</div>
 
 	<!--Main Section-->
-	<main id="main-section">
+	<main id="main-section" ng-controller="mainController">
 		<!-- Modal Structure -->
 		<div id="search-modal" class="modal">
 			<div class="modal-content">
@@ -312,7 +312,7 @@
 					<form class="col s10">
 						<div class="row">
 							<div class="col s8">
-								<input id="taken-search-box" class="black-font" type="text" name="search" placeholder="Add modules to table">
+								<search select="addModule" items="modules"> </search>
 							</div>
 							<div class="col s4">
 								<!-- Modal Trigger -->
@@ -340,7 +340,14 @@
 						<div class="col s1 header item">Actions</div>
 					</div>
 
-					<div class="col s12 content-row">
+					<div class="col s12 content-row" ng-repeat="subtype in modulesController.subtypes['ULR']" ng-hide="subtype.fulfilled">
+						<div class="col s2 item">{{ subtype.name }}</div>
+						<div class="col s10 item">Add your required module</div>
+					<!--	<div class="col s1 item">0</div>
+						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div> -->
+					</div>
+
+			<!--		<div class="col s12 content-row">
 						<div class="col s2 item">GEM A</div>
 						<div class="col s8 item">Add your required module</div>
 						<div class="col s1 item">0</div>
@@ -359,9 +366,21 @@
 						<div class="col s8 item">Add your required module</div>
 						<div class="col s1 item">0</div>
 						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
+					</div> -->
+
+					<div class="col s12 content-row" ng-repeat="module in modulesController.visibleModules['ULR']">
+						<div class="col s2 item">{{ module.type }}</div>
+						<div class="col s2 item">{{ module.code }}</div>
+						<div class="col s6 item">{{ module.title }}</div>
+						<div class="col s1 item">{{ module.mc }}</div>
+						<div class="col s1 item center">
+							<!--	<a class="btn-floating waves-effect waves-light red">X</a>  -->
+							<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>
+							<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>
+						</div>
 					</div>
 
-					<div class="col s12 content-row">
+		<!--			<div class="col s12 content-row">
 						<div class="col s10 mc-item item text-mc">Total MC Required</div>
 						<div class="col s1 mc-item item">12</div>
 						<div class="col s1 mc-item item"></div>
@@ -377,6 +396,14 @@
 						<div class="col s10 mc-item item text-mc">Total MC Taken</div>
 						<div class="col s1 mc-item item">20</div>
 						<div class="col s1 mc-item item"></div>
+					</div> -->
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">MC fulfilled / MC required</div>
+						<div class="col s2 mc-item item">
+							<span ng-bind="modulesController.totalMCs['ULR']"> </span>
+							/
+							<span> 20 </span>
+						</div>
 					</div>
 				</div>
 
@@ -395,15 +422,27 @@
 						<div class="col s1 header item">Actions</div>
 					</div>
 
-					<div class="col s12 content-row">
+<!--					<div class="col s12 content-row">
 						<div class="col s2 item">CS Foundation</div>
 						<div class="col s2 item">CS2105</div>
 						<div class="col s6 item">Introduction to Computer Networks</div>
 						<div class="col s1 item">4</div>
 						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
+					</div> -->
+
+					<div class="col s12 content-row" ng-repeat="module in modulesController.visibleModules['PR']">
+						<div class="col s2 item">{{ module.type }}</div>
+						<div class="col s2 item">{{ module.code }}</div>
+						<div class="col s6 item">{{ module.title }}</div>
+						<div class="col s1 item">{{ module.mc }}</div>
+						<div class="col s1 item center">
+							<!--	<a class="btn-floating waves-effect waves-light red">X</a>  -->
+							<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>
+							<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>
+						</div>
 					</div>
 
-					<div class="col s12 content-row">
+			<!--		<div class="col s12 content-row">
 						<div class="col s2 item">CS Depth - Breadth</div>
 						<div class="col s2 item">CS3226</div>
 						<div class="col s6 item">Web Programming And Application</div>
@@ -417,9 +456,9 @@
 						<div class="col s6 item">Software Engineering</div>
 						<div class="col s1 item">4</div>
 						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
-					</div>
+					</div> -->
 
-					<div class="col s12 content-row">
+			<!--		<div class="col s12 content-row">
 						<div class="col s10 mc-item item text-mc">Total MC Required</div>
 						<div class="col s1 mc-item item">120</div>
 						<div class="col s1 mc-item item"></div>
@@ -435,6 +474,14 @@
 						<div class="col s10 mc-item item text-mc">Total MC Taken</div>
 						<div class="col s1 mc-item item">20</div>
 						<div class="col s1 mc-item item"></div>
+					</div> -->
+					<div class="col s12 content-row">
+						<div class="col s10 mc-item item text-mc">MC fulfilled / MC required</div>
+						<div class="col s2 mc-item item">
+							<span ng-bind="modulesController.totalMCs['PR']"> </span>
+							/
+							<span> 20 </span>
+						</div>
 					</div>
 				</div>
 
@@ -453,17 +500,33 @@
 						<div class="col s1 header item">Actions</div>
 					</div>
 
-					<div class="col s12 content-row">
+					<div class="col s12 content-row" ng-repeat="module in modulesController.visibleModules['UE']">
+						<div class="col s2 item">{{ module.type }}</div>
+						<div class="col s2 item">{{ module.code }}</div>
+						<div class="col s6 item">{{ module.title }}</div>
+						<div class="col s1 item">{{ module.mc }}</div>
+						<div class="col s1 item center">
+							<!--	<a class="btn-floating waves-effect waves-light red">X</a>  -->
+							<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>
+							<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>
+						</div>
+					</div>
+
+					<!--<div class="col s12 content-row">
 						<div class="col s2 item">UE</div>
 						<div class="col s2 item">MA2213</div>
 						<div class="col s6 item">Numerical Analysis</div>
 						<div class="col s1 item">4</div>
 						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
-					</div>
+					</div> -->
 
 					<div class="col s12 content-row">
-						<div class="col s10 mc-item item text-mc">Total Module Credits</div>
-						<div class="col s2 mc-item item">4</div>
+						<div class="col s10 mc-item item text-mc">MC fulfilled / MC required</div>
+						<div class="col s2 mc-item item">
+							<span ng-bind="modulesController.totalMCs['UE']"> </span>
+							/
+							<span> 20 </span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -658,7 +721,7 @@
 	</main>
 
 
-	<section ng-controller="mainController">
+	<section >
 	<!--		<search select="addModule" items="modules"> </search>
 			<hr>
 			<moduletable list="modules" add="addModule"> </moduletable> -->

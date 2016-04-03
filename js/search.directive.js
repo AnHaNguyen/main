@@ -16,12 +16,19 @@ angular.module('core').directive('search', [
 				scope.selectedType = 'ALL';
 				scope.showSetting = false;
 				scope.visibleItems = scope.items;
+				scope.input = "";
 
 				scope.$watch(function () {
 					return scope.items;
 				}, function (newItems) {
 					scope.visibleItems = newItems;
 				}); 
+
+				scope.$watch(function () {
+					return scope.input;
+				}, function (newInput) {
+					console.log(newInput);
+				});
 
 				scope.changeVisibleItems = function () {
 					scope.visibleItems = [];

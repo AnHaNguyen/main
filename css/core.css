@@ -20,3 +20,6 @@ p:hover {
 .float-right {
 	float: right;
 }
+.clickable:hover {
+	cursor: pointer;
+}

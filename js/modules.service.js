@@ -14,6 +14,29 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 				'PR': 'Programme Requirements',
 				'ALL': 'All modules'
 			};
+			
+			// Module subtypes
+			service.subtypes = {
+				'ULR': [{
+					name: 'GEM A',
+					fulfilled: false
+				}, {
+					name: 'GEM B',
+					fulfilled: false
+				}, {
+					name: 'SSA',
+					fulfilled: false
+				}],
+				'PR': [{
+					name: 'CS - FOUNDATION',
+					fulfilled: false
+				}, {
+					name: 'CS - BREADTH & DEPTH',
+					fulfilled: false
+				}],
+				'UE': []
+			};
+			console.log(service.subtypes);
 
 			service.saveSelectedModulesToCookies = function () {
 				var data = JSON.stringify(service.visibleModules['ALL']);
@@ -40,6 +63,13 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 						var module = service.visibleModules[type][i];
 
 						service.visibleModules['ALL'].push(module);
+
+						// Update fulfilled subtypes
+						/*for(var type in service.types) {
+							for(var subtype in service.types[type]) {
+
+							}
+						} */
 					}
 				}
 
@@ -55,6 +85,8 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 						if (!added(module)) {
 							service.totalMCs[modType] += module.mc;
 							service.visibleModules[modType].push(module);
+
+							module.state = 'planned';
 						}
 					}
 				}
@@ -123,10 +155,29 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 					if (module.code === modCode) {
 						service.totalMCs[modType] -= module.mc;
 						service.visibleModules[modType].splice(i, 1);
+
+						// Mark this module as unselected
+						module.state = 'unselected';
 					}
 				}
 
 				service.updateAllSelectedModules();
+			};
+
+			// Change state between unselected, planned, taken
+			service.changeState = function (modType, modCode) {
+				for(var i in service.visibleModules['ALL']) {
+					var module = service.visibleModules['ALL'][i];
+
+					if ((module.type === modType) && (module.code === modCode)) {
+						console.log(modType, modCode);
+						if (module.state === 'taken') {
+							module.state = 'planned';
+						} else {
+							module.state = 'taken';
+						}
+					}
+				}
 			};
 
 			service.fetchData = function (admissionYear, major, callback) {
@@ -141,12 +192,14 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 				}).then(function successCallback(res) {
 
 					service.modules = res.data;
+					console.log('fetch>>', res.data);
 
 					// Hardcode MC
 					for(var i in res.data) {
 						var module = res.data[i];
 
 						module.mc = 4;
+						module.state = 'unselected';
 					}
 
 					service.init();
@@ -161,7 +214,7 @@ angular.module('core').service('Modules', ['$http', '$cookies',
 
 			// Gather all selected modules and send it to back-end
 			service.submit = function (admissionYear, major, focusArea, callback) {
-				var modules = service.visibleModules['all'];
+				var modules = service.visibleModules['ALL'];
 				var selectedModules = [];
 
 				for(var i in modules) {

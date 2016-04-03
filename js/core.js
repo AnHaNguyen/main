@@ -15,6 +15,12 @@ angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Mod
 			});
 		};
 
+		// Remove module
+		$scope.removeModule = Modules.removeModule;
+
+		// Change state of module from planned to taken and vice versa
+		$scope.changeState = Modules.changeState;
+
 		// Function to add new module
 		$scope.addModule = Modules.addModule;
 

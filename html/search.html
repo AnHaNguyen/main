@@ -1,7 +1,9 @@
 <div>
 	<div angucomplete-alt id="module-search" 
 		selected-object="enterInput"
+		ng-model="input"
 		local-data="visibleItems"
+		clear-selected="true"
 		pause="0"
 		minlength="1"
 		text-no-results="false"
@@ -10,5 +12,5 @@
 		input-class="search-input"
 		match-class="highlight"
 		placeholder="Search modules"> </div>
-	<!--	<input ng-click="changeType()" type="submit" value="{{selectedType}}"> </input> -->
+	<!--		<input ng-click="changeType()" type="submit" value="{{selectedType}}"> </input>  -->
 </div>
