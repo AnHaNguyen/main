@@ -189,130 +189,18 @@
 			</li>
 		</ul>
 
-		<!--Top title-->
-		<div id="page-title" class="z-depth-1">
-			<span></span>
-		</div>
 
 		<!--DEGREE REQUIREMENT-->
-		<div id="deg-req-div" class="basic-padding row">
-			<div class="main-table col s12">
+		<div id="deg-req-div" class="basic-padding col s12">
+			<!--Fixed Navigation Bar-->
+			<div class="z-depth-1 page-title row no-margin">
+				<div class="col s6 large-text">Degree Requirement</div>
 				<!--Search bar-->
-				<div class="row">
-					<div class="col s10">
-						<form class="col s10">
-							<div class="row">
-								<div class="col s8">
-									<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table">
-								</div>
-								<div class="col s4">
-									<!-- Modal Trigger -->
-									<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a>
-								</div>
-							</div>
-						</form>
-					</div>
-
-					<div class="col s2"></div>
-				</div>
-
-				<!--ULR content-->
-				<div id="ulr-deg-req" class="row mod-type-table">
-					<div class="col s12 content-row">
-						<div class="col s12 header item">University Level Requirements (ULR)</div>
-					</div>
-					<div class="col s12 content-row">
-						<div class="col s2 header item">Type</div>
-						<div class="col s2 header item">Code</div>
-						<div class="col s7 header item">Title</div>
-						<div class="col s1 header item">MC</div>
-					</div>
-
-					<div class="col s12 content-row">
-						<div class="col s2 item">GEM</div>
-						<div class="col s2 item">GEM A / B</div>
-						<div class="col s7 item">2 GEM and at least 1 GEM B</div>
-						<div class="col s1 item">8</div>
-
-					</div>
-
-					<div class="col s12 content-row">
-						<div class="col s2 item">SSA</div>
-						<div class="col s2 item">SSA</div>
-						<div class="col s7 item">1 SSA</div>
-						<div class="col s1 item">4</div>
-					</div>
-
-					<div class="col s12 content-row">
-						<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
-						<div class="col s1 mc-item item">20</div>
-					</div>
-				</div>
-
-				<!--Porgramme Requirements content-->
-				<div id="prog-req-deg-req" class="row mod-type-table">
-					<div class="col s12 content-row">
-						<div class="col s12 header item">Programme Requirements (Programme)</div>
-					</div>
-
-					<div class="col s12 content-row">
-						<div class="col s2 item">CS Foundation</div>
-						<div class="col s2 item">CS2105</div>
-						<div class="col s7 item">Introduction to Computer Networks</div>
-						<div class="col s1 item">4</div>
-					</div>
-
-					<div class="col s12 content-row">
-						<div class="col s2 item">CS Foundation</div>
-						<div class="col s2 item">CS2100</div>
-						<div class="col s7 item">Computer Organization</div>
-						<div class="col s1 item">4</div>
-					</div>
-
-					<div class="col s12 content-row">
-						<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
-						<div class="col s1 mc-item item">120</div>
-					</div>
-				</div>
-
-				<!--UE content-->
-				<div id="ue-deg-req" class="row mod-type-table">
-					<div class="col s12 content-row">
-						<div class="col s12 header item">Unrestricted Electives (UE)</div>
-					</div>
-
-					<div class="col s12 content-row">
-						<div class="col s2 item">UE</div>
-						<div class="col s2 item">All codes</div>
-						<div class="col s7 item">5 any modules</div>
-						<div class="col s1 item">20</div>
-					</div>
-
-					<div class="col s12 content-row">
-						<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
-						<div class="col s1 mc-item item">20</div>
-					</div>
-				</div>
-
-				<div id="ue-deg-req" class="row mod-type-table">
-					<div class="col s12 content-row">
-						<div class="col s11 mc-item item text-mc">Total Module Credits</div>
-						<div class="col s1 mc-item item">160</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-
-		<!--TAKEN MODULES-->
-		<div id="taken-mod-div" class="basic-padding">
-			<!--Search bar-->
-			<div class="row">
-				<div class="col s10">
-					<form class="col s10">
-						<div class="row">
+				<div class="col s6 right">
+					<form class="col s12">
+						<div class="row no-margin">
 							<div class="col s8">
-								<search select="addModule" items="modules"> </search>
+								<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table">
 							</div>
 							<div class="col s4">
 								<!-- Modal Trigger -->
@@ -321,24 +209,136 @@
 						</div>
 					</form>
 				</div>
-
-				<div class="col s2"></div>
 			</div>
 
-			<div class="z-depth-1 main-table">
-				<!--ULR content-->
-				<div id="ulr-taken" class="row mod-type-table">
-					<div class="col s12 header item">
-						University Level Requirements (ULR)
+			<div class="container-customize">
+				<div class="main-table col s12">
+					<!--ULR content-->
+					<div id="ulr-deg-req" class="row mod-type-table">
+						<div class="col s12 content-row">
+							<div class="col s12 header item">University Level Requirements (ULR)</div>
+						</div>
+						<div class="col s12 content-row">
+							<div class="col s2 header item">Type</div>
+							<div class="col s2 header item">Code</div>
+							<div class="col s7 header item">Title</div>
+							<div class="col s1 header item">MC</div>
+						</div>
+
+						<div class="col s12 content-row">
+							<div class="col s2 item">GEM</div>
+							<div class="col s2 item">GEM A / B</div>
+							<div class="col s7 item">2 GEM and at least 1 GEM B</div>
+							<div class="col s1 item">8</div>
+
+						</div>
+
+						<div class="col s12 content-row">
+							<div class="col s2 item">SSA</div>
+							<div class="col s2 item">SSA</div>
+							<div class="col s7 item">1 SSA</div>
+							<div class="col s1 item">4</div>
+						</div>
+
+						<div class="col s12 content-row">
+							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
+							<div class="col s1 mc-item item">20</div>
+						</div>
 					</div>
 
-					<div class="col s12 content-row">
-						<div class="col s2 header item">Type</div>
-						<div class="col s2 header item">Code</div>
-						<div class="col s6 header item">Title</div>
-						<div class="col s1 header item">MC</div>
-						<div class="col s1 header item">Actions</div>
+					<!--Programme Requirements content-->
+					<div id="prog-req-deg-req" class="row mod-type-table">
+						<div class="col s12 content-row">
+							<div class="col s12 header item">Programme Requirements (Programme)</div>
+						</div>
+
+						<div class="col s12 content-row">
+							<div class="col s2 item">CS Foundation</div>
+							<div class="col s2 item">CS2105</div>
+							<div class="col s7 item">Introduction to Computer Networks</div>
+							<div class="col s1 item">4</div>
+						</div>
+
+						<div class="col s12 content-row">
+							<div class="col s2 item">CS Foundation</div>
+							<div class="col s2 item">CS2100</div>
+							<div class="col s7 item">Computer Organization</div>
+							<div class="col s1 item">4</div>
+						</div>
+
+						<div class="col s12 content-row">
+							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
+							<div class="col s1 mc-item item">120</div>
+						</div>
 					</div>
+
+					<!--UE content-->
+					<div id="ue-deg-req" class="row mod-type-table">
+						<div class="col s12 content-row">
+							<div class="col s12 header item">Unrestricted Electives (UE)</div>
+						</div>
+
+						<div class="col s12 content-row">
+							<div class="col s2 item">UE</div>
+							<div class="col s2 item">All codes</div>
+							<div class="col s7 item">5 any modules</div>
+							<div class="col s1 item">20</div>
+						</div>
+
+						<div class="col s12 content-row">
+							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
+							<div class="col s1 mc-item item">20</div>
+						</div>
+					</div>
+
+					<div id="ue-deg-req" class="row mod-type-table">
+						<div class="col s12 content-row">
+							<div class="col s11 mc-item item text-mc">Total Module Credits</div>
+							<div class="col s1 mc-item item">160</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!--TAKEN MODULES-->
+		<div id="taken-mod-div" class="basic-padding col s12">
+			<!--Fixed Navigation Bar-->
+			<div class="z-depth-1 page-title row no-margin">
+				<div class="col s6 large-text">Modules Taken</div>
+				<!--Search bar-->
+				<div class="col s6 right">
+					<form class="col s12">
+						<div class="row no-margin">
+							<div class="col s8">
+								<search select="addModule" items="modules"> </search>
+<!--						<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table"> -->
+							</div>
+							<div class="col s4">
+								<!-- Modal Trigger -->
+								<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="container-customize">
+				<div class="main-table col s12">
+					<!--ULR content-->
+					<div id="ulr-taken" class="row mod-type-table">
+						<div class="col s12 header item">
+							University Level Requirements (ULR)
+						</div>
+
+						<div class="col s12 content-row">
+							<div class="col s2 header item">Type</div>
+							<div class="col s2 header item">Code</div>
+							<div class="col s6 header item">Title</div>
+							<div class="col s1 header item">MC</div>
+							<div class="col s1 header item">Actions</div>
+						</div>
 
 					<div class="col s12 content-row" ng-repeat="subtype in modulesController.subtypes['ULR']" ng-hide="subtype.fulfilled">
 						<div class="col s2 item">{{ subtype.name }}</div>
@@ -354,12 +354,12 @@
 						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
 					</div>
 
-					<div class="col s12 content-row">
-						<div class="col s2 item">GEM B</div>
-						<div class="col s8 item">Add your required module</div>
-						<div class="col s1 item">0</div>
-						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
-					</div>
+						<div class="col s12 content-row">
+							<div class="col s2 item">GEM B</div>
+							<div class="col s8 item">Add your required module</div>
+							<div class="col s1 item">0</div>
+							<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
+						</div>
 
 					<div class="col s12 content-row">
 						<div class="col s2 item">SSA</div>
@@ -386,11 +386,11 @@
 						<div class="col s1 mc-item item"></div>
 					</div>
 
-					<div class="col s12 content-row">
-						<div class="col s10 mc-item item text-mc">Total MC Fulfilled</div>
-						<div class="col s1 mc-item item">12</div>
-						<div class="col s1 mc-item item"></div>
-					</div>
+						<div class="col s12 content-row">
+							<div class="col s10 mc-item item text-mc">Total MC Fulfilled</div>
+							<div class="col s1 mc-item item">12</div>
+							<div class="col s1 mc-item item"></div>
+						</div>
 
 					<div class="col s12 content-row">
 						<div class="col s10 mc-item item text-mc">Total MC Taken</div>
@@ -405,22 +405,21 @@
 							<span> 20 </span>
 						</div>
 					</div>
-				</div>
 
 
-				<!--Programme Requirement content-->
-				<div id="prog-req-taken" class="row mod-type-table">
-					<div class="col s12 content-row">
-						<div class="col s12 header item">Programme Requirements</div>
-					</div>
+					<!--Programme Requirement content-->
+					<div id="prog-req-taken" class="row mod-type-table">
+						<div class="col s12 content-row">
+							<div class="col s12 header item">Programme Requirements</div>
+						</div>
 
-					<div class="col s12 content-row">
-						<div class="col s2 header item">Type</div>
-						<div class="col s2 header item">Code</div>
-						<div class="col s6 header item">Title</div>
-						<div class="col s1 header item">MC</div>
-						<div class="col s1 header item">Actions</div>
-					</div>
+						<div class="col s12 content-row">
+							<div class="col s2 header item">Type</div>
+							<div class="col s2 header item">Code</div>
+							<div class="col s6 header item">Title</div>
+							<div class="col s1 header item">MC</div>
+							<div class="col s1 header item">Actions</div>
+						</div>
 
 <!--					<div class="col s12 content-row">
 						<div class="col s2 item">CS Foundation</div>
@@ -464,11 +463,11 @@
 						<div class="col s1 mc-item item"></div>
 					</div>
 
-					<div class="col s12 content-row">
-						<div class="col s10 mc-item item text-mc">Total MC Fulfilled</div>
-						<div class="col s1 mc-item item">20</div>
-						<div class="col s1 mc-item item"></div>
-					</div>
+						<div class="col s12 content-row">
+							<div class="col s10 mc-item item text-mc">Total MC Fulfilled</div>
+							<div class="col s1 mc-item item">20</div>
+							<div class="col s1 mc-item item"></div>
+						</div>
 
 					<div class="col s12 content-row">
 						<div class="col s10 mc-item item text-mc">Total MC Taken</div>
@@ -483,22 +482,21 @@
 							<span> 20 </span>
 						</div>
 					</div>
-				</div>
 
 
-				<!--Unrestricted Elective content-->
-				<div id="ue-taken" class="row mod-type-table">
-					<div class="col s12 content-row">
-						<div class="col s12 header item">Unrestricted Electives</div>
-					</div>
+					<!--Unrestricted Elective content-->
+					<div id="ue-taken" class="row mod-type-table">
+						<div class="col s12 content-row">
+							<div class="col s12 header item">Unrestricted Electives</div>
+						</div>
 
-					<div class="col s12 content-row">
-						<div class="col s2 header item">Type</div>
-						<div class="col s2 header item">Code</div>
-						<div class="col s6 header item">Title</div>
-						<div class="col s1 header item">MC</div>
-						<div class="col s1 header item">Actions</div>
-					</div>
+						<div class="col s12 content-row">
+							<div class="col s2 header item">Type</div>
+							<div class="col s2 header item">Code</div>
+							<div class="col s6 header item">Title</div>
+							<div class="col s1 header item">MC</div>
+							<div class="col s1 header item">Actions</div>
+						</div>
 
 					<div class="col s12 content-row" ng-repeat="module in modulesController.visibleModules['UE']">
 						<div class="col s2 item">{{ module.type }}</div>
@@ -540,7 +538,7 @@
 					<form class="col s10">
 						<div class="row">
 							<div class="col s8">
-								<input id="planner-search-box" class="black-font" type="text" name="search" placeholder="Add modules to table">
+								<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table">
 							</div>
 							<div class="col s4">
 								 Modal Trigger 
@@ -553,21 +551,23 @@
 				<div class="col s2"></div>
 			</div> -->
 
-			<div class="row plan-mod-row">
-				<div class="row no-margin center">
-					<div class="col s3 no-padding drag-n-drop-tbl">
-						<p>Semester 1</p>
-					</div>
-					<div class="col s3 no-padding drag-n-drop-tbl">
-						<p>Semester 2</p>
-					</div>
-					<div class="col s3 no-padding drag-n-drop-tbl">
-						<p>Semester 3</p>
-					</div>
-					<div class="col s3 no-padding drag-n-drop-tbl">
-						<p>Semester 4</p>
-					</div>
-				</div>
+			<div class="container-customize">
+				<div class="main-table col s12">
+					<div id="plan-mod-wrapper">
+						<div class="row no-margin center">
+							<div class="col s3 no-padding drag-n-drop-tbl">
+								<p>Semester 1</p>
+							</div>
+							<div class="col s3 no-padding drag-n-drop-tbl">
+								<p>Semester 2</p>
+							</div>
+							<div class="col s3 no-padding drag-n-drop-tbl">
+								<p>Semester 3</p>
+							</div>
+							<div class="col s3 no-padding drag-n-drop-tbl">
+								<p>Semester 4</p>
+							</div>
+						</div>
 
 				<div class="row no-margin">
 					<div class="col s3 no-padding">
@@ -673,13 +673,9 @@
 									</li>
 								</ul>
 							</div>
-						</div>
-					</div>
 
-					<div class="col s3 no-padding">
-						<div class="row no-margin">
-							<div class="col s12 drag-n-drop-tbl">
-								<ul id="sortable-2">
+							<div class="col s3 no-padding drag-n-drop-tbl flex-display">
+								<ul id="sortable-2" class="col s12">
 									<li class="default z-depth-2">
 										<div class="row">
 											<div class="col s10">
@@ -710,13 +706,9 @@
 									</li>
 								</ul>
 							</div>
-						</div>
-					</div>
 
-					<div class="col s3 no-padding">
-						<div class="row no-margin">
-							<div class="col s12 drag-n-drop-tbl">
-								<ul id="sortable-3">
+							<div class="col s3 no-padding drag-n-drop-tbl flex-display">
+								<ul id="sortable-3" class="col s12">
 									<li class="default z-depth-2">
 										<div class="row">
 											<div class="col s10">
@@ -733,47 +725,83 @@
 									</li>
 								</ul>
 							</div>
+
+							<div class="col s3 no-padding drag-n-drop-tbl flex-display">
+								<ul id="sortable-3" class="col s12">
+									<li class="default z-depth-2">
+										<div class="row">
+											<div class="col s10">
+												CS3241<br>
+												Comp Graphics<br>
+												Depth & Breadth<br>
+												4MC<br>
+											</div>
+
+											<div class="col s2">
+												<a href="#main" class="right">X</a>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div> -->
 				</div>
 			</div>
-		</div>
 
-		<!--EXEMPTION MODULES-->
-		<div id="exempt-mod-div" class="basic-padding">
-		</div>
-
-		<!--FOOTER-->
-		<div class="row">
-			<div class="col s10 offset-s1">
-				<div class="row">
-					<div class="col s6">
-						<h5>Product</h5>
-						<ul>
-							<li>Help</li>
-							<li>Contribute</li>
-							<li>API</li>
-						</ul>
-					</div>
-
-					<div class="col s6">
-						<h5>SoCPlanner</h5>
-						<ul>
-							<li>About</li>
-							<li>Out Team</li>
-							<li>Contact Us</li>
-						</ul>
+			<!--EXEMPTION MODULES-->
+			<div id="exempt-mod-div" class="basic-padding col s12">
+				<!--Fixed Navigation Bar-->
+				<div class="z-depth-1 page-title row no-margin">
+					<div class="col s6 large-text">Modules Exemption</div>
+					<!--Search bar-->
+					<div class="col s6 right">
+						<form class="col s12">
+							<div class="row no-margin">
+								<div class="col s8">
+									<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table">
+								</div>
+								<div class="col s4">
+									<!-- Modal Trigger -->
+									<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
-
-				<div class="row">
-					<hr>
-					<footer align="center">Copyright © 2016 SOCPlanner. All rights reserved</footer>
-				</div>
-				<div class="col s1"></div>
 			</div>
-		</div>
-	</main>
+
+			<!--FOOTER-->
+			<div class="row">
+				<div class="col s10 offset-s1">
+					<div class="row">
+						<div class="col s6">
+							<h5>Product</h5>
+							<ul>
+								<li>Help</li>
+								<li>Contribute</li>
+								<li>API</li>
+							</ul>
+						</div>
+
+						<div class="col s6">
+							<h5>SoCPlanner</h5>
+							<ul>
+								<li>About</li>
+								<li>Out Team</li>
+								<li>Contact Us</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="row">
+						<hr>
+						<footer align="center">Copyright © 2016 SOCPlanner. All rights reserved</footer>
+					</div>
+					<div class="col s1"></div>
+				</div>
+			</div>
+		</main>
 
 
 	<section >

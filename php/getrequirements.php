@@ -21,8 +21,7 @@ if (isset($_REQUEST["cmd"])){
 	if ($_REQUEST["cmd"] == "getreq"){
 		echo $data;
 	} else if ($_REQUEST["cmd"] == "verify"){
-		//$modules = json_decode($_REQUEST["modules"],true);		//type = nil for exempted mods
-		$modules = array(array("CS1010","PR", "4"),array("CS1231","PR", "4"),array("GEK1517","ULR","4"),array("MA1101R","PR","4"),array("MA1521","PR","4"),array("CS1020","PR","4"),array("ES1102","UE","0"),array("MA2101","PR","4"),array("MA2213","PR","4"),array("SSA1202","ULR","4"),array("ST2334","PR","4"),array("CS2010","PR","4"),array("CS2100","PR","4"),array("GEM2900","ULR","4"),array("LAC1201","ULR","4"),array("MA2214","PR","4"),array("CS2101","PR","4"),array("CS2102","UE","4"),array("CS2103","PR","4"),array("CS2105","PR","4"),array("IS1103","PR","4"),array("CS2106","PR","4"),array("CS3201","PR","4"),array("CS3202","PR","4"),array("CS3230","PR","4"),array("CS4211","PR","4"),array("CS3240","UE","4"),array("CS3241","UE","4"),array("CS3223","UE","4"),array("CS3243","UE","4"),array("CS3226","UE","4"),array("GEK1544","ULR","4"),array("PC1221","nil","4"),array("MA1301","nil","4"));
+		$modules = json_decode($_REQUEST["modules"],true);		//type = nil for exempted mods
 		$req = json_decode($data,true);
 
 		switch ($major) {
@@ -45,37 +44,16 @@ if (isset($_REQUEST["cmd"])){
 		
 	}
 } else{
-	$focus_area = "SE";
-	$focus_mod = array("CS2103"=>4,"CS3213"=>4,"CS3219"=>4,"CS4211"=>4,"CS4218"=>4);
-	$sci_mod = array("CM1121"=>4,"CM1131"=>4,"CS1417"=>4,"LSM1301"=>4,"LSM1302"=>4,"PC1141"=>4,"PC1142"=>4,"PC1143"=>4,"PC1144"=>4,"PC1221"=>4,"PC1222"=>4,"PC1432"=>4,"MA2213"=>4,"MA2214"=>4,"CM1101"=>4,"CM1111"=>4,"CM1161"=>4,"CM1191"=>4,"CM1401"=>4,"CM1402"=>4,"CM1501"=>4,"CM1502"=>4,"LSM1303"=>4,"PC1421"=>4,"PC1431"=>4,"PC1433"=>4,"MA1104"=>4,"MA2101"=>4,"MA2108"=>4,"MA2501"=>4,"ST2132"=>4,"ST2137"=>4);
 	$modulesIS = array(array("CS1010","PR", "4"),array("CS1231","PR", "4"),array("GEK1517","ULR","4"),array("MA1101R","PR","4"),array("MA1521","PR","4"),array("CS1020","PR","4"),array("ES1102","UE","0"),array("MA2101","PR","4"),array("MA2213","PR","4"),array("SSA1202","ULR","4"),array("ST2334","PR","4"),array("CS2010","PR","4"),array("CS2100","PR","4"),array("GEM2900","ULR","4"),array("LAC1201","ULR","4"),array("MA2214","PR","4"),array("CS2101","PR","4"),array("CS2102","PR","4"),array("CS2103","PR","4"),array("CS2105","PR","4"),array("IS1103","PR","4"),array("CS2106","PR","4"),array("CS3201","PR","4"),array("CS3202","PR","4"),array("CS3230","PR","4"),array("CS4211","PR","4"),array("CS3240","PR","4"),array("CS3241","UE","4"),array("CS3223","UE","4"),array("CS3243","UE","4"),array("CS3226","UE","4"),array("GEK1544","ULR","4"),array("PC1221","nil","4"),array("MA1301","nil","4"));
 	$modulesCS = array(array("CS1010","PR", "4"),array("CS1231","PR", "4"),array("GEK1517","ULR","4"),array("MA1101R","PR","4"),array("MA1521","PR","4"),array("CS1020","PR","4"),array("ES1102","UE","0"),array("MA2101","PR","4"),array("MA2213","PR","4"),array("SSA1202","ULR","4"),array("ST2334","PR","4"),array("CS2010","PR","4"),array("CS2100","PR","4"),array("GEM2900","ULR","4"),array("LAC1201","ULR","4"),array("MA2214","PR","4"),array("CS2101","PR","4"),array("CS2102","UE","4"),array("CS2103","PR","4"),array("CS2105","PR","4"),array("IS1103","PR","4"),array("CS2106","PR","4"),array("CS3201","PR","4"),array("CS3202","PR","4"),array("CS3230","PR","4"),array("CS4211","PR","4"),array("CS3240","UE","4"),array("CS3241","UE","4"),array("CS3223","UE","4"),array("CS3243","UE","4"),array("CS3226","UE","4"),array("GEK1544","ULR","4"),array("PC1221","nil","4"),array("MA1301","nil","4"));
 	$modulesCEG = array(array("CS1010","PR", "4"),array("CS1231","PR", "4"),array("GEK1517","ULR","4"),array("CG1001","PR","2"),array("CG1108","PR","4"),array("CS1020","PR","4"),array("ES1102","UE","0"),array("CG2023","PR","4"),array("CG2271","PR","4"),array("SSA1202","ULR","4"),array("ST2334","PR","4"),array("CS2010","PR","4"),array("CG3207","PR","4"),array("GEM2900","ULR","4"),array("LAC1201","ULR","4"),array("EE2020","PR","5"),array("CS2101","PR","4"),array("EE2021","PR","4"),array("CS2103","PR","4"),array("CG3002","PR","6"),array("EE3031","PR","4"),array("CS2107","PR","4"),array("CS3103","PR","4"),array("CS3223","PR","4"),array("CS4223","PR","4"),array("CS4224","PR","4"),array("CS3240","PR","4"),array("CS3241","PR","4"),array("CS3235","PR","4"),array("CS3243","UE","4"),array("CS3226","UE","4"),array("GEK1544","ULR","4"));
 	
 	$req = json_decode($data,true);
 
-	//verifyReqIS($modulesIS,$adm_year,$req);
-	verifyReqCS($modulesCS, $adm_year, $req);
+	verifyReqIS($modulesIS,$adm_year,$req);
+	//verifyReqCS($modulesCS, $adm_year, $req);
 	//verifyReqCEG($modulesCEG, $adm_year, $req);
 }
-
-
-
-
-
-
-/*$adm_year = 3;
-$and1 = array("ULR"=>20);
-$and2 = array("PR"=>array("CS1010"=>4, "CS1020"=>4,"CS2010"=>4,"CS1231"=>4,"CS2100"=>4,"CS2103"=>4,"CS2105"=>4,"CS2106"=>4,"CS3230"=>4,"Focus"=>12,"Focus4"=>4,"Lev4"=>12,"IS1103"=>4,"CS2101"=>4,"MA1301"=>4,"ST2334"=>4,"MA1521"=>4,"MA1101R"=>4,"Scie"=>12));
-$and3 = array("UE"=>20);
-$and = array_merge($and1,$and2,$and3);
-$group1 = array(array("CS3201,CS3202","8"),array("CS3216,CS3217","8"),array("CS3281,CS3282","8"),array("CS3283,CS3284","8"));
-$group3 = array(array("CP4101","12"),array("Lev4","12"),array("ATAP","12"));			//not handle yet case Lev4 in or
-$group2 = array(array("PC1221","4"),array("PC1222","4"));
-$or = array($group1, $group2, $group3);
-$req = array("and"=>$and,"or"=>$or);*/
-
-
 
 
 function verifyReqCS($modules, $adm_year, $req){
@@ -286,11 +264,10 @@ function verifyReqCS($modules, $adm_year, $req){
 function verifyReqIS($modules, $adm_year, $req){
 	$major = "IS";
 
-	//$elective_mod = getElectiveMod("$major");
-	$elective_mod = array("CS2106"=>4,"CS2107"=>4,"CS3235"=>4,"CS3240"=>4,"IS3150"=>4,"IS3220"=>4,"IS3221"=>4,"IS3222"=>4,"IS3223"=>4,"IS3230"=>4, "IS3240"=>4, "IS3241"=>4, "IS3242"=>4, "IS3243"=>4, "IS3250"=>4, "IS3251"=>4, "IS3260"=>4, "IS3261"=>4, "CS4880"=>4, "IS4150"=>4, "IS4202"=>4, "IS4203"=>4, "IS4204"=>4, "IS4224"=>4, "IS4225"=>4,"IS4226"=>4, "IS4227"=>4, "IS4228"=>4, "IS4231"=>4, "IS4232"=>4, "IS4233"=>4, "IS4234"=>4, "IS4240"=>4, "IS4241"=>4, "IS4243"=>4, "IS4250"=>4, "IS4260"=>4); 
-	$and = array("ULR"=>20, "PR"=>array("CS1010"=>4,"CS1020"=>4,"CS1231"=>4,"IS1103"=>4,"IS1105"=>4,"CS2100"=>4,"CS2102"=>4,"CS2105"=>4,"IS2101"=>4,"IS2102"=>4,"IS2103"=>4,"IS2104"=>4,"IS3101"=>4,"IS3102"=>8,"IS4100"=>4,"ACC1002X"=>4,"MA1301"=>4,"ST2334"=>4, "Elective"=>28, "Elective4"=>12), "UE"=>20);
-	$or = [[["MA1312","4"],["MA1521","4"]],[["CP4101","12"],["Lev4","12"],["ATAP","12"]]];
-	$req = array("and"=>$and,"or"=>$or);
+	$elective_mod = getElectiveMod($major);
+	//$elective_mod = array("CS2106"=>4,"CS2107"=>4,"CS3235"=>4,"CS3240"=>4,"IS3150"=>4,"IS3220"=>4,"IS3221"=>4,"IS3222"=>4,"IS3223"=>4,"IS3230"=>4, "IS3240"=>4, "IS3241"=>4, "IS3242"=>4, "IS3243"=>4, "IS3250"=>4, "IS3251"=>4, "IS3260"=>4, "IS3261"=>4, "CS4880"=>4, "IS4150"=>4, "IS4202"=>4, "IS4203"=>4, "IS4204"=>4, "IS4224"=>4, "IS4225"=>4,"IS4226"=>4, "IS4227"=>4, "IS4228"=>4, "IS4231"=>4, "IS4232"=>4, "IS4233"=>4, "IS4234"=>4, "IS4240"=>4, "IS4241"=>4, "IS4243"=>4, "IS4250"=>4, "IS4260"=>4); 
+
+//	$req = array("and"=>$and,"or"=>$or);
 
 	$Lev4 = $major."4";
 	$ElectiveLev4[0] = "IS4";
@@ -548,14 +525,7 @@ function verifyReqCEG($modules, $adm_year, $req){
 			for ($k = 0; $k < count($group); $k++){
 				if (array_key_exists($group[$k],$modulesMC)){
 					$or[$i][$j][1] = strval(intval($or[$i][$j][1] - $modulesMC[$group[$k]]));		//adjust MCS after removing modules in list
-				} else if ($group[$k] == "Lev4"){
-					for ($m = 0; $m < count($modules); $m++){
-						if ($count[$modules[$m][0]] == 0 && strpos($modules[$m][0], $Lev4) !== false){
-							$group[$k] -= $modulesMC[$modules[$m][0]];
-							$group[$k] .= ",".$module[$m][0];
-						} 
-					}
-				} 
+				}  
 			}
 		}
 		for ($j = 0; $j < count($case); $j++){
