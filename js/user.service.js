@@ -19,8 +19,8 @@ angular.module('core').service('User', ['$http',
 		}; */
 		var service = {};
 
-		service.login = function (username, password) {
-			console.log(username, password);
+		service.login = function (username, bachelor, major, focus_area, admission_year) {
+			console.log(username, bachelor, major, focus_area, admission_year);
 		};
 
 		return service;
