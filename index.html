@@ -199,13 +199,13 @@
 				<div class="col s6 right">
 					<form class="col s12">
 						<div class="row no-margin">
-							<div class="col s8">
+							<!--<div class="col s8">
 								<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table">
 							</div>
-							<div class="col s4">
+							<div class="col s4">-->
 								<!-- Modal Trigger -->
-								<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a>
-							</div>
+								<!--<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a>
+							</div>-->
 						</div>
 					</form>
 				</div>
@@ -312,7 +312,7 @@
 					<form class="col s12">
 						<div class="row no-margin">
 							<div class="col s8">
-								<search select="addModule" items="modules"> </search>
+								<search select="addModule" items="modules" class="black-font"> </search>
 <!--						<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table"> -->
 							</div>
 							<div class="col s4">
@@ -347,27 +347,6 @@
 						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div> -->
 						</div>
 
-						<!--		<div class="col s12 content-row">
-						<div class="col s2 item">GEM A</div>
-						<div class="col s8 item">Add your required module</div>
-						<div class="col s1 item">0</div>
-						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
-					</div>
-
-						<div class="col s12 content-row">
-							<div class="col s2 item">GEM B</div>
-							<div class="col s8 item">Add your required module</div>
-							<div class="col s1 item">0</div>
-							<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
-						</div>
-
-					<div class="col s12 content-row">
-						<div class="col s2 item">SSA</div>
-						<div class="col s8 item">Add your required module</div>
-						<div class="col s1 item">0</div>
-						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
-					</div> -->
-
 						<div class="col s12 content-row" ng-repeat="module in modulesController.visibleModules['ULR']">
 							<div class="col s2 item">{{ module.type }}</div>
 							<div class="col s2 item">{{ module.code }}</div>
@@ -380,23 +359,6 @@
 							</div>
 						</div>
 
-						<!--			<div class="col s12 content-row">
-						<div class="col s10 mc-item item text-mc">Total MC Required</div>
-						<div class="col s1 mc-item item">12</div>
-						<div class="col s1 mc-item item"></div>
-					</div>
-
-						<div class="col s12 content-row">
-							<div class="col s10 mc-item item text-mc">Total MC Fulfilled</div>
-							<div class="col s1 mc-item item">12</div>
-							<div class="col s1 mc-item item"></div>
-						</div>
-
-					<div class="col s12 content-row">
-						<div class="col s10 mc-item item text-mc">Total MC Taken</div>
-						<div class="col s1 mc-item item">20</div>
-						<div class="col s1 mc-item item"></div>
-					</div> -->
 						<div class="col s12 content-row">
 							<div class="col s10 mc-item item text-mc">MC fulfilled / MC required</div>
 							<div class="col s2 mc-item item">
@@ -422,14 +384,6 @@
 							<div class="col s1 header item">Actions</div>
 						</div>
 
-						<!--					<div class="col s12 content-row">
-						<div class="col s2 item">CS Foundation</div>
-						<div class="col s2 item">CS2105</div>
-						<div class="col s6 item">Introduction to Computer Networks</div>
-						<div class="col s1 item">4</div>
-						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
-					</div> -->
-
 						<div class="col s12 content-row" ng-repeat="module in modulesController.visibleModules['PR']">
 							<div class="col s2 item">{{ module.type }}</div>
 							<div class="col s2 item">{{ module.code }}</div>
@@ -442,39 +396,6 @@
 							</div>
 						</div>
 
-						<!--		<div class="col s12 content-row">
-						<div class="col s2 item">CS Depth - Breadth</div>
-						<div class="col s2 item">CS3226</div>
-						<div class="col s6 item">Web Programming And Application</div>
-						<div class="col s1 item">4</div>
-						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
-					</div>
-
-					<div class="col s12 content-row">
-						<div class="col s2 item">CS Foundation</div>
-						<div class="col s2 item">CS2103</div>
-						<div class="col s6 item">Software Engineering</div>
-						<div class="col s1 item">4</div>
-						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
-					</div> -->
-
-						<!--		<div class="col s12 content-row">
-						<div class="col s10 mc-item item text-mc">Total MC Required</div>
-						<div class="col s1 mc-item item">120</div>
-						<div class="col s1 mc-item item"></div>
-					</div>
-
-						<div class="col s12 content-row">
-							<div class="col s10 mc-item item text-mc">Total MC Fulfilled</div>
-							<div class="col s1 mc-item item">20</div>
-							<div class="col s1 mc-item item"></div>
-						</div>
-
-					<div class="col s12 content-row">
-						<div class="col s10 mc-item item text-mc">Total MC Taken</div>
-						<div class="col s1 mc-item item">20</div>
-						<div class="col s1 mc-item item"></div>
-					</div> -->
 						<div class="col s12 content-row">
 							<div class="col s10 mc-item item text-mc">MC fulfilled / MC required</div>
 							<div class="col s2 mc-item item">
@@ -512,14 +433,6 @@
 							</div>
 						</div>
 
-						<!--<div class="col s12 content-row">
-						<div class="col s2 item">UE</div>
-						<div class="col s2 item">MA2213</div>
-						<div class="col s6 item">Numerical Analysis</div>
-						<div class="col s1 item">4</div>
-						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div>
-					</div> -->
-
 						<div class="col s12 content-row">
 							<div class="col s10 mc-item item text-mc">MC fulfilled / MC required</div>
 							<div class="col s2 mc-item item">
@@ -543,7 +456,7 @@
 					<form class="col s12">
 						<div class="row no-margin">
 							<div class="col s8">
-								<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table">
+								<search select="addModule" items="modules" class="black-font"> </search>
 							</div>
 							<div class="col s4">
 								<!-- Modal Trigger -->
