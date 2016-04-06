@@ -1,7 +1,7 @@
 /*p:hover {
 	background-color: #4aa3df;
 	cursor: pointer;
-}*/
+}
 
 .search-input {
 	width: 500px !important;
@@ -19,7 +19,7 @@
 }
 .float-right {
 	float: right;
-}
+}*/
 .clickable:hover {
 	cursor: pointer;
 }

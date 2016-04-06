@@ -156,13 +156,13 @@
 
 					<li>
 						<div class="bold collapsible-header waves-effect waves-red no-padding no-margin">
-							<a id="taken-mod-nav" class="sidebar-item" href="#taken-mod-div">Modules Taken</a>
+							<a id="all-mod-nav" class="sidebar-item" href="#all-mod-div">All Modules</a>
 						</div>
 						<div class="collapsible-body">
 							<ul>
-								<li><a href="#ulr-taken">ULR</a></li>
-								<li><a href="#prog-req-taken">Programme</a></li>
-								<li><a href="#ue-taken">UE</a></li>
+								<li><a href="#all-ulr">ULR</a></li>
+								<li><a href="#all-prog-req">Programme</a></li>
+								<li><a href="#all-ue">UE</a></li>
 							</ul>
 						</div>
 					</li>
@@ -170,19 +170,6 @@
 					<li>
 						<div class="bold collapsible-header waves-effect waves-red no-padding no-margin">
 							<a id="plan-mod-nav" class="sidebar-item" href="#plan-mod-div">Modules Planner</a>
-						</div>
-					</li>
-
-					<li>
-						<div class="bold collapsible-header waves-effect waves-red no-padding no-margin">
-							<a id="exempt-mod-nav" class="sidebar-item" href="#exempt-mod-div">Modules Exemption</a>
-						</div>
-						<div class="collapsible-body">
-							<ul>
-								<li><a href="#ulr-taken">ULR</a></li>
-								<li><a href="#prog-req-taken">Programme</a></li>
-								<li><a href="#ue-taken">UE</a></li>
-							</ul>
 						</div>
 					</li>
 				</ul>
@@ -193,7 +180,7 @@
 		<!--DEGREE REQUIREMENT-->
 		<div id="deg-req-div" class="basic-padding col s12">
 			<!--Fixed Navigation Bar-->
-			<div class="z-depth-1 page-title row no-margin">
+			<div class="page-title row no-margin">
 				<div class="col s6 large-text">Degree Requirement</div>
 			</div>
 
@@ -288,22 +275,22 @@
 		</div>
 
 
-		<!--TAKEN MODULES-->
-		<div id="taken-mod-div" class="basic-padding col s12">
+		<!--ALL MODULES-->
+		<div id="all-mod-div" class="basic-padding col s12">
 			<!--Fixed Navigation Bar-->
-			<div class="z-depth-1 page-title row no-margin">
-				<div class="col s6 large-text">Modules Taken</div>
+			<div class="page-title row no-margin">
+				<div class="col s6 large-text">All Modules</div>
 				<!--Search bar-->
 				<div class="col s6 right">
 					<form class="col s12">
 						<div class="row no-margin">
-							<div class="col s8">
-								<search select="addModule" items="modules" class="black-font"> </search>
-<!--						<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table"> -->
-							</div>
-							<div class="col s4">
+							<div class="filter-div">
 								<!-- Modal Trigger -->
-								<!--	<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a> -->
+								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
+								href="#modal-advanced"><img src="icon/filter-icon.png"></a>
+							</div>
+							<div class="col s10">
+								<search select="addModule" items="modules"></search>
 							</div>
 						</div>
 					</form>
@@ -313,41 +300,45 @@
 			<div class="container-customize">
 				<div class="main-table col s12">
 					<!--ULR content-->
-					<div id="ulr-taken" class="row mod-type-table">
+					<div id="all-ulr" class="row mod-type-table">
 						<div class="col s12 header item">
 							University Level Requirements (ULR)
 						</div>
 
 						<div class="col s12 content-row">
 							<div class="col s2 header item">Type</div>
-							<div class="col s2 header item">Code</div>
-							<div class="col s6 header item">Title</div>
+							<div class="col s1 header item">Code</div>
+							<div class="col s5 header item">Title</div>
 							<div class="col s1 header item">MC</div>
-							<div class="col s1 header item">Actions</div>
+							<div class="col s3 header item">Actions</div>
 						</div>
 
 						<div class="col s12 content-row" ng-repeat="subtype in modulesController.subtypes['ULR']" ng-hide="subtype.fulfilled">
 							<div class="col s2 item">{{ subtype.name }}</div>
 							<div class="col s10 item">Add your required module</div>
-							<!--	<div class="col s1 item">0</div>
-						<div class="col s1 item center"><a class="btn-floating waves-effect waves-light red">X</a></div> -->
 						</div>
 
 						<div class="col s12 content-row" ng-repeat="module in modulesController.visibleModules['ULR']">
 							<div class="col s2 item">{{ module.type }}</div>
-							<div class="col s2 item">{{ module.code }}</div>
-							<div class="col s6 item">{{ module.title }}</div>
+							<div class="col s1 item">{{ module.code }}</div>
+							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
-							<div class="col s1 item center">
-								<!--	<a class="btn-floating waves-effect waves-light red">X</a>  -->
-								<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>
-								<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>
+							<div class="col s3 item">
+								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
+								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
+								<div class="float-left">
+									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
+								</div>
+								<div class="btn-group float-left">
+									<a class="left-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Taken</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
+								</div>
 							</div>
 						</div>
 
 						<div class="col s12 content-row">
-							<div class="col s10 mc-item item text-mc">MC fulfilled / MC required</div>
-							<div class="col s2 mc-item item">
+							<div class="col s8 mc-item item text-mc">MC fulfilled / MC required</div>
+							<div class="col s4 mc-item item">
 								<span ng-bind="modulesController.totalMCs['ULR']"> </span>
 								/
 								<span> 20 </span>
@@ -357,34 +348,40 @@
 
 
 					<!--Programme Requirement content-->
-					<div id="prog-req-taken" class="row mod-type-table">
+					<div id="all-prog-req" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">Programme Requirements</div>
 						</div>
 
 						<div class="col s12 content-row">
 							<div class="col s2 header item">Type</div>
-							<div class="col s2 header item">Code</div>
-							<div class="col s6 header item">Title</div>
+							<div class="col s1 header item">Code</div>
+							<div class="col s5 header item">Title</div>
 							<div class="col s1 header item">MC</div>
-							<div class="col s1 header item">Actions</div>
+							<div class="col s3 header item">Actions</div>
 						</div>
 
 						<div class="col s12 content-row" ng-repeat="module in modulesController.visibleModules['PR']">
 							<div class="col s2 item">{{ module.type }}</div>
-							<div class="col s2 item">{{ module.code }}</div>
-							<div class="col s6 item">{{ module.title }}</div>
+							<div class="col s1 item">{{ module.code }}</div>
+							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
-							<div class="col s1 item center">
-								<!--	<a class="btn-floating waves-effect waves-light red">X</a>  -->
-								<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>
-								<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>
+							<div class="col s3 item">
+								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
+								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
+								<div class="float-left">
+									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
+								</div>
+								<div class="btn-group float-left">
+									<a class="left-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Taken</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
+								</div>
 							</div>
 						</div>
 
 						<div class="col s12 content-row">
-							<div class="col s10 mc-item item text-mc">MC fulfilled / MC required</div>
-							<div class="col s2 mc-item item">
+							<div class="col s8 mc-item item text-mc">MC fulfilled / MC required</div>
+							<div class="col s4 mc-item item">
 								<span ng-bind="modulesController.totalMCs['PR']"> </span>
 								/
 								<span> 20 </span>
@@ -394,34 +391,41 @@
 
 
 					<!--Unrestricted Elective content-->
-					<div id="ue-taken" class="row mod-type-table">
+					<div id="all-ue" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">Unrestricted Electives</div>
 						</div>
 
 						<div class="col s12 content-row">
 							<div class="col s2 header item">Type</div>
-							<div class="col s2 header item">Code</div>
-							<div class="col s6 header item">Title</div>
+							<div class="col s1 header item">Code</div>
+							<div class="col s5 header item">Title</div>
 							<div class="col s1 header item">MC</div>
-							<div class="col s1 header item">Actions</div>
+							<div class="col s3 header item">Actions</div>
 						</div>
 
 						<div class="col s12 content-row" ng-repeat="module in modulesController.visibleModules['UE']">
 							<div class="col s2 item">{{ module.type }}</div>
-							<div class="col s2 item">{{ module.code }}</div>
-							<div class="col s6 item">{{ module.title }}</div>
+							<div class="col s1 item">{{ module.code }}</div>
+							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
-							<div class="col s1 item center">
+							<div class="col s3 item center">
 								<!--	<a class="btn-floating waves-effect waves-light red">X</a>  -->
-								<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>
-								<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>
+								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
+								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
+								<div class="float-left">
+									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
+								</div>
+								<div class="btn-group float-left">
+									<a class="left-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Taken</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
+								</div>
 							</div>
 						</div>
 
 						<div class="col s12 content-row">
-							<div class="col s10 mc-item item text-mc">MC fulfilled / MC required</div>
-							<div class="col s2 mc-item item">
+							<div class="col s8 mc-item item text-mc">MC fulfilled / MC required</div>
+							<div class="col s4 mc-item item">
 								<span ng-bind="modulesController.totalMCs['UE']"> </span>
 								/
 								<span> 20 </span>
@@ -435,18 +439,19 @@
 		<!--PLANNER MODULES-->
 		<div id="plan-mod-div" class="basic-padding" ng-controller="planController">
 			<!--Fixed Navigation Bar-->
-			<div class="z-depth-1 page-title row no-margin">
-				<div class="col s6 large-text">Modules Planner</div>
+			<div class="page-title row no-margin">
+				<div class="col s6 large-text">Modules Taken</div>
 				<!--Search bar-->
 				<div class="col s6 right">
 					<form class="col s12">
 						<div class="row no-margin">
-							<div class="col s8">
-								<search select="addModule" items="modules" class="black-font"> </search>
-							</div>
-							<div class="col s4">
+							<div class="filter-div">
 								<!-- Modal Trigger -->
-								<!--<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a> -->
+								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
+								href="#modal-advanced"><img src="icon/filter-icon.png"></a>
+							</div>
+							<div class="col s10">
+								<search select="addModule" items="modules"></search>
 							</div>
 						</div>
 					</form>
@@ -530,59 +535,37 @@
 			</div>
 		</div>
 
-			<!--EXEMPTION MODULES-->
-			<div id="exempt-mod-div" class="basic-padding col s12">
-				<!--Fixed Navigation Bar-->
-				<div class="z-depth-1 page-title row no-margin">
-					<div class="col s6 large-text">Modules Exemption</div>
-					<!--Search bar-->
-					<div class="col s6 right">
-						<form class="col s12">
-							<div class="row no-margin">
-								<div class="col s8">
-									<input id="search-box" class="black-font" type="text" name="search" placeholder="Search modules from table">
-								</div>
-								<div class="col s4">
-									<!-- Modal Trigger -->
-									<a class="waves-effect waves-light btn modal-trigger" href="#modal-advanced">Advanced</a>
-								</div>
-							</div>
-						</form>
+		<!--FOOTER-->
+		<div class="row">
+			<div class="col s10 offset-s1">
+				<div class="row">
+					<div class="col s6">
+						<h5>Product</h5>
+						<ul>
+							<li>Help</li>
+							<li>Contribute</li>
+							<li>API</li>
+						</ul>
+					</div>
+
+					<div class="col s6">
+						<h5>SoCPlanner</h5>
+						<ul>
+							<li>About</li>
+							<li>Out Team</li>
+							<li>Contact Us</li>
+						</ul>
 					</div>
 				</div>
-			</div>
 
-			<!--FOOTER-->
-			<div class="row">
-				<div class="col s10 offset-s1">
-					<div class="row">
-						<div class="col s6">
-							<h5>Product</h5>
-							<ul>
-								<li>Help</li>
-								<li>Contribute</li>
-								<li>API</li>
-							</ul>
-						</div>
-
-						<div class="col s6">
-							<h5>SoCPlanner</h5>
-							<ul>
-								<li>About</li>
-								<li>Out Team</li>
-								<li>Contact Us</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="row">
-						<hr>
-						<footer align="center">Copyright © 2016 SOCPlanner. All rights reserved</footer>
-					</div>
-					<div class="col s1"></div>
+				<div class="row">
+					<hr>
+					<footer align="center">Copyright © 2016 SOCPlanner. All rights reserved</footer>
 				</div>
+				<div class="col s1"></div>
 			</div>
-		</main>
+		</div>
+	</main>
 
 
 	<section >
