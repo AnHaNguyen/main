@@ -1,8 +1,3 @@
-/*------------------------Drag and Drop Feature---------------------*/
-$("#sortable-1, #sortable-2, #sortable-3, #sortable-4").sortable({
-	connectWith: "#sortable-1, #sortable-2, #sortable-3, #sortable-4"
-});
-
 function showDegReq() {
 	$("#deg-req-div").show();
 	$("#all-mod-div").hide();
@@ -115,5 +110,13 @@ function toggleFunction() {
 			$(this).addClass("selected-toggle-btn");
 			leftItem.removeClass("selected-toggle-btn");
 		}
+	});
+}
+
+function semPlanner() {
+	$(".semester-div").on("click", function(){
+		$(this).addClass("selected-sem-planner");
+		$(this).parent().find(".mc-div").addClass("selected-sem-planner");
+		$(this).parent().css("background-color", "#EEEEEE");
 	});
 }

@@ -19,15 +19,6 @@
 	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
 	<link rel="stylesheet" href="css/style.css">
-	<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-76015504-1', 'auto');
-    ga('send', 'pageview');
-	</script>
 </head>
 
 <body ng-app="core" id="main">
@@ -283,7 +274,6 @@
 			</div>
 		</div>
 
-
 		<!--ALL MODULES-->
 		<div id="all-mod-div" class="basic-padding col s12">
 			<!--Fixed Navigation Bar-->
@@ -469,76 +459,86 @@
 
 			<div class="container-customize">
 				<div class="main-table col s12">
-					<div id="plan-mod-wrapper">
-						<div class="row no-margin center">
-							<div class="col s3 no-padding drag-n-drop-tbl">
-								<p>Semester 1</p>
+					<div id="plan-mod-wrapper" class="row">
+							<div class="wrapper-div">
+								<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 1</div>
+								<div class="col s12 drag-n-drop-div">
+									<div ui-sortable="sortableOptions" class="semester" ng-model="semester[0]">
+										<div ng-repeat="mod in semester[0]" class="row no-margin">
+											<div class="drag-drop-item">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col s12 mc-div">4MCs</div>
 							</div>
-							<div class="col s3 no-padding drag-n-drop-tbl">
-								<p>Semester 2</p>
-							</div>
-							<div class="col s3 no-padding drag-n-drop-tbl">
-								<p>Semester 3</p>
-							</div>
-							<div class="col s3 no-padding drag-n-drop-tbl">
-								<p>Semester 4</p>
-							</div>
-						</div>
 
-						<div class="row no-margin">
-							<div class="col s3 no-padding">
-								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[0]">
-									<div ng-repeat="mod in semester[0]" class="row no-margin">
-										<div class="default z-depth-2">
-											<div class="row">
-												{{mod.code}} <br>
+							<div class="wrapper-div">
+								<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 2</div>
+								<div class="col s12 drag-n-drop-div">
+									<div ui-sortable="sortableOptions" class="semester" ng-model="semester[1]">
+										<div ng-repeat="mod in semester[1]" class="row no-margin">
+											<div class="drag-drop-item">
+												<span class="bold">{{mod.code}}</span> <br>
 												{{mod.title}} <br>
 												{{mod.mc}} MC
 											</div>
 										</div>
 									</div>
 								</div>
+								<div class="col s12 mc-div">4MCs</div>
 							</div>
-							<div class="col s3 no-padding">
-								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[1]">
-									<div ng-repeat="mod in semester[1]" class="row no-margin">
-										<div class="default z-depth-2">
-											<div class="row">
-												{{mod.code}} <br>
+
+							<div class="wrapper-div">
+								<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 3</div>
+								<div class="col s12 drag-n-drop-div">
+									<div ui-sortable="sortableOptions" class="semester" ng-model="semester[2]">
+										<div ng-repeat="mod in semester[2]" class="row no-margin">
+											<div class="drag-drop-item">
+												<span class="bold">{{mod.code}}</span> <br>
 												{{mod.title}} <br>
 												{{mod.mc}} MC
 											</div>
 										</div>
 									</div>
 								</div>
+								<div class="col s12 mc-div">4MCs</div>
 							</div>
-							<div class="col s3 no-padding">
-								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[2]">
-									<div ng-repeat="mod in semester[2]" class="row no-margin">
-										<div class="default z-depth-2">
-											<div class="row">
-												{{mod.code}} <br>
+
+							<div class="wrapper-div">
+								<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 4</div>
+								<div class="col s12 drag-n-drop-div">
+									<div ui-sortable="sortableOptions" class="semester" ng-model="semester[3]">
+										<div ng-repeat="mod in semester[3]" class="row no-margin">
+											<div class="drag-drop-item">
+												<span class="bold">{{mod.code}}</span> <br>
 												{{mod.title}} <br>
 												{{mod.mc}} MC
 											</div>
 										</div>
 									</div>
 								</div>
+								<div class="col s12 mc-div">4MCs</div>
 							</div>
-							<div class="col s3 no-padding">
-								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[3]">
-									<div ng-repeat="mod in semester[3]" class="row no-margin">
-										<div class="default z-depth-2">
-											<div class="row">
-												{{mod.code}} <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
-											</div>
-										</div>
-									</div>
-								</div>
+						
+
+					<!--<div class="row no-margin center">
+							<div class="col s12 wrapper-div">
+								<span>4MCs</span>
 							</div>
-						</div>
+							<div class="col s3 wrapper-div">
+								<span>12MCs</span>
+							</div>
+							<div class="col s3 wrapper-div">
+								<span>10MCs</span>
+							</div>
+							<div class="col s3 wrapper-div">
+								<span>10MCs</span>
+							</div>
+						</div>-->
 					</div>
 				</div>
 			</div>
