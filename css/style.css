@@ -331,11 +331,20 @@ body {
 	padding: 10px;
 	margin: 5px;
 	box-shadow: 2px 4px green;
+	cursor: move;
+
+	-webkit-transition: -webkit-transform 0.3s;
+	transition: transform 0.3s;
+}
+
+.drag-drop-item:hover {
+	-webkit-transform: translateY(-3px);
+	transform: translateY(-3px);
+	box-shadow: 2px 6px 3px green;
 }
 
 .drag-n-drop-div {
 	padding: 5px !important;
-	cursor: pointer;
 }
 
 .wrapper-div {
