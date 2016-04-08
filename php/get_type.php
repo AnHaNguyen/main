@@ -18,6 +18,8 @@
  * - mods (e.g. ["CS1101S","CS2020"])
  * - precise (if included, display module types in detail)
  *
+ * Usage example: http://bit.ly/23hcGpf
+ *
  * Note:
  * - This program does not care for and will not deal with preclusion conflicts.
  * - This program only works with the CS major for now.
@@ -324,58 +326,6 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
             $sci_mc_req += $all_mod_info["ST2132"]["ModuleCredit"];
         }
     }
-
-    // LEGACY CODE
-    // Set type for statistics modules for AY15-16 onwards
-    // From AY15-16 onwards, can choose to fulfil statistics requirements via either of two branches
-    /*
-     * - ST2131 and ST2334 are preclusions of each other.
-     * - ST2132 requires either ST2131 or ST2334.
-     * - If ST2131 is taken, ST2132 has to be taken as well.
-     * - If ST2334 is taken, the science MC requirement goes up by 4 MCs.
-     * - If ST2132 is taken without either ST2131 or ST2334, it is simultaneously both a stat & science
-     * requirement, and you can't tell which it is until either ST2131 or ST2334 is taken,
-     * i.e. ST2132 becomes a Schrondinger's module if it is taken without its prerequisite.
-     *
-     * Workaround: If ST2131 or ST2334 is not taken, but ST2132 is, treat it as a science module.
-     * As it appears in $sci_reqs, it will be handled automatically as a science module later
-     * if it is not given a module type now.
-     *
-    if ($adm_year >= "1516") {
-
-        $stat_reqs = $grad_reqs["or"][2];
-        $stat_reqs_branches = [];
-        $has_taken_basic_stat = false; // either ST2131 or ST2334
-
-        // Explode 2d array containing module code pairs and MC into 2d array containing only module codes
-        foreach ($stat_reqs as $stat_branch_and_mc) {
-            $stat_reqs_branches = explode(",", $stat_branch_and_mc[0]);
-        }
-
-        // Look for ST2131 or ST2334; having either locks the stat requirement branch
-        for ($i = 0; !$has_taken_basic_stat && $i < count($stat_reqs_branches); $i++) {
-
-            $basic_stat_in_branch = $stat_reqs_branches[$i][0];
-            $follow_up_stat_in_branch = $stat_reqs_branches[$i][1];
-
-            // If ST2131 or ST2334 is found
-            if (array_key_exists($basic_stat_in_branch, $mods)) {
-                $mods[$basic_stat_in_branch] = IS_PRECISE_MODE ? "Math" : PR_TYPE;
-                $has_taken_basic_stat = true;
-
-                // Look for follow up module as well
-                if (array_key_exists($follow_up_stat_in_branch, $mods)) {
-                    $mods[$follow_up_stat_in_branch] = IS_PRECISE_MODE ? "Math" : PR_TYPE;
-                }
-
-                // Exception: If ST2334 was previously found, follow up module is "Scie"
-                // Workaround: Increment science MC requirement by 4 MCs if so
-                if ($basic_stat_in_branch === "ST2334") {
-                    $sci_mc_req = $sci_mc_req + 4;
-                }
-            }
-        }
-    }*/
 
     // Set type for FYP or internship modules
     $fyp = "CP4101"; // Hard coded because data is not in json
