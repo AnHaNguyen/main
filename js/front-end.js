@@ -1,15 +1,7 @@
-/*------------------------Drag and Drop Feature---------------------*/
-$(function() {
-	$("#sortable-1, #sortable-2, #sortable-3, #sortable-4").sortable({
-		connectWith: "#sortable-1, #sortable-2, #sortable-3, #sortable-4"
-	});
-});
-
 function showDegReq() {
 	$("#deg-req-div").show();
-	$("#taken-mod-div").hide();
+	$("#all-mod-div").hide();
 	$("#plan-mod-div").hide();
-	$("#exempt-mod-div").hide();
 }
 
 /*-----------------------Start-page--------------------------*/
@@ -59,49 +51,72 @@ $(document).ready(function() {
 	});
 
 
-	//$(".collapsible-body ul li.active a").click(function(e) { 
-		// Add smooth scrolling to all links
-  $("a").on('click', function(event) {
+	/*-------------Add smooth scrolling to all links-------------------*/
+	$("a").on('click', function(event) {
 
-    // Prevent default anchor click behavior
-    event.preventDefault();
+	    // Prevent default anchor click behavior
+	    event.preventDefault();
 
-    // Store hash
-    var hash = this.hash;
+	    // Store hash
+	    var hash = this.hash;
 
-    // Using jQuery's animate() method to add smooth page scroll
-    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-    $('html, body').animate({
-      scrollTop: $(hash).offset().top - 80
-    }, 800, function(){
-   
-      // Add hash (#) to URL when done scrolling (default click behavior)
-      window.location.hash = hash;
-    });
-  });
+	    // Using jQuery's animate() method to add smooth page scroll
+	    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+	    $('html, body').animate({
+	    	scrollTop: $(hash).offset().top - 80
+	    }, 800, function(){
+	    	
+	      // Add hash (#) to URL when done scrolling (default click behavior)
+	      window.location.hash = hash;
+	  });
+	});
 });
 
 $("#deg-req-nav").on("click", function (){
 	showDegReq();
 });
 
-$("#taken-mod-nav").on("click", function (){
+$("#all-mod-nav").on("click", function (){
 	$("#deg-req-div").hide();
-	$("#taken-mod-div").show();
+	$("#all-mod-div").show();
 	$("#plan-mod-div").hide();
-	$("#exempt-mod-div").hide();
 });
 
 $("#plan-mod-nav").on("click", function (){
 	$("#deg-req-div").hide();
-	$("#taken-mod-div").hide();
+	$("#all-mod-div").hide();
 	$("#plan-mod-div").show();
-	$("#exempt-mod-div").hide();
 });
 
-$("#exempt-mod-nav").on("click", function (){
-	$("#deg-req-div").hide();
-	$("#taken-mod-div").hide();
-	$("#plan-mod-div").hide();
-	$("#exempt-mod-div").show();
-});
+/*-------------Toggle button taken/plan---------------*/
+function toggleFunction() {
+	$(".left-div").on("click", function() {
+		var rightItem = $(this).parent().find(".right-div");
+
+		if(!rightItem.hasClass("selected-toggle-btn")){
+			$(this).addClass("selected-toggle-btn");
+		} else {
+			$(this).addClass("selected-toggle-btn");
+			rightItem.removeClass("selected-toggle-btn");
+		}
+	});
+
+	$(".right-div").on("click", function() {
+		var leftItem = $(this).parent().find(".left-div");
+
+		if(!leftItem.hasClass("selected-toggle-btn")){
+			$(this).addClass("selected-toggle-btn");
+		} else {
+			$(this).addClass("selected-toggle-btn");
+			leftItem.removeClass("selected-toggle-btn");
+		}
+	});
+}
+
+function semPlanner() {
+	$(".semester-div").on("click", function(){
+		$(this).addClass("selected-sem-planner");
+		$(this).parent().find(".mc-div").addClass("selected-sem-planner");
+		$(this).parent().css("background-color", "#EEEEEE");
+	});
+}
