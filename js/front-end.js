@@ -51,7 +51,7 @@ $(document).ready(function() {
 	});
 
 
-	/*-------------Add smooth scrolling to all links-------------------*/
+	/*-------------Add smooth scrolling to all links---------------*/
 	$("a").on('click', function(event) {
 
 	    // Prevent default anchor click behavior
@@ -92,24 +92,56 @@ $("#plan-mod-nav").on("click", function (){
 function toggleFunction() {
 	$(".left-div").on("click", function() {
 		var rightItem = $(this).parent().find(".right-div");
+		var middleItem = $(this).parent().find(".middle-div");
+		var isRight = rightItem.hasClass("selected-toggle-btn");
+		var isMiddle = middleItem.hasClass("selected-toggle-btn");
 
-		if(!rightItem.hasClass("selected-toggle-btn")){
-			$(this).addClass("selected-toggle-btn");
-		} else {
-			$(this).addClass("selected-toggle-btn");
+		if(isRight && isMiddle){
 			rightItem.removeClass("selected-toggle-btn");
+			middleItem.removeClass("selected-toggle-btn");
+		} else if(isRight) {
+			rightItem.removeClass("selected-toggle-btn");
+		} else if(isMiddle){
+			middleItem.removeClass("selected-toggle-btn");
 		}
+
+		$(this).addClass("selected-toggle-btn");
+	});
+
+	$(".middle-div").on("click", function() {
+		var leftItem = $(this).parent().find(".left-div");
+		var rightItem = $(this).parent().find(".right-div");
+		var isLeft = leftItem.hasClass("selected-toggle-btn");
+		var isRight = rightItem.hasClass("selected-toggle-btn");
+
+		if(isRight && isLeft){
+			rightItem.removeClass("selected-toggle-btn");
+			leftItem.removeClass("selected-toggle-btn");
+		} else if(isRight) {
+			rightItem.removeClass("selected-toggle-btn");
+		} else if(isLeft){
+			leftItem.removeClass("selected-toggle-btn");
+		}
+
+		$(this).addClass("selected-toggle-btn");
 	});
 
 	$(".right-div").on("click", function() {
 		var leftItem = $(this).parent().find(".left-div");
+		var middleItem = $(this).parent().find(".middle-div");
+		var isLeft = leftItem.hasClass("selected-toggle-btn");
+		var isMiddle = middleItem.hasClass("selected-toggle-btn");
 
-		if(!leftItem.hasClass("selected-toggle-btn")){
-			$(this).addClass("selected-toggle-btn");
-		} else {
-			$(this).addClass("selected-toggle-btn");
+		if(isLeft && isMiddle){
 			leftItem.removeClass("selected-toggle-btn");
+			middleItem.removeClass("selected-toggle-btn");
+		} else if(isLeft) {
+			leftItem.removeClass("selected-toggle-btn");
+		} else if(isMiddle){
+			middleItem.removeClass("selected-toggle-btn");
 		}
+
+		$(this).addClass("selected-toggle-btn");
 	});
 }
 
@@ -117,6 +149,6 @@ function semPlanner() {
 	$(".semester-div").on("click", function(){
 		$(this).addClass("selected-sem-planner");
 		$(this).parent().find(".mc-div").addClass("selected-sem-planner");
-		$(this).parent().css("background-color", "#EEEEEE");
+		$(this).parent().find(".drag-n-drop").css("background-color", "#EEEEEE");
 	});
 }
