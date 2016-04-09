@@ -93,7 +93,27 @@ $(document).ready(function() {
 	$(".input-div").on("focusout", function(){
 		$(this).css("background-color", "white");
 	});
+
+		/*------------Multiple-choice------------*/
+	$(".dropdown-content a").on("mouseover", function() {
+		console.log("hey, printed111111111111 !!!")
+	$(".taken-choice").on("click", function(){
+		var parent = $(this).parent().parent().find(".dropbtn").text("Taken");
+		console.log("hey, printed !!!")
+	});
+
+	$(".plan-choice").on("click", function(){
+		var parent = $(this).parent().parent().find(".dropbtn").text("Plan");
+		console.log("hey, printed 222222222!!!")
+	});
+
+	$(".waived-choice").on("click", function(){
+		var parent = $(this).parent().parent().find(".dropbtn").text("Waived");
+		console.log("hey, printed 33333333!!!")
+	});
+	});
 });
+
 
 $("#deg-req-nav").on("click", function (){
 	showDegReq();
@@ -111,7 +131,7 @@ $("#plan-mod-nav").on("click", function (){
 	$("#plan-mod-div").show();
 });
 
-/*-------------Toggle button taken/plan---------------*/
+/*-------------Toggle button taken/plan---------------
 function toggleFunction() {
 	$(".left-div").on("click", function() {
 		var rightItem = $(this).parent().find(".right-div");
@@ -166,7 +186,7 @@ function toggleFunction() {
 
 		$(this).addClass("selected-toggle-btn");
 	});
-}
+}*/
 
 function semPlanner() {
 	$(".semester-div").on("click", function(){

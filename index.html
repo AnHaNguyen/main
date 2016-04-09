@@ -9,14 +9,13 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 	<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 
+	<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">-->
+	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
 	<!-- Include angularjs -->
 	<link rel="stylesheet" type="text/css" href="css/core.css">
 	<link rel="stylesheet" type="text/css" href="node_modules/angucomplete-alt/angucomplete-alt.css">
-
-	<!--Drag and drop-->
-	<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
 	<link rel="stylesheet" href="css/style.css">
 	<script>
@@ -40,7 +39,7 @@
 
 			<div id="start-text-div">
 				<p>SoCPlans helps SoC's students to verify degree and plan modules for semesters</p>
-				<div class="waves-effect waves-light btn" id="get-started-btn">Get started</div>
+				<div class="waves-effect waves-light btn" id="get-started-btn">Get Started</div>
 			</div>
 
 			<div id="grad-cer-div" class="center z-depth-2">
@@ -49,18 +48,21 @@
 				<form method="post">
 					<input placeholder="Your Full Name" id="full-name" ng-model="full_name" type="text" class="validate center"><br>
 					<span>having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
-					<span class="grad-cer-text">BACHELOR OF <input placeholder="Your Bachelor" id="bachelor" ng-model="bachelor" type="text" class="validate center input-size"><br>
-						IN <input placeholder="Your Major" id="major" ng-model="major" type="text" class="validate center input-size">
-						FOCUS AREA <input placeholder="Your Focus Area" id="focus_area" ng-model="focus_area" type="text" class="validate center input-size"><br>
-						ADMISSION YEAR <input placeholder="Your Admission Year" id="admission_year" ng-model="admission_year" type="text" class="validate center input-size"><br>
-					</span>
+					<span class="grad-cer-text">BACHELOR OF</span>
+					<input placeholder="Your Bachelor" id="bachelor" ng-model="bachelor" type="text" class="validate center input-size"><br>
+						<span class="grad-cer-text">IN</span>
+						<input placeholder="Your Major" id="major" ng-model="major" type="text" class="validate center input-size">
+						<span class="grad-cer-text">FOCUS AREA</span>
+						<input placeholder="Your Focus Area" id="focus_area" ng-model="focus_area" type="text" class="validate center input-size"><br>
+						<span class="grad-cer-text">ADMISSION YEAR</span>
+						<input placeholder="Your Admission Year" id="admission_year" ng-model="admission_year" type="text" class="validate center input-size"><br>
 					<input type="submit" id="starter-confirm-btn" ng-click="confirm()" class="btn" value="Confirm">
 				</form>
 			</div>
 
 			<div id="starter-footer" class="center">
 				<p>Available only to NUS's SoC Students</p>
-				<p>Proudly brought to you by SoCPlans team</p>
+				<p>Proudly brought to you by <b>SoCPlans</b> team</p>
 			</div>
 		</div>
 	</div>
@@ -191,7 +193,6 @@
 		</ul>
 
 		<!--DEGREE REQUIREMENT-->
-
 		<div id="deg-req-div" class="basic-padding col s12">
 			<!--Fixed Navigation Bar-->
 			<div class="page-title row no-margin">
@@ -342,10 +343,18 @@
 								<div class="float-left">
 									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
-								<div class="btn-group float-left">
+								<!--<div class="btn-group float-left">
 									<a class="left-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
 									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
+								</div>-->
+								<div class="dropdown">
+									<a class="dropbtn z-depth-1 btn">Taken</a>
+									<div class="dropdown-content">
+										<a class="taken-choice">Taken</a>
+										<a class="plan-choice">Plan</a>
+										<a class="waived-choice">Waived</a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -386,10 +395,13 @@
 								<div class="float-left">
 									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
-								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
+								<div class="dropdown">
+									<a class="dropbtn z-depth-1 btn">Mod State</a>
+									<div class="dropdown-content">
+										<a>Taken</a>
+										<a>Plan</a>
+										<a>Waived</a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -424,17 +436,20 @@
 							<div class="col s1 item">{{ module.code }}</div>
 							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
-							<div class="col s3 item center">
+							<div class="col s3 item">
 								<!--	<a class="btn-floating waves-effect waves-light red">X</a>  -->
 								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
 								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
 									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
-								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
+								<div class="dropdown">
+									<a class="dropbtn z-depth-1 btn">Mod State</a>
+									<div class="dropdown-content">
+										<a>Taken</a>
+										<a>Plan</a>
+										<a>Waived</a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -473,6 +488,8 @@
 					</form>
 				</div>
 			</div>
+
+
 
 			<div class="container-customize">
 				<div class="main-table col s12">
@@ -540,22 +557,6 @@
 							</div>
 							<div class="col s12 mc-div">4MCs</div>
 						</div>
-						
-
-					<!--<div class="row no-margin center">
-							<div class="col s12 wrapper-div">
-								<span>4MCs</span>
-							</div>
-							<div class="col s3 wrapper-div">
-								<span>12MCs</span>
-							</div>
-							<div class="col s3 wrapper-div">
-								<span>10MCs</span>
-							</div>
-							<div class="col s3 wrapper-div">
-								<span>10MCs</span>
-							</div>
-						</div>-->
 					</div>
 				</div>
 			</div>
@@ -575,7 +576,7 @@
 					</div>
 
 					<div class="col s6">
-						<h5>SoCPlanner</h5>
+						<h5>SoCPlans</h5>
 						<ul>
 							<li>About</li>
 							<li>Out Team</li>
@@ -586,7 +587,7 @@
 
 				<div class="row">
 					<hr>
-					<footer align="center">Copyright © 2016 SOCPlanner. All rights reserved</footer>
+					<footer align="center">Copyright © 2016 SOCPlans. All rights reserved</footer>
 				</div>
 				<div class="col s1"></div>
 			</div>
@@ -612,7 +613,7 @@
 
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-		<script type="text/javascript" src="js/degree-requirement.js"></script>		
+		<script type="text/javascript" src="js/degree-requirement.js"></script>
 		<script type="text/javascript" src="js/front-end.js"></script>
 	</body>
 	</html>
