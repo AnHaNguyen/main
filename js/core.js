@@ -2,7 +2,7 @@
 
 angular.module('core', ['angucomplete-alt', 'ngCookies']);
 
-angular.module('core',[]).controller('mainController', [ '$scope', '$cookies', 'Modules',
+angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Modules',
 	function($scope, $cookies, Modules) { 
 		$scope.username = '';
 
@@ -18,23 +18,23 @@ angular.module('core',[]).controller('mainController', [ '$scope', '$cookies', '
 	}
 ]);
 
-angular.module('core',[]).controller('xyController', [ '$scope',
-	function ($scope) {
-		$scope.Input = {
-			username: $scope.full_name,
-			bachelor: $scope.bachelor,
-			major: $scope.major,
-			focus_area: $scope.focus_area,
-			admission_year: $scope.admission_year
-		};
-
-		/*"full-name", "bachelor", "major", "focus_area", "admission_year"*/
+angular.module('core').controller('xyController', [ '$scope', '$cookies', 'User',
+	function ($scope, $cookies, User) {
+		/*"full_name", "bachelor", "major", "focus_area", "admission_year"*/
 
 		$scope.login = function (Input) {
 			User.login(Input.username, Input.bachelor, Input.major, Input.focus_area, Input.admission_year);
 		};
 
 		$scope.confirm = function() {
+			$scope.Input = {
+				username: $scope.full_name,
+				bachelor: $scope.bachelor,
+				major: $scope.major,
+				focus_area: $scope.focus_area,
+				admission_year: $scope.admission_year
+			};
+
 			$scope.login($scope.Input);
 		}
 	}

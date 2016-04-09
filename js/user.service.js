@@ -1,7 +1,7 @@
 'use strict'
 
-angular.module('core').service('User', ['$http',
-	function ($http) {
+angular.module('core').service('User', ['$http', '$cookies',
+	function ($http, $cookies) {
 /*		this.init = function (admissionYear, callback) {
 			$http({
 				method: 'GET',
@@ -21,6 +21,11 @@ angular.module('core').service('User', ['$http',
 
 		service.login = function (username, bachelor, major, focus_area, admission_year) {
 			console.log(username, bachelor, major, focus_area, admission_year);
+			$cookies.username = username;
+			$cookies.bachelor = bachelor;
+			$cookies.major = major;
+			$cookies.focus_area = focus_area;
+			$cookies.admission_year = admission_year;
 		};
 
 		return service;

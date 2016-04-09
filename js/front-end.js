@@ -14,6 +14,45 @@ function showDegReq() {
 	$("#exempt-mod-div").hide();
 }
 
+function updateDegReq() {
+	var jsonFile = "req/" + $('#major').val() + '/' + $('#admission_year').val() + ".json";
+	console.log(jsonFile);
+	$.getJSON(jsonFile, function(jsonContent){
+		var newHtml = '<div class="main-table col s12">';
+		$.each(jsonContent.and, function (reqType, value) {
+			console.log(reqType + ": " + value);
+
+			if ($.type(value)==="number") {
+				template = `<div class="col s12 content-row"> \
+						<div class="col s10 header item">{{reqType}}</div> \ 
+						<div class="col s2 header item">{{value}}</div> \
+					</div>`;
+				newHtml += template.replace("{{reqType}}", reqType).replace("{{value}}", value);
+			} else {
+				newHtml += '<div class="col s12 content-row"> <div class="col s12 header item">{{reqType}}</div></div>'.replace("{{reqType}}", reqType) ;
+
+				$.each(value, function(module, MC) {
+					template = `<div class="col s12 content-row"> \
+							<div class="col s10 item">{{module}}</div> \ 
+							<div class="col s2 item">{{MC}}</div> \
+						</div>`;
+
+					newHtml += template.replace("{{module}}", module).replace("{{MC}}", MC);
+				})
+
+				newHtml += '</div>';
+			} 
+		}); 
+
+		$.each(jsonContent.or, function(index, value) {
+			console.log(index + ": " + value);
+		});
+
+		newHtml += "</div>";
+		$("#deg-req-div").html(newHtml);
+	});
+}
+
 $("#get-started-btn").on("click", function() {
 	$("#start-text-div").hide();
 	$("#grad-cer-div").show();
@@ -22,6 +61,7 @@ $("#get-started-btn").on("click", function() {
 $("#starter-confirm-btn").on("click", function() {
 	$("#start-page").hide();
 	$("#main-section").show();
+	updateDegReq();
 	showDegReq();
 });
 
