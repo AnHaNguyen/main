@@ -175,7 +175,6 @@ function update_ULR_type($adm_year, $mods, $is_ceg_major) {
                 $has_taken_GES = true;
 
             } else if (!$has_taken_GET
-                && $mod_code !== "GET1031" // Offered by SoC
                 && strpos($mod_code, "GET") === 0) {
 
                 $mods[$mod_code] = [ULR_TYPE,GET_TYPE];
