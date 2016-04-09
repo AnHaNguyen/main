@@ -51,12 +51,17 @@ body {
 	color: red;
 }
 
-/*---------------------------------------*/
+/*----------------Logo-----------------*/
 .logo {
 	font-family: 'Indie Flower', cursive;
 	font-size: 40px !important;
 	color: white;
 	text-shadow: 2px 2px black;
+}
+
+.logo-img-cust {
+	height: 100px !important;
+	cursor: pointer;
 }
 
 .none-hover:hover {
@@ -70,6 +75,10 @@ body {
 
 .no-margin {
 	margin: 0 !important;
+}
+
+.no-lineheight {
+	line-height: 0 !important;
 }
 
 .black-font {
@@ -116,7 +125,41 @@ body {
 	margin: 0 10px 0 10px;
 }
 
-/*---------------------------------------------------------------*/
+			/*------------Collapsible-header-----------*/
+#nav-mobile .collapsible-header {
+	padding: 0 !important;
+	margin: 0 !important;
+	font-weight: bold;
+}
+
+#nav-mobile .collapsible-header:hover {
+	border-left: 7px solid grey;
+}
+
+#nav-mobile .collapsible-header.active {
+	border-left: 7px solid #4cb5f5;		/* blue sky color */
+}
+
+			/*--------------Sidebar text--------------*/
+#nav-mobile .collapsible-header a{
+	padding: 0 !important;
+	display: flex;
+}
+
+#nav-mobile .collapsible-header.active a {
+	color: #4cb5f5;						/* blue sky color */
+}
+
+.gray-icon {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+}
+
+#nav-mobile .collapsible-header.active a .gray-icon {
+	-webkit-filter: grayscale(0%);
+	filter: grayscale(0%);	
+}
+/*------------------------------------------------------------------*/
 .page-title {
 	background-color: #4cb5f5;	/* blue sky color */
 	color: white;
@@ -164,7 +207,7 @@ body {
 	opacity: 0.5;
 }
 
-/*-----------------Button toggle------------------*/
+		/*-----------Button toggle-----------*/
 .btn-group {
 	margin-left: 5px;
 }
@@ -174,9 +217,10 @@ body {
 	background-color: orange; 
 	float: left;
 	text-transform: capitalize;
-	padding: 0 5px 0 5px !important;
+	padding: 0 !important;
 	height: auto;
 	width: 60px;
+	font-size: 14px;
 }
 
 .left-div {
@@ -187,7 +231,7 @@ body {
 	border-radius: 0 10px 10px 0;
 }
 
-.right-div:hover, .left-div:hover, .selected-toggle-btn {
+.right-div:hover, .left-div:hover, .middle-div:hover, .selected-toggle-btn {
 	box-shadow: inset 0 0 5px black !important;
 	background-color: #fb6542 !important;			/* sunset color */
 }
@@ -203,16 +247,28 @@ body {
 	border-width: 1px 0 0 1px;
 	border-style: solid;
 	border-color: black;
-	margin: 0px !important;
 }
 
+		/*---------Rows---------*/
 .content-row {
 	padding: 0 !important;
 	display: flex;
 }
 
-.content-row:hover {
-	background-color: #EEEEEE;
+.content-row:hover{
+	font-weight: bold;
+}
+
+.ulr-hover:hover {
+	background-color: #ffdb5c;			/* banana color */
+}
+
+.pr-hover:hover {
+	background-color: #fa6e59;			/* watermelon color */
+}
+
+.ue-hover:hover {
+	background-color: #aebd38;			/* moss color */
 }
 
 .header, .mc-item {
@@ -263,6 +319,8 @@ body {
 }
 
 .filter-div:hover {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
 	background-color: #EEEEEE;
 }
 
@@ -273,11 +331,20 @@ body {
 	padding: 10px;
 	margin: 5px;
 	box-shadow: 2px 4px green;
+	cursor: move;
+
+	-webkit-transition: -webkit-transform 0.3s;
+	transition: transform 0.3s;
+}
+
+.drag-drop-item:hover {
+	-webkit-transform: translateY(-3px);
+	transform: translateY(-3px);
+	box-shadow: 2px 6px 3px green;
 }
 
 .drag-n-drop-div {
 	padding: 5px !important;
-	cursor: pointer;
 }
 
 .wrapper-div {
@@ -291,8 +358,6 @@ body {
 }
 
 .wrapper-div:hover {
-	/*-webkit-transform: scaleY(1.1);
-	transform: scaleY(1.1);*/
 	background-color: #EEEEEE;
 }
 
@@ -308,12 +373,11 @@ body {
 .semester-div, .mc-div {
 	padding: 10px !important;
 	text-align: center;
-	/*font-weight: bold;*/
-	color: rgb(76, 147, 208);		/* darken blue */
+	color: rgb(76, 147, 208);					/* darken blue color */
 }
 
 .selected-sem-planner {
 	color: white;
 	font-weight: bold;
-	background-color: rgb(76, 147, 208);		/* darken blue */
+	background-color: rgb(76, 147, 208);		/* darken blue color */
 }

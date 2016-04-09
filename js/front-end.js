@@ -51,7 +51,7 @@ $(document).ready(function() {
 	});
 
 
-	/*-------------Add smooth scrolling to all links-------------------*/
+	/*-------------Add smooth scrolling to all links---------------*/
 	$("a").on('click', function(event) {
 
 	    // Prevent default anchor click behavior
@@ -69,6 +69,16 @@ $(document).ready(function() {
 	      // Add hash (#) to URL when done scrolling (default click behavior)
 	      window.location.hash = hash;
 	  });
+	});
+
+	/*----------------Lighten - darken color----------------*/
+	var darkenDragDropColor = LightenDarkenColor("#b3c100", -40);
+	$(".drag-drop-item").on("mouseover", function() {
+		$(this).css("background-color", "" + darkenDragDropColor);
+	});
+
+	$(".drag-drop-item").on("mouseout", function() {
+		$(this).css("background-color", "#b3c100");
 	});
 });
 
@@ -92,24 +102,56 @@ $("#plan-mod-nav").on("click", function (){
 function toggleFunction() {
 	$(".left-div").on("click", function() {
 		var rightItem = $(this).parent().find(".right-div");
+		var middleItem = $(this).parent().find(".middle-div");
+		var isRight = rightItem.hasClass("selected-toggle-btn");
+		var isMiddle = middleItem.hasClass("selected-toggle-btn");
 
-		if(!rightItem.hasClass("selected-toggle-btn")){
-			$(this).addClass("selected-toggle-btn");
-		} else {
-			$(this).addClass("selected-toggle-btn");
+		if(isRight && isMiddle){
 			rightItem.removeClass("selected-toggle-btn");
+			middleItem.removeClass("selected-toggle-btn");
+		} else if(isRight) {
+			rightItem.removeClass("selected-toggle-btn");
+		} else if(isMiddle){
+			middleItem.removeClass("selected-toggle-btn");
 		}
+
+		$(this).addClass("selected-toggle-btn");
+	});
+
+	$(".middle-div").on("click", function() {
+		var leftItem = $(this).parent().find(".left-div");
+		var rightItem = $(this).parent().find(".right-div");
+		var isLeft = leftItem.hasClass("selected-toggle-btn");
+		var isRight = rightItem.hasClass("selected-toggle-btn");
+
+		if(isRight && isLeft){
+			rightItem.removeClass("selected-toggle-btn");
+			leftItem.removeClass("selected-toggle-btn");
+		} else if(isRight) {
+			rightItem.removeClass("selected-toggle-btn");
+		} else if(isLeft){
+			leftItem.removeClass("selected-toggle-btn");
+		}
+
+		$(this).addClass("selected-toggle-btn");
 	});
 
 	$(".right-div").on("click", function() {
 		var leftItem = $(this).parent().find(".left-div");
+		var middleItem = $(this).parent().find(".middle-div");
+		var isLeft = leftItem.hasClass("selected-toggle-btn");
+		var isMiddle = middleItem.hasClass("selected-toggle-btn");
 
-		if(!leftItem.hasClass("selected-toggle-btn")){
-			$(this).addClass("selected-toggle-btn");
-		} else {
-			$(this).addClass("selected-toggle-btn");
+		if(isLeft && isMiddle){
 			leftItem.removeClass("selected-toggle-btn");
+			middleItem.removeClass("selected-toggle-btn");
+		} else if(isLeft) {
+			leftItem.removeClass("selected-toggle-btn");
+		} else if(isMiddle){
+			middleItem.removeClass("selected-toggle-btn");
 		}
+
+		$(this).addClass("selected-toggle-btn");
 	});
 }
 
@@ -117,6 +159,33 @@ function semPlanner() {
 	$(".semester-div").on("click", function(){
 		$(this).addClass("selected-sem-planner");
 		$(this).parent().find(".mc-div").addClass("selected-sem-planner");
-		$(this).parent().css("background-color", "#EEEEEE");
+		$(this).parent().find(".drag-n-drop").css("background-color", "#EEEEEE");
 	});
+}
+
+		/*---------Code from CSS-tricks----------*/
+function LightenDarkenColor(col, amt) { 
+    var usePound = false;
+    if (col[0] == "#") {
+        col = col.slice(1);
+        usePound = true;
+    }
+ 
+    var num = parseInt(col,16);
+    var r = (num >> 16) + amt;
+ 
+    if (r > 255) r = 255;
+    else if  (r < 0) r = 0;
+ 
+    var b = ((num >> 8) & 0x00FF) + amt;
+ 
+    if (b > 255) b = 255;
+    else if  (b < 0) b = 0;
+ 
+    var g = (num & 0x0000FF) + amt;
+ 
+    if (g > 255) g = 255;
+    else if (g < 0) g = 0;
+ 
+    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
 }
