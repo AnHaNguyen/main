@@ -43,14 +43,13 @@
 				<div class="waves-effect waves-light btn" id="get-started-btn">Get started</div>
 			</div>
 
-			<div ng-controller="xyController" id="grad-cer-div" class="center z-depth-2">
+			<div id="grad-cer-div" class="center z-depth-2">
 				<img src="img/NUS-logo.png" alt="NUS Logo">
 				<p>This is to certify that<br></p>
 				<form method="post">
-					<span>{{full_name}}</span>
 					<input placeholder="Your Full Name" id="full-name" ng-model="full_name" type="text" class="validate center"><br>
 					<span>having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
-					<span class="grad-cer-text">BACHELOR OF {{bachelor}}<input placeholder="Your Bachelor" id="bachelor" ng-model="bachelor" type="text" class="validate center input-size"><br>
+					<span class="grad-cer-text">BACHELOR OF <input placeholder="Your Bachelor" id="bachelor" ng-model="bachelor" type="text" class="validate center input-size"><br>
 						IN <input placeholder="Your Major" id="major" ng-model="major" type="text" class="validate center input-size">
 						FOCUS AREA <input placeholder="Your Focus Area" id="focus_area" ng-model="focus_area" type="text" class="validate center input-size"><br>
 						ADMISSION YEAR <input placeholder="Your Admission Year" id="admission_year" ng-model="admission_year" type="text" class="validate center input-size"><br>
@@ -616,6 +615,7 @@
 
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/degree-requirement.js"></script>		
 		<script type="text/javascript" src="js/front-end.js"></script>
 	</body>
 	</html>
