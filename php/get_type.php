@@ -1,5 +1,7 @@
 <?php
 
+//require "update_IS_PR_type.php";
+
 /*
  * Given a student's major, admission year, primary focus area, and an array of module codes,
  * returns a json associative array containing module code keys and type values.
@@ -16,20 +18,29 @@
  * - adm_year (e.g. 1314, 1516)
  * - focus_area (e.g. IR, DB, AI)
  * - mods (e.g. ["CS1101S","CS2020"])
- * - precise (if included, display module types in detail)
  *
- * Usage example: http://bit.ly/23hcGpf
+ * Returns:
+ * - JSON associative array, with key = module code, value = [main type, sub-type]
+ * e.g.
+ * {
+ *      "GEK1011": ["ULR","GEM_B"],
+ *      "CS1101S": ["PR","CORE]
+ * }
+ *
+ * Usage example: http://bit.ly/1MlMjXD
  *
  * Note:
  * - This program does not care for and will not deal with preclusion conflicts.
  * - This program only works with the CS major for now.
+ * - Module sub-types still have to be tweaked as required by front-end.
  *
  * @author Pierce Anderson Fu
  */
 
 // @TODO: Refactor
-
-define("IS_PRECISE_MODE", isset($_GET["precise"]));
+// @TODO: Include iLead + NOC modules in CS internship reqs
+// @TODO: Deal with IEM1201x and IEM2201x modules in CS PR (in place of CS2101)
+// @TODO: Deal with specializations in IS?
 
 // Module types used in both precise and non-precise mode
 define("ULR_TYPE", "ULR");
@@ -81,10 +92,10 @@ function check_module_type($major, $adm_year, $focus_area, $mods) {
         case 'CS':
             return get_type_CS($adm_year, $focus_area, $mods_with_types);
             break;
-        /*case 'IS':
-            return get_type_IS($adm_year, $focus_area, $mods_with_types);
+        case 'IS':
+            return get_type_IS($adm_year, $mods_with_types);
             break;
-        case 'CEG':
+        /*case 'CEG':
             return get_type_CEG($adm_year, $focus_area, $mods_with_types);
             break;
         case 'BZA':
@@ -103,6 +114,15 @@ function get_type_CS($adm_year, $focus_area, $mods) {
 
     $mods = update_ULR_type($adm_year, $mods);
     $mods = update_CS_PR_type($adm_year, $focus_area, $mods);
+
+    return $mods;
+}
+
+
+function get_type_IS($adm_year, $mods) {
+
+    $mods = update_ULR_type($adm_year, $mods);
+    //$mods = update_IS_PR_type($adm_year, $mods);
 
     return $mods;
 }
@@ -136,25 +156,25 @@ function update_ULR_type($adm_year, $mods) {
                     // Try to fill in GEM B requirement first
                     // CS students have to fulfill at least one GEM B
                     if (!$has_taken_GEM_B) {
-                        $mods[$mod_code] = IS_PRECISE_MODE ? GEM_B_TYPE : ULR_TYPE;
+                        $mods[$mod_code] = [ULR_TYPE,GEM_B_TYPE];
                         $has_taken_GEM_B = true;
                     }
 
                     else if ($has_taken_GEM_B && !$has_taken_GEM_A) {
-                        $mods[$mod_code] = IS_PRECISE_MODE ? GEM_A_TYPE : ULR_TYPE;
+                        $mods[$mod_code] = [ULR_TYPE,GEM_A_TYPE];
                         $has_taken_GEM_A = true;
                     }
 
                     else if ($num_breadth_taken < NUM_BREADTH_REQ
                               && $mod_code !== "GEK1901") { // Exception: "GEK1901" is offered by SoC
 
-                        $mods[$mod_code] = IS_PRECISE_MODE ? BREADTH_TYPE : ULR_TYPE;
+                        $mods[$mod_code] = [ULR_TYPE,BREADTH_TYPE ];
                         $num_breadth_taken++;
 
                     }
 
                     else {
-                        $mods[$mod_code] = UE_TYPE;
+                        $mods[$mod_code] = [UE_TYPE,UE_TYPE];
                     }
                     
                 }
@@ -163,17 +183,17 @@ function update_ULR_type($adm_year, $mods) {
                 // Q7: http://www.nus.edu.sg/registrar/gem/pre2015/frequently-asked-questions
                 else if ($mod_code[4] === "5") {
                     if (!$has_taken_GEM_A) {
-                        $mods[$mod_code] = IS_PRECISE_MODE ? GEM_A_TYPE : ULR_TYPE;
+                        $mods[$mod_code] = [ULR_TYPE,GEM_A_TYPE];
                         $has_taken_GEM_A = true;
                     }
 
                     else if ($num_breadth_taken < NUM_BREADTH_REQ) {
-                        $mods[$mod_code] = IS_PRECISE_MODE ? BREADTH_TYPE : ULR_TYPE;
+                        $mods[$mod_code] = [ULR_TYPE,BREADTH_TYPE];
                         $num_breadth_taken++;
                     }
 
                     else {
-                        $mods[$mod_code] = UE_TYPE;
+                        $mods[$mod_code] = [UE_TYPE,UE_TYPE];
                     }
                 }
             }
@@ -181,16 +201,16 @@ function update_ULR_type($adm_year, $mods) {
             // Set type for SS
             else if (strpos($mod_code, "SSS") === 0) {
                 if (!$has_taken_SS) {
-                    $mods[$mod_code] = IS_PRECISE_MODE ? SS_TYPE : ULR_TYPE;
+                    $mods[$mod_code] = [ULR_TYPE,SS_TYPE];
                 }
 
                 else if ($num_breadth_taken < NUM_BREADTH_REQ) {
-                    $mods[$mod_code] = IS_PRECISE_MODE ? BREADTH_TYPE : ULR_TYPE;
+                    $mods[$mod_code] = [ULR_TYPE,BREADTH_TYPE];
                     $num_breadth_taken++;
                 }
 
                 else {
-                    $mods[$mod_code] = UE_TYPE;
+                    $mods[$mod_code] = [UE_TYPE,UE_TYPE];
                 }
             }
             
@@ -198,7 +218,7 @@ function update_ULR_type($adm_year, $mods) {
             else if (!$is_soc_mod
                 && $num_breadth_taken < NUM_BREADTH_REQ) {
 
-                $mods[$mod_code] = IS_PRECISE_MODE ? BREADTH_TYPE : ULR_TYPE;
+                $mods[$mod_code] = [ULR_TYPE,BREADTH_TYPE];
                 $num_breadth_taken++;
             }
         }
@@ -216,39 +236,39 @@ function update_ULR_type($adm_year, $mods) {
         $has_taken_GET = false;
         
         foreach ($mods as $mod_code => $mod_type) {
-            
+
             if (!$has_taken_GEH
                 && strpos($mod_code, "GEH") === 0) {
 
-                $mods[$mod_code] = IS_PRECISE_MODE ? GEH_TYPE : ULR_TYPE;
+                $mods[$mod_code] = [ULR_TYPE,GEH_TYPE];
                 $has_taken_GEH = true;
-                
+
             } else if (!$has_taken_GEQ
                 && strpos($mod_code, "GEQ") === 0) {
 
-                $mods[$mod_code] = IS_PRECISE_MODE ? GEQ_TYPE : ULR_TYPE;
+                $mods[$mod_code] = [ULR_TYPE,GEQ_TYPE];
                 $has_taken_GEQ = true;
-                
+
             } else if (!$has_taken_GER
                 && strpos($mod_code, "GER") === 0) {
 
-                $mods[$mod_code] = IS_PRECISE_MODE ? GER_TYPE : ULR_TYPE;
+                $mods[$mod_code] = [ULR_TYPE,GER_TYPE];
                 $has_taken_GER = true;
-                
+
             } else if (!$has_taken_GES
                 && strpos($mod_code, "GES") === 0) {
 
-                $mods[$mod_code] = IS_PRECISE_MODE ? GES_TYPE : ULR_TYPE;
+                $mods[$mod_code] = [ULR_TYPE,GES_TYPE];
                 $has_taken_GES = true;
-                
+
             } else if (!$has_taken_GET
                 && strpos($mod_code, "GET") === 0) {
 
-                $mods[$mod_code] = IS_PRECISE_MODE ? GET_TYPE : ULR_TYPE;
+                $mods[$mod_code] = [ULR_TYPE,GET_TYPE];
                 $has_taken_GET = true;
-                
+
             } else {
-                $mods[$mod_code] = UE_TYPE;
+                $mods[$mod_code] = [UE_TYPE,UE_TYPE];
             }
             
         }
@@ -258,6 +278,7 @@ function update_ULR_type($adm_year, $mods) {
     }
 }
 
+
 function update_CS_PR_type($adm_year, $focus_area, $mods) {
     $all_mod_info_string = file_get_contents('../data/simplified.json');
     $grad_reqs_string = file_get_contents('../req/CS/' . $adm_year . '.json');
@@ -266,11 +287,13 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
 
     $all_mod_info = json_decode($all_mod_info_string, true);
     $grad_reqs = json_decode($grad_reqs_string, true);
-    $core_reqs = $grad_reqs["and"]["PR"];
+    $core_reqs = $grad_reqs["and"]["PR"]["mod"];
     $fa_reqs = json_decode($fa_reqs_string, true)[$focus_area];
     $sci_reqs = json_decode($sci_reqs_string, true);
+    $phy_reqs = [];
 
     // Requirement exceptions not covered in json
+    // Preclusions are not dealt with in this program
     $core_reqs["CS1101S"] = "4"; // CS1010 can be replaced with CS1101S
     $core_reqs["CS2020"] = "4"; // CS1020 and CS2010 can be replaced with CS2020
     $core_reqs["CS2103T"] = "4"; // Effectively equivalent to CS2103
@@ -293,14 +316,11 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
     // From AY12-13 onwards, can choose from either of two physics mods
     if ($adm_year >= "1213") {
         $phy_reqs_2d_array = $grad_reqs["or"][1];
-        $phy_reqs = [];
 
         // Flatten 2d array containing module code and MC into 1d array containing only module codes
         foreach ($phy_reqs_2d_array as $phy_mod_code_and_mc) {
             $phy_reqs[] = $phy_mod_code_and_mc[0]; // Just extract the module codes
         }
-
-        $has_taken_phy = false;
     }
 
     // Set type for statistics modules
@@ -310,14 +330,14 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
      */
     if (array_key_exists("ST2131", $mods)) {
 
-        $mods["ST2132"] = IS_PRECISE_MODE ? STATS_TYPE : PR_TYPE;
+        $mods["ST2132"] = [PR_TYPE,STATS_TYPE];
 
         if ($adm_year < "1516") {
             // Going to have to take MCs required for ST2132 out from science's requirement
             $sci_mc_req -= $all_mod_info["ST2131"]["ModuleCredit"];
         }
         if (array_key_exists("ST2132", $mods)) {
-            $mods["ST2132"] = IS_PRECISE_MODE ? STATS_TYPE : PR_TYPE;
+            $mods["ST2132"] = [PR_TYPE,STATS_TYPE];
         }
     } else {
         // Take ST2334 to be the default choice, and ST2132 to fulfil the science requirement
@@ -339,7 +359,7 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
 
     // Check if FYP was taken
     if (array_key_exists($fyp, $mods)) {
-        $mods[$fyp] = IS_PRECISE_MODE ? FYP_TYPE : PR_TYPE;
+        $mods[$fyp] = [PR_TYPE,FYP_TYPE];
         $has_taken_fyp_or_intern = true;
     }
 
@@ -356,7 +376,7 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
                 $intern_mod_code = $current_intern_branch[0];
 
                 if (array_key_exists($intern_mod_code, $mods)) {
-                    $mods[$intern_mod_code] = IS_PRECISE_MODE ? INTERN_TYPE : PR_TYPE;
+                    $mods[$intern_mod_code] = [PR_TYPE,INTERN_TYPE];
                     $has_taken_fyp_or_intern = true;
                 }
             }
@@ -370,8 +390,8 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
                     && array_key_exists($second_intern_mod_code, $mods)
                 ) {
 
-                    $mods[$first_intern_mod_code] = IS_PRECISE_MODE ? INTERN_TYPE : PR_TYPE;
-                    $mods[$second_intern_mod_code] = IS_PRECISE_MODE ? INTERN_TYPE : PR_TYPE;
+                    $mods[$first_intern_mod_code] = [PR_TYPE,INTERN_TYPE];
+                    $mods[$second_intern_mod_code] = [PR_TYPE,INTERN_TYPE];
                     $has_taken_fyp_or_intern = true;
 
                 }
@@ -399,8 +419,8 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
         if (array_key_exists($first_half_mod_code, $mods)
             && array_key_exists($second_half_mod_code, $mods)) {
 
-            $mods[$first_half_mod_code] = IS_PRECISE_MODE ? ADV_SE_TYPE : PR_TYPE;
-            $mods[$second_half_mod_code] = IS_PRECISE_MODE ? ADV_SE_TYPE : PR_TYPE;
+            $mods[$first_half_mod_code] = [PR_TYPE,ADV_SE_TYPE];
+            $mods[$second_half_mod_code] = [PR_TYPE,ADV_SE_TYPE];
             $has_fulfilled_adv_se_reqs = true;
 
         }
@@ -417,27 +437,25 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
 
             // Set type for core CS modules
             if (array_key_exists($mod_code, $core_reqs)) {
-                $mods[$mod_code] = IS_PRECISE_MODE ? CORE_TYPE : PR_TYPE;
+                $mods[$mod_code] = [PR_TYPE,CORE_TYPE];
+            }
+
+            // Set type for physics requirement modules (AY12-13 onwards)
+            else if ($adm_year >= "1213"
+                && in_array($mod_code, $phy_reqs)) {
+
+                $mods[$mod_code] = [PR_TYPE,CORE_TYPE];
+
             }
 
             // Set type for science requirement modules
             else if (array_key_exists($mod_code, $sci_reqs)) {
                 if ($sci_mc_taken < $sci_mc_req) {
-                    $mods[$mod_code] = IS_PRECISE_MODE ? SCIENCE_TYPE : PR_TYPE;
+                    $mods[$mod_code] = [PR_TYPE,SCIENCE_TYPE];
                     $sci_mc_taken += $sci_reqs[$mod_code];
                 } else {
-                    $mods[$mod_code] = UE_TYPE;
+                    $mods[$mod_code] = [UE_TYPE,UE_TYPE];
                 }
-            }
-
-            // Set type for physics requirement modules (AY12-13 onwards)
-            else if ($adm_year >= "1213"
-                && !$has_taken_phy
-                && in_array($mod_code, $phy_reqs)) {
-
-                $mods[$mod_code] = IS_PRECISE_MODE ? SCIENCE_TYPE : PR_TYPE;
-                $has_taken_phy = true;
-
             }
 
             // Set type for focus area modules (level 4k or above)
@@ -446,7 +464,7 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
 
                 // Fulfil focus area lvl 4k mod requirement
                 if (!$has_taken_fa_4k) {
-                    $mods[$mod_code] = IS_PRECISE_MODE ? FOCUS_AREA_TYPE : PR_TYPE;
+                    $mods[$mod_code] = [PR_TYPE,FOCUS_AREA_TYPE];
                     $cs_breath_depth_mc_taken += $mod_credit;
                     $cs_4k_mc_taken += $mod_credit;
                     $fa_mods_taken += 1;
@@ -455,7 +473,7 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
 
                 // Fulfil focus area mod requirement
                 else if ($fa_mods_taken < $fa_mod_req) {
-                    $mods[$mod_code] = IS_PRECISE_MODE ? FOCUS_AREA_TYPE : PR_TYPE;
+                    $mods[$mod_code] = [PR_TYPE,FOCUS_AREA_TYPE];
                     $cs_breath_depth_mc_taken += $mod_credit;
                     $cs_4k_mc_taken += $mod_credit;
                     $fa_mods_taken += 1;
@@ -463,20 +481,20 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
 
                 // Fulfil CS breadth and depth lvl 4k requirement
                 else if ($cs_4k_mc_taken < $cs_4k_mc_req) {
-                    $mods[$mod_code] = IS_PRECISE_MODE ? CS_4K_TYPE : PR_TYPE;
+                    $mods[$mod_code] = [PR_TYPE,CS_4K_TYPE];
                     $cs_breath_depth_mc_taken += $mod_credit;
                     $cs_4k_mc_taken += $mod_credit;
                 }
 
                 // Fulfil CS breadth and depth MC requirement
                 else if ($cs_breath_depth_mc_taken < $cs_breadth_depth_mc_req) {
-                    $mods[$mod_code] = IS_PRECISE_MODE ? CS_BREADTH_TYPE : PR_TYPE;
+                    $mods[$mod_code] = [PR_TYPE,CS_BREADTH_TYPE];
                     $cs_breath_depth_mc_taken += $mod_credit;
                 }
 
                 // Dump into UE
                 else {
-                    $mods[$mod_code] = UE_TYPE;
+                    $mods[$mod_code] = [UE_TYPE,UE_TYPE];
                 }
             }
 
@@ -488,7 +506,7 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
                 if (($has_taken_fa_4k && $fa_mods_taken < $fa_mod_req)
                     || ($fa_mods_taken + 1 < $fa_mod_req)) {
 
-                    $mods[$mod_code] = IS_PRECISE_MODE ? FOCUS_AREA_TYPE : PR_TYPE;
+                    $mods[$mod_code] = [PR_TYPE,FOCUS_AREA_TYPE];
                     $cs_breath_depth_mc_taken += $mod_credit;
                     $fa_mods_taken += 1;
 
@@ -500,14 +518,14 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
                         && $cs_breath_depth_mc_taken < $cs_breadth_depth_mc_req)
                     || ($cs_breath_depth_mc_taken + $mod_credit < $cs_breadth_depth_mc_req)) {
 
-                    $mods[$mod_code] = IS_PRECISE_MODE ? CS_BREADTH_TYPE : PR_TYPE;
+                    $mods[$mod_code] = [PR_TYPE,CS_BREADTH_TYPE];
                     $cs_breath_depth_mc_taken += $mod_credit;
 
                 }
 
                 // Dump into UE
                 else {
-                    $mods[$mod_code] = UE_TYPE;
+                    $mods[$mod_code] = [UE_TYPE,UE_TYPE];
                 }
             }
 
@@ -519,7 +537,7 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
                 if (($has_taken_fa_4k && $cs_4k_mc_taken < $cs_4k_mc_req)
                     || ($cs_4k_mc_taken + $mod_credit < $cs_4k_mc_req)) {
 
-                    $mods[$mod_code] = IS_PRECISE_MODE ? CS_4K_TYPE : PR_TYPE;
+                    $mods[$mod_code] = [PR_TYPE,CS_4K_TYPE];
                     $cs_breath_depth_mc_taken += $mod_credit;
                     $cs_4k_mc_taken += $mod_credit;
 
@@ -538,14 +556,14 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
                 else if ($cs_breath_depth_mc_taken + 4 * ($fa_mod_req - $fa_mods_taken)
                     < $cs_breadth_depth_mc_req) {
 
-                    $mods[$mod_code] = IS_PRECISE_MODE ? CS_BREADTH_TYPE : PR_TYPE;
+                    $mods[$mod_code] = [PR_TYPE,CS_BREADTH_TYPE];
                     $cs_breath_depth_mc_taken += $mod_credit;
 
                 }
 
                 // Dump into UE
                 else {
-                    $mods[$mod_code] = UE_TYPE;
+                    $mods[$mod_code] = [UE_TYPE,UE_TYPE];
                 }
             }
 
@@ -565,20 +583,20 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
                         - ((!$has_taken_fa_4k) ? 4 : 0)
                     < $cs_breadth_depth_mc_req) {
 
-                    $mods[$mod_code] = IS_PRECISE_MODE ? CS_BREADTH_TYPE : PR_TYPE;
+                    $mods[$mod_code] = [PR_TYPE,CS_BREADTH_TYPE];
                     $cs_breath_depth_mc_taken += $mod_credit;
 
                 }
 
                 // Dump into UE
                 else {
-                    $mods[$mod_code] = UE_TYPE;
+                    $mods[$mod_code] = [UE_TYPE,UE_TYPE];
                 }
             }
 
             // If absolutely none of the above, dump into UE
             else {
-                $mods[$mod_code] = UE_TYPE;
+                $mods[$mod_code] = [UE_TYPE,UE_TYPE];
             }
         }
     }
