@@ -1,7 +1,7 @@
 <?php
 require_once("library.php");
 
-function verifyPRIS($PRmod, $modulesMC, $prReq, $or){
+function verifyPRIS($PRmod, $modulesMC, $prReq, $or, $specialMCs){
 	$major = "IS";
 	$elective_mod = getElectiveMod($major);
 
@@ -20,7 +20,7 @@ function verifyPRIS($PRmod, $modulesMC, $prReq, $or){
 		$modName = $PRmod[$i][0];
 		$minus = $modulesMC[$modName];			//MCs
 
-		if (array_key_exists($modName, $prReq)){		//handle Mods in PR
+		if (isInList($modName, $prReq)){		//handle Mods in PR
 			$prReq[$modName] -= $minus;
 		} 
 		
@@ -66,7 +66,7 @@ function verifyPRIS($PRmod, $modulesMC, $prReq, $or){
 	//handle overlapping mods
 
 	$keys = array_keys($prReq);
-	$PRsum = 0;
+	$PRsum = $specialMCs;
 	for ($i = 0; $i < count($prReq); $i++){
 		if ($keys[$i] != "Elective4"){
 			$PRsum += $prReq[$keys[$i]];

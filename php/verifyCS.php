@@ -1,7 +1,7 @@
 <?php
 require_once("library.php");
 
-function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD){
+function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD, $specialMCs){
 	$prefix = array("CS");
 	
 	$count = array();
@@ -35,7 +35,7 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD){
 		$modName = $PRmod[$i][0];
 		$minus = $modulesMC[$modName];			//MCs
 
-		if (array_key_exists($modName, $prReq)){		//handle Mods in PR
+		if (isInList($modName, $prReq)){		//handle Mods in PR
 			$prReq[$modName] -= $minus;
 			$count[$modName]++;
 		} 
@@ -112,7 +112,7 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD){
 	}	
 
 	$keys = array_keys($prReq);
-	$PRsum = 0;
+	$PRsum = $specialMCs;
 	for ($i = 0; $i < count($prReq); $i++){
 		if ($keys[$i] != "Focus4"){
 			$PRsum += $prReq[$keys[$i]];
