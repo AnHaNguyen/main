@@ -1,23 +1,25 @@
 'use strict';
 
-
 /**
- *            fetchdata -> init -> resetTable -> reload --> updateAllSelectedModule
+ *            fetchdata -> init -> resetTable -> reload --> updateAllSelectedModule 
  * 			  removeModule -> removePlannedModule
  * 						   -> updateAllSelectedModule --> saveAllSelectedModule
  * 			  addModule -> addPlannedModule
  * 						-> updateAllSelectedModule --> saveAllSelectedModule
  *   		  changeStateModule -> addPlannedModule, removePlannedModule
+ * 			  updateAllSelectedModules -> saveAllSelectedModule
+ * 									   --> getType
+ * 			  Add Module --> Module is added to ['ALL'] --> getType --> Module is categorized into ['ULR', 'PR', 'UE']
+ *  					 --> Module is added to planned modules
  **/
 
 angular.module('core').factory('Modules', ['$http', '$cookies', 
 		function ($http, $cookies) {
-			var service = {};
-
-			service.plannedModules = [];
-
-			// Module fields
-			service.fields = ['Order', 'Type', 'Code', 'Title'];
+			var service = {
+				plannedModules: [],
+				types: {},
+				user: {}
+			};
 
 			// Module types
 			service.types = {
@@ -25,28 +27,6 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 				'UE' : 'Unrestricted Electives',
 				'PR': 'Programme Requirements',
 				'ALL': 'All modules'
-			};
-			
-			// Module subtypes
-			service.subtypes = {
-				'ULR': [{
-					name: 'GEM A',
-					fulfilled: false
-				}, {
-					name: 'GEM B',
-					fulfilled: false
-				}, {
-					name: 'SSA',
-					fulfilled: false
-				}],
-				'PR': [{
-					name: 'CS - FOUNDATION',
-					fulfilled: false
-				}, {
-					name: 'CS - BREADTH & DEPTH',
-					fulfilled: false
-				}],
-				'UE': []
 			};
 
 			/**
@@ -68,25 +48,20 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 			 **/
 			service.updateAllSelectedModules = function () {
 				/* Reset both selectedModules and planned Modules to empty */
-				service.visibleModules['ALL'] = [];
 				service.plannedModules.splice(0, service.plannedModules.length);
 
-				for(var type in service.types) {
-					if (type === 'ALL') continue;
+				for(var i in service.visibleModules['ALL']) {
+					/* For all modules added */
+					var module = service.visibleModules['ALL'][i];
 
-					for(var i in service.visibleModules[type]) {
-						/* For all modules added */
-						var module = service.visibleModules[type][i];
-
-						/* Add selected module */
-						service.visibleModules['ALL'].push(module);
-
-						/* Add planned modules */
-						if (module.state === 'planned') {
-							service.plannedModules.push(module);
-						}
+					/* Add planned modules */
+					if (module.state === 'planned') {
+						service.plannedModules.push(module);
 					}
 				}
+
+				/* get modules' types */
+				service.getType();
 
 				service.saveSelectedModulesToCookies();
 			};
@@ -113,6 +88,23 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 			}
 
 			/**
+			 *  Find module by module's type and code
+			 **/
+			function getModule(modCode) {
+				for(var i in service.modules) {
+					/* For all modules in the list */
+					var module = service.modules[i];
+
+					if (module.code === modCode) {
+						/* found */
+						return module;
+					}
+				}
+
+				return null;
+			};
+
+			/**
 			 * Search module by type and mod code and then add to selected modules
 			 * This function calls added() to avoid duplicate module
 			 * Default state of new module is planned
@@ -124,23 +116,17 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 			 * Update all selected modules afterward
 			 **/
 			service.addModule = function (modType, modCode, origin) {
-				for(var i in service.modules) {
-					var module = service.modules[i];
+				var module = getModule(modCode);
 
-					if ((module.type === modType) && (module.code === modCode)) {
-						/* Make sure this module has not been added before */
-						if (!added(module)) {
+				/* Make sure this module has not been added before */
+				if (!added(module)) {
 
-							/* Update total MCs */
-							service.totalMCs[modType] += module.mc;
-							service.visibleModules[modType].push(module);
+					service.visibleModules['ALL'].push(module);
 
-							if ((!origin) || (origin !== 'auto')) {
-								service.addPlannedModule(module);
-							}
-							module.state = 'planned';
-						}
+					if ((!origin) || (origin !== 'auto')) {
+						service.addPlannedModule(module);
 					}
+					module.state = 'planned';
 				}
 
 				service.updateAllSelectedModules();
@@ -177,8 +163,6 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 					service.visibleModules[type] = [];
 					service.totalMCs[type] = 0;
 				}
-
-				service.selectedType = 'ALL';
 			};
 
 			/**
@@ -194,17 +178,10 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 				service.reload();
 			};
 
-			/**  not sure if this procedure is still needed
-			 * Switch type of modules to be displayed
-			 **/
-			service.switchType = function (type) {
-				service.selectedType = type;
-			};
-
 			// Check if this module is alread added to visible list
 			var added = function (module) {
 				for(var i in service.visibleModules['ALL']) {
-					if (service.visibleModules['ALL'][i] === module) {
+					if (service.visibleModules['ALL'][i].code === module.code) {
 						return true;
 					}
 				}
@@ -217,12 +194,12 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 			 * MC is also updated
 			 **/
 			service.removeModule = function (modType, modCode) {
-				for(var i in service.visibleModules[modType]) {
-					var module = service.visibleModules[modType][i];
+				for(var i in service.visibleModules['ALL']) {
+					var module = service.visibleModules['ALL'][i];
 
 					if (module.code === modCode) {
-						service.totalMCs[modType] -= module.mc;
-						service.visibleModules[modType].splice(i, 1);
+
+						service.visibleModules['ALL'].splice(i, 1);
 
 						// Mark this module as unselected
 						service.removePlannedModule(module);
@@ -239,7 +216,6 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 					var module = service.visibleModules['ALL'][i];
 
 					if ((module.type === modType) && (module.code === modCode)) {
-						console.log(modType, modCode);
 						if (module.state === 'taken') {
 							service.addPlannedModule(module);
 						} else {
@@ -310,33 +286,92 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 			};
 
 			// Gather all selected modules and send it to back-end
-			service.submit = function (admissionYear, major, focusArea, callback) {
-				var modules = service.visibleModules['ALL'];
-				var selectedModules = [];
-
-				for(var i in modules) {
-					var module = modules[i];
-
-					selectedModules.push([module.code, module.type, '4']);
-				}
-
+			service.submit = function (url, params, callback) {
 				$http({
 					method: 'GET',
-					url: '/main/php/getrequirements.php',
-					params: {
-						adm_year: admissionYear,
-						major: major,
-						focus_area: focusArea,
-						cmd: 'verify'
-					}
+					url: url,
+					params: params
 				}).then(function successCallback(res) {
 
 					if (callback) {
 						callback(res.data);
 					}
 				}, function errorCallback(err) { 
-					console.log('ERROR: Sending modules ' + err);
+					console.log('ERROR: Submitting ' + url + ' ' + err);
 				});
+			};
+
+			/**
+			 *  OUTPUT: List of Module Codes
+			 **/
+			service.getListOfModules = function () {
+				var list = [];
+				var modules = service.visibleModules['ALL'];
+
+				for(var i in modules) {
+					var module = modules[i];
+
+					list.push(module.code);
+				}
+
+				return JSON.stringify(list);
+			};
+
+			/**
+			 *  Divide modules into ULR, PR, UE
+			 **/
+			service.regroup = function () {
+				/* reset all module group except for ALL */
+				for(var type in service.types) {
+					if (type === 'ALL') continue;
+
+					service.visibleModules[type] = [];
+					service.totalMCs[type] = 0;
+				}
+
+				var modules = service.visibleModules['ALL'];
+
+				for(var i in modules) {
+					var module = modules[i];
+
+					if ((module.type) && (module.type === 'ULR')) {
+						/* add module to specific category, and update MC also */
+						service.visibleModules['ULR'].push(module);
+						service.totalMCs['ULR'] += module.mc;
+					} else if ((module.type) && (module.type === 'PR')) {
+						service.visibleModules['PR'].push(module);
+						service.totalMCs['PR'] += module.mc;
+					} else {
+						service.visibleModules['UE'].push(module);
+						service.totalMCs['UE'] += module.mc;
+					}
+				}
+			};
+
+			/**
+			 *  Send user's info and list of modules to server to get types of modules
+			 *  It also redistributes modules into specific types
+			 **/
+			service.getType = function () {
+				var params = {
+					major: 'CS',
+					adm_year: '1314',
+					focus_area: 'IR',
+					mods: service.getListOfModules()
+				};
+
+				service.submit('/main/php/get_type.php', params, function (result) {
+					var modules = service.visibleModules['ALL'];
+					
+					for(var i in modules) {
+						var module = modules[i];
+
+						module.type = result[module.code];
+					}
+
+					/* Divide modules into types */
+					service.regroup();
+				}); 
 			};
 
 			return service;

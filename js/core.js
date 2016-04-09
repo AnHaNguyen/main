@@ -88,7 +88,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', '$coo
 			var expireDate = new Date();
 			expireDate.setDate(expireDate.getDate() + 10 * 365);
 
-			$cookies.put('data', data, { expires: expireDate });
+			$cookies.put('plan', plan, { expires: expireDate });
 		};
 
 		if (plan) {

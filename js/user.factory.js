@@ -33,7 +33,6 @@ angular.module('core').factory('User', ['$http', '$cookies',
 				expireDate.setDate(expireDate.getDate() + 10 * 365);
 
 				$cookies.put('user', data, { expires: expireDate });
-				console.log('usersave>>', data);
 			};
 
 			/**
@@ -48,7 +47,6 @@ angular.module('core').factory('User', ['$http', '$cookies',
 				object.username = username;
 				object.bachelor = bachelor;
 
-				console.log('setInfo>>', object);
 
 				object.displayMajor = object.major;
 				object.displayFocusArea = object.focusArea;
@@ -72,14 +70,12 @@ angular.module('core').factory('User', ['$http', '$cookies',
 				/* Load user's info from cookie */
 				var info = $cookies.get('user');
 
-				console.log('userload>>', info);
 				if (info) {
 					/* JSON decoding */
 					var info = JSON.parse(info);
 
 					object.setInfo(info.major, info.focusArea, info.admissionYear, info.username, info.bachelor);
 
-					console.log('user>>', info);
 				}
 			};
 
