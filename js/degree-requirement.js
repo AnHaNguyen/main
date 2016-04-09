@@ -1,14 +1,19 @@
 function updateDegReq() {
 	orReplacement = {"Lev4": "3 level-4 modules"};
 
-	description = {"GEMA": "GEMA Module", "GEMB": "GEMB Module", "SS": "Singapore Studies Module", "Breadth": "Breadth Module"};	
+	descriptionOf = {"GEMA": "GEMA Module(s)", "GEMB": "GEMB Module(s)", "SS": "Singapore Studies Module(s)", "Breadth": "Breadth Module(s)"};	
 
 	longForm = {"ULR": "University Level Requirements", "PR": "Program Requirements", "UE": "Unrestricted Electives",
-				"Lev4": "3 level-4 modules", "Focus": "3 focus-area modules", "Focus4": "Level-4 module in focus area", 
-				"Scie": "Science modules"};
+				"Lev4": "level-4 module(s)", 
+				"Focus": "Focus-area module(s)", 
+				"Focus4": "Level-4 module(s) in focus area", 
+				"Scie": "Science module(s)",
+				"Elective": "Technical Elective Module(s)",
+				"ElectiveDepth": "Technical Elective Depth Module(s)"
+			};
 
 	getIdOf = {"ULR": "ulr-deg-req", "PR": "prog-req-deg-req", "UE": "ue-deg-req"};
-	hoverType = {"ULR": "ulr", "PR": "pr", "UE": "ue"}
+	hoverType = {"ULR": "ulr", "PR": "pr", "UE": "ue", "OR": "pr"};
 
 	major = $('#major').val(), year = $('#admission_year').val();
 	jsonFile = "req/" + major + '/' + year + ".json";
@@ -34,6 +39,46 @@ function updateDegReq() {
 		console.log(jsonContent);
 
 		$.each(jsonContent.and, function (reqType, details) {
+			//put or-table before UE
+
+			if (reqType=="UE") {
+				$.each(jsonContent.or, function(index, orTable) {
+					newHtml += `<div class="row mod-type-table">`;
+
+					newHtml += `<div class="col s12 content-row"> \
+									<div class="col s12 header item"> Choose one of the following options </div> \
+								</div>`;
+
+					$.each(orTable, function(index, option) {
+						newHtml += `<div class="col s12 content-row {{hoverType}}-hover"> `.replace("{{hoverType}}", hoverType["OR"]);
+						optionTemplate = `<div class="col s10 item">{{option}} </div> \
+											<div class="col s2 item">{{MC}} </div> `;
+
+						function orParse(codeList) {
+							if (orReplacement[codeList]!=undefined) return orReplacement[codeList];
+							splitCode = codeList.split(',');
+
+							description = codeList.replace(",", " and ");
+
+							for (i=0; i<splitCode.length; i++) {
+								moduleCode = splitCode[i];
+								title = "";
+								if (moduleTable[moduleCode]!=undefined) title = moduleTable[moduleCode].ModuleTitle;
+								description = description.replace(moduleCode, moduleCode + " " + title);
+							}
+							
+							return description;
+						}
+
+						newHtml += optionTemplate.replace("{{option}}", orParse(option[0])).replace("{{MC}}", option[1]);
+						newHtml += `</div>`;
+					})
+
+					newHtml +=`</div>`;
+				});				
+			}
+
+
 			newHtml += '<div id="{{id}}" class="row mod-type-table">'.replace("{{id}}", getIdOf[reqType]);
 
 			template = `<div class="col s12 content-row"> \
@@ -56,7 +101,7 @@ function updateDegReq() {
 
 						if (moduleTable[moduleCode]!=undefined) moduleTemplate = moduleTemplate.replace("{{title}}", moduleTable[moduleCode].ModuleTitle);
 						else {
-							if (description[moduleCode]!=undefined) moduleTemplate = moduleTemplate.replace("{{title}}", description[moduleCode]);
+							if (descriptionOf[moduleCode]!=undefined) moduleTemplate = moduleTemplate.replace("{{title}}", MC/4 + " " + descriptionOf[moduleCode]);
 							moduleTemplate = moduleTemplate.replace("{{title}}", "");
 						}
 						newHtml += moduleTemplate.replace("{{moduleCode}}", moduleCode).replace("{{MC}}", MC);
@@ -64,7 +109,7 @@ function updateDegReq() {
 						moduleTemplate = `<div class="col s10 item">{{description}} </div> \
 											<div class="col s2 item"> {{MC}} </div>`;
 
-						newHtml += moduleTemplate.replace("{{description}}", longForm[moduleCode]).replace("{{MC}}", MC);
+						newHtml += moduleTemplate.replace("{{description}}", MC/4 + " " + longForm[moduleCode]).replace("{{MC}}", MC);
 					}
 
 
@@ -74,41 +119,6 @@ function updateDegReq() {
 
 			newHtml += `</div>`;
 		}); 
-
-		$.each(jsonContent.or, function(index, orTable) {
-			newHtml += `<div class="row mod-type-table">`;
-
-			newHtml += `<div class="col s12 content-row"> \
-							<div class="col s12 header item"> Choose one of the following options </div> \
-						</div>`;
-
-			$.each(orTable, function(index, option) {
-				newHtml += `<div class="col s12 content-row ulr-hover"> `;
-				optionTemplate = `<div class="col s10 item">{{option}} </div> \
-									<div class="col s2 item">{{MC}} </div> `;
-
-				function orParse(codeList) {
-					if (orReplacement[codeList]!=undefined) return orReplacement[codeList];
-					splitCode = codeList.split(',');
-
-					description = codeList.replace(",", " and ");
-
-					for (i=0; i<splitCode.length; i++) {
-						moduleCode = splitCode[i];
-						title = "";
-						if (moduleTable[moduleCode]!=undefined) title = moduleTable[moduleCode].ModuleTitle;
-						description = description.replace(moduleCode, moduleCode + " " + title);
-					}
-					
-					return description;
-				}
-
-				newHtml += optionTemplate.replace("{{option}}", orParse(option[0])).replace("{{MC}}", option[1]);
-				newHtml += `</div>`;
-			})
-
-			newHtml +=`</div>`;
-		});
 
 		newHtml += "</div></div>";
 		$("#deg-req-div").html(newHtml);
