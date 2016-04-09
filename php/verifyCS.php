@@ -1,7 +1,7 @@
 <?php
 require_once("library.php");
 
-function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or){
+function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD){
 	$prefix = array("CS");
 	
 	$count = array();
@@ -47,19 +47,23 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or){
 	if (array_key_exists("Focus", $prReq)){			//req has focus mod
 		for ($j = 0; $j < count($focus_list);$j++){
 			$modName = $focus_list[$j];
-			if (isLev4Prefix($modName,$prefix) && array_key_exists("Focus4", $prReq) && $prReq["Focus4"] > 0){		//handle focus lev 4 req
+			if (isLev4($modName) && array_key_exists("Focus4", $prReq) && $prReq["Focus4"] > 0){		//handle focus lev 4 req
 				$prReq["Focus4"] -= $modulesMC[$modName];
-			}
-			if ($prReq["Focus"] > 0){
-				$prReq["Focus"] -= $modulesMC[$modName];	
+				$prReq["Focus"] -= $modulesMC[$modName];
+				$BandD -= $modulesMC[$modName];
 				$count[$modName]++;
 			}
 		}
-		if (array_key_exists("Focus4", $prReq)){
-			$prReq["Focus"] = max($prReq["Focus"], $prReq["Focus4"]);
+		for ($j = 0; $j < count($focus_list);$j++){
+			$modName = $focus_list[$j];
+			if (!isLev4($modName) && $prReq["Focus"] > $prReq["Focus4"]){
+				$prReq["Focus"] -= $modulesMC[$modName];	
+				$BandD -= $modulesMC[$modName];
+				$count[$modName]++;
+			}
 		}
 	}
-
+	
 	if (array_key_exists("Scie", $prReq)){
 		for ($j = 0; $j < count($sci_list); $j++){
 			$modName = $sci_list[$j];
@@ -75,6 +79,9 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or){
 			$modName = $PRmod[$i][0];
 			if (isLev4Prefix($modName,$prefix)){
 				if ($prReq["Lev4"] >0){
+					if ($count[$modName] == 0){
+						$BandD -= $modName[$modName];
+					}
 					$prReq["Lev4"] -= $modulesMC[$modName];
 					$count[$modName]++;
 				}
@@ -91,8 +98,8 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or){
 		for ($j = 0; $j < count($case); $j++){
 			$satisfyMods = hasCompleteCS($case[$j], $PRmod, $count, $modulesMC, $sci_list);			//[0] = number of MCs not cleared, [1][2] ... list of mods used to clear 
 			
-			if ($satisfyMods[0] < $min){
-				$min = $satisfyMods[0];
+			if ($satisfyMods[count($satisfyMods)-1] < $min){
+				$min = $satisfyMods[count($satisfyMods)-1];
 				$minMods = array_slice($satisfyMods,0,count($satisfyMods)-1);
 			}
 		}
@@ -102,9 +109,7 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or){
 			$count[$minMods[$j]]++;
 		}
 		$left[$i] = $min;
-	}
-	
-	//handle overlapping mods
+	}	
 
 	$keys = array_keys($prReq);
 	$PRsum = 0;
@@ -116,14 +121,33 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or){
 	for ($i = 0; $i < count($left); $i++){
 		$PRsum += $left[$i];
 	}
+	//handle B&D + overlapping mods
+	for ($i =0; $i < count($PRmod); $i++){
+		$modName = $PRmod[$i][0];
+		if ($count[$modName] > 1){
+			$PRsum += $modulesMC[$modName];
+		}
+	}
+
+	for ($i =0; $i < count($PRmod); $i++){
+		if ($BandD > 0){
+			$modName = $PRmod[$i][0];
+			if ($count[$modName] == 0 && isCSMod($modName)){
+				$BandD -= $modulesMC[$modName];
+				$PRsum -= $modulesMC[$modName];
+				$count[$modName]++;
+			}
+		}
+	}
 	return $PRsum;
 }
 
 function hasCompleteCS($group, $PRmod, $count, $modulesMC, $sci_list){
 	$total = $group[1];
 	$satisfyMods =array();
-	$index = 1;
+	$index = 0;
 	$mods = preg_split("/\,/", $group[0]);
+
 	for ($i = 0; $i < count($mods); $i++){
 		$modName = $mods[$i];
 		if (array_key_exists($modName,$modulesMC)){
@@ -133,7 +157,7 @@ function hasCompleteCS($group, $PRmod, $count, $modulesMC, $sci_list){
 		} else if ($mods == "Lev4"){
 			for ($j = 0; $j < count($PRmod); $j++){
 				$modName = $PRmod[$j][0];
-				if (isLev4Prefix($modName,$prefix) && $count[$modName] == 0){
+				if (isLev4Prefix($modName,$prefix) && $count[$modName] == 0 && $modulesMC[$modName] == 4){
 					$total -= $modulesMC[$modName];
 					$satisfyMods[$index] = $modName;
 					$index++;
@@ -150,7 +174,8 @@ function hasCompleteCS($group, $PRmod, $count, $modulesMC, $sci_list){
 			}
 		}
 	}
-	$satisfyMods[0] = $total;
+	
+	$satisfyMods[count($satisfyMods)] = $total;
 	return $satisfyMods;
 }
 
@@ -164,5 +189,11 @@ function getScienceMod(){
 	$file = "/var/www/html/main/req/CS/science.json";
 	$data = file_get_contents($file);
 	return json_decode($data, true);
+}
+
+function isCSMod($modName){
+	$substr = substr($modName, 0,2);
+	$lev = substr($modName, 2,1);
+	return ($substr == "CS" && intval($lev) != 0);
 }
 ?>
