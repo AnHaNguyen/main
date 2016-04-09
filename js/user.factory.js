@@ -19,14 +19,13 @@ angular.module('core').factory('User', ['$http', 'localStorageService',
 			 *  Save user's data to cookie 
 			 **/
 			object.save = function () {
-				/* JSON Encoding */
-				var data = JSON.stringify({
+				var data = {
 					major: object.major,
 					focusArea: object.focusArea,
 					admissionYear: object.admissionYear,
 					username: object.username,
 					bachelor: object.bachelor
-				});
+				};
 
 				localStorageService.set('user', data);
 			};
