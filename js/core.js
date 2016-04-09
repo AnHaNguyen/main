@@ -152,4 +152,3 @@ angular.module('core').controller('planController', [ '$scope', 'Transport', '$c
 		};
 	}
 ]);
-
