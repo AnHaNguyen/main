@@ -4,7 +4,7 @@ require_once "update_ULR_type.php";
 require_once "update_CS_PR_type.php";
 require_once "update_IS_PR_type.php";
 require_once "update_CEG_PR_type.php";
-require_once "update_BZA_PR_type.php";
+//require_once "update_BZA_PR_type.php";
 
 /*
  * Given a student's major, admission year, primary focus area, and an array of module codes,
@@ -86,8 +86,8 @@ function check_module_type($major, $adm_year, $mods) {
             return get_type_IS($adm_year, $mods_with_types);
         case 'CEG':
             return get_type_CEG($adm_year, $mods_with_types);
-        case 'BZA':
-            return get_type_BZA($adm_year, $mods_with_types);
+        /*case 'BZA':
+            return get_type_BZA($adm_year, $mods_with_types);*/
         default:
             // Error
             return "Invalid major entered, exiting";
@@ -120,10 +120,10 @@ function get_type_CEG($adm_year, $mods) {
     return $mods;
 }
 
-function get_type_BZA($adm_year, $mods) {
+/*function get_type_BZA($adm_year, $mods) {
 
     $mods = update_ULR_type($adm_year, $mods, false);
     $mods = update_BZA_PR_type($adm_year, $mods);
 
     return $mods;
-}
+}*/
