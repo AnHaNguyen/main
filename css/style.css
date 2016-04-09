@@ -10,11 +10,11 @@ body {
 	min-height: 100vh;
     width: 100%;
     box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
-    background: #1a82f7; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); /* Standard syntax (must be last) */
+    background: #1a82f7; 													/* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); 	/* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); 			/* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); 		/* For Firefox 3.6 to 15 */
+    background: linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); 			/* Standard syntax (must be last) */
 }
 
 #start-wrapper {
@@ -37,6 +37,14 @@ body {
 
 #start-text-div {
 	height: 70vh;
+	color: white;
+	text-align: center;
+}
+
+#start-text-div p {
+	font-size: 18px;
+	text-shadow: 1px 0 black;
+	padding-top: 150px;
 }
 
 #starter-footer {
@@ -334,6 +342,80 @@ body {
 	-webkit-filter: grayscale(100%);
 	filter: grayscale(100%);
 	background-color: #EEEEEE;
+}
+
+		/*----------Advanced Search Box----------*/
+.modal {
+	border-radius: 5px;
+}
+
+.advanced-search-title {
+	color: white;
+	background-color: #4cb5f5;	/* blue sky color */
+	font-size: 20px;
+	padding: 15px 20px 20px 25px;
+	overflow: hidden;
+}
+
+		/*------------Input-----------*/
+.wrapper-input-div {
+	margin: 30px 30px 0 30px;
+	overflow: hidden;
+}
+
+.input-div:focus, .input-div: {
+	background-color: #f0f0f0;				/* Lighten #EEEEEE */	
+}
+
+.input-div input {
+	margin: 0 !important;
+	padding: 5px 15px 5px 15px;
+	box-sizing: border-box !important;
+	border: 1px solid black !important;
+	border-radius: 5px;
+	box-shadow: 0 0 !important;
+}
+
+::-webkit-input-placeholder {
+   color: #EEEEEE;				
+   -webkit-filter: brightness(60%);
+   filter: brightness(60%);
+}
+
+	/*---------------Cancel & Ok buttons--------------*/
+.modal-footer {
+	padding-right: 30px !important;
+	height: 60px !important;
+}
+
+.modal-footer div {
+	text-transform: capitalize;
+	background-color: #4cb5f5;	/* blue sky color */
+	border-radius: 5px;
+	margin: 5px !important;
+	width: 105px;
+}
+
+.modal-footer div a {
+	color: white;
+}
+
+.multi-choice-div {
+	float: left;
+	margin-right: 30px;
+}
+
+.left-advanced-search-div {
+	padding-top: 12px;
+	float: left;
+}
+
+.right-advanced-search-div {
+	float: right;	
+}
+
+.right-advanced-search-div img:hover {
+	opacity: 0.5;
 }
 
 /*------------------Drag & Drop Table------------------*/

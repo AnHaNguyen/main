@@ -23,16 +23,10 @@ $(document).ready(function() {
 	 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
 	 $(".modal-trigger").leanModal();
 
-	 $("#taken-search-box").focus(function(){
-	 	$("#taken-search-box").keypress(function(e) {
+	 $(".search-input").focus(function(){
+	 	$(".search-input").keypress(function(e) {
 	 		if(e.which == 13) {		// pressing enter button
-	 			$("#search-modal").openModal();
-
-	 			$(".close-btn").on("click", function() {
-	 				$("#search-modal").closeModal();
-	 			});
-
-	 			Materialize.toast(' is added into ', 4000);
+	 			Materialize.toast('New module is added into ', 2000);
 	 		}
 	 	});
 	 });
@@ -64,7 +58,7 @@ $(document).ready(function() {
 	    // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
 	    $('html, body').animate({
 	    	scrollTop: $(hash).offset().top - 80
-	    }, 800, function(){
+	    }, 400, function(){
 	    	
 	      // Add hash (#) to URL when done scrolling (default click behavior)
 	      window.location.hash = hash;
@@ -79,6 +73,24 @@ $(document).ready(function() {
 
 	$(".drag-drop-item").on("mouseout", function() {
 		$(this).css("background-color", "#b3c100");
+	});
+
+	var darkenModal = LightenDarkenColor("#4cb5f5", -40);
+	$(".modal-footer div").on("mouseover", function(){
+		$(this).css("background-color", "" + darkenModal);
+	});
+
+	$(".modal-footer div").on("mouseout", function(){
+		$(this).css("background-color", "#4cb5f5");
+	});
+
+	/*------------------Input in Advanced Search Box--------------------*/
+	$(".input-div").on("click", function(){
+		$(this).css("background-color", "#f0f0f0");
+	});
+
+	$(".input-div").on("focusout", function(){
+		$(this).css("background-color", "white");
 	});
 });
 
