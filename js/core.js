@@ -86,12 +86,37 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			localStorageService.set('plan', plan);
 		};
 
+		$scope.plannedMC = [];
+
+		/** 
+		 *  MC Counter in plan table
+		 *  Recompute mc after a module is added, removed or moved
+		 **/
+
+		$scope.computePlannedMC = function () {
+			for(var i in $scope.semester) {
+				$scope.plannedMC[i] = 0;
+
+				var sem = $scope.semester[i];
+
+				for(var j in sem) {
+					var mod = sem[j];
+
+					$scope.plannedMC[i] += mod.mc;
+				}
+			}
+		};
+
 		if (plan) {
 		/* BRANCH: stored plan found */
 			$scope.semester = plan;
+
+			$scope.computePlannedMC();
 		} else {
 		/* BRANCH: stored plan not found */
 			$scope.semester = [ [], [], [], [] ];
+
+			$scope.computePlannedMC();
 		}
 
 		$scope.addPlannedModule = function (module) {
@@ -102,6 +127,8 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			};
 			$scope.semester[0].push(clone);
 			$scope.save();
+
+			$scope.computePlannedMC();
 		};
 
 		$scope.removePlannedModule = function (mod) {
@@ -118,6 +145,8 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 					}
 				}
 			}
+
+			$scope.computePlannedMC();
 		};
 
 		Modules.removePlannedModuleFromPlanTable = $scope.removePlannedModule;
@@ -132,6 +161,8 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			tolerance: 'intersect',
 			update: function () {
 				$scope.save();
+
+				$scope.computePlannedMC();
 			}
 		};
 
