@@ -216,37 +216,37 @@ function update_ULR_type($adm_year, $mods) {
         $has_taken_GET = false;
         
         foreach ($mods as $mod_code => $mod_type) {
-            
+
             if (!$has_taken_GEH
                 && strpos($mod_code, "GEH") === 0) {
 
                 $mods[$mod_code] = IS_PRECISE_MODE ? GEH_TYPE : ULR_TYPE;
                 $has_taken_GEH = true;
-                
+
             } else if (!$has_taken_GEQ
                 && strpos($mod_code, "GEQ") === 0) {
 
                 $mods[$mod_code] = IS_PRECISE_MODE ? GEQ_TYPE : ULR_TYPE;
                 $has_taken_GEQ = true;
-                
+
             } else if (!$has_taken_GER
                 && strpos($mod_code, "GER") === 0) {
 
                 $mods[$mod_code] = IS_PRECISE_MODE ? GER_TYPE : ULR_TYPE;
                 $has_taken_GER = true;
-                
+
             } else if (!$has_taken_GES
                 && strpos($mod_code, "GES") === 0) {
 
                 $mods[$mod_code] = IS_PRECISE_MODE ? GES_TYPE : ULR_TYPE;
                 $has_taken_GES = true;
-                
+
             } else if (!$has_taken_GET
                 && strpos($mod_code, "GET") === 0) {
 
                 $mods[$mod_code] = IS_PRECISE_MODE ? GET_TYPE : ULR_TYPE;
                 $has_taken_GET = true;
-                
+
             } else {
                 $mods[$mod_code] = UE_TYPE;
             }
@@ -258,6 +258,7 @@ function update_ULR_type($adm_year, $mods) {
     }
 }
 
+
 function update_CS_PR_type($adm_year, $focus_area, $mods) {
     $all_mod_info_string = file_get_contents('../data/simplified.json');
     $grad_reqs_string = file_get_contents('../req/CS/' . $adm_year . '.json');
@@ -266,11 +267,12 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
 
     $all_mod_info = json_decode($all_mod_info_string, true);
     $grad_reqs = json_decode($grad_reqs_string, true);
-    $core_reqs = $grad_reqs["and"]["PR"];
+    $core_reqs = $grad_reqs["and"]["PR"]["mod"];
     $fa_reqs = json_decode($fa_reqs_string, true)[$focus_area];
     $sci_reqs = json_decode($sci_reqs_string, true);
 
     // Requirement exceptions not covered in json
+    // Preclusions are not dealt with in this program
     $core_reqs["CS1101S"] = "4"; // CS1010 can be replaced with CS1101S
     $core_reqs["CS2020"] = "4"; // CS1020 and CS2010 can be replaced with CS2020
     $core_reqs["CS2103T"] = "4"; // Effectively equivalent to CS2103
