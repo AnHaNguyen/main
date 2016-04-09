@@ -2,16 +2,16 @@
 
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable']);
 
-angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Modules',
-	function($scope, $cookies, Modules) { 
-		$scope.selected = '';
+angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Modules', 'User',
+	function($scope, $cookies, Modules, User) { 
+
+		$scope.user = User;
 
 		$scope.modulesController = Modules;
 
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
 				$scope.modules = data;
-				console.log('new >> ' , data);
 			});
 		};
 
@@ -33,33 +33,11 @@ angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Mod
 
 		$scope.initModules(1415, 'CS');
 
-		$scope.displayMajor = '';
-		$scope.displayFocusArea = '';
-		$scope.displayAdmissionYear = '';
-
-		$scope.setInfo = function (major, focusArea, admissionYear) {
-			$scope.major = major;
-			$scope.focusArea = focusArea;
-			$scope.admissionYear = admissionYear;
-
-			$scope.displayMajor = $scope.major;
-			$scope.displayFocusArea = $scope.focusArea;
-			$scope.displayAdmissionYear = $scope.admissionYear;
-
-			$scope.initModules($scope.admissionYear, $scope.major);
+		$scope.user.reset = function (major, focusArea, admissionYear) {
+			$scope.initModules(admissionYear, major);
 		};
 
-		// Find user's info in cookies
-		var infoUser = $cookies.get('info');
-
-		if (infoUser) {
-			$scope.setInfo(infoUser.major, infoUser.focusArea, infoUser.admissionYear);
-		}
-
-		// Update user's info
-		$scope.updateInfo = function () {
-			$scope.setInfo($scope.major, $scope.focusArea, $scope.admissionYear);
-		};
+		$scope.user.init();
 	}
 ]);
 
@@ -106,15 +84,11 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', '$coo
 			// Update by save it to cookies
 			var plan = JSON.stringify($scope.semester);
 
-			// Expire date is ten years from now
+			/* Set cookie's expire date which is ten years from now */
 			var expireDate = new Date();
 			expireDate.setDate(expireDate.getDate() + 10 * 365);
 
-			var cookieOption = {
-				expires: expireDate
-			}; 
-
-			$cookies.put('plan', plan, cookieOption);
+			$cookies.put('data', data, { expires: expireDate });
 		};
 
 		if (plan) {

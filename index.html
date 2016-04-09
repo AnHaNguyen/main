@@ -32,7 +32,7 @@
 </head>
 
 <body ng-app="core" id="main">
-	<div id="start-page">
+	<div id="start-page" ng-controller="mainController">
 		<div id="start-wrapper">
 			<div>
 				<span class="logo">SOCPlans</span>
@@ -46,13 +46,13 @@
 			<div id="grad-cer-div" class="center z-depth-2">
 				<img src="img/NUS-logo.png" alt="NUS Logo">
 				<p>This is to certify that<br></p>
-				<form method="post">
-					<input placeholder="Your Full Name" id="full-name" type="text" class="validate center"><br>
+				<form ng-submit="user.update()">
+					<input placeholder="Your Full Name" id="full-name" type="text" class="validate center" ng-model="user.displayUsername"><br>
 					<span>having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
-					<span class="grad-cer-text">BACHELOR OF<input placeholder="Your Bachelor" id="bachelor" type="text" class="validate center input-size"><br>
-						IN <input placeholder="Your Major" id="major" type="text" class="validate center input-size">
-						FOCUS AREA <input placeholder="Your Focus Area" id="focus_area" type="text" class="validate center input-size"><br>
-						ADMISSION YEAR <input placeholder="Your Admission Year" id="admission_year" type="text" class="validate center input-size"><br>
+					<span class="grad-cer-text">BACHELOR OF<input placeholder="Your Bachelor" id="bachelor" type="text" class="validate center input-size" ng-model="user.displayBachelor"><br>
+						IN <input placeholder="Your Major" id="major" type="text" class="validate center input-size" ng-model="user.displayMajor">
+						FOCUS AREA <input placeholder="Your Focus Area" id="focus_area" type="text" class="validate center input-size" ng-model="user.displayFocusArea"><br>
+						ADMISSION YEAR <input placeholder="Your Admission Year" id="admission_year" type="text" class="validate center input-size" ng-model="user.displayAdmissionYear"><br>
 					</span>
 					<input type="submit" id="starter-confirm-btn" class="btn" value="Confirm">
 				</form>
@@ -605,6 +605,7 @@
 		<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"> </script>
 		<script type="text/javascript" src="js/core.js"> </script>
 		<script type="text/javascript" src="js/modules.factory.js"> </script>
+		<script type="text/javascript" src="js/user.factory.js"> </script>
 		<script type="text/javascript" src="js/search.directive.js"> </script>
 		<script type="text/javascript" src="node_modules/angucomplete-alt/dist/angucomplete-alt.min.js"> </script>
 		<script type="text/javascript" src="bower_components/angular-ui-sortable/sortable.min.js"> </script>
