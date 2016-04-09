@@ -253,10 +253,22 @@ body {
 .content-row {
 	padding: 0 !important;
 	display: flex;
+	background-color: white;
 }
 
 .content-row:hover{
 	font-weight: bold;
+}
+
+.new-added-row {
+	animation-name: addMod;
+	animation-duration: 0.7s;
+}
+
+@keyframes addMod {
+	0% 		{background-color: white; font-weight: bold;}
+	50%		{background-color: #739f3d; font-weight: bold;}			/* pear green color */
+	100% 	{background-color: #c60000; font-weight: bold;}			/* red pepper color */
 }
 
 .ulr-hover:hover {
@@ -264,7 +276,7 @@ body {
 }
 
 .pr-hover:hover {
-	background-color: #fa6e59;			/* watermelon color */
+	background-color: #fe7a47;			/* papaya color */
 }
 
 .ue-hover:hover {
