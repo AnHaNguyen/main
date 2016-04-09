@@ -1,19 +1,17 @@
 'use strict';
 
-angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable']);
+angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
 
-angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Modules', 'Transport',
-	function($scope, $cookies, Modules, Transport) { 
-		$scope.selected = '';
+angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 
+	function($scope, Modules, User) { 
+
+		$scope.user = User;
 
 		$scope.modulesController = Modules;
-
-		Transport.plannedModules = Modules.plannedModules;
 
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
 				$scope.modules = data;
-				console.log('new >> ' , data);
 			});
 		};
 
@@ -35,33 +33,11 @@ angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Mod
 
 		$scope.initModules(1415, 'CS');
 
-		$scope.displayMajor = '';
-		$scope.displayFocusArea = '';
-		$scope.displayAdmissionYear = '';
-
-		$scope.setInfo = function (major, focusArea, admissionYear) {
-			$scope.major = major;
-			$scope.focusArea = focusArea;
-			$scope.admissionYear = admissionYear;
-
-			$scope.displayMajor = $scope.major;
-			$scope.displayFocusArea = $scope.focusArea;
-			$scope.displayAdmissionYear = $scope.admissionYear;
-
-			$scope.initModules($scope.admissionYear, $scope.major);
+		$scope.user.reset = function (major, focusArea, admissionYear) {
+			$scope.initModules(admissionYear, major);
 		};
 
-		// Find user's info in cookies
-		var infoUser = $cookies.get('info');
-
-		if (infoUser) {
-			$scope.setInfo(infoUser.major, infoUser.focusArea, infoUser.admissionYear);
-		}
-
-		// Update user's info
-		$scope.updateInfo = function () {
-			$scope.setInfo($scope.major, $scope.focusArea, $scope.admissionYear);
-		};
+		$scope.user.init();
 	}
 ]);
 
@@ -78,64 +54,105 @@ angular.module('core').controller('loginController', [ '$scope', 'User',
 	}
 ]);
 
-angular.module('core').controller('planController', [ '$scope', 'Transport', '$cookies',
-	function ($scope, Transport, $cookies) {
+angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService',
+	function ($scope, Modules, localStorageService) {
+		/* Create clone of modules factory */
+		$scope.initModules = function (admissionYear, major) {
+			Modules.fetchData(admissionYear, major, function (data) {
+				$scope.modules = data;
+			});
+		};
+
+		// Remove module
+		$scope.removeModule = Modules.removeModule;
+
+		// Change state of module from planned to taken and vice versa
+		$scope.changeState = Modules.changeState;
+
+		// Function to add new module
+		$scope.addModule = Modules.addModule;
+
+		$scope.initModules(1, 1);
+
+		/* End */
+
 		// CHeck the cookie first
-		var plan = $cookies.get('plan');
+		var plan = localStorageService.get('plan');
 
 		$scope.save = function () {
-			// Update by save it to cookies
-			var plan = JSON.stringify($scope.modules);
+			// Update by save it to localStorage
+			var plan = $scope.semester;
 
-			// Expire date is ten years from now
-			var expireDate = new Date();
-			expireDate.setDate(expireDate.getDate() + 10 * 365);
+			localStorageService.set('plan', plan);
+		};
 
-			var cookieOption = {
-				expires: expireDate
-			}; 
+		$scope.plannedMC = [];
 
-			$cookies.put('plan', plan, cookieOption);
+		/** 
+		 *  MC Counter in plan table
+		 *  Recompute mc after a module is added, removed or moved
+		 **/
+
+		$scope.computePlannedMC = function () {
+			for(var i in $scope.semester) {
+				$scope.plannedMC[i] = 0;
+
+				var sem = $scope.semester[i];
+
+				for(var j in sem) {
+					var mod = sem[j];
+
+					$scope.plannedMC[i] += mod.mc;
+				}
+			}
 		};
 
 		if (plan) {
-			var plan = JSON.parse(plan);
+		/* BRANCH: stored plan found */
+			$scope.semester = plan;
 
-			$scope.modules = plan;
+			$scope.computePlannedMC();
 		} else {
-			$scope.modules = [ [], [], [], [] ];
+		/* BRANCH: stored plan not found */
+			$scope.semester = [ [], [], [], [] ];
+
+			$scope.computePlannedMC();
 		}
 
 		$scope.addPlannedModule = function (module) {
-			$scope.modules[0].push(module);
+			var clone = {
+				code: module.code,
+				title: module.title,
+				mc: module.mc
+			};
+			$scope.semester[0].push(clone);
 			$scope.save();
+
+			$scope.computePlannedMC();
 		};
 
 		$scope.removePlannedModule = function (mod) {
-			for(var s in $scope.modules) {
-				var modules = $scope.modules[s];
+			for(var s in $scope.semester) {
+				var semester = $scope.semester[s];
 
-				for(var i in modules) {
-					var module = modules[i];
+				for(var i in semester) {
+					var module = semester[i];
 
 					if (module.code === mod.code) {
-						modules.splice(i, 1);
+						semester.splice(i, 1);
 						$scope.save();
 						return;
 					}
 				}
 			}
+
+			$scope.computePlannedMC();
 		};
 
-		Transport.removePlannedModule = $scope.removePlannedModule;
-		Transport.addPlannedModule = $scope.addPlannedModule;
+		Modules.removePlannedModuleFromPlanTable = $scope.removePlannedModule;
+		Modules.addPlannedModuleToPlanTable = $scope.addPlannedModule;
 
-		$scope.semester = [];
-		$scope.semester[0] = $scope.modules[0];
-		$scope.semester[1] = $scope.modules[1];
-		$scope.semester[2] = $scope.modules[2];
-		$scope.semester[3] = $scope.modules[3];
-
+		/* Configuration for sortable angularjs */
 		$scope.sortingLog = [];
 
 		$scope.sortableOptions = {
@@ -144,11 +161,13 @@ angular.module('core').controller('planController', [ '$scope', 'Transport', '$c
 			tolerance: 'intersect',
 			update: function () {
 				$scope.save();
+
+				$scope.computePlannedMC();
 			}
 		};
 
 		$scope.log = function () {
-			console.log($scope.modules);
+			console.log($scope.semester);
 		};
 	}
 ]);
