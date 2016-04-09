@@ -54,10 +54,23 @@ if (isset($_REQUEST["cmd"])){
 	
 	$req = json_decode($data,true);
 
-	//verifyReqIS($modulesIS,$adm_year,$req);
-	//verifyReqCS($modulesCS, $adm_year, $req);
-	//verifyReqCEG($modulesCEG, $adm_year, $req);
-	verifyReqBZA($modulesIS, $adm_year, $req);
+	switch ($major) {
+			case 'CS':
+				verifyReqCS($modulesCS, $adm_year, $req);
+				break;
+			case 'IS':
+				verifyReqIS($modulesIS, $adm_year, $req);
+				break;
+			case 'CEG':
+				verifyReqCEG($modulesCEG, $adm_year, $req);
+				break;
+			case 'BZA':
+				verifyReqBZA($modulesIS, $adm_year, $req);	
+				break;
+			default:
+				
+				break;
+	}
 }
 
 
@@ -65,6 +78,10 @@ function verifyReqCS($modules, $adm_year, $req){
 	$major = "CS";
 	//$focus_area = $_REQUEST["focus_area"];
 	$focus_area = "SE";		//fake
+
+	if ($adm_year < "1718"){			//so far still the same
+		$BandD = 24;
+	}
 
 	$modulesMC = array();
 
@@ -91,7 +108,7 @@ function verifyReqCS($modules, $adm_year, $req){
 	$ULR = verifyULR($ULRmod, $modulesMC, $adm_year, $ulrReq);
 	
 	$prReq = $and["PR"]["mod"];
-	$PR = verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or);
+	$PR = verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD);
 
 	//handle multi categories mod
 /*	for ($i = 0; $i < count($modules); $i++){
@@ -225,7 +242,7 @@ function getModules($modules, $type){
 				$j++;
 			}
 		} else{
-			if ($modules[$i][1] == $type || $type == "nil"){
+			if ($modules[$i][1] == $type || $modules[$i][1] == "nil"){
 				$returnList[$j] = $modules[$i];
 				$j++;
 			}
