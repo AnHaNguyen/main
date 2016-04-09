@@ -47,14 +47,14 @@
 				<img src="img/NUS-logo.png" alt="NUS Logo">
 				<p>This is to certify that<br></p>
 				<form method="post">
-					<input placeholder="Your Full Name" id="full-name" type="text" class="validate center"><br>
+					<input placeholder="Your Full Name" id="full-name" ng-model="full_name" type="text" class="validate center"><br>
 					<span>having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
-					<span class="grad-cer-text">BACHELOR OF<input placeholder="Your Bachelor" id="bachelor" type="text" class="validate center input-size"><br>
-						IN <input placeholder="Your Major" id="major" type="text" class="validate center input-size">
-						FOCUS AREA <input placeholder="Your Focus Area" id="focus_area" type="text" class="validate center input-size"><br>
-						ADMISSION YEAR <input placeholder="Your Admission Year" id="admission_year" type="text" class="validate center input-size"><br>
+					<span class="grad-cer-text">BACHELOR OF <input placeholder="Your Bachelor" id="bachelor" ng-model="bachelor" type="text" class="validate center input-size"><br>
+						IN <input placeholder="Your Major" id="major" ng-model="major" type="text" class="validate center input-size">
+						FOCUS AREA <input placeholder="Your Focus Area" id="focus_area" ng-model="focus_area" type="text" class="validate center input-size"><br>
+						ADMISSION YEAR <input placeholder="Your Admission Year" id="admission_year" ng-model="admission_year" type="text" class="validate center input-size"><br>
 					</span>
-					<input type="submit" id="starter-confirm-btn" class="btn" value="Confirm">
+					<input type="submit" id="starter-confirm-btn" ng-click="confirm()" class="btn" value="Confirm">
 				</form>
 			</div>
 
@@ -191,6 +191,7 @@
 		</ul>
 
 		<!--DEGREE REQUIREMENT-->
+
 		<div id="deg-req-div" class="basic-padding col s12">
 			<!--Fixed Navigation Bar-->
 			<div class="page-title row no-margin">
@@ -601,6 +602,7 @@
 		<script type="text/javascript" src="bower_components/angular/angular.js"> </script>
 		<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"> </script>
 		<script type="text/javascript" src="js/core.js"> </script>
+		<script type="text/javascript" src="js/user.service.js"> </script>
 		<script type="text/javascript" src="js/modules.service.js"> </script>
 		<script type="text/javascript" src="js/search.directive.js"> </script>
 		<script type="text/javascript" src="js/moduletable.directive.js"> </script>
@@ -610,6 +612,7 @@
 
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/degree-requirement.js"></script>		
 		<script type="text/javascript" src="js/front-end.js"></script>
 	</body>
 	</html>

@@ -1,4 +1,5 @@
 function showDegReq() {
+	updateDegReq();	
 	$("#deg-req-div").show();
 	$("#all-mod-div").hide();
 	$("#plan-mod-div").hide();
