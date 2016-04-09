@@ -1,7 +1,17 @@
 'use strict';
 
-angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
-		function ($http, $cookies, Transport) {
+
+/**
+ *            fetchdata -> init -> resetTable -> reload --> updateAllSelectedModule
+ * 			  removeModule -> removePlannedModule
+ * 						   -> updateAllSelectedModule --> saveAllSelectedModule
+ * 			  addModule -> addPlannedModule
+ * 						-> updateAllSelectedModule --> saveAllSelectedModule
+ *   		  changeStateModule -> addPlannedModule, removePlannedModule
+ **/
+
+angular.module('core').factory('Modules', ['$http', '$cookies', 
+		function ($http, $cookies) {
 			var service = {};
 
 			service.plannedModules = [];
@@ -38,24 +48,26 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 				}],
 				'UE': []
 			};
-			console.log(service.subtypes);
 
+			/**
+			 **/
 			service.saveSelectedModulesToCookies = function () {
+				/* Data to be saved is the json string of currently visible modules */
 				var data = JSON.stringify(service.visibleModules['ALL']);
 
-				// Expire date is ten years from now
+				/* Set cookie's expire date which is ten years from now */
 				var expireDate = new Date();
 				expireDate.setDate(expireDate.getDate() + 10 * 365);
 
-				var cookieOption = {
-					expires: expireDate
-				}; 
-
-				$cookies.put('data', data, cookieOption);
+				$cookies.put('data', data, { expires: expireDate });
 			};
 
-			// Update visibleModules.all
+			/**
+			 * visibleModules is actually selected modules
+			 * This function calls saveSelectedModulesToCookies to save data as cookies
+			 **/
 			service.updateAllSelectedModules = function () {
+				/* Reset both selectedModules and planned Modules to empty */
 				service.visibleModules['ALL'] = [];
 				service.plannedModules.splice(0, service.plannedModules.length);
 
@@ -63,21 +75,16 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 					if (type === 'ALL') continue;
 
 					for(var i in service.visibleModules[type]) {
+						/* For all modules added */
 						var module = service.visibleModules[type][i];
 
+						/* Add selected module */
 						service.visibleModules['ALL'].push(module);
 
-						// Update planned modules
+						/* Add planned modules */
 						if (module.state === 'planned') {
 							service.plannedModules.push(module);
 						}
-
-						// Update fulfilled subtypes
-						/*for(var type in service.types) {
-							for(var subtype in service.types[type]) {
-
-							}
-						} */
 					}
 				}
 
@@ -85,30 +92,46 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 			};
 
 
-			// Add planned module
+			/**
+			 * These two functions change the state of a selected module from planned to taken
+			 * The selected module also needs to be added, removed from plan table
+			 **/
 			service.addPlannedModule = function (module) {
 				module.state = 'planned';
 				
-				if (Transport.addPlannedModule) {
-					Transport.addPlannedModule(module);
+				if (service.addPlannedModuleToPlanTable) {
+					service.addPlannedModuleToPlanTable(module);
 				}
 			}
 
 			service.removePlannedModule = function (module) {
 				module.state = 'taken';
 				
-				if (Transport.removePlannedModule) {
-					Transport.removePlannedModule(module);
+				if (service.removePlannedModuleFromPlanTable) {
+					service.removePlannedModuleFromPlanTable(module);
 				}
 			}
 
-			// Add modules
+			/**
+			 * Search module by type and mod code and then add to selected modules
+			 * This function calls added() to avoid duplicate module
+			 * Default state of new module is planned
+			 * Origin specifies how this function is called:
+			 *	- auto: called automatically when extracting info from cookies
+			 *	- manu: called manually by user
+			 * When the function is called automatically, this module must not be added to plan table
+			 * Total MCs is updated also
+			 * Update all selected modules afterward
+			 **/
 			service.addModule = function (modType, modCode, origin) {
 				for(var i in service.modules) {
 					var module = service.modules[i];
 
 					if ((module.type === modType) && (module.code === modCode)) {
+						/* Make sure this module has not been added before */
 						if (!added(module)) {
+
+							/* Update total MCs */
 							service.totalMCs[modType] += module.mc;
 							service.visibleModules[modType].push(module);
 
@@ -123,7 +146,9 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 				service.updateAllSelectedModules();
 			}
 
-			// Load saved data from cookie
+			/**
+			 * Load data from cookies
+			 **/
 			service.reload = function () {
 				var data = $cookies.get('data');
 				var plan = $cookies.get('plan');
@@ -134,6 +159,8 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 					for(var i in data) {
 						var module = data[i];
 						var cmd = 'auto';
+
+						/* If these modules are not saved in plan cookies, then add them to plan table */
 						if (!plan) cmd = 'manu';
 
 						service.addModule(module.type, module.code, cmd);
@@ -154,7 +181,11 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 				service.selectedType = 'ALL';
 			};
 
-			// Init moduletable if module list is changed
+			/**
+			 * This functions resets all arrays to empty
+			 * It also calls to resetTable to create empty lists and totalMC variable for each type
+			 * Then reload is called to load data from cookies
+			 **/
 			service.init = function () {
 				// Visible Modules = selected Modules
 				service.visibleModules = {};
@@ -163,7 +194,9 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 				service.reload();
 			};
 
-			// Switch type of modules to be displayed
+			/**  not sure if this procedure is still needed
+			 * Switch type of modules to be displayed
+			 **/
 			service.switchType = function (type) {
 				service.selectedType = type;
 			};
@@ -179,7 +212,10 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 				return false;
 			};
 
-			// Remove modules
+			/**
+			 * Remove module by modType and modCode
+			 * MC is also updated
+			 **/
 			service.removeModule = function (modType, modCode) {
 				for(var i in service.visibleModules[modType]) {
 					var module = service.visibleModules[modType][i];
@@ -213,12 +249,18 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 				}
 			};
 
+			/**
+			 *  Randomly choosing type for module
+			 **/
 			var pickType = function (s) {
 				if (s.search('CS') != -1) return 'PR';
 				else if (s.search('MA') != -1) return 'UE';
 				else return 'ULR';
 			};
 
+			/**
+			 * Reformat input to make sure data from server is usable by front-end
+			 **/
 			service.preprocess = function (input) {
 				var data = [];
 
@@ -238,6 +280,10 @@ angular.module('core').service('Modules', ['$http', '$cookies', 'Transport',
 				return data;
 			};
 
+			/**
+			 *  The first procedure to be called after website is loaded
+			 *  It fetches the list of all modules from server and also initializes values of this factory
+			 **/
 			service.fetchData = function (admissionYear, major, callback) {
 				$http({
 					method: 'GET',

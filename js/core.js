@@ -2,13 +2,11 @@
 
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable']);
 
-angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Modules', 'Transport',
-	function($scope, $cookies, Modules, Transport) { 
+angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Modules',
+	function($scope, $cookies, Modules) { 
 		$scope.selected = '';
 
 		$scope.modulesController = Modules;
-
-		Transport.plannedModules = Modules.plannedModules;
 
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
@@ -78,14 +76,35 @@ angular.module('core').controller('loginController', [ '$scope', 'User',
 	}
 ]);
 
-angular.module('core').controller('planController', [ '$scope', 'Transport', '$cookies',
-	function ($scope, Transport, $cookies) {
+angular.module('core').controller('planController', [ '$scope', 'Modules', '$cookies',
+	function ($scope, Modules, $cookies) {
+		/* Create clone of modules factory */
+		$scope.initModules = function (admissionYear, major) {
+			Modules.fetchData(admissionYear, major, function (data) {
+				$scope.modules = data;
+				console.log('plan controller >> ' , data);
+			});
+		};
+
+		// Remove module
+		$scope.removeModule = Modules.removeModule;
+
+		// Change state of module from planned to taken and vice versa
+		$scope.changeState = Modules.changeState;
+
+		// Function to add new module
+		$scope.addModule = Modules.addModule;
+
+		$scope.initModules(1, 1);
+
+		/* End */
+
 		// CHeck the cookie first
 		var plan = $cookies.get('plan');
 
 		$scope.save = function () {
 			// Update by save it to cookies
-			var plan = JSON.stringify($scope.modules);
+			var plan = JSON.stringify($scope.semester);
 
 			// Expire date is ten years from now
 			var expireDate = new Date();
@@ -99,27 +118,29 @@ angular.module('core').controller('planController', [ '$scope', 'Transport', '$c
 		};
 
 		if (plan) {
+		/* BRANCH: Plan cookies found */
 			var plan = JSON.parse(plan);
 
-			$scope.modules = plan;
+			$scope.semester = plan;
 		} else {
-			$scope.modules = [ [], [], [], [] ];
+		/* BRANCH: Plan cookies not found */
+			$scope.semester = [ [], [], [], [] ];
 		}
 
 		$scope.addPlannedModule = function (module) {
-			$scope.modules[0].push(module);
+			$scope.semester[0].push(module);
 			$scope.save();
 		};
 
 		$scope.removePlannedModule = function (mod) {
-			for(var s in $scope.modules) {
-				var modules = $scope.modules[s];
+			for(var s in $scope.semester) {
+				var semester = $scope.semester[s];
 
-				for(var i in modules) {
-					var module = modules[i];
+				for(var i in semester) {
+					var module = semester[i];
 
 					if (module.code === mod.code) {
-						modules.splice(i, 1);
+						semester.splice(i, 1);
 						$scope.save();
 						return;
 					}
@@ -127,15 +148,10 @@ angular.module('core').controller('planController', [ '$scope', 'Transport', '$c
 			}
 		};
 
-		Transport.removePlannedModule = $scope.removePlannedModule;
-		Transport.addPlannedModule = $scope.addPlannedModule;
+		Modules.removePlannedModuleFromPlanTable = $scope.removePlannedModule;
+		Modules.addPlannedModuleToPlanTable = $scope.addPlannedModule;
 
-		$scope.semester = [];
-		$scope.semester[0] = $scope.modules[0];
-		$scope.semester[1] = $scope.modules[1];
-		$scope.semester[2] = $scope.modules[2];
-		$scope.semester[3] = $scope.modules[3];
-
+		/* Configuration for sortable angularjs */
 		$scope.sortingLog = [];
 
 		$scope.sortableOptions = {
@@ -148,7 +164,7 @@ angular.module('core').controller('planController', [ '$scope', 'Transport', '$c
 		};
 
 		$scope.log = function () {
-			console.log($scope.modules);
+			console.log($scope.semester);
 		};
 	}
 ]);
