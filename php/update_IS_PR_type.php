@@ -5,8 +5,8 @@
  */
 
 // PR subtypes
-define("IS_ELECTIVE_TYPE", "IS_ELECTIVE");
-define("IS_ELECTIVE_4K_TYPE", "IS_ELECTIVE_4K");
+define("IS_PE_TYPE", "IS_PE"); // Programme Elective
+define("IS_PE_4K_TYPE", "IS_PE_4K");
 define("IS_4K_TYPE", "IS_4K");
 
 
@@ -104,13 +104,13 @@ function update_IS_PR_type($adm_year, $mods) {
 
                 // Fulfil programme elective's level 4k requirement
                 else if ($electives_4k_mc_taken < $electives_4k_mc_req) {
-                    $mods[$mod_code] = [PR_TYPE,IS_ELECTIVE_4K_TYPE];
+                    $mods[$mod_code] = [PR_TYPE,IS_PE_4K_TYPE];
                     $electives_4k_mc_taken += $mod_credit;
                 }
 
                 // Fulfil programme elective's MC requirement
                 else if ($electives_mc_taken < $electives_mc_req) {
-                    $mods[$mod_code] = [PR_TYPE,IS_ELECTIVE_TYPE];
+                    $mods[$mod_code] = [PR_TYPE,IS_PE_TYPE];
                     $electives_mc_taken += $mod_credit;
                 }
 
@@ -125,7 +125,7 @@ function update_IS_PR_type($adm_year, $mods) {
             else if (array_key_exists($mod_code, $elective_reqs)
                 && $electives_mc_taken + ($electives_4k_mc_req - $electives_4k_mc_taken) < $electives_mc_req) {
 
-                $mods[$mod_code] = [PR_TYPE,IS_ELECTIVE_TYPE];
+                $mods[$mod_code] = [PR_TYPE,IS_PE_TYPE];
                 $electives_mc_taken += $mod_credit;
             }
 
