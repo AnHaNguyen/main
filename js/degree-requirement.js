@@ -1,11 +1,22 @@
-function updateDegReq() {
-	var longForm = {"ULR": "University Level Requirements", "PR": "Program Requirements", "UE": "Unrestricted Electives"};
+var orReplacement = {"Lev4": "3 level-4 modules"};
 
-	var jsonFile = "req/" + $('#major').val() + '/' + $('#admission_year').val() + ".json";
+function orParse(code) {
+	if (orReplacement[code]!=undefined) return orReplacement[code];
+	return code;
+}
+
+function updateDegReq() {
+	var longForm = {"ULR": "University Level Requirements", "PR": "Program Requirements", "UE": "Unrestricted Electives",
+					"Lev4": "3 level-4 modules", "Focus": "3 focus-area modules", "Focus4": "Level-4 module in focus area", 
+					"Scie": "Science modules"};
+
+	var major = $('#major').val(), year = $('#admission_year').val();
+	var jsonFile = "req/" + major + '/' + year + ".json";
+
 	console.log(jsonFile);
 	$.getJSON(jsonFile, function(jsonContent){
 		var newHtml =	`<div class="page-title row no-margin"> \
-							<div class="col s6 large-text">Degree Requirement</div> \
+							<div class="col s12 large-text">Degree Requirement for {{major}} degree in year {{year}}</div> \
 						</div> \
 
 						<div class="container-customize"> \
@@ -15,7 +26,7 @@ function updateDegReq() {
 										<div class="col s10 header item"> Requirement Type</div> \ 
 										<div class="col s2 header item"> MC </div> \						
 									</div>
-								</div>`;
+								</div>`.replace("{{major}}", major).replace("{{year}}", year);
 
 		console.log(jsonContent);
 
@@ -31,13 +42,21 @@ function updateDegReq() {
 
 			if (details.mod!="undefined") {
 				$.each(details.mod, function(moduleCode, MC) {
-					newHtml += `<div class="col s12 content-row ulr-hover"> `;					
+					newHtml += `<div class="col s12 content-row ulr-hover"> `;
 
-					moduleTemplate = `<div class="col s2 item">{{moduleCode}} </div> \
-							<div class="col s8 item"> {{name}} </div> \
-							<div class="col s2 item"> {{MC}} </div>`;
+					if (longForm[moduleCode]==undefined) {
+						moduleTemplate = `<div class="col s2 item">{{moduleCode}} </div> \
+								<div class="col s8 item"> {{name}} </div> \
+								<div class="col s2 item"> {{MC}} </div>`;
 
-					newHtml += moduleTemplate.replace("{{moduleCode}}", moduleCode).replace("{{MC}}", MC);
+						newHtml += moduleTemplate.replace("{{moduleCode}}", moduleCode).replace("{{MC}}", MC);								
+					} else {
+						moduleTemplate = `<div class="col s10 item">{{description}} </div> \
+											<div class="col s2 item"> {{MC}} </div>`;
+
+						newHtml += moduleTemplate.replace("{{description}}", longForm[moduleCode]).replace("{{MC}}", MC);
+					}
+
 
 					newHtml += `</div>`;					
 				});
@@ -58,7 +77,7 @@ function updateDegReq() {
 				optionTemplate = `<div class="col s10 item">{{option}} </div> \
 									<div class="col s2 item">{{MC}} </div> `;
 
-				newHtml += optionTemplate.replace("{{option}}", option[0]).replace("{{MC}}", option[1]);
+				newHtml += optionTemplate.replace("{{option}}", orParse(option[0])).replace("{{MC}}", option[1]);
 				newHtml += `</div>`;
 
 			})
