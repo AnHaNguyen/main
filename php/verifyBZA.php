@@ -1,7 +1,7 @@
 <?php
 require_once("library.php");
 
-function verifyPRBZA($PRmod, $PRmodMC, $prReq, $or){
+function verifyPRBZA($PRmod, $modulesMC, $prReq, $or){
 	$major = "BZA";
 	$elective_mod = getElectiveMod($major);
 	$ListA = $elective_mod["ListA"];
@@ -40,7 +40,7 @@ function verifyPRBZA($PRmod, $PRmodMC, $prReq, $or){
 	
 	for ($i = 0; $i < count($PRmod); $i++){
 		$modName = $PRmod[$i][0];
-		$minus = $PRmodMC[$modName];			//MCs
+		$minus = $modulesMC[$modName];			//MCs
 
 		if (array_key_exists($modName, $prReq)){		//handle Mods in PR
 			$prReq[$modName] -= $minus;
@@ -95,7 +95,7 @@ function verifyPRBZA($PRmod, $PRmodMC, $prReq, $or){
 		$case = $or[$i];
 		$min = 120 ;
 		for ($j = 0; $j < count($case); $j++){
-			$satisfyMods = hasCompleteBZA($case[$j], $PRmod, $PRmodMC);			//[0] = number of MCs not cleared, [1][2] ... list of mods used to clear 
+			$satisfyMods = hasCompleteBZA($case[$j], $PRmod, $modulesMC, $elective_listA, $elective_listB, $ElectiveLev4);			//[0] = number of MCs not cleared, [1][2] ... list of mods used to clear 
 			
 			if ($satisfyMods < $min){
 				$min = $satisfyMods;
@@ -118,17 +118,66 @@ function verifyPRBZA($PRmod, $PRmodMC, $prReq, $or){
 	return $PRsum;
 }
 
-function hasCompleteBZA($group, $PRmod, $PRmodMC){
-	$total = $group[1];
+function hasCompleteBZA($group, $PRmod, $modulesMC, $elective_listA, $elective_listB, $Elective4){
+	$mcArr = preg_split("/\;/", $group[1]);
+	$total = intval($mcArr[0]);
 	$mods = preg_split("/\,/", $group[0]);
 
 	for ($i = 0; $i < count($mods); $i++){
 		$modName = $mods[$i];
-		if (array_key_exists($modName,$PRmodMC)){
-			$total -= $PRmodMC[$modName];
-		} 
+		if (array_key_exists($modName,$modulesMC)){
+			$total -= $modulesMC[$modName];
+		} else if (strpos($modName, "Elective" !== false)){
+			$total = handleElective($modName,$total,$mcArr, $modulesMC, $elective_listA, $elective_listB, $Elective4);
+		}
 	}
 	
 	return $total;
 }
+
+function handleElective($string, $total,$mcArr, $modulesMC, $elective_listA, $elective_listB, $Elective4){
+	$components = preg_split("/\;/", $string);
+	$elective4 = 0;
+	$listA = 0;
+	$listB = 0;
+	for ($i = 1; $i < count($components); $i++){
+		if ($components[$i] == "Elective4"){
+			$elective4 = intval($mcArr[$i]);
+			for ($j = 0; $j < count($Elective4); $j++){
+				$modName = $Elective4[$j];
+				if ($elective4 > 0){
+					$elective4 -= $modulesMC[$modName];
+				}
+				if ($total > 0){
+					$total -= $modulesMC[$modName];
+				}
+			}	
+		} else if ($components[$i] == "ListA"){
+			$listA = intval($mcArr[$i]);
+			for ($j = 0; $j < count($elective_listA); $j++){
+				$modName = $elective_listA[$j];
+				if ($listA > 0){
+					$listA -= $modulesMC[$modName];
+				}
+				if ($total > 0){
+					$total -= $modulesMC[$modName];
+				}
+			}
+		} else if ($components[$i] == "ListB"){
+			$listB = intval($mcArr[$i]);
+			for ($j = 0; $j < count($elective_listB); $j++){
+				$modName = $elective_listB[$j];
+				if ($listB > 0){
+					$listB -= $modulesMC[$modName];
+				}
+				if ($total > 0){
+					$total -= $modulesMC[$modName];
+				}
+			}
+		}
+	}
+	$remain = max($elective4, $listA + $listB);
+	return max($total, $remain);
+}
+
 ?>
