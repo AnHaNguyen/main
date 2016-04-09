@@ -3,10 +3,12 @@
 require_once "update_ULR_type.php";
 require_once "update_CS_PR_type.php";
 require_once "update_IS_PR_type.php";
+require_once "update_CEG_PR_type.php";
+require_once "update_BZA_PR_type.php";
 
 /*
  * Given a student's major, admission year, primary focus area, and an array of module codes,
- * returns a json associative array containing module code keys and type values.
+ * returns a json associative array containing mod` ule code keys and type values.
  * ("type" here refers to the type of graduation requirement that the respective key's module fulfils)
  *
  * This program is tightly coupled with the formatting defined in following json files:
@@ -37,6 +39,7 @@ require_once "update_IS_PR_type.php";
  * - This program only works with the CS an IS major for now.
  * - This program will not work for USP students nor students who went for NOC.
  * - Module subtypes still have to be tweaked as required by front-end.
+ * - PHP 5 doesn't support array values, which we're using, hence the repetitiveness.
  *
  * @author Pierce Anderson Fu
  */
@@ -81,10 +84,10 @@ function check_module_type($major, $adm_year, $mods) {
             }
         case 'IS':
             return get_type_IS($adm_year, $mods_with_types);
-        /*case 'CEG':
-            return get_type_CEG($adm_year, $focus_area, $mods_with_types);
+        case 'CEG':
+            return get_type_CEG($adm_year, $mods_with_types);
         case 'BZA':
-            return get_type_BZA($adm_year, $focus_area, $mods_with_types);*/
+            return get_type_BZA($adm_year, $mods_with_types);
         default:
             // Error
             return "Invalid major entered, exiting";
@@ -94,7 +97,7 @@ function check_module_type($major, $adm_year, $mods) {
 
 function get_type_CS($adm_year, $focus_area, $mods) {
 
-    $mods = update_ULR_type($adm_year, $mods);
+    $mods = update_ULR_type($adm_year, $mods, false);
     $mods = update_CS_PR_type($adm_year, $focus_area, $mods);
 
     return $mods;
@@ -103,8 +106,24 @@ function get_type_CS($adm_year, $focus_area, $mods) {
 
 function get_type_IS($adm_year, $mods) {
 
-    $mods = update_ULR_type($adm_year, $mods);
+    $mods = update_ULR_type($adm_year, $mods, false);
     $mods = update_IS_PR_type($adm_year, $mods);
+
+    return $mods;
+}
+
+function get_type_CEG($adm_year, $mods) {
+
+    $mods = update_ULR_type($adm_year, $mods, true);
+    $mods = update_CEG_PR_type($adm_year, $mods);
+
+    return $mods;
+}
+
+function get_type_BZA($adm_year, $mods) {
+
+    $mods = update_ULR_type($adm_year, $mods, false);
+    $mods = update_BZA_PR_type($adm_year, $mods);
 
     return $mods;
 }
