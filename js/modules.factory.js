@@ -318,9 +318,9 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 			};
 
 			/**
-			 *  Divide modules into ULR, PR, UE
+			 *  Categorize modules into ULR, PR, UE
 			 **/
-			service.regroup = function () {
+			service.categorizeModule = function () {
 				/* reset all module group except for ALL */
 				for(var type in service.types) {
 					if (type === 'ALL') continue;
@@ -334,14 +334,22 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 				for(var i in modules) {
 					var module = modules[i];
 
+					/* add module to specific category, and update MC also */
 					if ((module.type) && (module.type === 'ULR')) {
-						/* add module to specific category, and update MC also */
+
 						service.visibleModules['ULR'].push(module);
 						service.totalMCs['ULR'] += module.mc;
 					} else if ((module.type) && (module.type === 'PR')) {
+
 						service.visibleModules['PR'].push(module);
 						service.totalMCs['PR'] += module.mc;
+					} else if ((module.type) && (module.type === 'UE')) {
+
+						service.visibleModules['UE'].push(module);
+						service.totalMCs['UE'] += module.mc;
 					} else {
+						console.log('WARNING: Cannot identify module\'type');
+
 						service.visibleModules['UE'].push(module);
 						service.totalMCs['UE'] += module.mc;
 					}
@@ -360,17 +368,22 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 					mods: service.getListOfModules()
 				};
 
-				service.submit('/main/php/get_type.php', params, function (result) {
+				service.submit('/main/php/get_type.php', params, function (results) {
 					var modules = service.visibleModules['ALL'];
 					
 					for(var i in modules) {
 						var module = modules[i];
 
-						module.type = result[module.code];
+						var result = results[module.code];
+
+						if (result) {
+							module.type = result[0];
+							module.subtype = result[1];
+						}
 					}
 
-					/* Divide modules into types */
-					service.regroup();
+					/* Categorize modules into types */
+					service.categorizeModule();
 				}); 
 			};
 

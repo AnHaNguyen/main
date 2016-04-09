@@ -60,7 +60,6 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', '$coo
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
 				$scope.modules = data;
-				console.log('plan controller >> ' , data);
 			});
 		};
 
@@ -102,7 +101,12 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', '$coo
 		}
 
 		$scope.addPlannedModule = function (module) {
-			$scope.semester[0].push(module);
+			var clone = {
+				code: module.code,
+				title: module.title,
+				mc: module.mc
+			};
+			$scope.semester[0].push(clone);
 			$scope.save();
 		};
 
