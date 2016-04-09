@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable']);
+angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
 
-angular.module('core').controller('mainController', [ '$scope', '$cookies', 'Modules', 'User',
-	function($scope, $cookies, Modules, User) { 
+angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 
+	function($scope, Modules, User) { 
 
 		$scope.user = User;
 
@@ -54,8 +54,8 @@ angular.module('core').controller('loginController', [ '$scope', 'User',
 	}
 ]);
 
-angular.module('core').controller('planController', [ '$scope', 'Modules', '$cookies',
-	function ($scope, Modules, $cookies) {
+angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService',
+	function ($scope, Modules, localStorageService) {
 		/* Create clone of modules factory */
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
@@ -77,26 +77,20 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', '$coo
 		/* End */
 
 		// CHeck the cookie first
-		var plan = $cookies.get('plan');
+		var plan = localStorageService.get('plan');
 
 		$scope.save = function () {
-			// Update by save it to cookies
-			var plan = JSON.stringify($scope.semester);
+			// Update by save it to localStorage
+			var plan = $scope.semester;
 
-			/* Set cookie's expire date which is ten years from now */
-			var expireDate = new Date();
-			expireDate.setDate(expireDate.getDate() + 10 * 365);
-
-			$cookies.put('plan', plan, { expires: expireDate });
+			localStorageService.set('plan', plan);
 		};
 
 		if (plan) {
-		/* BRANCH: Plan cookies found */
-			var plan = JSON.parse(plan);
-
+		/* BRANCH: stored plan found */
 			$scope.semester = plan;
 		} else {
-		/* BRANCH: Plan cookies not found */
+		/* BRANCH: stored plan not found */
 			$scope.semester = [ [], [], [], [] ];
 		}
 

@@ -13,8 +13,8 @@
  *  					 --> Module is added to planned modules
  **/
 
-angular.module('core').factory('Modules', ['$http', '$cookies', 
-		function ($http, $cookies) {
+angular.module('core').factory('Modules', ['$http', 'localStorageService', 
+		function ($http, localStorageService) {
 			var service = {
 				plannedModules: [],
 				types: {},
@@ -33,18 +33,14 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 			 **/
 			service.saveSelectedModulesToCookies = function () {
 				/* Data to be saved is the json string of currently visible modules */
-				var data = JSON.stringify(service.visibleModules['ALL']);
+				var data = service.visibleModules['ALL'];
 
-				/* Set cookie's expire date which is ten years from now */
-				var expireDate = new Date();
-				expireDate.setDate(expireDate.getDate() + 10 * 365);
-
-				$cookies.put('data', data, { expires: expireDate });
+				localStorageService.set('data', data);
 			};
 
 			/**
 			 * visibleModules is actually selected modules
-			 * This function calls saveSelectedModulesToCookies to save data as cookies
+			 * This function calls saveSelectedModulesToCookies to save data in localStorage
 			 **/
 			service.updateAllSelectedModules = function () {
 				/* Reset both selectedModules and planned Modules to empty */
@@ -109,7 +105,7 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 			 * This function calls added() to avoid duplicate module
 			 * Default state of new module is planned
 			 * Origin specifies how this function is called:
-			 *	- auto: called automatically when extracting info from cookies
+			 *	- auto: called automatically when extracting info from localStorage
 			 *	- manu: called manually by user
 			 * When the function is called automatically, this module must not be added to plan table
 			 * Total MCs is updated also
@@ -133,20 +129,19 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 			}
 
 			/**
-			 * Load data from cookies
+			 * Load data from localStorage
 			 **/
 			service.reload = function () {
-				var data = $cookies.get('data');
-				var plan = $cookies.get('plan');
+				var data = localStorageService.get('data');
+				var plan = localStorageService.get('plan');
 
 				if (data) {
-					data = JSON.parse(data);
 
 					for(var i in data) {
 						var module = data[i];
 						var cmd = 'auto';
 
-						/* If these modules are not saved in plan cookies, then add them to plan table */
+						/* If these modules are not saved in plan localStorage, then add them to plan table */
 						if (!plan) cmd = 'manu';
 
 						service.addModule(module.type, module.code, cmd);
@@ -168,7 +163,7 @@ angular.module('core').factory('Modules', ['$http', '$cookies',
 			/**
 			 * This functions resets all arrays to empty
 			 * It also calls to resetTable to create empty lists and totalMC variable for each type
-			 * Then reload is called to load data from cookies
+			 * Then reload is called to load data from localStorage
 			 **/
 			service.init = function () {
 				// Visible Modules = selected Modules

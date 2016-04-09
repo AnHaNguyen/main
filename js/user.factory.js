@@ -5,8 +5,8 @@
  *  update -> setInfo -> reset
  *  load info from cookie -> setInfo
  **/
-angular.module('core').factory('User', ['$http', '$cookies',
-		function ($http, $cookies) {
+angular.module('core').factory('User', ['$http', 'localStorageService',
+		function ($http, localStorageService) {
 			var object = {};
 
 			object.displayMajor = '';
@@ -28,17 +28,13 @@ angular.module('core').factory('User', ['$http', '$cookies',
 					bachelor: object.bachelor
 				});
 
-				/* Set cookie's expire date which is ten years from now */
-				var expireDate = new Date();
-				expireDate.setDate(expireDate.getDate() + 10 * 365);
-
-				$cookies.put('user', data, { expires: expireDate });
+				localStorageService.set('user', data);
 			};
 
 			/**
 			 *  Update user's info and reset the whole website 
 			 *  It calls reset after user's info is updated
-			 *  It calls save to save info to cookies
+			 *  It calls save to save info to localStorage
 			 **/
 			object.setInfo = function (major, focusArea, admissionYear, username, bachelor) {
 				object.major = major;
@@ -68,14 +64,10 @@ angular.module('core').factory('User', ['$http', '$cookies',
 
 			object.init = function () {
 				/* Load user's info from cookie */
-				var info = $cookies.get('user');
+				var info = localStorageService.get('user');
 
 				if (info) {
-					/* JSON decoding */
-					var info = JSON.parse(info);
-
 					object.setInfo(info.major, info.focusArea, info.admissionYear, info.username, info.bachelor);
-
 				}
 			};
 
