@@ -18,7 +18,7 @@ define("GES_TYPE", "GES");
 define("GET_TYPE", "GET");
 
 
-function update_ULR_type($adm_year, $mods) {
+function update_ULR_type($adm_year, $mods, $is_ceg_major) {
 
     // Old ULR system, prior to 15-16 batch
     if ($adm_year < "1516") {
@@ -28,11 +28,25 @@ function update_ULR_type($adm_year, $mods) {
         $has_taken_SS = false;
         $num_breadth_taken = 0;
         define("NUM_BREADTH_REQ", 2);
-        define("SOC_MODS_REGEX", "/CS|CP|CG|IT|IS|BT|XFC|FMC/");
+        define("SOC_MODS_REGEX", "/BT|CG|CP|CS|FMC|IS|IT|XFC/");
+        define("FOE_MODS_REGEX", "/BN|CE|CN|EE|EG|ESE|ESP|FME|HR|IE|ME|MLE|MST|MT|OT|SDM|SE|SH|TC|TE|TG|TM|TP|UIS|XFE/");
+        $ulr_foe_mods = [
+            "GEK1523", // Bachelor Of Technology Programme
+            "GEK2505", // Biomedical Engineering
+            "GEM1915", // Chemical & Biomolecular Engineering
+            "GET1011", // Chemical & Biomolecular Engineering
+            "GEK1522", // Civil & Environmental Engineering
+            "GES1017", // Division Of Engineering And Tech Mgt
+            "SSE1201", // Division Of Engineering And Tech Mgt
+            "GEK1501", // Electrical & Computer Engineering
+            "GEK1513", // Electrical & Computer Engineering
+            "GEH1057", // Materials Science And Engineering
+        ];
 
         foreach ($mods as $mod_code => $mod_type) {
 
             $is_soc_mod = preg_match(SOC_MODS_REGEX, $mod_code);
+            $is_foe_mod = preg_match(FOE_MODS_REGEX, $mod_code);
 
             // Set type for GEM
             if (strpos($mod_code, "GEM") === 0
@@ -55,12 +69,12 @@ function update_ULR_type($adm_year, $mods) {
                         $has_taken_GEM_A = true;
                     }
 
+                    // Avoid setting FoE modules as breadth if student's major is CEG
                     else if ($num_breadth_taken < NUM_BREADTH_REQ
-                        && $mod_code !== "GEK1901") { // Exception: "GEK1901" is offered by SoC
+                        && !($is_ceg_major && array_key_exists($mod_code, $ulr_foe_mods))) {
 
                         $mods[$mod_code] = [ULR_TYPE,BREADTH_TYPE ];
                         $num_breadth_taken++;
-
                     }
 
                     else {
@@ -77,7 +91,10 @@ function update_ULR_type($adm_year, $mods) {
                         $has_taken_GEM_A = true;
                     }
 
-                    else if ($num_breadth_taken < NUM_BREADTH_REQ) {
+                    // Avoid setting FoE modules as breadth if student's major is CEG
+                    else if ($num_breadth_taken < NUM_BREADTH_REQ
+                        && !($is_ceg_major && array_key_exists($mod_code, $ulr_foe_mods))) {
+
                         $mods[$mod_code] = [ULR_TYPE,BREADTH_TYPE];
                         $num_breadth_taken++;
                     }
@@ -89,12 +106,15 @@ function update_ULR_type($adm_year, $mods) {
             }
 
             // Set type for SS
-            else if (strpos($mod_code, "SSS") === 0) {
+            else if (strpos($mod_code, "SS") === 0) {
                 if (!$has_taken_SS) {
                     $mods[$mod_code] = [ULR_TYPE,SS_TYPE];
                 }
 
-                else if ($num_breadth_taken < NUM_BREADTH_REQ) {
+                // Avoid setting FoE modules as breadth if student's major is CEG
+                else if ($num_breadth_taken < NUM_BREADTH_REQ
+                    && !($is_ceg_major && array_key_exists($mod_code, $ulr_foe_mods))) {
+
                     $mods[$mod_code] = [ULR_TYPE,BREADTH_TYPE];
                     $num_breadth_taken++;
                 }
@@ -105,8 +125,11 @@ function update_ULR_type($adm_year, $mods) {
             }
 
             // Set type for breadth
+            // Avoid setting FoE modules as breadth if student's major is CEG
             else if (!$is_soc_mod
-                && $num_breadth_taken < NUM_BREADTH_REQ) {
+                && $num_breadth_taken < NUM_BREADTH_REQ
+                && !($is_ceg_major && $is_foe_mod)
+                && !($is_ceg_major && array_key_exists($mod_code, $ulr_foe_mods))) {
 
                 $mods[$mod_code] = [ULR_TYPE,BREADTH_TYPE];
                 $num_breadth_taken++;
@@ -152,6 +175,7 @@ function update_ULR_type($adm_year, $mods) {
                 $has_taken_GES = true;
 
             } else if (!$has_taken_GET
+                && $mod_code !== "GET1031" // Offered by SoC
                 && strpos($mod_code, "GET") === 0) {
 
                 $mods[$mod_code] = [ULR_TYPE,GET_TYPE];
