@@ -7,7 +7,7 @@
 
 	<!-- Compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 
 	<!-- Include angularjs -->
 	<link rel="stylesheet" type="text/css" href="css/core.css">
@@ -54,7 +54,7 @@
 						FOCUS AREA <input placeholder="Your Focus Area" id="focus_area" type="text" class="validate center input-size" ng-model="user.displayFocusArea"><br>
 						ADMISSION YEAR <input placeholder="Your Admission Year" id="admission_year" type="text" class="validate center input-size" ng-model="user.displayAdmissionYear"><br>
 					</span>
-					<input type="submit" id="starter-confirm-btn" class="btn" value="Confirm">
+					<input type="submit" id="starter-confirm-btn" ng-click="confirm()" class="btn" value="Confirm">
 				</form>
 			</div>
 
@@ -64,82 +64,79 @@
 			</div>
 		</div>
 	</div>
-
-	<!--Main Section-->
+<!--Main Section-->
 	<main id="main-section" ng-controller="mainController">
-		<!-- Modal Structure -->
-		<div id="search-modal" class="modal">
-			<div class="modal-content">
-				<div class="row">
-					<form class="col s12 black-font">
-						<div class="row">
-							<div class="col s3">Module Type</div>
-							<div class="col s9">
-								<input type="text" class="validate">
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col s3">Semester</div>
-							<div class="col s9">
-								<input type="text" class="validate">
-							</div>
-						</div>
-					</form>
+		<!-- Modal Structure Of All Modules-->
+		<div id="modal-advanced-all-mod" class="modal">
+			<div class="modal-content no-padding">
+				<div class="advanced-search-title">
+					<div class="left-advanced-search-div"><span>Advanced Search</span></div>
+					<div class="right-advanced-search-div">
+						<a href="#main" class="modal-action modal-close">
+							<img src="icon/white-close-icon.png" class="right">
+						</a>
+					</div>
 				</div>
-			</div>
-
-			<div class="modal-footer">
-				<a href="#main" class="close-btn modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-				<a href="#main" class="close-btn modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-			</div>
-		</div>
-
-		<!-- Modal Structure Of Degree Requirement-->
-		<div id="modal-advanced" class="modal">
-			<div class="modal-content">
-				<h4>Advanced Search</h4>
-				<br>
+				<!--Content-->
 				<form class="col s12 black-font">
-					<div class="row">
-						<div class="col s3">Search Type</div>
-						<div class="col s9">
-							<input type="text" class="validate">
+					<div class="wrapper-input-div">
+						<div class="input-div"><input type="text" class="validate" placeholder="Search Type"></div>
+						<div>
+							<p class="multi-choice-div">
+								<input class="with-gap" name="group1" type="radio" id="type1" checked />
+								<label for="type1">Taken</label>
+							</p>
+							<p class="multi-choice-div">
+								<input class="with-gap" name="group1" type="radio" id="type2" />
+								<label for="type2">Plan</label>
+							</p>
+							<p class="multi-choice-div">
+								<input class="with-gap" name="group1" type="radio" id="type3"  />
+								<label for="type3">Waived</label>
+							</p>
 						</div>
 					</div>
 				</form>
 			</div>
 
 			<div class="modal-footer">
-				<a href="#main" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-				<a href="#main" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+				<div class="waves-effect waves-light btn"><a href="#main" class="modal-action modal-close">OK</a></div>
+				<div class="waves-effect waves-light btn"><a href="#main" class="modal-action modal-close">Cancel</a></div>
 			</div>
 		</div>
 
 		<!--Modal Structure of Planner-->
 		<div id="modal-advanced-planner" class="modal">
-			<div class="modal-content">
-				<h4>Advanced Search</h4>
-				<br>
-				<form class="col s12 black-font">
-					<div class="row">
-						<div class="col s3">Module Type</div>
-						<div class="col s9">
-							<input type="text" class="validate">
-						</div>
+			<div class="modal-content no-padding">
+				<div class="advanced-search-title">
+					<div class="left-advanced-search-div"><span>Advanced Search</span></div>
+					<div class="right-advanced-search-div">
+						<a href="#main" class="modal-action modal-close">
+							<img src="icon/white-close-icon.png" class="right">
+						</a>
 					</div>
-					<div class="row">
-						<div class="col s3">Academic Year</div>
-						<div class="col s9">
-							<input type="text" class="validate">
+				</div>
+				<!--Content-->
+				<form class="col s12 black-font">
+					<div class="wrapper-input-div">
+						<div class="input-div"><input type="text" class="validate" placeholder="Search Type"></div>
+						<div>
+							<p class="multi-choice-div">
+								<input class="with-gap" name="group1" type="radio" id="type1" checked />
+								<label for="type1">Semester 1</label>
+							</p>
+							<p class="multi-choice-div">
+								<input class="with-gap" name="group1" type="radio" id="type2" />
+								<label for="type2">Semester 2</label>
+							</p>
 						</div>
 					</div>
 				</form>
 			</div>
 
 			<div class="modal-footer">
-				<a href="#main" class=" modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-				<a href="#main" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+				<div class="waves-effect waves-light btn"><a href="#main" class="modal-action modal-close">OK</a></div>
+				<div class="waves-effect waves-light btn"><a href="#main" class="modal-action modal-close">Cancel</a></div>
 			</div>
 		</div>
 
@@ -192,8 +189,8 @@
 			</li>
 		</ul>
 
-
 		<!--DEGREE REQUIREMENT-->
+
 		<div id="deg-req-div" class="basic-padding col s12">
 			<!--Fixed Navigation Bar-->
 			<div class="page-title row no-margin">
@@ -302,7 +299,7 @@
 							<div class="filter-div">
 								<!-- Modal Trigger -->
 								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
-								href="#modal-advanced"><img src="icon/filter-icon.png"></a>
+								href="#modal-advanced-all-mod"><img src="icon/filter-icon.png"></a>
 							</div>
 							<div class="col s10">
 								<search select="addModule" items="modules"></search>
@@ -466,7 +463,7 @@
 							<div class="filter-div">
 								<!-- Modal Trigger -->
 								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
-								href="#modal-advanced"><img src="icon/filter-icon.png"></a>
+								href="#modal-advanced-planner"><img src="icon/filter-icon.png"></a>
 							</div>
 							<div class="col s10">
 								<search select="addModule" items="modules"></search>
@@ -613,6 +610,7 @@
 
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+		<script type="text/javascript" src="js/degree-requirement.js"></script>		
 		<script type="text/javascript" src="js/front-end.js"></script>
 	</body>
 	</html>

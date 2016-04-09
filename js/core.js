@@ -140,4 +140,3 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		};
 	}
 ]);
-
