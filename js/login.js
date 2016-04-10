@@ -4,6 +4,7 @@ var CS = "Computer Science";
 var IS = "Information System";
 var BZA = "Business Analytic";
 var CEG = "Computer Engineering";
+var totalSem = 8;
 
 $("#login").on("click",function(){
     if (ivle.getToken(window.location.href) == null){
@@ -77,15 +78,52 @@ ModuleTitle "Database Systems Implementation"
 AcadYear    "2015/2016"
 Semester    "2"
 SemesterDisplay "Semester 2"*/
-    var allMods = new Array();
+    
     var mods = new Array();
-   
-    user.modulesTaken(function(allMods){
-        for (var i = 0; i < allMods.length; i++){
-            mods.push(allMods[i]['ModuleCode']);
-        }   
-        return mods;
-
+	for (var i = 0; i < totalSem; i++){
+		mods[i] = new Array();
+	}
+    var matric = user.profile('UserID');
+    $.ajax({
+        url: "php/authentication/connectdatabase.php?cmd=getModules&matric="+matric
+    }).done(function(data){
+        if (data == -1){
+            alert("Error retrieving!");
+            return;
+        }
+        if (JSON.parse(data) == ""){            //first time user, no record in DB
+            var allMods = new Array();
+            user.modulesTaken(function(allMods){
+                for (var i = 0; i < allMods.length; i++){
+                    var semester = getSemester(allMods[i], user.profile('MatriculationYear'));
+                    mods[semester-1].push(allMods[i]['ModuleCode']);
+                }
+                var modsStr = JSON.stringify(mods);
+                $.ajax({
+                    url: "php/authentication/connectdatabase.php?cmd=storeModules&matric="+matric+"&modules="+modsStr
+                }).done(function(_data){
+                    if (_data == -1){
+                        alert("Error inserting!");
+                        return;
+                    }
+                });   
+                return mods;
+            });
+        } else{
+            mods = JSON.parse(data);
+            return mods;
+        }      
     });
-    //return mods;
+    return mods;
+}
+
+function getSemester(moduleInfo, startYear){
+    var takenYear = moduleInfo['AcadYear'].split("/")[0];
+    var curYear = parseInt(takenYear) - parseInt(startYear) + 1;
+    var takenSem = parseInt(moduleInfo['Semester']);
+    if (takenSem == 1){
+        return curYear*2 - 1;
+    } else {
+        return curYear*2;
+    }
 }
