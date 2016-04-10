@@ -15,10 +15,9 @@ $("#login").on("click",function(){
             
 });
 
-$(function($){
-    token = ivle.getToken(window.location.href);
-});
-
+function updateToken(){
+    return ivle.getToken(window.location.href);
+}
 
 
 /*function initialUser(key, token){
@@ -115,48 +114,51 @@ function getSemester(moduleInfo, startYear){
     }
 }
 
-function getModulesLogin(){
+function getModulesLogin(token){
     if (token != null){
-      	var user = ivle.User(key, token); // return a User instance
+      	var user = ivle.User(key, token).init(); // return a User instance
  
     	// you must init user, it will validate the user and query his/her profile
-    	user.init().done(function() {
-  
-    		return getModules(user);
-    	});
+    	 
+    	return getModules(user);
+    	
     }else{
     	return;
     }
 }
 
-function getAdmissionYearLogin(){
-    if (token != null){
-      	var user = ivle.User(key, token); // return a User instance
- 
-    	// you must init user, it will validate the user and query his/her profile
-    	user.init().done(function() {
-  
-    		return getAdmissionYear(user);
-    	});
-    }else{
-    	return;
-    }
-}
-
-function getMajorLogin(){
+function getAdmissionYearLogin(token){
 	if (token != null){
-      	var user = ivle.User(key, token); // return a User instance
+		var user = ivle.User(key, token); // return a User instance
  
     	// you must init user, it will validate the user and query his/her profile
     	user.init().done(function() {
-  
-    		return getMajor(user);
-    	});
+    		return getAdmissionYear(user);
+    	})
     }else{
     	return;
     }
 }
 
-function isIVLELogin(){
-	return (token != null);
+function getMajorLogin(token, callback){
+	if (token != null){
+		var user = ivle.User(key, token); // return a User instance
+ 
+    	// you must init user, it will validate the user and query his/her profile
+    	
+		user.init().done(function() {
+    		//major = getMajor(user);
+			callback(getMajorLogin);
+    	})
+		return major;
+		
+    }else{
+    	return;
+    }
 }
+
+function getIVLEToken(){
+	var token = updateToken();
+	return token;
+}
+

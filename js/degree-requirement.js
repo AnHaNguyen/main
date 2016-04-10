@@ -27,14 +27,15 @@ function updateDegReq() {
 	getIdOf = {"ULR": "ulr-deg-req", "PR": "prog-req-deg-req", "UE": "ue-deg-req"};
 	hoverType = {"ULR": "ulr", "PR": "pr", "UE": "ue", "OR": "pr"};
 
-	if (isIVLELogin()){
-		major = getMajorLogin();
-		year = getAdmissionYearLogin();
+	var token = getIVLEToken();
+	if (token != null){
+		major = getMajorLogin(token);
+		year = getAdmissionYearLogin(token);
 	} else{
 		major = $('#major').val(), year = $('#admission_year').val();
 	}
-	
-	//alert(major + " " + year);
+		
+	alert(major + " " + year);
 	jsonFile = "req/" + major + '/' + year + ".json";
 	moduleJsonFile = "data/simplified.json";
 
