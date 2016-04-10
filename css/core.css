@@ -40,3 +40,6 @@
 .height100 {
 	height: 100px !important;
 }
+.angucomplete-holder input {
+	padding: 0 !important;
+}

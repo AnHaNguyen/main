@@ -50,7 +50,7 @@
 					<input placeholder="Your Full Name" id="full-name" type="text" class="validate center" ng-model="user.displayUsername"><br>
 					<span>having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
 					<span class="grad-cer-text">BACHELOR OF</span>
-					<input placeholder="Your Bachelor" id="bachelor" ng-model="bachelor" type="text" class="validate center input-size"><br>
+					<input placeholder="Your Bachelor" id="bachelor" ng-model="user.displayBachelor" type="text" class="validate center input-size"><br>
 						<span class="grad-cer-text">IN</span>
 						<search placeholder="Your Major" 
 								minlength="0" 
@@ -60,8 +60,9 @@
 								clearinput="" 
 								init="user.displayMajor" 
 								filter=""
+								style="display: inline-block;"
 							    id="major" type="text" class="validate center input-size"> 
-						</search>
+						</search> 
 						<span class="grad-cer-text">FOCUS AREA</span>
 						<search placeholder="Your Focus Area" 
 								minlength="0" 
@@ -70,6 +71,7 @@
 								items="user.focusAreasList" 
 								clearinput=""
 								init="user.displayFocusArea" 
+								style="display: inline-block; width: 300px !important;"
 								id="focus_area" type="text" class="validate center input-size"> 
 						</search><br> 
 						<span class="grad-cer-text">ADMISSION YEAR</span>
@@ -81,6 +83,7 @@
 								clearinput="" 
 								init="user.displayAdmissionYear" 
 								filter=""
+								style="display: inline-block;"
 								id="admission_year" type="text" class="validate center input-size"> 
 						</search><br>
 					<input type="submit" id="starter-confirm-btn" ng-click="confirm()" class="btn" value="Confirm">
