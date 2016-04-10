@@ -2,15 +2,13 @@
 
 /**
  *            fetchdata -> init -> resetTable -> reload --> updateAllSelectedModule 
- * 			  removeModule -> removePlannedModule
- * 						   -> updateAllSelectedModule --> saveAllSelectedModule
- * 			  addModule -> addPlannedModule
- * 						-> updateAllSelectedModule --> saveAllSelectedModule
  *   		  changeStateModule -> addPlannedModule, removePlannedModule
  * 			  updateAllSelectedModules -> saveAllSelectedModule
  * 									   --> getType
- * 			  Add Module --> Module is added to ['ALL'] --> getType --> Module is categorized into ['ULR', 'PR', 'UE']
+ * 			  Add Module --> Module is added to ['ALL'] --> save to localstorgae --> getType --> Module is categorized into ['ULR', 'PR', 'UE']
+ * 																							 --> After getting type, verify modules
  *  					 --> Module is added to planned modules
+ *    Module state is exempted(waived) when it first added
  **/
 
 angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User',
@@ -91,7 +89,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			/**
 			 *  Find module by module's type and code
 			 **/
-			function getModule(modCode) {
+			function getModuleByCode(modCode) {
 				for(var i in service.modules) {
 					/* For all modules in the list */
 					var module = service.modules[i];
@@ -117,7 +115,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			 * Update all selected modules afterward
 			 **/
 			service.addModule = function (modType, modCode, origin) {
-				var module = getModule(modCode);
+				var module = getModuleByCode(modCode);
 
 				/* Make sure this module has not been added before */
 				if (!added(module)) {
@@ -210,19 +208,23 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				service.updateAllSelectedModules();
 			};
 
-			// Change state between unselected, planned, taken
-			service.changeState = function (modType, modCode) {
-				for(var i in service.visibleModules['ALL']) {
-					var module = service.visibleModules['ALL'][i];
+			// Change state between exempted, planned, taken
+			service.changeState = function (modType, modCode, newState) {
 
-					if ((module.type === modType) && (module.code === modCode)) {
-						if (module.state === 'taken') {
-							service.addPlannedModule(module);
-						} else {
-							service.removePlannedModule(module);
-						}
+				var module = getModuleByCode(modCode);
+
+				if (module && (module.state !== newState)) {
+
+					if (module.state === 'planned') {
+						service.removePlannedModule(module);
+					} else {
+						service.addPlannedModule(module);
 					}
+
+					module.state = newState;
 				}
+
+				service.updateAllSelectedModules();
 			};
 
 			/**

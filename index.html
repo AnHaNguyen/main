@@ -368,9 +368,9 @@
 									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" ng-click="changeState(module.type, module.code, 'taken')" onClick="toggleFunction()">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'planned')" onClick="toggleFunction()">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'exempted')" onClick="toggleFunction()">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -421,9 +421,9 @@
 									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" ng-click="changeState(module.type, module.code, 'taken')" onClick="toggleFunction()">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'planned')" onClick="toggleFunction()">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'exempted')" onClick="toggleFunction()">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -475,9 +475,9 @@
 									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" ng-click="changeState(module.type, module.code, 'taken')" onClick="toggleFunction()">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'planned')" onClick="toggleFunction()">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'exempted')" onClick="toggleFunction()">Waived</a>
 								</div>
 							</div>
 						</div>

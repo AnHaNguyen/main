@@ -152,19 +152,42 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			$scope.computePlannedMC();
 		}
 
-		$scope.addPlannedModule = function (module) {
-			var clone = {
-				code: module.code,
-				title: module.title,
-				mc: module.mc
-			};
-			$scope.semester[0].push(clone);
-			$scope.save();
+		/**
+		 *  Check if this module has been added to the table
+		 **/
+		var isAdded = function(module) {
+			for(var i in $scope.semester) {
+				for(var j in $scope.semester[i]) {
+					var mod = $scope.semester[i][j];
 
-			$scope.computePlannedMC();
+					if (mod.code === module.code) {
+
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		$scope.addPlannedModule = function (module) {
+
+			if (!isAdded(module)) {
+				var clone = {
+					code: module.code,
+					title: module.title,
+					mc: module.mc
+				};
+
+				$scope.semester[0].push(clone);
+				$scope.save();
+
+				$scope.computePlannedMC();
+			}
 		};
 
 		$scope.removePlannedModule = function (mod) {
+
 			for(var s in $scope.semester) {
 				var semester = $scope.semester[s];
 
