@@ -14,7 +14,8 @@ angular.module('core').directive('search', [
 				initvalue: '=init',
 				titlefield: '@titlefield',
 				filter: '=filter',
-				minlength: '@minlength'
+				minlength: '@minlength',
+				placeholder: '@placeholder'
 			},
 			link: function(scope, element, attrs) {
 

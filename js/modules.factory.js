@@ -125,17 +125,16 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					if (modState === 'planned') {
 						if ((!origin) || (origin !== 'auto')) {
 							service.addPlannedModule(module);
-
-							/* new-added-row class */
-							for(var i in service.visibleModules['ALL']) {
-								var module = service.visibleModules['ALL'][i];
-
-								module.new = '';
-							}
-
-							module.new = 'new-added-row';
 						}
 					}
+
+					/* add new-added-row class */
+					for(var i in service.visibleModules['ALL']) {
+						var module = service.visibleModules['ALL'][i];
+
+						module.new = '';
+					}
+					module.new = 'new-added-row';
 
 					module.state = (modState ? modState : 'planned');
 				}
