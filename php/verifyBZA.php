@@ -1,7 +1,7 @@
 <?php
 require_once("library.php");
 
-function verifyPRBZA($PRmod, $modulesMC, $prReq, $or){
+function verifyPRBZA($PRmod, $modulesMC, $prReq, $or, $specialMCs){
 	$major = "BZA";
 	$elective_mod = getElectiveMod($major);
 	$ListA = $elective_mod["ListA"];
@@ -42,7 +42,7 @@ function verifyPRBZA($PRmod, $modulesMC, $prReq, $or){
 		$modName = $PRmod[$i][0];
 		$minus = $modulesMC[$modName];			//MCs
 
-		if (array_key_exists($modName, $prReq)){		//handle Mods in PR
+		if (isInList($modName, $prReq)){		//handle Mods in PR
 			$prReq[$modName] -= $minus;
 		} 
 		
@@ -106,7 +106,7 @@ function verifyPRBZA($PRmod, $modulesMC, $prReq, $or){
 	}
 	
 	$keys = array_keys($prReq);
-	$PRsum = 0;
+	$PRsum = $specialMCs;
 	for ($i = 0; $i < count($prReq); $i++){
 		if ($keys[$i] != "Elective4" && $keys[$i] != "ListA" && $keys[$i] != "ListB"){
 			$PRsum += $prReq[$keys[$i]];
