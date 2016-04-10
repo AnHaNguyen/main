@@ -34,13 +34,20 @@
 <body ng-app="core" id="main">
 	<div id="start-page" ng-controller="mainController">
 		<div id="start-wrapper">
-			<div>
+			<div id="logo-div">
 				<span class="logo">SOCPlans</span>
 			</div>
 
 			<div id="start-text-div">
-				<p>SoCPlans helps SoC's students to verify degree and plan modules for semesters</p>
-				<div class="waves-effect waves-light btn" id="get-started-btn">Get Started</div>
+				<p id="intro-text">SoCPlans helps SoC's students in degree verification and planning modules for next semesters.</p>
+				<div class="start-login-div">
+					<a class="waves-effect waves-light btn" id="get-started-btn">Non-Login User</a>
+					<p>You have to manually add all your information.</p>
+				</div>
+				<div class="start-login-div">
+					<a class="waves-effect waves-light btn" id="login">IVLE User (Recommended)</a>
+					<p>We can get modules you took so you don't have to manually add them.</p>
+				</div>
 			</div>
 
 			<div id="grad-cer-div" class="center z-depth-2">
@@ -90,9 +97,11 @@
 				</form>
 			</div>
 
-			<div id="starter-footer" class="center">
-				<p>Available only to NUS's SoC Students</p>
-				<p>Proudly brought to you by <b>SoCPlans</b> team</p>
+			<div id="start-footer">
+				<div class="center">
+					<p>Available only to NUS's SoC Students</p>
+					<p>Proudly brought to you by <b>SoCPlans</b> team</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -180,8 +189,8 @@
 				<hr>
 			</li>
 			<li class="no-padding none-hover">
-				<ul class="collapsible collapsible-accordion">
-					<li id="deg-req-nav">
+				<ul class="collapsible collapsible-accordion" id="sidebar-all-items">
+					<li id="deg-req-nav" class="active">
 						<div class="collapsible-header waves-effect waves-red">
 							<a class="sidebar-item" href="#deg-req-div"><img src="icon/icon-deg-req.png" class="gray-icon">
 								<span>Degree Requirement</span>
@@ -323,7 +332,7 @@
 						</div>
 					</div>
 
-					<div id="ue-deg-req" class="row mod-type-table">
+					<div class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s11 mc-item item text-mc">Total Module Credits</div>
 							<div class="col s1 mc-item item">160</div>
@@ -695,5 +704,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 		<script type="text/javascript" src="js/degree-requirement.js"></script>
 		<script type="text/javascript" src="js/front-end.js"></script>
+		<script type="text/javascript" src="js/login.js"></script>
+		<script type="text/javascript" src="dist/nus-ivle-api.min.js"></script>
 	</body>
 	</html>
