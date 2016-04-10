@@ -343,7 +343,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						service.visibleModules['UE'].push(module);
 						service.totalMCs['UE'] += module.mc;
 					} else {
-						console.log('WARNING: Cannot identify module\'type');
+						console.log('WARNING: Cannot identify module\'type', module);
 
 						service.visibleModules['UE'].push(module);
 						service.totalMCs['UE'] += module.mc;
@@ -356,10 +356,16 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			 *  It also redistributes modules into specific types
 			 **/
 			service.getType = function () {
+				/* Safe copy */
+				var major = (User.major && User.major.code ? User.major.code : '');
+				var focusArea = (User.focusArea && User.focusArea.code ? User.focusArea.code : '');
+				var admissionYear = (User.admissionYear && User.admissionYear.code ? User.admissionYear.code : '');
+				console.log(major, focusArea, admissionYear);
+
 				var params = {
-					major: User.major.code,
-					adm_year: User.admissionYear.code,
-					focus_area: User.focusArea.code,
+					major: major,
+					focus_area: focusArea,
+					adm_year: admissionYear,
 					mods: service.getListOfModules()
 				};
 
@@ -376,6 +382,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 							module.subtype = result[1];
 						}
 					}
+					console.log(results);
 
 					/* Categorize modules into types */
 					service.categorizeModule();

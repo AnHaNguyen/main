@@ -12,19 +12,24 @@ angular.module('core').factory('User', ['$http', 'localStorageService',
 
 			object.majorsList = [
 				{ title: 'Computer Science', code: 'CS' },
-				{ title: 'Information System', code: 'IS' }
+				{ title: 'Information System', code: 'IS' },
+				{ title: 'Business Analytics', code: 'BZA' },
+				{ title: 'Computer Engineering', code: 'CEG' }
 			];
 
 			object.focusAreasList = [
-				{ title: 'Algorith & Theory', code: 'AT' },
-				{ title: 'Artificial Intelligence', code: 'AI' },
-				{ title: 'Computer Security', code: 'CS' },
-				{ title: 'Database Systems', code: 'DS' },
-				{ title: 'Multimedia Information Retrieval', code: 'MIR' },
-				{ title: 'Network and Distributed Systems', code: 'NDS' },
-				{ title: 'Parallel Computing', code: 'PC' },
-				{ title: 'Programming Languages', code: 'PL' },
-				{ title: 'Software Engineering', code: 'SE' }
+				{ title: 'Algorithms & Theory (AT)', code: 'AT' },
+				{ title: 'Artificial Intelligence (AI)', code: 'AI' },
+				{ title: 'Computer Graphics and Games (CG)', code: 'CG' },
+				{ title: 'Computer Security(CS)', code: 'CS' },
+				{ title: 'Database Systems (DB)', code: 'DB' },
+				{ title: 'Multimedia Information Retrieval (IR)', code: 'IR' },
+				{ title: 'Networking and Distributed Systems (NW)', code: 'NW' },
+				{ title: 'Parallel Computing (PC)', code: 'PC' },
+				{ title: 'Programming Languages (PL)', code: 'PL' },
+				{ title: 'Software Engineering (SE)', code: 'SE' },
+				{ title: 'Interactive Media (IM)', code: 'IM' },
+				{ title: '12. Visual Computing (VC)', code: 'VC' }
 			];
 
 			object.admissionYearsList = [

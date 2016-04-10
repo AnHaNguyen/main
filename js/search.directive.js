@@ -17,6 +17,8 @@ angular.module('core').directive('search', [
 			},
 			link: function(scope, element, attrs) {
 
+				var searchFields = {'title': 0, 'code': 0};
+
 				/* User did not provide clearinput, default is empty string */
 				if (!scope.clearinput) {
 					scope.clearinput= '';
@@ -41,7 +43,7 @@ angular.module('core').directive('search', [
 						if (ans.length > limit) break;
 
 						/* Check all fields in item */
-						for(var field in item) {
+						for(var field in searchFields) {
 							var value = item[field];
 
 							/* Only search defined, string value */
@@ -64,6 +66,7 @@ angular.module('core').directive('search', [
 							ans.push(item);
 						}
 					}
+					console.log(pattern, ' - ', ans);
 
 					return ans;
 				};
