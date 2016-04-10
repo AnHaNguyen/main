@@ -35,8 +35,6 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 			});
 		};
 
-		$scope.initModules(1415, 'CS');
-
 		/**
 		 *  Certificate controller
 		 **/
@@ -47,7 +45,7 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		 *  Give user service the power to reset the entire universe
 		 **/
 		$scope.user.reset = function (major, focusArea, admissionYear) {
-			$scope.initModules(admissionYear, major);
+			$scope.initModules(admissionYear.code, major.code);
 		};
 
 		$scope.user.init();

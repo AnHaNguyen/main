@@ -13,8 +13,8 @@
  *  					 --> Module is added to planned modules
  **/
 
-angular.module('core').factory('Modules', ['$http', 'localStorageService', 
-		function ($http, localStorageService) {
+angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User',
+		function ($http, localStorageService, User) {
 			var service = {
 				plannedModules: [],
 				types: {},
@@ -357,9 +357,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService',
 			 **/
 			service.getType = function () {
 				var params = {
-					major: 'CS',
-					adm_year: '1314',
-					focus_area: 'IR',
+					major: User.major.code,
+					adm_year: User.admissionYear.code,
+					focus_area: User.focusArea.code,
 					mods: service.getListOfModules()
 				};
 
