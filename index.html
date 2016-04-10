@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 	<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 
-	<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">-->
+	<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
@@ -333,7 +333,16 @@
 						</div>
 
 						<div class="col s12 content-row ulr-hover" ng-repeat="module in modulesController.visibleModules['ULR']">
-							<div class="col s2 item">{{ module.type }}</div>
+							<div class="col s2 item">
+								<div class="dropdown">
+									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
+									<div class="dropdown-content">
+										<a class="taken-choice">ULR</a>
+										<a class="plan-choice">PR</a>
+										<a class="waived-choice">UE</a>
+									</div>
+								</div>
+							</div>
 							<div class="col s1 item">{{ module.code }}</div>
 							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
@@ -343,18 +352,10 @@
 								<div class="float-left">
 									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
-								<!--<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Taken</a>
+								<div class="btn-group float-left">
+									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" onClick="toggleFunction()">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
 									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
-								</div>-->
-								<div class="dropdown">
-									<a class="dropbtn z-depth-1 btn">Taken</a>
-									<div class="dropdown-content">
-										<a class="taken-choice">Taken</a>
-										<a class="plan-choice">Plan</a>
-										<a class="waived-choice">Waived</a>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -385,7 +386,16 @@
 						</div>
 
 						<div class="col s12 content-row pr-hover" ng-repeat="module in modulesController.visibleModules['PR']">
-							<div class="col s2 item">{{ module.type }}</div>
+							<div class="col s2 item">
+								<div class="dropdown">
+									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
+									<div class="dropdown-content">
+										<a class="taken-choice">ULR</a>
+										<a class="plan-choice">PR</a>
+										<a class="waived-choice">UE</a>
+									</div>
+								</div>
+							</div>
 							<div class="col s1 item">{{ module.code }}</div>
 							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
@@ -395,13 +405,10 @@
 								<div class="float-left">
 									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
-								<div class="dropdown">
-									<a class="dropbtn z-depth-1 btn">Mod State</a>
-									<div class="dropdown-content">
-										<a>Taken</a>
-										<a>Plan</a>
-										<a>Waived</a>
-									</div>
+								<div class="btn-group float-left">
+									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" onClick="toggleFunction()">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -432,7 +439,16 @@
 						</div>
 
 						<div class="col s12 content-row ue-hover" ng-repeat="module in modulesController.visibleModules['UE']">
-							<div class="col s2 item">{{ module.type }}</div>
+							<div class="col s2 item">
+								<div class="dropdown">
+									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
+									<div class="dropdown-content">
+										<a class="taken-choice">ULR</a>
+										<a class="plan-choice">PR</a>
+										<a class="waived-choice">UE</a>
+									</div>
+								</div>
+							</div>
 							<div class="col s1 item">{{ module.code }}</div>
 							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
@@ -443,13 +459,10 @@
 								<div class="float-left">
 									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
-								<div class="dropdown">
-									<a class="dropbtn z-depth-1 btn">Mod State</a>
-									<div class="dropdown-content">
-										<a>Taken</a>
-										<a>Plan</a>
-										<a>Waived</a>
-									</div>
+								<div class="btn-group float-left">
+									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" onClick="toggleFunction()">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
 								</div>
 							</div>
 						</div>

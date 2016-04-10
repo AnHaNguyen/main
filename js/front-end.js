@@ -131,7 +131,7 @@ $("#plan-mod-nav").on("click", function (){
 	$("#plan-mod-div").show();
 });
 
-/*-------------Toggle button taken/plan---------------
+/*-------------Toggle button taken/plan---------------*/
 function toggleFunction() {
 	$(".left-div").on("click", function() {
 		var rightItem = $(this).parent().find(".right-div");
@@ -186,7 +186,7 @@ function toggleFunction() {
 
 		$(this).addClass("selected-toggle-btn");
 	});
-}*/
+}
 
 function semPlanner() {
 	$(".semester-div").on("click", function(){
