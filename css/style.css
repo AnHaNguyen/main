@@ -7,17 +7,20 @@ body {
 #start-page {
 	/*-----------Fit in 1 page, no scrolling---------*/
     height: 100vh;
-	min-height: 100vh;
     width: 100%;
-    box-shadow: inset 0 0 100px rgba(0, 0, 0, .5);
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.7);
     background: #1a82f7; 													/* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); 	/* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); 			/* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); 		/* For Firefox 3.6 to 15 */
-    background: linear-gradient(#0F398B, #E5FEFF 80%, #CDFFDC); 			/* Standard syntax (must be last) */
+    background: -webkit-linear-gradient(#0F398B, #E5FEFF 100%, #CDFFDC); 	/* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#0F398B, #E5FEFF 100%, #CDFFDC); 			/* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#0F398B, #E5FEFF 100%, #CDFFDC); 		/* For Firefox 3.6 to 15 */
+    background: linear-gradient(#0F398B, #E5FEFF 100%, #CDFFDC); 			/* Standard syntax (must be last) */
 }
 
-#get-started-btn, #starter-confirm-btn {
+#logo-div {
+	padding: 3vh 0 1vh 0;
+}
+
+.start-text-div .btn, #starter-confirm-btn {
 	font-weight: 500;
 	font-size: 16px;
 	line-height: normal;
@@ -26,16 +29,21 @@ body {
 	border-radius: 5px;
 }
 
+.start-login-div {
+	width: 46%;
+	float: left;
+	margin: 0 2% 0 2%;
+}
+
 #start-wrapper {
 	margin: 0 20% 0 20%;
-	padding: 10px 0 10px 0;
-	height: 10vh;
+	height: 100vh;
 }
 
 #grad-cer-div {
 	border: 1px solid black;
 	padding: 20px;
-	margin-bottom: 10px;
+	height: 72vh;
 	background-color: white;
 	text-align: center;
 }
@@ -45,15 +53,19 @@ body {
 }
 
 #start-text-div {
-	height: 70vh;
+	height: 72vh;
 	color: white;
 	text-align: center;
+	overflow: auto;
 }
 
-#start-text-div p {
+#intro-text, .start-login-div p {
 	font-size: 18px;
 	text-shadow: 1px 0 black;
-	padding-top: 150px;
+}
+
+#intro-text {
+	padding: 100px 0 50px 0;
 }
 
 .input-size {
@@ -68,7 +80,6 @@ body {
 	color: #fb6542;
 	font-weight: bold;
 }
-
 /*----------------Logo-----------------*/
 .logo {
 	font-family: 'Indie Flower', cursive;

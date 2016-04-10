@@ -34,14 +34,20 @@
 <body ng-app="core" id="main">
 	<div id="start-page" ng-controller="mainController">
 		<div id="start-wrapper">
-			<div>
+			<div id="logo-div">
 				<span class="logo">SOCPlans</span>
 			</div>
 
 			<div id="start-text-div">
-				<p>SoCPlans helps SoC's students to verify degree and plan modules for semesters</p>
-				<div class="waves-effect waves-light btn" id="get-started-btn">Get Started</div>
-				<br><button type = "button" id = "login">Log in through IVLE</button>
+				<p id="intro-text">SoCPlans helps SoC's students in degree verification and planning modules for next semesters.</p>
+				<div class="start-login-div">
+					<a class="waves-effect waves-light btn" id="get-started-btn">Non-Login User</a>
+					<p>You have to manually add all your information.</p>
+				</div>
+				<div class="start-login-div">
+					<a class="waves-effect waves-light btn" id="login">IVLE User (Recommended)</a>
+					<p>We can get modules you took so you don't have to manually add them.</p>
+				</div>
 			</div>
 
 			<div id="grad-cer-div" class="center z-depth-2">
@@ -62,9 +68,11 @@
 				</form>
 			</div>
 
-			<div id="starter-footer" class="center">
-				<p>Available only to NUS's SoC Students</p>
-				<p>Proudly brought to you by <b>SoCPlans</b> team</p>
+			<div id="start-footer">
+				<div class="center">
+					<p>Available only to NUS's SoC Students</p>
+					<p>Proudly brought to you by <b>SoCPlans</b> team</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -295,7 +303,7 @@
 						</div>
 					</div>
 
-					<div id="ue-deg-req" class="row mod-type-table">
+					<div class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s11 mc-item item text-mc">Total Module Credits</div>
 							<div class="col s1 mc-item item">160</div>
