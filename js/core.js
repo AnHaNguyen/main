@@ -7,6 +7,8 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 
 		$scope.emptystring = '';
 
+		$scope.stateToAdd = 'planned';
+
 		/**------------------ Modules list controller ---------------------------------*/
 
 		$scope.modulesController = Modules;
@@ -27,7 +29,7 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 
 		// Function to add new module
 		$scope.addModule = function (item) {
-			Modules.addModule(item.type, item.code);
+			Modules.addModule(item.code, $scope.stateToAdd);
 		};
 
 		// Function to submit list of taken modules
@@ -99,6 +101,8 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 	function ($scope, Modules, localStorageService, SearchFilter) {
 		$scope.emptystring = '';
 
+		$scope.stateToAdd = 'planned';
+
 		/**----------------------- Module controller ----------------------------**/
 		/* Create clone of modules factory */
 		$scope.initModules = function (admissionYear, major) {
@@ -115,7 +119,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 
 		// Function to add new module
 		$scope.addModule = function (item) {
-			Modules.addModule(item.type, item.code);
+			Modules.addModule(item.code, $scope.stateToAdd);
 		};
 
 		$scope.initModules(1, 1);

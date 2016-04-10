@@ -113,15 +113,15 @@
 						<div class="input-div"><input type="text" class="validate" placeholder="Search Type"></div>
 						<div>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type1" checked />
+								<input class="with-gap" name="group1" type="radio" id="type1" ng-model="stateToAdd" value="taken" checked />
 								<label for="type1">Taken</label>
 							</p>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type2" />
+								<input class="with-gap" name="group1" type="radio" id="type2" ng-model="stateToAdd" value="planned"/>
 								<label for="type2">Plan</label>
 							</p>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type3"  />
+								<input class="with-gap" name="group1" type="radio" id="type3" ng-model="stateToAdd" value="exempted"/>
 								<label for="type3">Waived</label>
 							</p>
 						</div>
@@ -381,7 +381,7 @@
 							<div class="col s10 item">Add your required module</div>
 						</div>
 
-						<div class="col s12 content-row ulr-hover" ng-repeat="module in modulesController.visibleModules['ULR']">
+						<div ng-repeat="module in modulesController.visibleModules['ULR']" class="col s12 content-row ue-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
@@ -399,12 +399,15 @@
 								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
 								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
-									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
+									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" ng-click="changeState(module.type, module.code, 'taken')" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'planned')" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'exempted')" onClick="toggleFunction()">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light 
+										      {{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -434,7 +437,7 @@
 							<div class="col s3 header item">Actions</div>
 						</div>
 
-						<div class="col s12 content-row pr-hover" ng-repeat="module in modulesController.visibleModules['PR']">
+						<div ng-repeat="module in modulesController.visibleModules['PR']" class="col s12 content-row ue-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
@@ -452,12 +455,15 @@
 								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
 								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
-									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
+									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" ng-click="changeState(module.type, module.code, 'taken')" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'planned')" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'exempted')" onClick="toggleFunction()">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light 
+										      {{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -487,7 +493,7 @@
 							<div class="col s3 header item">Actions</div>
 						</div>
 
-						<div class="col s12 content-row ue-hover" ng-repeat="module in modulesController.visibleModules['UE']">
+						<div ng-repeat="module in modulesController.visibleModules['UE']" class="col s12 content-row ue-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
@@ -506,12 +512,15 @@
 								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
 								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
-									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
+									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light selected-toggle-btn" ng-click="changeState(module.type, module.code, 'taken')" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'planned')" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" ng-click="changeState(module.type, module.code, 'exempted')" onClick="toggleFunction()">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light 
+										      {{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>

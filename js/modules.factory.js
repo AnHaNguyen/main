@@ -114,7 +114,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			 * Total MCs is updated also
 			 * Update all selected modules afterward
 			 **/
-			service.addModule = function (modType, modCode, origin) {
+			service.addModule = function (modCode, modState, origin) {
 				var module = getModuleByCode(modCode);
 
 				/* Make sure this module has not been added before */
@@ -122,10 +122,22 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 					service.visibleModules['ALL'].push(module);
 
-					if ((!origin) || (origin !== 'auto')) {
-						service.addPlannedModule(module);
+					if (modState === 'planned') {
+						if ((!origin) || (origin !== 'auto')) {
+							service.addPlannedModule(module);
+
+							/* new-added-row class */
+							for(var i in service.visibleModules['ALL']) {
+								var module = service.visibleModules['ALL'][i];
+
+								module.new = '';
+							}
+
+							module.new = 'new-added-row';
+						}
 					}
-					module.state = 'planned';
+
+					module.state = (modState ? modState : 'planned');
 				}
 
 				service.updateAllSelectedModules();
@@ -147,7 +159,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						/* If these modules are not saved in plan localStorage, then add them to plan table */
 						if (!plan) cmd = 'manu';
 
-						service.addModule(module.type, module.code, cmd);
+						service.addModule(module.code, module.state, cmd);
 					}
 				}
 			};
@@ -188,10 +200,10 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			};
 
 			/**
-			 * Remove module by modType and modCode
+			 * Remove module by and modCode
 			 * MC is also updated
 			 **/
-			service.removeModule = function (modType, modCode) {
+			service.removeModule = function (modCode) {
 				for(var i in service.visibleModules['ALL']) {
 					var module = service.visibleModules['ALL'][i];
 
@@ -209,7 +221,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			};
 
 			// Change state between exempted, planned, taken
-			service.changeState = function (modType, modCode, newState) {
+			service.changeState = function (modCode, newState) {
 
 				var module = getModuleByCode(modCode);
 
