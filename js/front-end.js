@@ -5,6 +5,18 @@ function showDegReq() {
 	$("#plan-mod-div").hide();
 }
 
+function showMainPage() {
+	$("#start-page").hide();
+	$("#main-section").show();
+	showDegReq();
+
+	/*--------------Transitions for navigation bar----------------*/
+	Materialize.fadeInImage("#nav-mobile");
+	Materialize.showStaggeredList("#sidebar-all-items");
+	Materialize.fadeInImage(".page-title");
+	Materialize.fadeInImage(".main-table");
+}
+
 /*-----------------------Start-page--------------------------*/
 $("#get-started-btn").on("click", function() {
 	$("#start-text-div").hide();
@@ -12,14 +24,16 @@ $("#get-started-btn").on("click", function() {
 });
 
 $("#starter-confirm-btn").on("click", function() {
-	$("#start-page").hide();
-	$("#main-section").show();
-	showDegReq();
+	showMainPage();
 });
 
 $(document).ready(function() {
 	$("#main-section").hide();
 	$("#grad-cer-div").hide();
+
+	if(ivle.getToken(window.location.href) != null) {
+		showMainPage();
+	}
 
 	 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
 	 $(".modal-trigger").leanModal();
