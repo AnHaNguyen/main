@@ -40,6 +40,12 @@
 .height100 {
 	height: 100px !important;
 }
-.angucomplete-holder input {
+#major .angucomplete-holder input {
+	padding: 0 !important;
+}
+#focus_area .angucomplete-holder input {
+	padding: 0 !important;
+}
+#admission_year .angucomplete-holder input {
 	padding: 0 !important;
 }
