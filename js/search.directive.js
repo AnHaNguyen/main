@@ -13,6 +13,7 @@ angular.module('core').directive('search', [
 				clearinput: '@clearinput',
 				initvalue: '=init',
 				titlefield: '@titlefield',
+				filter: '=filter',
 				minlength: '@minlength'
 			},
 			link: function(scope, element, attrs) {
@@ -41,6 +42,11 @@ angular.module('core').directive('search', [
 
 						/* Limit the number of results as it may go up to 5000 */
 						if (ans.length > limit) break;
+
+						/* Filter items before checking */
+						if ((filter) && (filter.pass) && (!filter.pass(item))) {
+							continue;
+						}
 
 						/* Check all fields in item */
 						for(var field in searchFields) {

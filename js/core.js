@@ -2,10 +2,12 @@
 
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
 
-angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 
-	function($scope, Modules, User) { 
+angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 'SearchFilter',
+	function($scope, Modules, User, SearchFilter) { 
 
 		$scope.emptystring = '';
+
+		/**------------------ Modules list controller ---------------------------------*/
 
 		$scope.modulesController = Modules;
 
@@ -35,9 +37,7 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 			});
 		};
 
-		/**
-		 *  Certificate controller
-		 **/
+		/**---------------  Certificate controller -------------------------------------**/
 
 		$scope.user = User;
 
@@ -67,6 +67,18 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		$scope.changeAdmissionYear = function (selectedAdmissionYear) {
 			$scope.user.displayAdmissionYear = selectedAdmissionYear.title;
 		};
+
+		/**------------------------- Search Filter controller ---------------------**/
+
+		$scope.searchFilter = SearchFilter;
+
+		$scope.modifyFilter = function (type) {
+			if (type === 'ALL') {
+				$scope.searchFilter.resetFilter();
+			} else {
+				$scope.searchFilter.set('type', type);
+			}
+		};
 	}
 ]);
 
@@ -83,10 +95,11 @@ angular.module('core').controller('loginController', [ '$scope', 'User',
 	}
 ]);
 
-angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService',
-	function ($scope, Modules, localStorageService) {
+angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService', 'SearchFilter',
+	function ($scope, Modules, localStorageService, SearchFilter) {
 		$scope.emptystring = '';
 
+		/**----------------------- Module controller ----------------------------**/
 		/* Create clone of modules factory */
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
@@ -109,6 +122,19 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 
 		/* End */
 
+		/**------------------------- Search Filter controller ---------------------**/
+
+		$scope.searchFilter = SearchFilter;
+
+		$scope.modifyFilter = function (type) {
+			if (type === 'ALL') {
+				$scope.searchFilter.resetFilter();
+			} else {
+				$scope.searchFilter.set('type', type);
+			}
+		};
+
+		/**------------------------- Plan table controller ------------------------**/
 		// CHeck the cookie first
 		var plan = localStorageService.get('plan');
 
