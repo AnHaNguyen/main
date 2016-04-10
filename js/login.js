@@ -45,9 +45,9 @@ MatriculationYear   "2013"
     alert(major + " " + admission_year);
 
     return {
-        modules: modules;
-        admission_year: admission_year;
-        major: major;
+        modules: modules,
+        admission_year: admission_year,
+        major: major
     }
 });
 }
