@@ -20,13 +20,16 @@ body {
 	padding: 3vh 0 1vh 0;
 }
 
-.start-text-div .btn, #starter-confirm-btn {
-	font-weight: 500;
+.start-login-div .btn, #starter-confirm-btn {
 	font-size: 16px;
 	line-height: normal;
 	height: auto;
-	padding: 15px 20px 15px 20px;
+	padding: 15px 20px;
 	border-radius: 5px;
+}
+
+.start-login-div .btn:hover, #starter-confirm-btn:hover {
+	font-weight: 500;
 }
 
 .start-login-div {

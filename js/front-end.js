@@ -15,6 +15,12 @@ $("#starter-confirm-btn").on("click", function() {
 	$("#start-page").hide();
 	$("#main-section").show();
 	showDegReq();
+
+	/*--------------Transitions for navigation bar----------------*/
+	Materialize.fadeInImage("#nav-mobile");
+	Materialize.showStaggeredList("#sidebar-all-items");
+	Materialize.fadeInImage(".page-title");
+	Materialize.fadeInImage(".main-table");
 });
 
 $(document).ready(function() {
