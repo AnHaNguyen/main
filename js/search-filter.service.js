@@ -11,7 +11,7 @@ angular.module('core').service('SearchFilter', ['$http',
 
 		object.pass = function (item) {
 
-			for(var field in filter) {
+			for(var field in object.filter) {
 				if ((!item[field]) || (item[field] !== object.filter[field])) {
 					return false;
 				}

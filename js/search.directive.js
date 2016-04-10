@@ -44,7 +44,7 @@ angular.module('core').directive('search', [
 						if (ans.length > limit) break;
 
 						/* Filter items before checking */
-						if ((filter) && (filter.pass) && (!filter.pass(item))) {
+						if ((scope.filter) && (scope.filter.pass) && (!scope.filter.pass(item))) {
 							continue;
 						}
 
