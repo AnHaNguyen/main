@@ -4,6 +4,7 @@ var CS = "Computer Science";
 var IS = "Information System";
 var BZA = "Business Analytic";
 var CEG = "Computer Engineering";
+var totalSem = 8;
 
 $("#login").on("click",function(){
     if (ivle.getToken(window.location.href) == null){
@@ -79,6 +80,9 @@ Semester    "2"
 SemesterDisplay "Semester 2"*/
     
     var mods = new Array();
+	for (var i = 0; i < totalSem; i++){
+		mods[i] = new Array();
+	}
     var matric = user.profile('UserID');
     $.ajax({
         url: "php/authentication/connectdatabase.php?cmd=getModules&matric="+matric
@@ -87,7 +91,7 @@ SemesterDisplay "Semester 2"*/
             alert("Error retrieving!");
             return;
         }
-        if (data == ""){            //first time user, no record in DB
+        if (JSON.parse(data) == ""){            //first time user, no record in DB
             var allMods = new Array();
             user.modulesTaken(function(allMods){
                 for (var i = 0; i < allMods.length; i++){
