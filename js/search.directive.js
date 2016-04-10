@@ -66,7 +66,6 @@ angular.module('core').directive('search', [
 							ans.push(item);
 						}
 					}
-					console.log(pattern, ' - ', ans);
 
 					return ans;
 				};

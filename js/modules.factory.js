@@ -18,7 +18,12 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			var service = {
 				plannedModules: [],
 				types: {},
-				user: {}
+				user: {},
+				remainingMC: {
+					'ULR': 0,
+					'UE': 0,
+					'PR': 0
+				}
 			};
 
 			// Module types
@@ -360,7 +365,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				var major = (User.major && User.major.code ? User.major.code : '');
 				var focusArea = (User.focusArea && User.focusArea.code ? User.focusArea.code : '');
 				var admissionYear = (User.admissionYear && User.admissionYear.code ? User.admissionYear.code : '');
-				console.log(major, focusArea, admissionYear);
 
 				var params = {
 					major: major,
@@ -382,12 +386,50 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 							module.subtype = result[1];
 						}
 					}
-					console.log(results);
 
 					/* Categorize modules into types */
 					service.categorizeModule();
+
+					/* After categorizing modules, verify them */
+					service.verify();
 				}); 
 			};
+
+			/**
+			 *  Set up parameters and mods to send verify request
+			 *  Assume that all modules have been categorized
+			 **/
+			service.verify = function () {
+				/* Safe copy */
+				var major = (User.major && User.major.code ? User.major.code : '');
+				var focusArea = (User.focusArea && User.focusArea.code ? User.focusArea.code : '');
+				var admissionYear = (User.admissionYear && User.admissionYear.code ? User.admissionYear.code : '');
+
+				var modules = [];
+				
+				for(var i in service.visibleModules['ALL']) {
+					var module = service.visibleModules['ALL'][i];
+
+					/* If module is exempted then type of module is nil */
+					modules.push([
+						module.code, (module.state === 'exempted' ? 'nil' : module.type), module.mc + ''
+					]);
+				}
+
+				var params = {
+					cmd: 'verify',
+					adm_year: admissionYear,
+					focus_area: focusArea,
+					major: major,
+					modules: JSON.stringify(modules)
+				};
+
+				service.submit('/main/php/getrequirements.php', params, function (results) {
+					for(var type in results) {
+						service.remainingMC[type] = results[type];
+					}
+				});
+			}
 
 			return service;
 		}
