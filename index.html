@@ -52,11 +52,11 @@
 					<span class="grad-cer-text">BACHELOR OF</span>
 					<input placeholder="Your Bachelor" id="bachelor" ng-model="bachelor" type="text" class="validate center input-size"><br>
 						<span class="grad-cer-text">IN</span>
-						<input placeholder="Your Major" id="major" ng-model="major" type="text" class="validate center input-size">
+						<search placeholder="Your Major" id="major" minlength="0" titlefield="title"select="changeMajor" items="user.majorsList" clearinput="" init="user.displayMajor" type="text" class="validate center input-size"> </search>
 						<span class="grad-cer-text">FOCUS AREA</span>
-						<input placeholder="Your Focus Area" id="focus_area" ng-model="focus_area" type="text" class="validate center input-size"><br>
+						<search placeholder="Your Focus Area" id="focus_area" minlength="0" titlefield="title" select="changeFocusArea" items="user.focusAreasList" clearinput=""init="user.displayFocusArea" type="text" class="validate center input-size"> </search><br> 
 						<span class="grad-cer-text">ADMISSION YEAR</span>
-						<input placeholder="Your Admission Year" id="admission_year" ng-model="admission_year" type="text" class="validate center input-size"><br>
+						<search placeholder="Your Admission Year" id="admission_year" minlength="0" titlefield="title" select="changeAdmissionYear" items="user.admissionYearsList" clearinput="" init="user.displayAdmissionYear" type="text" class="validate center input-size"> </search><br>
 					<input type="submit" id="starter-confirm-btn" ng-click="confirm()" class="btn" value="Confirm">
 				</form>
 			</div>
@@ -319,7 +319,7 @@
 								href="#modal-advanced-all-mod"><img src="icon/filter-icon.png"></a>
 							</div>
 							<div class="col s10">
-								<search select="addModule" items="modules"></search>
+								<search init="" id="moduletable-search" minlength="1" titlefield="code,title" clearinput="true" select="addModule" items="modules"></search>
 							</div>
 						</div>
 					</form>
@@ -510,7 +510,7 @@
 								href="#modal-advanced-planner"><img src="icon/filter-icon.png"></a>
 							</div>
 							<div class="col s10">
-								<search select="addModule" items="modules"></search>
+								<search init="" id="plantable-search" minlength="1" titlefield="code,title" clearinput="true" select="addModule" items="modules"></search>
 							</div>
 						</div>
 					</form>

@@ -5,9 +5,11 @@ angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalSt
 angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 
 	function($scope, Modules, User) { 
 
-		$scope.user = User;
+		$scope.emptystring = '';
 
 		$scope.modulesController = Modules;
+
+		$scope.modules = [];
 
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
@@ -22,7 +24,9 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		$scope.changeState = Modules.changeState;
 
 		// Function to add new module
-		$scope.addModule = Modules.addModule;
+		$scope.addModule = function (item) {
+			Modules.addModule(item.type, item.code);
+		};
 
 		// Function to submit list of taken modules
 		$scope.submit = function () {
@@ -33,11 +37,38 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 
 		$scope.initModules(1415, 'CS');
 
+		/**
+		 *  Certificate controller
+		 **/
+
+		$scope.user = User;
+
+		/**
+		 *  Give user service the power to reset the entire universe
+		 **/
 		$scope.user.reset = function (major, focusArea, admissionYear) {
 			$scope.initModules(admissionYear, major);
 		};
 
 		$scope.user.init();
+		$scope.log = function () {
+			$scope.$broadcast('angucomplete-alt:changeInput', 'major', 'what');
+		};
+
+		/**
+		 *  These 3 functions are for updating major, focusarea, adyear
+		 **/
+		$scope.changeMajor = function (selectedMajor) {
+			$scope.user.displayMajor = selectedMajor.title;
+		};
+
+		$scope.changeFocusArea = function (selectedFocusArea) {
+			$scope.user.displayFocusArea = selectedFocusArea.title;
+		};
+
+		$scope.changeAdmissionYear = function (selectedAdmissionYear) {
+			$scope.user.displayAdmissionYear = selectedAdmissionYear.title;
+		};
 	}
 ]);
 
@@ -56,6 +87,8 @@ angular.module('core').controller('loginController', [ '$scope', 'User',
 
 angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService',
 	function ($scope, Modules, localStorageService) {
+		$scope.emptystring = '';
+
 		/* Create clone of modules factory */
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
@@ -70,7 +103,9 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		$scope.changeState = Modules.changeState;
 
 		// Function to add new module
-		$scope.addModule = Modules.addModule;
+		$scope.addModule = function (item) {
+			Modules.addModule(item.type, item.code);
+		};
 
 		$scope.initModules(1, 1);
 
