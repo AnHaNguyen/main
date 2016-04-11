@@ -91,7 +91,7 @@ angular.module('core').factory('User', ['$http', 'localStorageService',
 				object.displayUsername = username;
 				object.displayBachelor = bachelor;
 
-				object.reset(major, focusArea, admissionYear);
+				object.reset(object.major, object.focusArea, object.admissionYear);
 
 				object.save();
 			};

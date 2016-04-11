@@ -2,12 +2,14 @@
 
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
 
-angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 'SearchFilter',
-	function($scope, Modules, User, SearchFilter) { 
+angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 'SearchFilter', 'Transport',
+	function($scope, Modules, User, SearchFilter, Transport) { 
 
 		$scope.emptystring = '';
 
 		$scope.stateToAdd = 'planned';
+
+		Transport.noSemesters = 4;
 
 		/**------------------ Modules list controller ---------------------------------*/
 
@@ -16,6 +18,15 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		$scope.modules = [];
 
 		$scope.initModules = function (admissionYear, major) {
+			/* change the number of semesters in plan table */
+			console.log('init>>', admissionYear);
+			if (admissionYear) {
+				var startYear = parseInt(admissionYear[0]) * 10 + parseInt(admissionYear[1]);
+				var passedYear = 15 - startYear;
+				var remainingYear = 5 - passedYear;
+				Transport.noSemesters = remainingYear * 2;
+			}
+
 			Modules.fetchData(admissionYear, major, function (data) {
 				$scope.modules = data;
 			});
@@ -84,8 +95,8 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 	}
 ]);
 
-angular.module('core').controller('loginController', [ '$scope', 'User',
-	function ($scope, User) {
+angular.module('core').controller('loginController', [ '$scope', 'User', 'Transport',
+	function ($scope, User, Transport) {
 		$scope.Input = {
 			username: '',
 			password: ''
@@ -97,8 +108,8 @@ angular.module('core').controller('loginController', [ '$scope', 'User',
 	}
 ]);
 
-angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService', 'SearchFilter',
-	function ($scope, Modules, localStorageService, SearchFilter) {
+angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService', 'SearchFilter', 'Transport',
+	function ($scope, Modules, localStorageService, SearchFilter, Transport) {
 		$scope.emptystring = '';
 
 		$scope.stateToAdd = 'planned';
@@ -155,7 +166,6 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		 *  MC Counter in plan table
 		 *  Recompute mc after a module is added, removed or moved
 		 **/
-
 		$scope.computePlannedMC = function () {
 			for(var i in $scope.semester) {
 				$scope.plannedMC[i] = 0;
@@ -170,14 +180,59 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			}
 		};
 
+		$scope.showSemester = [ true, true, true, true, false, false, false, false, false, false ];
+
+		/**
+		 *  Track the number of semesters
+		 **/ 
+		$scope.$watch(function() {
+			return Transport.noSemesters;
+		}, function (newValue) {
+			// Avoid conflict with old version of planner 
+			console.log(newValue);
+			while ($scope.semester.length < 10) {
+				$scope.semester.push([]);
+			}
+
+			for(var i = 0;  i < 10;  i++) {
+				$scope.showSemester[i] = false;
+			}
+			for(var i = 0;  i < newValue;  i++) {
+				$scope.showSemester[i] = true;
+			}
+
+			// addd this to avoid hiding non-empty sem 
+			for(var i = 9;  i >= 0;  i--) {
+				if ($scope.semester[i].length != 0) {
+					for(var j = i;  j >= 0;  j--) {
+						$scope.showSemester[j] = true;
+					}
+				}
+			}  
+		}); 
+
 		if (plan) {
 		/* BRANCH: stored plan found */
 			$scope.semester = plan;
 
+			/* Avoid conflict with old version of planner */
+			while ($scope.semester.length < 10) {
+				$scope.semester.push([]);
+			}
+
+			// addd this to avoid hiding non-empty sem 
+			for(var i = 9;  i >= 0;  i--) {
+				if ($scope.semester[i].length != 0) {
+					for(var j = i;  j >= 0;  j--) {
+						$scope.showSemester[j] = true;
+					}
+				}
+			}  
+
 			$scope.computePlannedMC();
 		} else {
 		/* BRANCH: stored plan not found */
-			$scope.semester = [ [], [], [], [] ];
+			$scope.semester = [ [], [], [], [], [], [], [], [], [] ];
 
 			$scope.computePlannedMC();
 		}
