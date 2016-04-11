@@ -10,13 +10,15 @@ var token;
 $("#login").on("click",function(){
     if (ivle.getToken(window.location.href) == null){
         var authUrl = ivle.login(key, redirectUrl);
+        token = ivle.getToken(authUrl);
         window.location.href = authUrl;
     }
             
 });
 
 function updateToken(){
-    return ivle.getToken(window.location.href);
+    token = ivle.getToken(window.location.href);
+    return token;
 }
 
 
@@ -63,7 +65,7 @@ function getMajor(user){
     } else return "Not supported";
 }
 
-function getModules(user){
+function getModules(user, callback){
     /*ModuleCode    "CS3223"
 ModuleTitle "Database Systems Implementation"
 AcadYear    "2015/2016"
@@ -98,14 +100,13 @@ SemesterDisplay "Semester 2"*/
                         return;
                     }
                 });   
-                return mods;
+                callback(mods);
             });
         } else{
-            //mods = JSON.parse(data);
-            return mods;
+            mods = JSON.parse(data);
+            callback(mods);
         }      
     });
-    return mods;
 }
 
 function getSemester(moduleInfo, startYear){
@@ -119,51 +120,56 @@ function getSemester(moduleInfo, startYear){
     }
 }
 
-function getModulesLogin(token){
-    if (token != null){
-      	var user = ivle.User(key, token).init(); // return a User instance
- 
-    	// you must init user, it will validate the user and query his/her profile
-    	 
-    	return getModules(user);
-    	
-    }else{
-    	return;
-    }
+function getCurrentSem(startYear){
+    var year = parseInt(startYear);
+    var currentSem = 1;
+    var currentAcadYear = "2016/2017";
+    var curYear = parseInt(currentAcadYear.split("/")[0]);
+    if (currentSem == 1){
+        return (curYear - year + 1)*2 - 1;
+    } else{
+        return (curYear - year + 1)*2;
+    }   
 }
 
-function getAdmissionYearLogin(token){
-	if (token != null){
-		var user = ivle.User(key, token); // return a User instance
- 
-    	// you must init user, it will validate the user and query his/her profile
-    	user.init().done(function() {
-    		return getAdmissionYear(user);
-    	})
-    }else{
-    	return;
-    }
-}
-
-function getMajorLogin(token, callback){
-	if (token != null){
-		var user = ivle.User(key, token); // return a User instance
- 
-    	// you must init user, it will validate the user and query his/her profile
-    	
-		user.init().done(function() {
-    		//major = getMajor(user);
-			callback(getMajorLogin);
-    	})
-		return major;
-		
-    }else{
-    	return;
-    }
-}
 
 function getIVLEToken(){
-	var token = updateToken();
-	return token;
+    if (token == null){
+        return updateToken();
+    } else{
+        return token;
+    }
 }
 
+function initializeUser(token, callback){
+	var user = ivle.User(key, token);
+	
+	user.init().done(function(){
+		callback(user);
+	});	
+}
+
+function getModulesLogin(token, callback){
+	var user = ivle.User(key, token);
+	user.init().done(function(){
+		getModules(user, function(modules){
+            states = getStates(user);
+			callback(modules, states);
+		});
+		
+	});
+}
+
+
+function getStates(user){     //add state to modules
+    var startYear = user.profile('MatriculationYear');
+    var curSem = getCurrentSem(startYear);
+    var states = {};
+    for (var i = 1; i <= totalSem; i++){
+        if (i >= curSem){
+            states[i] = "planned";
+        } else{
+            states[i] = "taken";
+        }
+    }
+}

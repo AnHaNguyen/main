@@ -651,6 +651,7 @@
 							</div>
 							<div class="col s12 mc-div">{{plannedMC[3]}}</div>
 						</div>
+
 						<div class="wrapper-div">
 							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 5</div>
 							<div class="col s12 drag-n-drop-div">
@@ -666,7 +667,56 @@
 							</div>
 							<div class="col s12 mc-div">{{plannedMC[4]}}</div>
 						</div>
-					</div>-->
+					</div>
+
+						<div class="wrapper-div">
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 6</div>
+							<div class="col s12 drag-n-drop-div">
+								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[5]">
+									<div ng-repeat="mod in semester[5]" class="row no-margin">
+										<div class="drag-drop-item">
+											<span class="bold">{{mod.code}}</span> <br>
+											{{mod.title}} <br>
+											{{mod.mc}} MC
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col s12 mc-div">{{plannedMC[5]}}</div>
+						</div>
+
+						<div class="wrapper-div">
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 7</div>
+							<div class="col s12 drag-n-drop-div">
+								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[6]">
+									<div ng-repeat="mod in semester[6]" class="row no-margin">
+										<div class="drag-drop-item">
+											<span class="bold">{{mod.code}}</span> <br>
+											{{mod.title}} <br>
+											{{mod.mc}} MC
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col s12 mc-div">{{plannedMC[6]}}</div>
+						</div>
+
+						<div class="wrapper-div">
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 8</div>
+							<div class="col s12 drag-n-drop-div">
+								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[7]">
+									<div ng-repeat="mod in semester[7]" class="row no-margin">
+										<div class="drag-drop-item">
+											<span class="bold">{{mod.code}}</span> <br>
+											{{mod.title}} <br>
+											{{mod.mc}} MC
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col s12 mc-div">{{plannedMC[7]}}</div>
+						</div>-->
+					</div>
 				</div>
 			</div>
 		</div>
