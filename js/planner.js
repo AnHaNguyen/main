@@ -1,8 +1,12 @@
 function displayPlannerTable() {
 	var token = getIVLEToken();
-	var admissionYear, nextSem;
+	var admissionYear = 0, nextSem;
 	if (token != null){
-		admissionYear = parseInt(getAdmissionYearLogin(token).toString().substr(2, 2));
+		initializeUser(token, function(user){
+			admissionYear = parseInt(getAdmissionYear(user).toString().substr(0, 2));
+			alert("admissionYear ivle inside = " + admissionYear);
+		});
+		alert("admissionYear ivle = " + admissionYear);
 	} else{
 		admissionYear = parseInt(getYear($('#admission_year_value').val()).toString().substr(0, 2));
 	}

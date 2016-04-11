@@ -40,10 +40,10 @@ $(document).ready(function() {
 		showMainPage();
 	}
 
-	 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-	 $(".modal-trigger").leanModal();
+	// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+	$(".modal-trigger").leanModal();
 
-	 $(".search-input").focus(function(){
+	$(".search-input").focus(function(){
 	 	$(".search-input").keypress(function(e) {
 	 		if(e.which == 13) {		// pressing enter button
 	 			Materialize.toast('New module is added into ', 2000);
@@ -66,7 +66,7 @@ $(document).ready(function() {
 
 
 	/*-------------Add smooth scrolling to all links---------------*/
-	/*$("a").on('click', function(event) {
+	$("a").on('click', function(event) {
 
 	    // Prevent default anchor click behavior
 	    event.preventDefault();
