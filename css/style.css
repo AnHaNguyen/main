@@ -574,3 +574,17 @@ body {
 	font-weight: bold;
 	background-color: rgb(76, 147, 208);		/* darken blue color */
 }
+
+.close-dnd {
+	width: 10%;
+	float: left;
+}
+
+.drag-drop-text {
+	width: 90%;
+	float: left;
+}
+
+.drag-drop-item {
+	overflow: auto;
+}

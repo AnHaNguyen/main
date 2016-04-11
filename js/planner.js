@@ -11,7 +11,6 @@ function displayPlannerTable() {
 	var month = parseInt(date.getMonth().toString()) + 1;
 	var fullYear = date.getFullYear().toString();
 	var year = parseInt(fullYear.substr(2, 2));
-	//alert("month current = " + month + ", year = " + year + ", admission year = " + admissionYear);
 
 	var distYear = year - admissionYear;
 
@@ -47,7 +46,7 @@ function displayTable(startSem) {
 	angular.module('core', []);
 	var curId;
 
-	for(var i = 0; startSem <= 12; i++) {
+	for(var i = 0; startSem <= 10; i++) {
 		if(i % 4 == 0) {
 			$("#plan-mod-main-tbl").append('<div id="plan-mod-wrapper-' + i +'" class="row"></div>');
 			curId = "#plan-mod-wrapper-" + i;
@@ -56,12 +55,11 @@ function displayTable(startSem) {
 		var tempt = $('<div class="wrapper-div"><div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester ' 
 			+ startSem +'</div><div class="col s12 drag-n-drop-div"><div ui-sortable="sortableOptions" class="semester" ng-model="semester[' 
 			+ (i % 4) + ']"><div ng-repeat="mod in semester['
-			+ (i % 4) + ']" class="row no-margin"><div class="drag-drop-item"><span class="bold">{{mod.code}}</span><br>{{mod.title}}<br>{{mod.mc}} MC</div></div></div></div><div class="col s12 mc-div">{{plannedMC[' 
+			+ (i % 4) + ']" class="row no-margin"><div class="drag-drop-item" ng-click="removeModule(mod.code)"><div class="drag-drop-text"><span class="bold">{{mod.code}}</span><br>{{mod.title}}<br>{{mod.mc}} MC</div><div class="close-dnd"><b>X</b></div></div></div></div></div><div class="col s12 mc-div">{{plannedMC[' 
 			+ (i % 4) + ']}}</div></div>');
 
 		$(curId).append(tempt);
 		startSem++;
-
 
 		angular.element(curId).injector().invoke(function($compile) {
 	        var scope = angular.element(tempt).scope();
