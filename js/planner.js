@@ -30,14 +30,14 @@ function displayPlannerTable() {
 		// March - Sep: can't plan for sem 2, but can next sem 1.
 		// Oct - Dec: can't plan for sem 1, but can next sem 2.
 		if(month >= 1 && month <= 2) {
-			nextSem = 1 + 2 * distYear - 2;
+			nextSem = 1 + 2 * distYear - 1;
 			displayTable(nextSem);
 		}
 		else if(month >=3 && month <= 9) {
-			nextSem = 1 + 2 * distYear - 1;
+			nextSem = 1 + 2 * distYear;
 			displayTable(nextSem);
 		} else if(month >= 10 && month <= 12) {
-			nextSem = 1 + 2 * distYear;
+			nextSem = 1 + 2 * distYear + 1;
 			displayTable(nextSem);
 		}
 	}
