@@ -1,21 +1,51 @@
 function updateDegReq() {
 	orReplacement = {"Lev4": "3 level-4 modules"};
 
-	descriptionOf = {"GEMA": "GEMA Module(s)", "GEMB": "GEMB Module(s)", "SS": "Singapore Studies Module(s)", "Breadth": "Breadth Module(s)"};	
+	descriptionOf ={"GEMA": "GEM Module(s) in Mathematics and Science", 
+					"GEMB": "GEM Module(s) in Social Science", 
+					"SS": "Singapore Studies Module(s)", 
+					"Breadth": "Breadth Module(s)", 
+					"GEH": "GEM Module(s) in Human Cultures", 
+					"GEQ": "GEM Module(s) in Asking Questions", 
+					"GER": "GEM Module(s) in Quantitive Reasoning", 
+					"GES": "GEM Module(s) in Singapore Studies", 
+					"GET": "GEM Module(s) in Thinking and Expression"
+				};	
 
 	longForm = {"ULR": "University Level Requirements", "PR": "Program Requirements", "UE": "Unrestricted Electives",
 				"Lev4": "level-4 module(s)", 
 				"Focus": "Focus-area module(s)", 
 				"Focus4": "Level-4 module(s) in focus area", 
 				"Scie": "Science module(s)",
-				"Elective": "Technical Elective Module(s)",
-				"ElectiveDepth": "Technical Elective Depth Module(s)"
+				"Elective": "Elective Module(s)",
+				"ElectiveDepth": "Technical Elective Depth Module(s)",
+				"Elective4": "Elective Module(s) of Level 4",
+				"ListA": "Elective Module(s) in List A",
+				"ListB": "Elective Module(s) in List B"
 			};
-
+	majorConvert = {"Computer Science":"CS","Information System":"IS","Business Analytics": "BZA", "Computer Engineering":"CEG"};
+	
 	getIdOf = {"ULR": "ulr-deg-req", "PR": "prog-req-deg-req", "UE": "ue-deg-req"};
 	hoverType = {"ULR": "ulr", "PR": "pr", "UE": "ue", "OR": "pr"};
 
-	major = $('#major').val(), year = $('#admission_year').val();
+	var token = getIVLEToken();
+	var major, year;
+	if (token != null){
+		initializeUser(token, function(user){
+			major = getMajor(user);
+			year = getAdmissionYear(user);
+			
+			displayReq(major,year);
+		});
+		
+	} else{
+		major = majorConvert[$('#major_value').val()]; 
+		year = getYear($('#admission_year_value').val());
+		displayReq(major,year);
+	}
+}
+	
+function displayReq(major, year){
 	jsonFile = "req/" + major + '/' + year + ".json";
 	moduleJsonFile = "data/simplified.json";
 

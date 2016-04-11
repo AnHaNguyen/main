@@ -2,23 +2,26 @@
 
 /**
  *            fetchdata -> init -> resetTable -> reload --> updateAllSelectedModule 
- * 			  removeModule -> removePlannedModule
- * 						   -> updateAllSelectedModule --> saveAllSelectedModule
- * 			  addModule -> addPlannedModule
- * 						-> updateAllSelectedModule --> saveAllSelectedModule
  *   		  changeStateModule -> addPlannedModule, removePlannedModule
  * 			  updateAllSelectedModules -> saveAllSelectedModule
  * 									   --> getType
- * 			  Add Module --> Module is added to ['ALL'] --> getType --> Module is categorized into ['ULR', 'PR', 'UE']
+ * 			  Add Module --> Module is added to ['ALL'] --> save to localstorgae --> getType --> Module is categorized into ['ULR', 'PR', 'UE']
+ * 																							 --> After getting type, verify modules
  *  					 --> Module is added to planned modules
+ *    Module state is exempted(waived) when it first added
  **/
 
-angular.module('core').factory('Modules', ['$http', 'localStorageService', 
-		function ($http, localStorageService) {
+angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User',
+		function ($http, localStorageService, User) {
 			var service = {
 				plannedModules: [],
 				types: {},
-				user: {}
+				user: {},
+				remainingMC: {
+					'ULR': 0,
+					'UE': 0,
+					'PR': 0
+				}
 			};
 
 			// Module types
@@ -86,7 +89,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService',
 			/**
 			 *  Find module by module's type and code
 			 **/
-			function getModule(modCode) {
+			function getModuleByCode(modCode) {
 				for(var i in service.modules) {
 					/* For all modules in the list */
 					var module = service.modules[i];
@@ -111,18 +114,29 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService',
 			 * Total MCs is updated also
 			 * Update all selected modules afterward
 			 **/
-			service.addModule = function (modType, modCode, origin) {
-				var module = getModule(modCode);
+			service.addModule = function (modCode, modState, origin) {
+				var module = getModuleByCode(modCode);
 
 				/* Make sure this module has not been added before */
 				if (!added(module)) {
 
 					service.visibleModules['ALL'].push(module);
 
-					if ((!origin) || (origin !== 'auto')) {
-						service.addPlannedModule(module);
+					if (modState === 'planned') {
+						if ((!origin) || (origin !== 'auto')) {
+							service.addPlannedModule(module);
+						}
 					}
-					module.state = 'planned';
+
+					/* add new-added-row class */
+					for(var i in service.visibleModules['ALL']) {
+						var module = service.visibleModules['ALL'][i];
+
+						module.new = '';
+					}
+					module.new = 'new-added-row';
+
+					module.state = (modState ? modState : 'planned');
 				}
 
 				service.updateAllSelectedModules();
@@ -144,7 +158,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService',
 						/* If these modules are not saved in plan localStorage, then add them to plan table */
 						if (!plan) cmd = 'manu';
 
-						service.addModule(module.type, module.code, cmd);
+						service.addModule(module.code, module.state, cmd);
 					}
 				}
 			};
@@ -185,10 +199,10 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService',
 			};
 
 			/**
-			 * Remove module by modType and modCode
+			 * Remove module by and modCode
 			 * MC is also updated
 			 **/
-			service.removeModule = function (modType, modCode) {
+			service.removeModule = function (modCode) {
 				for(var i in service.visibleModules['ALL']) {
 					var module = service.visibleModules['ALL'][i];
 
@@ -205,19 +219,23 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService',
 				service.updateAllSelectedModules();
 			};
 
-			// Change state between unselected, planned, taken
-			service.changeState = function (modType, modCode) {
-				for(var i in service.visibleModules['ALL']) {
-					var module = service.visibleModules['ALL'][i];
+			// Change state between exempted, planned, taken
+			service.changeState = function (modCode, newState) {
 
-					if ((module.type === modType) && (module.code === modCode)) {
-						if (module.state === 'taken') {
-							service.addPlannedModule(module);
-						} else {
-							service.removePlannedModule(module);
-						}
+				var module = getModuleByCode(modCode);
+
+				if (module && (module.state !== newState)) {
+
+					if (module.state === 'planned') {
+						service.removePlannedModule(module);
+					} else {
+						service.addPlannedModule(module);
 					}
+
+					module.state = newState;
 				}
+
+				service.updateAllSelectedModules();
 			};
 
 			/**
@@ -343,7 +361,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService',
 						service.visibleModules['UE'].push(module);
 						service.totalMCs['UE'] += module.mc;
 					} else {
-						console.log('WARNING: Cannot identify module\'type');
+						console.log('WARNING: Cannot identify module\'type', module);
 
 						service.visibleModules['UE'].push(module);
 						service.totalMCs['UE'] += module.mc;
@@ -356,10 +374,15 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService',
 			 *  It also redistributes modules into specific types
 			 **/
 			service.getType = function () {
+				/* Safe copy */
+				var major = (User.major && User.major.code ? User.major.code : '');
+				var focusArea = (User.focusArea && User.focusArea.code ? User.focusArea.code : '');
+				var admissionYear = (User.admissionYear && User.admissionYear.code ? User.admissionYear.code : '');
+
 				var params = {
-					major: 'CS',
-					adm_year: '1314',
-					focus_area: 'IR',
+					major: major,
+					focus_area: focusArea,
+					adm_year: admissionYear,
 					mods: service.getListOfModules()
 				};
 
@@ -379,8 +402,47 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService',
 
 					/* Categorize modules into types */
 					service.categorizeModule();
+
+					/* After categorizing modules, verify them */
+					service.verify();
 				}); 
 			};
+
+			/**
+			 *  Set up parameters and mods to send verify request
+			 *  Assume that all modules have been categorized
+			 **/
+			service.verify = function () {
+				/* Safe copy */
+				var major = (User.major && User.major.code ? User.major.code : '');
+				var focusArea = (User.focusArea && User.focusArea.code ? User.focusArea.code : '');
+				var admissionYear = (User.admissionYear && User.admissionYear.code ? User.admissionYear.code : '');
+
+				var modules = [];
+				
+				for(var i in service.visibleModules['ALL']) {
+					var module = service.visibleModules['ALL'][i];
+
+					/* If module is exempted then type of module is nil */
+					modules.push([
+						module.code, (module.state === 'exempted' ? 'nil' : module.type), module.mc + ''
+					]);
+				}
+
+				var params = {
+					cmd: 'verify',
+					adm_year: admissionYear,
+					focus_area: focusArea,
+					major: major,
+					modules: JSON.stringify(modules)
+				};
+
+				service.submit('/main/php/getrequirements.php', params, function (results) {
+					for(var type in results) {
+						service.remainingMC[type] = results[type];
+					}
+				});
+			}
 
 			return service;
 		}
