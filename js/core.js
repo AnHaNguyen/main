@@ -32,7 +32,8 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 				var startYear = parseInt(admissionYear[0]) * 10 + parseInt(admissionYear[1]);
 				var passedYear = 15 - startYear;
 				var remainingYear = 5 - passedYear;
-				Transport.noSemesters = remainingYear * 2;
+				Transport.noSemesters = remainingYear * 2 - 1;
+				Transport.currentSems = passedYear * 2 + 2;
 			}
 
 			Modules.fetchData(admissionYear, major, function (data) {

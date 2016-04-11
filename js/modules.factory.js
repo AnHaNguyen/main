@@ -11,8 +11,8 @@
  *    Module state is exempted(waived) when it first added
  **/
 
-angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User', 'Transport',
-		function ($http, localStorageService, User, Transport) {
+angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User', 'Transport', '$interval',
+		function ($http, localStorageService, User, Transport, $interval) {
 			var service = {
 				plannedModules: [],
 				types: {},
@@ -32,13 +32,61 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				'ALL': 'All modules'
 			};
 
+			service.requestStack = [];
+			service.isLastRequestReceived = true;
+
+			$interval(function () {
+				if (service.isLastRequestReceived && service.requestStack.length) {
+					// Send only the latest request to server 
+					var url = service.requestStack[service.requestStack.length - 1];
+					service.requestStack = [];
+
+					// Avoid sending any request at this time
+					service.isLastRequestReceived = false;
+
+					$http({
+						url: url,
+						method: 'GET'
+					}).then(function (result) {
+						// Last request is sent, ready to send another request 
+						service.isLastRequestReceived = true;
+					}, function (err) {
+						console.log('ERROR: Saving modules list' + err);
+					});
+				}
+			}, 10);
+
 			/**
 			 **/
 			service.saveSelectedModulesToCookies = function () {
+
 				/* Data to be saved is the json string of currently visible modules */
 				var data = service.visibleModules['ALL'];
+				var token = getIVLEToken();
 
-				localStorageService.set('data', data);
+				if (token) {
+					var mods = [[], [], [], [], [], [], [], []];
+					for(var i in data) {
+						var mod = data[i];
+
+						if (mod.state === 'planned') {
+							mods[1].push(mod.code);
+						} else if (mod.state === 'exempted') {
+							mods[2].push(mod.code);
+						} else {
+							mods[3].push(mod.code);
+						}
+					}
+
+					mods[0].push('notthefirsttime');
+
+					var modsStr = JSON.stringify(mods);
+                    var url =  "php/authentication/connectdatabase.php?cmd=storeModules&matric="+User.matric+"&modules="+modsStr;
+
+					service.requestStack.push(url);
+				} else {
+					localStorageService.set('data', data);
+				}
 			};
 
 			/**
@@ -46,6 +94,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			 * This function calls saveSelectedModulesToCookies to save data in localStorage
 			 **/
 			service.updateAllSelectedModules = function () {
+
 				/* Reset both selectedModules and planned Modules to empty */
 				service.plannedModules.splice(0, service.plannedModules.length);
 
@@ -157,14 +206,33 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					getModulesLogin(token, function(semesters, states){
 						console.log('load module from database>>', semesters);
 
-						for(var i in semesters) {
-							var modules = semesters[i];
+						if (semesters[0][0] && (semesters[0][0] === 'notthefirsttime')) {
+							console.log('notthefirsttiem');
+							for(var i in semesters[1]) {
+								var modCode = semesters[1][i];
 
-							for(var j in modules) {
-								var modCode = modules[j];
+								service.addModule(modCode, 'planned');
+							}
+							for(var i in semesters[2]) {
+								var modCode = semesters[2][i];
 
-								if (modCode) {
-									service.addModule(modCode, 'taken');
+								service.addModule(modCode, 'exempted');
+							}
+							for(var i in semesters[3]) {
+								var modCode = semesters[3][i];
+
+								service.addModule(modCode, 'taken');
+							}
+						} else {
+							for(var i in semesters) {
+								var modules = semesters[i];
+
+								for(var j in modules) {
+									var modCode = modules[j];
+
+									if (modCode) {
+										service.addModule(modCode, 'taken');
+									}
 								}
 							}
 						}
@@ -465,7 +533,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 				service.submit('/main/php/getrequirements.php', params, function (results) {
 					for(var type in results) {
-						service.remainingMC[type] = max(parseInt(results[type]), 0);
+						service.remainingMC[type] = Math.max(parseInt(results[type]), 0);
 					}
 				});
 			}

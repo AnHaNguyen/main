@@ -83,6 +83,7 @@ SemesterDisplay "Semester 2"*/
             return;
         }
         if (JSON.parse(data) == ""){            //first time user, no record in DB
+			console.log('WARNING FIRST TIME LOGIN');
             var allMods = new Array();
             user.modulesTaken(function(allMods){
                 for (var i = 0; i < allMods.length; i++){
