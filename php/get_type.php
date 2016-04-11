@@ -119,7 +119,7 @@ function get_type_CEG($adm_year, $mods) {
 
     $mods = update_ULR_type($adm_year, $mods);
     $mods = update_CEG_PR_type($adm_year, $mods);
-    $mods = update_ULR_breadth_type($adm_year, $mods, false);
+    $mods = update_ULR_breadth_type($adm_year, $mods, true);
 
     return $mods;
 }
