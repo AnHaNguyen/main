@@ -11,11 +11,14 @@ function updateDegReq() {
 				"Elective": "Technical Elective Module(s)",
 				"ElectiveDepth": "Technical Elective Depth Module(s)"
 			};
-
+	majorConvert = {"Computer Science":"CS","Information System":"IS","Business Analytics": "BZA", "Computer Engineering":"CEG"};
+	
 	getIdOf = {"ULR": "ulr-deg-req", "PR": "prog-req-deg-req", "UE": "ue-deg-req"};
 	hoverType = {"ULR": "ulr", "PR": "pr", "UE": "ue", "OR": "pr"};
 
-	major = $('#major').val(), year = $('#admission_year').val();
+
+	major = majorConvert[$('#major_value').val()], year = getYear($('#admission_year_value').val());
+	//alert(major + " " + year);
 	jsonFile = "req/" + major + '/' + year + ".json";
 	moduleJsonFile = "data/simplified.json";
 
