@@ -126,7 +126,6 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 						var matric = user.data.UserID;
 						object.matric = matric;
 
-						console.log('anvel');
 						Transport.loadCookies();
 
 						object.setInfo(major.title, focusArea.title, admissionYear.title);
@@ -154,7 +153,6 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 
 						object.setInfo(major, focusArea, admissionYear, info.username, info.bachelor);
 					}
-					console.log('herere');
 
 					if (callback) {
 						callback();

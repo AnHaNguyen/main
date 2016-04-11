@@ -143,7 +143,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			 * Update all selected modules afterward
 			 **/
 			service.addModule = function (modCode, modState, origin) {
-				console.log('add');
 				var module = getModuleByCode(modCode);
 
 				/* Make sure this module has not been added before */
@@ -167,9 +166,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						module.new = 'new-added-row';
 
 						module.state = (modState ? modState : 'planned');
-					} else {
-						service.changeState(modCode, modState);
-					}
+					} 
+
+					service.changeState(modCode, modState);
 
 					service.updateAllSelectedModules();
 				}
@@ -259,7 +258,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				var token = getIVLEToken();
 
 				if (!token) {
-					console.log('firt');
 					Transport.loadCookies();
 				}
 				service.reload();
@@ -290,7 +288,8 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 						// Mark this module as unselected
 						service.removePlannedModule(module);
-						module.state = 'unselected';
+
+						service.changeState(modCode, 'unselected');
 					}
 				}
 
@@ -299,18 +298,27 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 			// Change state between exempted, planned, taken
 			service.changeState = function (modCode, newState) {
+				console.log(modCode, newState);
 
 				var module = getModuleByCode(modCode);
 
-				if (module && (module.state !== newState)) {
-
-					if (module.state === 'planned') {
-						service.removePlannedModule(module);
-					} else {
-						service.addPlannedModule(module);
+				if (module) {
+					if (module.state !== newState) {
+						if (module.state === 'planned') {
+							service.removePlannedModule(module);
+						} else {
+							service.addPlannedModule(module);
+						}
 					}
 
 					module.state = newState;
+					module.selected = {
+						'taken': '',
+						'planned': '',
+						'exempted': '',
+						'unselected': ''
+					};
+					module.selected[module.state] = 'selected-toggle-btn';
 				}
 
 				service.updateAllSelectedModules();

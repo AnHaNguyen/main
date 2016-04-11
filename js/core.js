@@ -153,7 +153,6 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			var plan = $scope.semester;
 
 			localStorageService.set('plan', plan);
-			console.log('save>>', plan);
 
 			if (User.matric) {
 				localStorageService.set('userid', User.matric);
@@ -264,7 +263,6 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			var token = getIVLEToken();
 			var userid = localStorageService.get('userid');
 			var plan = localStorageService.get('plan');
-			console.log(token, userid, plan);
 
 			if (userid) {
 				if (token) {

@@ -416,12 +416,9 @@ ga('send', 'pageview');
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light 
-										{{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light
-										{{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light
-										{{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light {{module.selected['taken']}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light {{module.selected['planned']}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['exempted']}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -472,12 +469,9 @@ ga('send', 'pageview');
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light 
-										{{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light
-										{{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light
-										{{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light {{module.selected['taken']}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light {{module.selected['planned']}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['exempted']}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -529,12 +523,9 @@ ga('send', 'pageview');
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light 
-										{{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light
-										{{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light
-										{{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light {{module.selected['taken']}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light {{module.selected['planned']}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['exempted']}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -787,15 +778,11 @@ ga('send', 'pageview');
 		</main>
 
 
-		<section >
-			<!--		<search select="addModule" items="modules"> </search>
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	<hr>
-			<moduletable list="modules" add="addModule"> </moduletable> -->
-		</section>
 
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 		<script type="text/javascript" src="js/degree-requirement.js"></script>
+		<script type="text/javascript" src="js/planner.js"></script>
 		<script type="text/javascript" src="js/front-end.js"></script>
 		<script type="text/javascript" src="js/login.js"></script>
 		<script type="text/javascript" src="dist/nus-ivle-api.min.js"></script>
