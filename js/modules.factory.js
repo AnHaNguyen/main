@@ -107,7 +107,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					'unselected': ''
 				};
 				module.selected[module.state] = 'selected-toggle-btn';
-				console.log(module);
 				
 				if (service.addPlannedModuleToPlanTable) {
 					service.addPlannedModuleToPlanTable(module);
@@ -128,6 +127,20 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					service.removePlannedModuleFromPlanTable(module);
 				}
 			}
+
+			service.getSelectedModuleByCode = function (modCode) {
+				for(var i in service.visibleModules['ALL']) {
+					/* For all modules in the list */
+					var module = service.visibleModules['ALL'][i];
+
+					if (module.code === modCode) {
+						/* found */
+						return module;
+					}
+				}
+
+				return null;
+			};
 
 			/**
 			 *  Find module by module's type and code
@@ -205,7 +218,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 				if (token) {
 					getModulesLogin(token, function(semesters, states){
-						console.log('.>', semesters);
 
 						if (semesters[0][0] && (semesters[0][0] === 'notthefirsttime')) {
 							for(var i in semesters[1]) {
@@ -222,6 +234,11 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 								var modCode = semesters[3][i];
 
 								service.addModule(modCode, 'taken');
+							}
+
+							// Make suer plan modules are the same as modules list
+							if (Transport.sync) {
+								Transport.sync();
 							}
 						} else {
 							for(var i in semesters) {
@@ -284,6 +301,17 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					Transport.loadCookies();
 				}
 				service.reload();
+			};
+
+			// Check if this module is alread added to visible list
+			User.added = function (module) {
+				for(var i in service.visibleModules['ALL']) {
+					if (service.visibleModules['ALL'][i].code === module.code) {
+						return true;
+					}
+				}
+
+				return false;
 			};
 
 			// Check if this module is alread added to visible list
