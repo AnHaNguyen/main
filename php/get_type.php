@@ -98,9 +98,11 @@ function check_module_type($major, $adm_year, $mods) {
 
 function get_type_CS($adm_year, $focus_area, $mods) {
 
+    $is_ceg_major = false;
+
     $mods = update_ULR_type($adm_year, $mods);
     $mods = update_CS_PR_type($adm_year, $focus_area, $mods);
-    $mods = update_ULR_breadth_type($adm_year, $mods, false);
+    $mods = update_ULR_breadth_type($adm_year, $mods, $is_ceg_major);
 
     return $mods;
 }
@@ -108,27 +110,33 @@ function get_type_CS($adm_year, $focus_area, $mods) {
 
 function get_type_IS($adm_year, $mods) {
 
+    $is_ceg_major = false;
+
     $mods = update_ULR_type($adm_year, $mods);
     $mods = update_IS_PR_type($adm_year, $mods);
-    $mods = update_ULR_breadth_type($adm_year, $mods, false);
+    $mods = update_ULR_breadth_type($adm_year, $mods, $is_ceg_major);
 
     return $mods;
 }
 
 function get_type_CEG($adm_year, $mods) {
 
+    $is_ceg_major = true;
+
     $mods = update_ULR_type($adm_year, $mods);
     $mods = update_CEG_PR_type($adm_year, $mods);
-    $mods = update_ULR_breadth_type($adm_year, $mods, true);
+    $mods = update_ULR_breadth_type($adm_year, $mods, $is_ceg_major);
 
     return $mods;
 }
 
 /*function get_type_BZA($adm_year, $mods) {
 
+    $is_ceg_major = false;
+
     $mods = update_ULR_type($adm_year, $mods);
     $mods = update_BZA_PR_type($adm_year, $mods);
-    $mods = update_ULR_breadth_type($adm_year, $mods, false);
+    $mods = update_ULR_breadth_type($adm_year, $mods, $is_ceg_major);
 
     return $mods;
 }*/
