@@ -139,8 +139,24 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		};
 
 		/**------------------------- Plan table controller ------------------------**/
-		// CHeck the cookie first
-		var plan = localStorageService.get('plan');
+		var token = getIVLEToken();
+		var plan;
+		if (token != null){			//ivle login
+			plan = {};
+			getModulesLogin(token, function(modules, states){
+				for (var i in modules){
+					plan[i] = array();
+					var sem = modules[i];
+					for (var j in sem){
+						var mod = sem[j];
+						plan[i][j] = getModuleByCode(mod);
+					}
+				}
+			});
+		}else{
+			// CHeck the cookie first					//to be edited
+			plan = localStorageService.get('plan');
+		}
 
 		$scope.save = function () {
 			// Update by save it to localStorage
@@ -177,7 +193,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			$scope.computePlannedMC();
 		} else {
 		/* BRANCH: stored plan not found */
-			$scope.semester = [ [], [], [], [] ];
+			$scope.semester = [ [], [], [], [], [], [], [], [] ];
 
 			$scope.computePlannedMC();
 		}
@@ -227,6 +243,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 					if (module.code === mod.code) {
 						semester.splice(i, 1);
 						$scope.save();
+						$scope.computePlannedMC();
 						return;
 					}
 				}

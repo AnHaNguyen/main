@@ -41,6 +41,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				localStorageService.set('data', data);
 			};
 
+			service.saveSelectedModulesToDB = function(token){		//to be edited
+
+			};
 			/**
 			 * visibleModules is actually selected modules
 			 * This function calls saveSelectedModulesToCookies to save data in localStorage
@@ -146,9 +149,30 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			 * Load data from localStorage
 			 **/
 			service.reload = function () {
-				var data = localStorageService.get('data');
-				var plan = localStorageService.get('plan');
-
+				var token = getIVLEToken();
+				var data;
+				var plan;
+				if (token != null){
+					data = {}; plan = {};
+					getModulesLogin(token, function(modules, states){
+						for (var i in modules){
+							plan[i] = {};
+							var sem = modules[i];
+							for (var j in sem){
+								var mod = sem[j];
+								plan[i][j] = getModuleByCode(mod);
+								var module = {};
+								module['code'] = mod;
+								module['state'] = states[i];
+								data.push(module);
+							}
+						}
+					});
+				} else{
+					data = localStorageService.get('data');
+					plan = localStorageService.get('plan');
+				}
+				
 				if (data) {
 
 					for(var i in data) {
