@@ -1,116 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title>SOCPlans</title>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>SOCPlans</title>
 
-	<!-- Compiled and minified CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-	<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+		<!-- Compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+		<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 
-	<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
-	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+		<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
-	<!-- Include angularjs -->
-	<link rel="stylesheet" type="text/css" href="css/core.css">
-	<link rel="stylesheet" type="text/css" href="node_modules/angucomplete-alt/angucomplete-alt.css">
+		<!-- Include angularjs -->
+		<link rel="stylesheet" type="text/css" href="css/core.css">
+		<link rel="stylesheet" type="text/css" href="node_modules/angucomplete-alt/angucomplete-alt.css">
 
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="shortcut icon" href="img/fav-icon.png">
-	<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="shortcut icon" href="img/fav-icon.png">
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-76015504-1', 'auto');
+ga('send', 'pageview');
+		</script>
+	</head>
 
-	ga('create', 'UA-76015504-1', 'auto');
-	ga('send', 'pageview');
-
-	</script>
-</head>
-
-<body ng-app="core" id="main">
-	<div id="start-page" ng-controller="mainController">
-		<div id="start-wrapper">
-			<div id="logo-div">
-				<span class="logo">SOCPlans</span>
-			</div>
-
-			<div id="start-text-div">
-				<p id="intro-text">SoCPlans helps SoC's students in degree verification and planning modules for next semesters.</p>
-				<div class="start-login-div">
-					<a class="waves-effect waves-light btn" id="get-started-btn">Non-Login User</a>
-					<p>You have to manually add all your information.</p>
+	<body ng-app="core" id="main">
+		<div id="start-page" ng-controller="mainController">
+			<div id="start-wrapper">
+				<div id="logo-div">
+					<span class="logo">SOCPlans</span>
 				</div>
-				<div class="start-login-div">
-					<a class="waves-effect waves-light btn" id="login">IVLE User (Recommended)</a>
-					<p>We can get modules you took so you don't have to manually add them.</p>
-				</div>
-			</div>
 
-			<div id="grad-cer-div" class="center z-depth-2">
-				<img src="img/NUS-logo.png" alt="NUS Logo">
-				<p>This is to certify that<br></p>
-				<form ng-submit="user.update()">
-					<input placeholder="Your Full Name" id="full-name" type="text" class="validate center" ng-model="user.displayUsername"><br>
-					<span>having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
-					<span class="grad-cer-text">BACHELOR OF</span>
-					<input placeholder="Your Bachelor" id="bachelor" ng-model="user.displayBachelor" type="text" class="validate center input-size"><br>
+				<div id="start-text-div">
+					<p id="intro-text">SoCPlans helps SoC's students in degree verification and planning modules for next semesters.</p>
+					<div class="start-login-div">
+						<a class="waves-effect waves-light btn" id="get-started-btn">Non-Login User</a>
+						<p>You have to manually add all your information.</p>
+					</div>
+					<div class="start-login-div">
+						<a class="waves-effect waves-light btn" id="login">IVLE User (Recommended)</a>
+						<p>We can get modules you took so you don't have to manually add them.</p>
+					</div>
+				</div>
+
+				<div id="grad-cer-div" class="center z-depth-2">
+					<img src="img/NUS-logo.png" alt="NUS Logo">
+					<p>This is to certify that<br></p>
+					<form ng-submit="user.update()">
+						<input placeholder="Your Full Name" id="full-name" type="text" class="validate center" ng-model="user.displayUsername"><br>
+						<span>having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
+						<span class="grad-cer-text">BACHELOR OF</span>
+						<input placeholder="Your Bachelor" id="bachelor" ng-model="user.displayBachelor" type="text" class="validate center input-size"><br>
 						<span class="grad-cer-text">IN</span>
 						<search placeholder="Your Major" 
-								minlength="0" 
-								titlefield="title"
-								select="changeMajor" 
-								items="user.majorsList" 
-								clearinput="" 
-								init="user.displayMajor" 
-								filter=""
-								placeholder="Your major"
-								style="display: inline-block;"
-							    id="major" type="text" class="validate center input-size"> 
+						minlength="0" 
+						titlefield="title"
+						select="changeMajor" 
+						items="user.majorsList" 
+						clearinput="" 
+						init="user.displayMajor" 
+						filter=""
+						placeholder="Your major"
+						style="display: inline-block;"
+						id="major" type="text" class="validate center input-size"> 
 						</search> 
 						<span class="grad-cer-text">FOCUS AREA</span>
 						<search placeholder="Your Focus Area" 
-								minlength="0" 
-								titlefield="title" 
-								select="changeFocusArea" 
-								items="user.focusAreasList" 
-								clearinput=""
-								placeholder="Your focus area"
-								init="user.displayFocusArea" 
-								style="display: inline-block; width: 300px !important;"
-								id="focus_area" type="text" class="validate center input-size"> 
+						minlength="0" 
+						titlefield="title" 
+						select="changeFocusArea" 
+						items="user.focusAreasList" 
+						clearinput=""
+						placeholder="Your focus area"
+						init="user.displayFocusArea" 
+						style="display: inline-block; width: 300px !important;"
+						id="focus_area" type="text" class="validate center input-size"> 
 						</search><br> 
 						<span class="grad-cer-text">ADMISSION YEAR</span>
 						<search placeholder="Your Admission Year" 
-								minlength="0" 
-								titlefield="title" 
-								select="changeAdmissionYear" 
-								items="user.admissionYearsList" 
-								clearinput="" 
-								init="user.displayAdmissionYear" 
-								filter=""
-								placeholder="Your admission year"
-								style="display: inline-block;"
-								id="admission_year" type="text" class="validate center input-size"> 
+						minlength="0" 
+						titlefield="title" 
+						select="changeAdmissionYear" 
+						items="user.admissionYearsList" 
+						clearinput="" 
+						init="user.displayAdmissionYear" 
+						filter=""
+						placeholder="Your admission year"
+						style="display: inline-block;"
+						id="admission_year" type="text" class="validate center input-size"> 
 						</search><br>
-					<input type="submit" id="starter-confirm-btn" ng-click="confirm()" class="btn" value="Confirm">
-				</form>
-			</div>
+						<input type="submit" id="starter-confirm-btn" ng-click="confirm()" class="btn" value="Confirm">
+					</form>
+				</div>
 
-			<div id="start-footer">
-				<div class="center">
-					<p>Available only to NUS's SoC Students</p>
-					<p>Proudly brought to you by <b>SoCPlans</b> team</p>
+				<div id="start-footer">
+					<div class="center">
+						<p>Available only to NUS's SoC Students</p>
+						<p>Proudly brought to you by <b>SoCPlans</b> team</p>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!--Main Section-->
-	<main id="main-section" ng-controller="mainController">
+		<!--Main Section-->
+		<main id="main-section" ng-controller="mainController">
 		<!-- Modal Structure Of All Modules-->
 		<div id="modal-advanced-all-mod" class="modal">
 			<div class="modal-content no-padding">
@@ -128,16 +126,16 @@
 						<div class="input-div"><input type="text" class="validate" placeholder="Search Type"></div>
 						<div>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type1" ng-model="stateToAdd" value="taken" checked />
-								<label for="type1">Taken</label>
+							<input class="with-gap" name="group1" type="radio" id="type1" ng-model="stateToAdd" value="taken" checked />
+							<label for="type1">Taken</label>
 							</p>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type2" ng-model="stateToAdd" value="planned"/>
-								<label for="type2">Plan</label>
+							<input class="with-gap" name="group1" type="radio" id="type2" ng-model="stateToAdd" value="planned"/>
+							<label for="type2">Plan</label>
 							</p>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type3" ng-model="stateToAdd" value="exempted"/>
-								<label for="type3">Waived</label>
+							<input class="with-gap" name="group1" type="radio" id="type3" ng-model="stateToAdd" value="exempted"/>
+							<label for="type3">Waived</label>
 							</p>
 						</div>
 					</div>
@@ -167,12 +165,12 @@
 						<div class="input-div"><input type="text" class="validate" placeholder="Search Type"></div>
 						<div>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type1" checked />
-								<label for="type1">Semester 1</label>
+							<input class="with-gap" name="group1" type="radio" id="type1" checked />
+							<label for="type1">Semester 1</label>
 							</p>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type2" />
-								<label for="type2">Semester 2</label>
+							<input class="with-gap" name="group1" type="radio" id="type2" />
+							<label for="type2">Semester 2</label>
 							</p>
 						</div>
 					</div>
@@ -188,63 +186,63 @@
 		<!--SIDE BAR NAV-->
 		<ul id="nav-mobile" class="side-nav fixed">
 			<li class="none-hover no-padding center no-lineheight">
-				<img src="img/logo.png" class="logo-img-cust">
-				<hr>
+			<img src="img/logo.png" class="logo-img-cust">
+			<hr>
 			</li>
 			<li class="no-padding none-hover">
-				<ul class="collapsible collapsible-accordion" id="sidebar-all-items">
-					<li id="deg-req-nav" class="active">
-						<div class="collapsible-header waves-effect waves-red">
-							<a class="sidebar-item" href="#deg-req-div"><img src="icon/icon-deg-req.png" class="gray-icon">
-								<span>Degree Requirement</span>
-							</a>
-						</div>
-						<div class="collapsible-body">
-							<ul>
-								<li><a href="#ulr-deg-req">ULR</a></li>
-								<li><a href="#prog-req-deg-req">Programme</a></li>
-								<li><a href="#ue-deg-req">UE</a></li>
-							</ul>
-						</div>
-					</li>
+			<ul class="collapsible collapsible-accordion" id="sidebar-all-items">
+				<li id="deg-req-nav" class="active">
+				<div class="collapsible-header waves-effect waves-red">
+					<a class="sidebar-item" href="#deg-req-div"><img src="icon/icon-deg-req.png" class="gray-icon">
+						<span>Degree Requirement</span>
+					</a>
+				</div>
+				<div class="collapsible-body">
+					<ul>
+						<li><a href="#ulr-deg-req">ULR</a></li>
+						<li><a href="#prog-req-deg-req">Programme</a></li>
+						<li><a href="#ue-deg-req">UE</a></li>
+					</ul>
+				</div>
+				</li>
 
-					<li>
-						<div class="collapsible-header waves-effect waves-red">
-							<a id="all-mod-nav" class="sidebar-item" href="#all-mod-div"><img src="icon/icon-all.png" class="gray-icon">
-								<span>All Modules</span>
-							</a>
-						</div>
-						<div class="collapsible-body">
-							<ul>
-								<li><a href="#all-ulr">ULR</a></li>
-								<li><a href="#all-prog-req">Programme</a></li>
-								<li><a href="#all-ue">UE</a></li>
-							</ul>
-						</div>
-					</li>
+				<li>
+				<div class="collapsible-header waves-effect waves-red">
+					<a id="all-mod-nav" class="sidebar-item" href="#all-mod-div"><img src="icon/icon-all.png" class="gray-icon">
+						<span>All Modules</span>
+					</a>
+				</div>
+				<div class="collapsible-body">
+					<ul>
+						<li><a href="#all-ulr">ULR</a></li>
+						<li><a href="#all-prog-req">Programme</a></li>
+						<li><a href="#all-ue">UE</a></li>
+					</ul>
+				</div>
+				</li>
 
-					<li>
-						<div class="collapsible-header waves-effect waves-red">
-							<a id="plan-mod-nav" class="sidebar-item" href="#plan-mod-div"><img src="icon/icon-plan.png" class="gray-icon">
-								<span>Modules Planner</span>
-							</a>
-						</div>
-					</li>
-				</ul>
+				<li>
+				<div class="collapsible-header waves-effect waves-red">
+					<a id="plan-mod-nav" class="sidebar-item" href="#plan-mod-div"><img src="icon/icon-plan.png" class="gray-icon">
+						<span>Modules Planner</span>
+					</a>
+				</div>
+				</li>
+			</ul>
 			</li>
 		</ul>
 
 		<!--DEGREE REQUIREMENT-->
 		<div id="deg-req-div" class="basic-padding col s12">
 			<!--Fixed Navigation Bar-->
-			<!--<div class="page-title row no-margin">
+			<div class="page-title row no-margin">
 				<div class="col s6 large-text">Degree Requirement</div>
 			</div>
 
 			<div class="container-customize">
-				<div class="main-table col s12">-->
+				<div class="main-table col s12">
 					<!--ULR content-->
-					<!--<div id="ulr-deg-req" class="row mod-type-table">
+					<div id="ulr-deg-req" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">University Level Requirements (ULR)</div>
 						</div>
@@ -274,10 +272,10 @@
 							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
 							<div class="col s1 mc-item item">20</div>
 						</div>
-					</div>-->
+					</div>
 
 					<!--Programme Requirements content-->
-					<!--<div id="prog-req-deg-req" class="row mod-type-table">
+					<div id="prog-req-deg-req" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">Programme Requirements (Programme)</div>
 						</div>
@@ -307,10 +305,10 @@
 							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
 							<div class="col s1 mc-item item">120</div>
 						</div>
-					</div>-->
+					</div>
 
 					<!--UE content-->
-					<!--<div id="ue-deg-req" class="row mod-type-table">
+					<div id="ue-deg-req" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">Unrestricted Electives (UE)</div>
 						</div>
@@ -342,7 +340,7 @@
 						</div>
 					</div>
 				</div>
-			</div>-->
+			</div>
 		</div>
 
 		<!--ALL MODULES-->
@@ -357,18 +355,18 @@
 							<div class="filter-div">
 								<!-- Modal Trigger -->
 								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
-								href="#modal-advanced-all-mod"><img src="icon/filter-icon.png"></a>
+									href="#modal-advanced-all-mod"><img src="icon/filter-icon.png"></a>
 							</div>
 							<div class="col s10">
 								<search init="" 
-										id="moduletable-search" 
-										minlength="1" 
-										titlefield="code,title" 
-										clearinput="true" 
-										select="addModule" 
-										filter="searchFilter"
-										placeholder="Search modules"
-										items="modules">
+								id="moduletable-search" 
+								minlength="1" 
+								titlefield="code,title" 
+								clearinput="true" 
+								select="addModule" 
+								filter="searchFilter"
+								placeholder="Search modules"
+								items="modules">
 								</search>
 							</div>
 						</div>
@@ -412,16 +410,18 @@
 							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
 							<div class="col s3 item">
+								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
+								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
 									<a class="left-div toggle-btn btn waves-effect waves-light 
-										      {{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+										{{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light
-										      {{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+										{{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
 									<a class="right-div toggle-btn btn waves-effect waves-light
-										      {{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
+										{{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -466,16 +466,18 @@
 							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
 							<div class="col s3 item">
+								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
+								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
 									<a class="left-div toggle-btn btn waves-effect waves-light 
-										      {{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+										{{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light
-										      {{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+										{{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
 									<a class="right-div toggle-btn btn waves-effect waves-light
-										      {{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
+										{{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -520,16 +522,19 @@
 							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
 							<div class="col s3 item">
+								<!--	<a class="btn-floating waves-effect waves-light red">X</a>  -->
+								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
+								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
 									<a class="left-div toggle-btn btn waves-effect waves-light 
-										      {{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+										{{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light
-										      {{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+										{{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
 									<a class="right-div toggle-btn btn waves-effect waves-light
-										      {{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
+										{{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -559,18 +564,18 @@
 							<div class="filter-div">
 								<!-- Modal Trigger -->
 								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
-								href="#modal-advanced-planner"><img src="icon/filter-icon.png"></a>
+									href="#modal-advanced-planner"><img src="icon/filter-icon.png"></a>
 							</div>
 							<div class="col s10">
 								<search init="" 
-										id="plantable-search" 
-										minlength="1" 
-										titlefield="code,title" 
-										clearinput="true" 
-										select="addModule" 
-										filter="searchFilter"
-										placeholder="Search modules"
-										items="modules">
+								id="plantable-search" 
+								minlength="1" 
+								titlefield="code,title" 
+								clearinput="true" 
+								select="addModule" 
+								filter="searchFilter"
+								placeholder="Search modules"
+								items="modules">
 								</search>
 							</div>
 						</div>
@@ -579,32 +584,26 @@
 			</div>
 
 			<div class="container-customize">
-				<div class="main-table col s12" id="plan-mod-main-tbl">
-					<!--<div id="plan-mod-wrapper" class="row">
-						<div class="wrapper-div">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 1</div>
+				<div class="main-table col s12">
+					<div id="plan-mod-wrapper" class="row">
+						<div class="wrapper-div" ng-show="showSemester[0]">
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[0]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[0]">
 									<div ng-repeat="mod in semester[0]" class="row no-margin">
 										<div class="drag-drop-item">
-											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
-											</div>
-											<div class="close-dnd">
-												<b>X</b>
-											</div>
+											<span class="bold">{{mod.code}}</span> <br>
+											{{mod.title}} <br>
+											{{mod.mc}} MC
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="col s12 mc-div">{{plannedMC[0]}}</div>
 						</div>
-					
 
 						<div class="wrapper-div" ng-show="showSemester[1]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 2</div>
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[1]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[1]">
 									<div ng-repeat="mod in semester[1]" class="row no-margin">
@@ -620,7 +619,7 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[2]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 3</div>
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[2]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[2]">
 									<div ng-repeat="mod in semester[2]" class="row no-margin">
@@ -636,7 +635,7 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[3]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 4</div>
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[3]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[3]">
 									<div ng-repeat="mod in semester[3]" class="row no-margin">
@@ -650,76 +649,11 @@
 							</div>
 							<div class="col s12 mc-div">{{plannedMC[3]}}</div>
 						</div>
-
-						<div class="wrapper-div">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 5</div>
-							<div class="col s12 drag-n-drop-div">
-								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[4]">
-									<div ng-repeat="mod in semester[4]" class="row no-margin">
-										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col s12 mc-div">{{plannedMC[4]}}</div>
-						</div>
-					</div>
-
-						<div class="wrapper-div">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 6</div>
-							<div class="col s12 drag-n-drop-div">
-								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[5]">
-									<div ng-repeat="mod in semester[5]" class="row no-margin">
-										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col s12 mc-div">{{plannedMC[5]}}</div>
-						</div>
-
-						<div class="wrapper-div">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 7</div>
-							<div class="col s12 drag-n-drop-div">
-								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[6]">
-									<div ng-repeat="mod in semester[6]" class="row no-margin">
-										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col s12 mc-div">{{plannedMC[6]}}</div>
-						</div>
-
-						<div class="wrapper-div">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 8</div>
-							<div class="col s12 drag-n-drop-div">
-								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[7]">
-									<div ng-repeat="mod in semester[7]" class="row no-margin">
-										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col s12 mc-div">{{plannedMC[7]}}</div>
-						</div>
 					</div>
 
 					<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div" ng-show="showSemester[4]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 5</div>
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[4]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[4]">
 									<div ng-repeat="mod in semester[4]" class="row no-margin">
@@ -735,7 +669,7 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[5]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 6</div>
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[5]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[5]">
 									<div ng-repeat="mod in semester[5]" class="row no-margin">
@@ -751,7 +685,7 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[6]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 7</div>
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[6]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[6]">
 									<div ng-repeat="mod in semester[6]" class="row no-margin">
@@ -767,7 +701,7 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[7]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 8</div>
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[7]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[7]">
 									<div ng-repeat="mod in semester[7]" class="row no-margin">
@@ -785,7 +719,7 @@
 
 					<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div" ng-show="showSemester[8]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 9</div>
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[8]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[8]">
 									<div ng-repeat="mod in semester[8]" class="row no-margin">
@@ -801,7 +735,7 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[9]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 10</div>
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[9]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[9]">
 									<div ng-repeat="mod in semester[9]" class="row no-margin">
@@ -815,7 +749,7 @@
 							</div>
 							<div class="col s12 mc-div">{{plannedMC[9]}}</div>
 						</div>
-					</div>-->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -850,12 +784,12 @@
 				<div class="col s1"></div>
 			</div>
 		</div>
-	</main>
+		</main>
 
 
-	<section >
-	<!--		<search select="addModule" items="modules"> </search>
-			<hr>
+		<section >
+			<!--		<search select="addModule" items="modules"> </search>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																	<hr>
 			<moduletable list="modules" add="addModule"> </moduletable> -->
 		</section>
 
@@ -879,4 +813,4 @@
 		<script type="text/javascript" src="bower_components/angular-ui-sortable/sortable.min.js"> </script>
 		<script type="text/javascript" src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"> </script>
 	</body>
-	</html>
+</html>

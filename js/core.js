@@ -23,7 +23,7 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 				var startYear = parseInt(admissionYear[0]) * 10 + parseInt(admissionYear[1]);
 				var passedYear = 15 - startYear;
 				var remainingYear = 5 - passedYear;
-				Transport.noSemesters = remainingYear * 2 - 1;
+				Transport.noSemesters = remainingYear * 2 - 2;
 				Transport.currentSems = passedYear * 2 + 2;
 			}
 
@@ -186,6 +186,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		};
 
 		$scope.semester = [[], [], [], [], [], [], [], [], [], []];
+		$scope.semId = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 		$scope.showSemester = [ true, true, true, true, false, false, false, false, false, false ];
 		$scope.plannedMC = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -215,6 +216,17 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 					}
 				}
 			}  
+
+			var count = 10;
+			var check = false;
+			for(var i = 9;  i >= 0;  i--) {
+				if ($scope.showSemester[i]) { check = true; }
+
+				if (check) {
+					$scope.semId[i] = count;
+					count--;
+				}
+			}
 		}); 
 
 		$scope.loadPlanner = function () {
