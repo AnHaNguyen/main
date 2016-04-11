@@ -29,16 +29,23 @@ function updateDegReq() {
 	hoverType = {"ULR": "ulr", "PR": "pr", "UE": "ue", "OR": "pr"};
 
 	var token = getIVLEToken();
+	var major, year;
 	if (token != null){
-		major = getMajorLogin(token);
-		year = getAdmissionYearLogin(token);
-	} else{
-		major = majorConvert[$('#major_value').val()], year = getYear($('#admission_year_value').val());
-	}
+		initializeUser(token, function(user){
+			major = getMajor(user);
+			year = getAdmissionYear(user);
+			
+			displayReq(major,year);
+		});
 		
+	} else{
+		major = majorConvert[$('#major_value').val()]; 
+		year = getYear($('#admission_year_value').val());
+		displayReq(major,year);
+	}
+}
 	
-	alert(major + " " + year);
-
+function displayReq(major, year){
 	jsonFile = "req/" + major + '/' + year + ".json";
 	moduleJsonFile = "data/simplified.json";
 

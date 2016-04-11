@@ -63,7 +63,7 @@ function getMajor(user){
     } else return "Not supported";
 }
 
-function getModules(user){
+function getModules(user, callback){
     /*ModuleCode    "CS3223"
 ModuleTitle "Database Systems Implementation"
 AcadYear    "2015/2016"
@@ -98,14 +98,13 @@ SemesterDisplay "Semester 2"*/
                         return;
                     }
                 });   
-                return mods;
+                callback(mods);
             });
         } else{
-            //mods = JSON.parse(data);
-            return mods;
+            mods = JSON.parse(data);
+            callback(mods);
         }      
     });
-    return mods;
 }
 
 function getSemester(moduleInfo, startYear){
@@ -119,51 +118,26 @@ function getSemester(moduleInfo, startYear){
     }
 }
 
-function getModulesLogin(token){
-    if (token != null){
-      	var user = ivle.User(key, token).init(); // return a User instance
- 
-    	// you must init user, it will validate the user and query his/her profile
-    	 
-    	return getModules(user);
-    	
-    }else{
-    	return;
-    }
-}
-
-function getAdmissionYearLogin(token){
-	if (token != null){
-		var user = ivle.User(key, token); // return a User instance
- 
-    	// you must init user, it will validate the user and query his/her profile
-    	user.init().done(function() {
-    		return getAdmissionYear(user);
-    	})
-    }else{
-    	return;
-    }
-}
-
-function getMajorLogin(token, callback){
-	if (token != null){
-		var user = ivle.User(key, token); // return a User instance
- 
-    	// you must init user, it will validate the user and query his/her profile
-    	
-		user.init().done(function() {
-    		//major = getMajor(user);
-			callback(getMajorLogin);
-    	})
-		return major;
-		
-    }else{
-    	return;
-    }
-}
 
 function getIVLEToken(){
 	var token = updateToken();
 	return token;
 }
 
+function initializeUser(token, callback){
+	var user = ivle.User(key, token);
+	
+	user.init().done(function(){
+		callback(user);
+	});	
+}
+
+function getModulesLogin(token, callback){
+	var user = ivle.User(key, token);
+	user.init().done(function(){
+		getModules(user, function(modules){
+			callback(modules);
+		});
+		
+	});
+}
