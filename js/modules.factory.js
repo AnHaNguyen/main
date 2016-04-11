@@ -100,6 +100,14 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			 **/
 			service.addPlannedModule = function (module) {
 				module.state = 'planned';
+				module.selected = {
+					'taken': '',
+					'planned': '',
+					'exempted': '',
+					'unselected': ''
+				};
+				module.selected[module.state] = 'selected-toggle-btn';
+				console.log(module);
 				
 				if (service.addPlannedModuleToPlanTable) {
 					service.addPlannedModuleToPlanTable(module);
@@ -108,6 +116,13 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 			service.removePlannedModule = function (module) {
 				module.state = 'taken';
+				module.selected = {
+					'taken': '',
+					'planned': '',
+					'exempted': '',
+					'unselected': ''
+				};
+				module.selected[module.state] = 'selected-toggle-btn';
 				
 				if (service.removePlannedModuleFromPlanTable) {
 					service.removePlannedModuleFromPlanTable(module);
@@ -166,9 +181,16 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						module.new = 'new-added-row';
 
 						module.state = (modState ? modState : 'planned');
-					} 
-
-					service.changeState(modCode, modState);
+						module.selected = {
+							'taken': '',
+							'planned': '',
+							'exempted': '',
+							'unselected': ''
+						};
+						module.selected[module.state] = 'selected-toggle-btn';
+					} else {
+						service.changeState(modCode, modState);
+					}
 
 					service.updateAllSelectedModules();
 				}
@@ -183,6 +205,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 				if (token) {
 					getModulesLogin(token, function(semesters, states){
+						console.log('.>', semesters);
 
 						if (semesters[0][0] && (semesters[0][0] === 'notthefirsttime')) {
 							for(var i in semesters[1]) {
@@ -289,7 +312,14 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						// Mark this module as unselected
 						service.removePlannedModule(module);
 
-						service.changeState(modCode, 'unselected');
+						module.state = 'unselected';
+						module.selected = {
+							'taken': '',
+							'planned': '',
+							'exempted': '',
+							'unselected': ''
+						};
+						module.selected[module.state] = 'selected-toggle-btn';
 					}
 				}
 
@@ -298,7 +328,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 			// Change state between exempted, planned, taken
 			service.changeState = function (modCode, newState) {
-				console.log(modCode, newState);
 
 				var module = getModuleByCode(modCode);
 

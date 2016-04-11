@@ -270,7 +270,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 						$scope.loadPlanner();
 					} else {
 						/* BRANCH: stored plan not found */
-						$scope.semester = [ [], [], [], [], [], [], [], [], [] ];
+						$scope.semester = [ [], [], [], [], [], [], [], [], [], [] ];
 
 						$scope.computePlannedMC();
 					}
@@ -279,14 +279,14 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 						$scope.loadPlanner();
 					} else {
 						/* BRANCH: stored plan not found */
-						$scope.semester = [ [], [], [], [], [], [], [], [], [] ];
+						$scope.semester = [ [], [], [], [], [], [], [], [], [], [] ];
 
 						$scope.computePlannedMC();
 					}
 				}
 			} else {
 				/* BRANCH: stored plan not found */
-				$scope.semester = [ [], [], [], [], [], [], [], [], [] ];
+				$scope.semester = [ [], [], [], [], [], [], [], [], [], [] ];
 
 				$scope.computePlannedMC();
 			}
@@ -329,13 +329,13 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		$scope.removePlannedModule = function (mod) {
 
 			for(var s in $scope.semester) {
-				var semester = $scope.semester[s];
+				var modules = $scope.semester[s];
 
-				for(var i in semester) {
-					var module = semester[i];
+				for(var i in modules) {
+					var module = modules[i];
 
 					if (module.code === mod.code) {
-						semester.splice(i, 1);
+						modules.splice(i, 1);
 						$scope.save();
 						$scope.computePlannedMC();
 						return;
@@ -364,7 +364,6 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		};
 
 		$scope.log = function () {
-			console.log($scope.semester);
 		};
 	}
 ]);
