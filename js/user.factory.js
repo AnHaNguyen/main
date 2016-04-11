@@ -72,6 +72,16 @@ angular.module('core').factory('User', ['$http', 'localStorageService',
 				}
 			}
 
+			object.findItemByCode = function (code, items) {
+				for(var i in items) {
+					var item = items[i];
+
+					if (item.code === code) {
+						return item;
+					}
+				}
+			}
+
 			/**
 			 *  Update user's info and reset the whole website 
 			 *  It calls reset after user's info is updated
@@ -91,6 +101,8 @@ angular.module('core').factory('User', ['$http', 'localStorageService',
 				object.displayUsername = username;
 				object.displayBachelor = bachelor;
 
+				console.log(object);
+
 				object.reset(object.major, object.focusArea, object.admissionYear);
 
 				object.save();
@@ -106,8 +118,20 @@ angular.module('core').factory('User', ['$http', 'localStorageService',
 			object.init = function () {
 				/* Load user's info from cookie */
 				var info = localStorageService.get('user');
+				var token = getIVLEToken();
 
-				if (info) {
+				if (token) {
+					initializeUser(token, function (user) {
+						var major = object.findItemByCode(getMajor(user), object.majorsList);
+						var admissionYear = object.findItemByCode(getAdmissionYear(user), object.admissionYearsList);
+						var focusArea = object.findItemByCode('SE', object.focusAreasList);
+						var matric = user.data.UserID;
+						object.matric = matric;
+
+						object.setInfo(major.title, focusArea.title, admissionYear.title);
+
+					});
+				} else if (info) {
 					/* safely extracting info */
 					var major = '', focusArea = '', admissionYear = '';
 

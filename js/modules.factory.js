@@ -11,8 +11,8 @@
  *    Module state is exempted(waived) when it first added
  **/
 
-angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User',
-		function ($http, localStorageService, User) {
+angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User', 'Transport',
+		function ($http, localStorageService, User, Transport) {
 			var service = {
 				plannedModules: [],
 				types: {},
@@ -118,47 +118,73 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				var module = getModuleByCode(modCode);
 
 				/* Make sure this module has not been added before */
-				if (!added(module)) {
+				if (module) {
+					if (!added(module)) {
 
-					service.visibleModules['ALL'].push(module);
+						service.visibleModules['ALL'].push(module);
 
-					if (modState === 'planned') {
-						if ((!origin) || (origin !== 'auto')) {
-							service.addPlannedModule(module);
+						if (modState === 'planned') {
+							if ((!origin) || (origin !== 'auto')) {
+								service.addPlannedModule(module);
+							}
 						}
+
+						/* add new-added-row class */
+						for(var i in service.visibleModules['ALL']) {
+							var module = service.visibleModules['ALL'][i];
+
+							module.new = '';
+						}
+						module.new = 'new-added-row';
+
+						module.state = (modState ? modState : 'planned');
+					} else {
+						service.changeState(modCode, modState);
 					}
 
-					/* add new-added-row class */
-					for(var i in service.visibleModules['ALL']) {
-						var module = service.visibleModules['ALL'][i];
-
-						module.new = '';
-					}
-					module.new = 'new-added-row';
-
-					module.state = (modState ? modState : 'planned');
+					service.updateAllSelectedModules();
 				}
-
-				service.updateAllSelectedModules();
 			}
 
 			/**
-			 * Load data from localStorage
+			 * LOAD DATA HERERERERERER
 			 **/
 			service.reload = function () {
-				var data = localStorageService.get('data');
-				var plan = localStorageService.get('plan');
+				/**------------------ IVLE ---------------------------------------------------*/
+				var token = getIVLEToken();
 
-				if (data) {
+				if (token) {
+					getModulesLogin(token, function(semesters, states){
+						console.log('load module from database>>', semesters);
 
-					for(var i in data) {
-						var module = data[i];
-						var cmd = 'auto';
+						for(var i in semesters) {
+							var modules = semesters[i];
 
-						/* If these modules are not saved in plan localStorage, then add them to plan table */
-						if (!plan) cmd = 'manu';
+							for(var j in modules) {
+								var modCode = modules[j];
 
-						service.addModule(module.code, module.state, cmd);
+								if (modCode) {
+									service.addModule(modCode, 'taken');
+								}
+							}
+						}
+					});
+				} else {
+					var data = localStorageService.get('data');
+					var plan = localStorageService.get('plan');
+
+
+					if (data) {
+
+						for(var i in data) {
+							var module = data[i];
+							var cmd = 'auto';
+
+							/* If these modules are not saved in plan localStorage, then add them to plan table */
+							if (!plan) cmd = 'manu';
+
+							service.addModule(module.code, module.state, cmd);
+						}
 					}
 				}
 			};
@@ -439,7 +465,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 				service.submit('/main/php/getrequirements.php', params, function (results) {
 					for(var type in results) {
-						service.remainingMC[type] = results[type];
+						service.remainingMC[type] = max(parseInt(results[type]), 0);
 					}
 				});
 			}

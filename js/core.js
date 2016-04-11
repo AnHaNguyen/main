@@ -19,25 +19,6 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 
 		Transport.noSemesters = 4;
 
-		/**------------------ IVLE ---------------------------------------------------*/
-		var token = getIVLEToken();
-		console.log('tk>>', token);
-
-		if (token) {
-			var plan = {};
-			getModulesLogin(token, function(modules, states){
-				console.log('overfhere>>', modules, states);
-			/*	for (var i in modules){
-					plan[i] = array();
-					var sem = modules[i];
-					for (var j in sem){
-						var mod = sem[j];
-						plan[i][j] = getModuleByCode(mod);
-					}
-				} */
-			});
-		}
-
 		/**------------------ Modules list controller ---------------------------------*/
 
 		$scope.modulesController = Modules;
@@ -85,6 +66,7 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		 *  Give user service the power to reset the entire universe
 		 **/
 		$scope.user.reset = function (major, focusArea, admissionYear) {
+			console.log('rest', major, admissionYear);
 			$scope.initModules(admissionYear.code, major.code);
 		};
 
@@ -187,13 +169,18 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			localStorageService.set('plan', plan);
 		};
 
-		$scope.plannedMC = [];
+		$scope.plannedMC = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 		/** 
 		 *  MC Counter in plan table
 		 *  Recompute mc after a module is added, removed or moved
 		 **/
 		$scope.computePlannedMC = function () {
+			// Avoid conflict with old version of planner 
+			while ($scope.semester.length < 10) {
+				$scope.semester.push([]);
+			}
+
 			for(var i in $scope.semester) {
 				$scope.plannedMC[i] = 0;
 
@@ -237,8 +224,9 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 				}
 			}  
 		}); 
+		var token = getIVLEToken();
 
-		if (plan) {
+		if (plan && (!token)) {
 		/* BRANCH: stored plan found */
 			$scope.semester = plan;
 
