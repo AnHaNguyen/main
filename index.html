@@ -57,13 +57,45 @@
 					<input placeholder="Your Full Name" id="full-name" type="text" class="validate center" ng-model="user.displayUsername"><br>
 					<span>having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
 					<span class="grad-cer-text">BACHELOR OF</span>
-					<input placeholder="Your Bachelor" id="bachelor" ng-model="bachelor" type="text" class="validate center input-size"><br>
+					<input placeholder="Your Bachelor" id="bachelor" ng-model="user.displayBachelor" type="text" class="validate center input-size"><br>
 						<span class="grad-cer-text">IN</span>
-						<input placeholder="Your Major" id="major" ng-model="major" type="text" class="validate center input-size">
+						<search placeholder="Your Major" 
+								minlength="0" 
+								titlefield="title"
+								select="changeMajor" 
+								items="user.majorsList" 
+								clearinput="" 
+								init="user.displayMajor" 
+								filter=""
+								placeholder="Your major"
+								style="display: inline-block;"
+							    id="major" type="text" class="validate center input-size"> 
+						</search> 
 						<span class="grad-cer-text">FOCUS AREA</span>
-						<input placeholder="Your Focus Area" id="focus_area" ng-model="focus_area" type="text" class="validate center input-size"><br>
+						<search placeholder="Your Focus Area" 
+								minlength="0" 
+								titlefield="title" 
+								select="changeFocusArea" 
+								items="user.focusAreasList" 
+								clearinput=""
+								placeholder="Your focus area"
+								init="user.displayFocusArea" 
+								style="display: inline-block; width: 300px !important;"
+								id="focus_area" type="text" class="validate center input-size"> 
+						</search><br> 
 						<span class="grad-cer-text">ADMISSION YEAR</span>
-						<input placeholder="Your Admission Year" id="admission_year" ng-model="admission_year" type="text" class="validate center input-size"><br>
+						<search placeholder="Your Admission Year" 
+								minlength="0" 
+								titlefield="title" 
+								select="changeAdmissionYear" 
+								items="user.admissionYearsList" 
+								clearinput="" 
+								init="user.displayAdmissionYear" 
+								filter=""
+								placeholder="Your admission year"
+								style="display: inline-block;"
+								id="admission_year" type="text" class="validate center input-size"> 
+						</search><br>
 					<input type="submit" id="starter-confirm-btn" ng-click="confirm()" class="btn" value="Confirm">
 				</form>
 			</div>
@@ -96,15 +128,15 @@
 						<div class="input-div"><input type="text" class="validate" placeholder="Search Type"></div>
 						<div>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type1" checked />
+								<input class="with-gap" name="group1" type="radio" id="type1" ng-model="stateToAdd" value="taken" checked />
 								<label for="type1">Taken</label>
 							</p>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type2" />
+								<input class="with-gap" name="group1" type="radio" id="type2" ng-model="stateToAdd" value="planned"/>
 								<label for="type2">Plan</label>
 							</p>
 							<p class="multi-choice-div">
-								<input class="with-gap" name="group1" type="radio" id="type3"  />
+								<input class="with-gap" name="group1" type="radio" id="type3" ng-model="stateToAdd" value="exempted"/>
 								<label for="type3">Waived</label>
 							</p>
 						</div>
@@ -328,7 +360,16 @@
 								href="#modal-advanced-all-mod"><img src="icon/filter-icon.png"></a>
 							</div>
 							<div class="col s10">
-								<search select="addModule" items="modules"></search>
+								<search init="" 
+										id="moduletable-search" 
+										minlength="1" 
+										titlefield="code,title" 
+										clearinput="true" 
+										select="addModule" 
+										filter="searchFilter"
+										placeholder="Search modules"
+										items="modules">
+								</search>
 							</div>
 						</div>
 					</form>
@@ -356,7 +397,7 @@
 							<div class="col s10 item">Add your required module</div>
 						</div>
 
-						<div class="col s12 content-row ulr-hover" ng-repeat="module in modulesController.visibleModules['ULR']">
+						<div ng-repeat="module in modulesController.visibleModules['ULR']" class="col s12 content-row ue-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
@@ -374,20 +415,23 @@
 								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
 								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
-									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
+									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light selected-toggle-btn" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light 
+										      {{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
 
 						<div class="col s12 content-row">
-							<div class="col s8 mc-item item text-mc">MC fulfilled / MC required</div>
+							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
 							<div class="col s4 mc-item item">
-								<span ng-bind="modulesController.totalMCs['ULR']"> </span>
+								<span ng-bind="modulesController.remainingMC['ULR']"> </span>
 								/
 								<span> 20 </span>
 							</div>
@@ -409,7 +453,7 @@
 							<div class="col s3 header item">Actions</div>
 						</div>
 
-						<div class="col s12 content-row pr-hover" ng-repeat="module in modulesController.visibleModules['PR']">
+						<div ng-repeat="module in modulesController.visibleModules['PR']" class="col s12 content-row ue-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
@@ -427,20 +471,23 @@
 								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
 								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
-									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
+									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light selected-toggle-btn" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light 
+										      {{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
 
 						<div class="col s12 content-row">
-							<div class="col s8 mc-item item text-mc">MC fulfilled / MC required</div>
+							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
 							<div class="col s4 mc-item item">
-								<span ng-bind="modulesController.totalMCs['PR']"> </span>
+								<span ng-bind="modulesController.remainingMC['PR']"> </span>
 								/
 								<span> 20 </span>
 							</div>
@@ -462,7 +509,7 @@
 							<div class="col s3 header item">Actions</div>
 						</div>
 
-						<div class="col s12 content-row ue-hover" ng-repeat="module in modulesController.visibleModules['UE']">
+						<div ng-repeat="module in modulesController.visibleModules['UE']" class="col s12 content-row ue-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
@@ -481,20 +528,23 @@
 								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
 								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
-									<a ng-click="removeModule(module.type, module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
+									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
 								<div class="btn-group float-left">
-									<a class="left-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Taken</a>
-									<a class="middle-div toggle-btn btn waves-effect waves-light selected-toggle-btn" onClick="toggleFunction()">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light" onClick="toggleFunction()">Waived</a>
+									<a class="left-div toggle-btn btn waves-effect waves-light 
+										      {{(module.state==='taken' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'taken')">Taken</a>
+									<a class="middle-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='planned' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'planned')">Plan</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light
+										      {{(module.state==='exempted' ? 'selected-toggle-btn' : '')}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
 								</div>
 							</div>
 						</div>
 
 						<div class="col s12 content-row">
-							<div class="col s8 mc-item item text-mc">MC fulfilled / MC required</div>
+							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
 							<div class="col s4 mc-item item">
-								<span ng-bind="modulesController.totalMCs['UE']"> </span>
+								<span ng-bind="modulesController.remainingMC['UE']"> </span>
 								/
 								<span> 20 </span>
 							</div>
@@ -519,7 +569,16 @@
 								href="#modal-advanced-planner"><img src="icon/filter-icon.png"></a>
 							</div>
 							<div class="col s10">
-								<search select="addModule" items="modules"></search>
+								<search init="" 
+										id="plantable-search" 
+										minlength="1" 
+										titlefield="code,title" 
+										clearinput="true" 
+										select="addModule" 
+										filter="searchFilter"
+										placeholder="Search modules"
+										items="modules">
+								</search>
 							</div>
 						</div>
 					</form>
@@ -641,6 +700,7 @@
 		<script type="text/javascript" src="js/modules.factory.js"> </script>
 		<script type="text/javascript" src="js/user.factory.js"> </script>
 		<script type="text/javascript" src="js/search.directive.js"> </script>
+		<script type="text/javascript" src="js/search-filter.service.js"> </script>
 		<script type="text/javascript" src="node_modules/angucomplete-alt/dist/angucomplete-alt.min.js"> </script>
 		<script type="text/javascript" src="bower_components/angular-ui-sortable/sortable.min.js"> </script>
 		<script type="text/javascript" src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"> </script>

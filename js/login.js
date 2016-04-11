@@ -45,6 +45,11 @@ function getAdmissionYear(user){
     return admission_year;
 }
 
+function getYear(year){
+	var matricYear = year.substring(2,4) + year.substring(7,9);
+    return matricYear;
+
+}
 function getMajor(user){
     var major = user.profile('FirstMajor');
     if (major.indexOf(CS) != -1){

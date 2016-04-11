@@ -2,12 +2,18 @@
 
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
 
-angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 
-	function($scope, Modules, User) { 
+angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 'SearchFilter',
+	function($scope, Modules, User, SearchFilter) { 
 
-		$scope.user = User;
+		$scope.emptystring = '';
+
+		$scope.stateToAdd = 'planned';
+
+		/**------------------ Modules list controller ---------------------------------*/
 
 		$scope.modulesController = Modules;
+
+		$scope.modules = [];
 
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
@@ -22,7 +28,9 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		$scope.changeState = Modules.changeState;
 
 		// Function to add new module
-		$scope.addModule = Modules.addModule;
+		$scope.addModule = function (item) {
+			Modules.addModule(item.code, $scope.stateToAdd);
+		};
 
 		// Function to submit list of taken modules
 		$scope.submit = function () {
@@ -31,13 +39,48 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 			});
 		};
 
-		$scope.initModules(1415, 'CS');
+		/**---------------  Certificate controller -------------------------------------**/
 
+		$scope.user = User;
+
+		/**
+		 *  Give user service the power to reset the entire universe
+		 **/
 		$scope.user.reset = function (major, focusArea, admissionYear) {
-			$scope.initModules(admissionYear, major);
+			$scope.initModules(admissionYear.code, major.code);
 		};
 
 		$scope.user.init();
+		$scope.log = function () {
+			$scope.$broadcast('angucomplete-alt:changeInput', 'major', 'what');
+		};
+
+		/**
+		 *  These 3 functions are for updating major, focusarea, adyear
+		 **/
+		$scope.changeMajor = function (selectedMajor) {
+			$scope.user.displayMajor = selectedMajor.title;
+		};
+
+		$scope.changeFocusArea = function (selectedFocusArea) {
+			$scope.user.displayFocusArea = selectedFocusArea.title;
+		};
+
+		$scope.changeAdmissionYear = function (selectedAdmissionYear) {
+			$scope.user.displayAdmissionYear = selectedAdmissionYear.title;
+		};
+
+		/**------------------------- Search Filter controller ---------------------**/
+
+		$scope.searchFilter = SearchFilter;
+
+		$scope.modifyFilter = function (type) {
+			if (type === 'ALL') {
+				$scope.searchFilter.resetFilter();
+			} else {
+				$scope.searchFilter.set('type', type);
+			}
+		};
 	}
 ]);
 
@@ -54,8 +97,13 @@ angular.module('core').controller('loginController', [ '$scope', 'User',
 	}
 ]);
 
-angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService',
-	function ($scope, Modules, localStorageService) {
+angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService', 'SearchFilter',
+	function ($scope, Modules, localStorageService, SearchFilter) {
+		$scope.emptystring = '';
+
+		$scope.stateToAdd = 'planned';
+
+		/**----------------------- Module controller ----------------------------**/
 		/* Create clone of modules factory */
 		$scope.initModules = function (admissionYear, major) {
 			Modules.fetchData(admissionYear, major, function (data) {
@@ -70,12 +118,27 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		$scope.changeState = Modules.changeState;
 
 		// Function to add new module
-		$scope.addModule = Modules.addModule;
+		$scope.addModule = function (item) {
+			Modules.addModule(item.code, $scope.stateToAdd);
+		};
 
 		$scope.initModules(1, 1);
 
 		/* End */
 
+		/**------------------------- Search Filter controller ---------------------**/
+
+		$scope.searchFilter = SearchFilter;
+
+		$scope.modifyFilter = function (type) {
+			if (type === 'ALL') {
+				$scope.searchFilter.resetFilter();
+			} else {
+				$scope.searchFilter.set('type', type);
+			}
+		};
+
+		/**------------------------- Plan table controller ------------------------**/
 		// CHeck the cookie first
 		var plan = localStorageService.get('plan');
 
@@ -119,19 +182,42 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			$scope.computePlannedMC();
 		}
 
-		$scope.addPlannedModule = function (module) {
-			var clone = {
-				code: module.code,
-				title: module.title,
-				mc: module.mc
-			};
-			$scope.semester[0].push(clone);
-			$scope.save();
+		/**
+		 *  Check if this module has been added to the table
+		 **/
+		var isAdded = function(module) {
+			for(var i in $scope.semester) {
+				for(var j in $scope.semester[i]) {
+					var mod = $scope.semester[i][j];
 
-			$scope.computePlannedMC();
+					if (mod.code === module.code) {
+
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
+		$scope.addPlannedModule = function (module) {
+
+			if (!isAdded(module)) {
+				var clone = {
+					code: module.code,
+					title: module.title,
+					mc: module.mc
+				};
+
+				$scope.semester[0].push(clone);
+				$scope.save();
+
+				$scope.computePlannedMC();
+			}
 		};
 
 		$scope.removePlannedModule = function (mod) {
+
 			for(var s in $scope.semester) {
 				var semester = $scope.semester[s];
 
