@@ -119,7 +119,7 @@ function verifyReqCS($modules, $adm_year, $req, $specialMC){
 	
 	//handle exempted modules => convert to UE
 	for ($i = 0; $i < count($modules); $i++){
-		if ($modules[$i][1] == ""){			//index 1 for mod type
+		if ($modules[$i][1] == "nil"){			//index 1 for mod type
 			$and["UE"]["MC"] += intval($modules[$i][2]);		//index 2 for MCs
 		} 
 	}
@@ -154,7 +154,7 @@ function verifyReqCEG($modules, $adm_year, $req, $specialMC){
 
 	//handle exempted modules => convert to UE
 	for ($i = 0; $i < count($modules); $i++){
-		if ($modules[$i][1] == ""){			//index 1 for mod type
+		if ($modules[$i][1] == "nil"){			//index 1 for mod type
 			$and["UE"]["MC"] += intval($modules[$i][2]);		//index 2 for MCs
 		} 
 	}
@@ -191,7 +191,7 @@ function verifyReqIS($modules, $adm_year, $req, $specialMC){
 
 	//handle exempted modules => convert to UE
 	for ($i = 0; $i < count($modules); $i++){
-		if ($modules[$i][1] == ""){			//index 1 for mod type
+		if ($modules[$i][1] == "nil"){			//index 1 for mod type
 			$and["UE"]["MC"] += intval($modules[$i][2]);		//index 2 for MCs
 		} 
 	}
@@ -226,7 +226,7 @@ function verifyReqBZA($modules, $adm_year, $req, $specialMC){
 
 	//handle exempted modules => convert to UE
 	for ($i = 0; $i < count($modules); $i++){
-		if ($modules[$i][1] == ""){			//index 1 for mod type
+		if ($modules[$i][1] == "nil"){			//index 1 for mod type
 			$and["UE"]["MC"] += intval($modules[$i][2]);		//index 2 for MCs
 		} 
 	}

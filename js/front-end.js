@@ -1,3 +1,5 @@
+var planTableCreated = false;
+
 function showDegReq() {
 	updateDegReq();	
 	$("#deg-req-div").show();
@@ -25,6 +27,9 @@ $("#get-started-btn").on("click", function() {
 
 $("#starter-confirm-btn").on("click", function() {
 	showMainPage();
+	if(!planTableCreated){
+		displayPlannerTable();
+	}
 });
 
 $(document).ready(function() {
@@ -35,10 +40,10 @@ $(document).ready(function() {
 		showMainPage();
 	}
 
-	 // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-	 $(".modal-trigger").leanModal();
+	// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+	$(".modal-trigger").leanModal();
 
-	 $(".search-input").focus(function(){
+	$(".search-input").focus(function(){
 	 	$(".search-input").keypress(function(e) {
 	 		if(e.which == 13) {		// pressing enter button
 	 			Materialize.toast('New module is added into ', 2000);

@@ -5,32 +5,31 @@ var IS = "Information System";
 var BZA = "Business Analytic";
 var CEG = "Computer Engineering";
 var totalSem = 8;
+var token;
 
 $("#login").on("click",function(){
     if (ivle.getToken(window.location.href) == null){
         var authUrl = ivle.login(key, redirectUrl);
+        token = ivle.getToken(authUrl);
         window.location.href = authUrl;
     }
             
 });
 
-$(function($){
-    var token = ivle.getToken(window.location.href);
-    if (token != null){
-        initialUser(key,token);
-    }
-});
+function updateToken(){
+    token = ivle.getToken(window.location.href);
+    return token;
+}
 
 
-
-function initialUser(key, token){
+/*function initialUser(key, token){
     var user = ivle.User(key, token); // return a User instance
  
     // you must init user, it will validate the user and query his/her profile
     user.init().done(function() {
     // start doing things
     // e.g. get user's profile
-    /*UserID    "a0113038"
+UserID    "a0113038"
 Name    "NGUYEN AN HA"
 Email   "a0113038@u.nus.edu"
 Gender  "Male"
@@ -38,20 +37,9 @@ Faculty "School of Computing"
 FirstMajor  "Computer Science (Hons)"
 SecondMajor ""
 MatriculationYear   "2013"
-*/
-    var modules = getModules(user);
-    var admission_year = getAdmissionYear(user);
 
-    var major = getMajor(user);
-    alert(major + " " + admission_year);
-
-    return {
-        modules: modules,
-        admission_year: admission_year,
-        major: major
-    }
 });
-}
+}*/
 
 function getAdmissionYear(user){
     var matricYear = user.profile('MatriculationYear').substring(2,4);
@@ -59,6 +47,11 @@ function getAdmissionYear(user){
     return admission_year;
 }
 
+function getYear(year){
+	var matricYear = year.substring(2,4) + year.substring(7,9);
+    return matricYear;
+
+}
 function getMajor(user){
     var major = user.profile('FirstMajor');
     if (major.indexOf(CS) != -1){
@@ -72,7 +65,7 @@ function getMajor(user){
     } else return "Not supported";
 }
 
-function getModules(user){
+function getModules(user, callback){
     /*ModuleCode    "CS3223"
 ModuleTitle "Database Systems Implementation"
 AcadYear    "2015/2016"
@@ -107,14 +100,13 @@ SemesterDisplay "Semester 2"*/
                         return;
                     }
                 });   
-                return mods;
+                callback(mods);
             });
         } else{
             mods = JSON.parse(data);
-            return mods;
+            callback(mods);
         }      
     });
-    return mods;
 }
 
 function getSemester(moduleInfo, startYear){
@@ -125,5 +117,59 @@ function getSemester(moduleInfo, startYear){
         return curYear*2 - 1;
     } else {
         return curYear*2;
+    }
+}
+
+function getCurrentSem(startYear){
+    var year = parseInt(startYear);
+    var currentSem = 1;
+    var currentAcadYear = "2016/2017";
+    var curYear = parseInt(currentAcadYear.split("/")[0]);
+    if (currentSem == 1){
+        return (curYear - year + 1)*2 - 1;
+    } else{
+        return (curYear - year + 1)*2;
+    }   
+}
+
+
+function getIVLEToken(){
+    if (token == null){
+        return updateToken();
+    } else{
+        return token;
+    }
+}
+
+function initializeUser(token, callback){
+	var user = ivle.User(key, token);
+	
+	user.init().done(function(){
+		callback(user);
+	});	
+}
+
+function getModulesLogin(token, callback){
+	var user = ivle.User(key, token);
+	user.init().done(function(){
+		getModules(user, function(modules){
+            states = getStates(user);
+			callback(modules, states);
+		});
+		
+	});
+}
+
+
+function getStates(user){     //add state to modules
+    var startYear = user.profile('MatriculationYear');
+    var curSem = getCurrentSem(startYear);
+    var states = {};
+    for (var i = 1; i <= totalSem; i++){
+        if (i >= curSem){
+            states[i] = "planned";
+        } else{
+            states[i] = "taken";
+        }
     }
 }
