@@ -1,13 +1,5 @@
 'use strict';
 
-var token = getIVLEToken();
-console.log('token>>', ivle);
-if (token != null){
-	getModulesLogin(token, function(modules){
-		console.log('>>', modules);
-	});        
-}
-
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
 
 angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 'SearchFilter', 'Transport',
@@ -27,7 +19,6 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 
 		$scope.initModules = function (admissionYear, major) {
 			/* change the number of semesters in plan table */
-			console.log('init>>', admissionYear);
 			if (admissionYear) {
 				var startYear = parseInt(admissionYear[0]) * 10 + parseInt(admissionYear[1]);
 				var passedYear = 15 - startYear;
@@ -55,7 +46,6 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		// Function to submit list of taken modules
 		$scope.submit = function () {
 			Modules.submit($scope.admissionYear, $scope.major, $scope.focusArea, function (data) {
-				console.log(data);
 			});
 		};
 
@@ -67,7 +57,6 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		 *  Give user service the power to reset the entire universe
 		 **/
 		$scope.user.reset = function (major, focusArea, admissionYear) {
-			console.log('rest', major, admissionYear);
 			$scope.initModules(admissionYear.code, major.code);
 		};
 
@@ -118,8 +107,8 @@ angular.module('core').controller('loginController', [ '$scope', 'User', 'Transp
 	}
 ]);
 
-angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService', 'SearchFilter', 'Transport',
-	function ($scope, Modules, localStorageService, SearchFilter, Transport) {
+angular.module('core').controller('planController', [ '$scope', 'Modules', 'localStorageService', 'SearchFilter', 'Transport', 'User',
+	function ($scope, Modules, localStorageService, SearchFilter, Transport, User) {
 		$scope.emptystring = '';
 
 		$scope.stateToAdd = 'planned';
@@ -143,8 +132,6 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			Modules.addModule(item.code, $scope.stateToAdd);
 		};
 
-		$scope.initModules(1, 1);
-
 		/* End */
 
 		/**------------------------- Search Filter controller ---------------------**/
@@ -160,17 +147,20 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		};
 
 		/**------------------------- Plan table controller ------------------------**/
-		// CHeck the cookie first
-		var plan = localStorageService.get('plan');
 
 		$scope.save = function () {
 			// Update by save it to localStorage
 			var plan = $scope.semester;
 
 			localStorageService.set('plan', plan);
-		};
+			console.log('save>>', plan);
 
-		$scope.plannedMC = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+			if (User.matric) {
+				localStorageService.set('userid', User.matric);
+			} else {
+				localStorageService.set('userid', 'nouser');
+			}
+		};
 
 		/** 
 		 *  MC Counter in plan table
@@ -195,7 +185,9 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			}
 		};
 
+		$scope.semester = [[], [], [], [], [], [], [], [], [], []];
 		$scope.showSemester = [ true, true, true, true, false, false, false, false, false, false ];
+		$scope.plannedMC = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 		/**
 		 *  Track the number of semesters
@@ -204,7 +196,6 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			return Transport.noSemesters;
 		}, function (newValue) {
 			// Avoid conflict with old version of planner 
-			console.log(newValue);
 			while ($scope.semester.length < 10) {
 				$scope.semester.push([]);
 			}
@@ -225,32 +216,70 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 				}
 			}  
 		}); 
-		var token = getIVLEToken();
 
-		if (plan && (!token)) {
-		/* BRANCH: stored plan found */
-			$scope.semester = plan;
+		$scope.loadPlanner = function () {
+			// CHeck the cookie first
+			var plan = localStorageService.get('plan');
 
-			/* Avoid conflict with old version of planner */
-			while ($scope.semester.length < 10) {
-				$scope.semester.push([]);
+			if (plan) {
+				/* BRANCH: stored plan found */
+				$scope.semester = plan;
+
+				/* Avoid conflict with old version of planner */
+				while ($scope.semester.length < 10) {
+					$scope.semester.push([]);
+				}
+
+				// addd this to avoid hiding non-empty sem 
+				for(var i = 9;  i >= 0;  i--) {
+					if ($scope.semester[i].length != 0) {
+						for(var j = i;  j >= 0;  j--) {
+							$scope.showSemester[j] = true;
+						}
+					}
+				}  
+			} else {
+				$scope.semester = [ [], [], [], [], [], [], [], [], [] ];
 			}
 
-			// addd this to avoid hiding non-empty sem 
-			for(var i = 9;  i >= 0;  i--) {
-				if ($scope.semester[i].length != 0) {
-					for(var j = i;  j >= 0;  j--) {
-						$scope.showSemester[j] = true;
+			$scope.computePlannedMC();
+		};
+
+		/**
+		 *  Load cookies
+		 */
+		Transport.loadCookies = function () {
+			var token = getIVLEToken();
+			var userid = localStorageService.get('userid');
+			var plan = localStorageService.get('plan');
+			console.log(token, userid, plan);
+
+			if (userid) {
+				if (token) {
+					if (userid === User.matric) {
+						$scope.loadPlanner();
+					} else {
+						/* BRANCH: stored plan not found */
+						$scope.semester = [ [], [], [], [], [], [], [], [], [] ];
+
+						$scope.computePlannedMC();
+					}
+				} else {
+					if (userid === 'nouser') {
+						$scope.loadPlanner();
+					} else {
+						/* BRANCH: stored plan not found */
+						$scope.semester = [ [], [], [], [], [], [], [], [], [] ];
+
+						$scope.computePlannedMC();
 					}
 				}
-			}  
+			} else {
+				/* BRANCH: stored plan not found */
+				$scope.semester = [ [], [], [], [], [], [], [], [], [] ];
 
-			$scope.computePlannedMC();
-		} else {
-		/* BRANCH: stored plan not found */
-			$scope.semester = [ [], [], [], [], [], [], [], [], [] ];
-
-			$scope.computePlannedMC();
+				$scope.computePlannedMC();
+			}
 		}
 
 		/**

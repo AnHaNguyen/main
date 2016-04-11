@@ -32,30 +32,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				'ALL': 'All modules'
 			};
 
-			service.requestStack = [];
-			service.isLastRequestReceived = true;
-
-			$interval(function () {
-				if (service.isLastRequestReceived && service.requestStack.length) {
-					// Send only the latest request to server 
-					var url = service.requestStack[service.requestStack.length - 1];
-					service.requestStack = [];
-
-					// Avoid sending any request at this time
-					service.isLastRequestReceived = false;
-
-					$http({
-						url: url,
-						method: 'GET'
-					}).then(function (result) {
-						// Last request is sent, ready to send another request 
-						service.isLastRequestReceived = true;
-					}, function (err) {
-						console.log('ERROR: Saving modules list' + err);
-					});
-				}
-			}, 10);
-
 			/**
 			 **/
 			service.saveSelectedModulesToCookies = function () {
@@ -83,7 +59,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					var modsStr = JSON.stringify(mods);
                     var url =  "php/authentication/connectdatabase.php?cmd=storeModules&matric="+User.matric+"&modules="+modsStr;
 
-					service.requestStack.push(url);
+					Transport.requestStack.push(url);
 				} else {
 					localStorageService.set('data', data);
 				}
@@ -164,6 +140,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			 * Update all selected modules afterward
 			 **/
 			service.addModule = function (modCode, modState, origin) {
+				console.log('add');
 				var module = getModuleByCode(modCode);
 
 				/* Make sure this module has not been added before */
@@ -204,10 +181,8 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 				if (token) {
 					getModulesLogin(token, function(semesters, states){
-						console.log('load module from database>>', semesters);
 
 						if (semesters[0][0] && (semesters[0][0] === 'notthefirsttime')) {
-							console.log('notthefirsttiem');
 							for(var i in semesters[1]) {
 								var modCode = semesters[1][i];
 
@@ -278,6 +253,12 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				service.visibleModules = {};
 				service.resetTable();
 
+				var token = getIVLEToken();
+
+				if (!token) {
+					console.log('firt');
+					Transport.loadCookies();
+				}
 				service.reload();
 			};
 

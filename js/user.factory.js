@@ -6,8 +6,8 @@
  *  load info from cookie -> setInfo
  *  displayField are just strings while Fields, such as majors, focusarea, admissionyear, are objects
  **/
-angular.module('core').factory('User', ['$http', 'localStorageService',
-		function ($http, localStorageService) {
+angular.module('core').factory('User', ['$http', 'localStorageService', 'Transport',
+		function ($http, localStorageService, Transport) {
 			var object = {};
 
 			object.majorsList = [
@@ -101,8 +101,6 @@ angular.module('core').factory('User', ['$http', 'localStorageService',
 				object.displayUsername = username;
 				object.displayBachelor = bachelor;
 
-				console.log(object);
-
 				object.reset(object.major, object.focusArea, object.admissionYear);
 
 				object.save();
@@ -115,7 +113,7 @@ angular.module('core').factory('User', ['$http', 'localStorageService',
 				object.setInfo(object.displayMajor, object.displayFocusArea, object.displayAdmissionYear, object.displayUsername, object.displayBachelor);
 			};
 
-			object.init = function () {
+			object.init = function (callback) {
 				/* Load user's info from cookie */
 				var info = localStorageService.get('user');
 				var token = getIVLEToken();
@@ -128,26 +126,39 @@ angular.module('core').factory('User', ['$http', 'localStorageService',
 						var matric = user.data.UserID;
 						object.matric = matric;
 
+						console.log('anvel');
+						Transport.loadCookies();
+
 						object.setInfo(major.title, focusArea.title, admissionYear.title);
 
+						if (callback) {
+							callback();
+						}
 					});
-				} else if (info) {
-					/* safely extracting info */
-					var major = '', focusArea = '', admissionYear = '';
+				} else {
+					if (info) {
+						/* safely extracting info */
+						var major = '', focusArea = '', admissionYear = '';
 
-					if (info.major && info.major.title) {
-						major = info.major.title;
+						if (info.major && info.major.title) {
+							major = info.major.title;
+						}
+
+						if (info.focusArea && info.focusArea.title) {
+							focusArea = info.focusArea.title;
+						}
+
+						if (info.admissionYear && info.admissionYear.title) {
+							admissionYear = info.admissionYear.title;
+						}
+
+						object.setInfo(major, focusArea, admissionYear, info.username, info.bachelor);
 					}
+					console.log('herere');
 
-					if (info.focusArea && info.focusArea.title) {
-						focusArea = info.focusArea.title;
+					if (callback) {
+						callback();
 					}
-
-					if (info.admissionYear && info.admissionYear.title) {
-						admissionYear = info.admissionYear.title;
-					}
-
-					object.setInfo(major, focusArea, admissionYear, info.username, info.bachelor);
 				}
 			};
 
