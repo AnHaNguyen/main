@@ -37,7 +37,7 @@ function updateDegReq() {
 	}
 		
 	
-	alert(major + " " + year);
+	//alert(major + " " + year);
 
 	jsonFile = "req/" + major + '/' + year + ".json";
 	moduleJsonFile = "data/simplified.json";

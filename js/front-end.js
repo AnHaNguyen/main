@@ -1,3 +1,5 @@
+var planTableCreated = false;
+
 function showDegReq() {
 	updateDegReq();	
 	$("#deg-req-div").show();
@@ -25,6 +27,9 @@ $("#get-started-btn").on("click", function() {
 
 $("#starter-confirm-btn").on("click", function() {
 	showMainPage();
+	if(!planTableCreated){
+		displayPlannerTable();
+	}
 });
 
 $(document).ready(function() {
@@ -61,7 +66,7 @@ $(document).ready(function() {
 
 
 	/*-------------Add smooth scrolling to all links---------------*/
-	$("a").on('click', function(event) {
+	/*$("a").on('click', function(event) {
 
 	    // Prevent default anchor click behavior
 	    event.preventDefault();

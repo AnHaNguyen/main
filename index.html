@@ -237,14 +237,14 @@
 		<!--DEGREE REQUIREMENT-->
 		<div id="deg-req-div" class="basic-padding col s12">
 			<!--Fixed Navigation Bar-->
-			<div class="page-title row no-margin">
+			<!--<div class="page-title row no-margin">
 				<div class="col s6 large-text">Degree Requirement</div>
 			</div>
 
 			<div class="container-customize">
-				<div class="main-table col s12">
+				<div class="main-table col s12">-->
 					<!--ULR content-->
-					<div id="ulr-deg-req" class="row mod-type-table">
+					<!--<div id="ulr-deg-req" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">University Level Requirements (ULR)</div>
 						</div>
@@ -274,10 +274,10 @@
 							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
 							<div class="col s1 mc-item item">20</div>
 						</div>
-					</div>
+					</div>-->
 
 					<!--Programme Requirements content-->
-					<div id="prog-req-deg-req" class="row mod-type-table">
+					<!--<div id="prog-req-deg-req" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">Programme Requirements (Programme)</div>
 						</div>
@@ -307,10 +307,10 @@
 							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
 							<div class="col s1 mc-item item">120</div>
 						</div>
-					</div>
+					</div>-->
 
 					<!--UE content-->
-					<div id="ue-deg-req" class="row mod-type-table">
+					<!--<div id="ue-deg-req" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">Unrestricted Electives (UE)</div>
 						</div>
@@ -342,7 +342,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>-->
 		</div>
 
 		<!--ALL MODULES-->
@@ -586,8 +586,8 @@
 			</div>
 
 			<div class="container-customize">
-				<div class="main-table col s12">
-					<div id="plan-mod-wrapper" class="row">
+				<div class="main-table col s12" id="plan-mod-main-tbl">
+					<!--<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div">
 							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 1</div>
 							<div class="col s12 drag-n-drop-div">
@@ -651,7 +651,22 @@
 							</div>
 							<div class="col s12 mc-div">{{plannedMC[3]}}</div>
 						</div>
-					</div>
+						<div class="wrapper-div">
+							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester 5</div>
+							<div class="col s12 drag-n-drop-div">
+								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[4]">
+									<div ng-repeat="mod in semester[4]" class="row no-margin">
+										<div class="drag-drop-item">
+											<span class="bold">{{mod.code}}</span> <br>
+											{{mod.title}} <br>
+											{{mod.mc}} MC
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col s12 mc-div">{{plannedMC[4]}}</div>
+						</div>
+					</div>-->
 				</div>
 			</div>
 		</div>
@@ -708,6 +723,7 @@
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 		<script type="text/javascript" src="js/degree-requirement.js"></script>
+		<script type="text/javascript" src="js/planner.js"></script>
 		<script type="text/javascript" src="js/front-end.js"></script>
 		<script type="text/javascript" src="js/login.js"></script>
 		<script type="text/javascript" src="dist/nus-ivle-api.min.js"></script>
