@@ -1,5 +1,13 @@
 'use strict';
 
+var token = getIVLEToken();
+console.log('token>>', ivle);
+if (token != null){
+	getModulesLogin(token, function(modules){
+		console.log('>>', modules);
+	});        
+}
+
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
 
 angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 'SearchFilter', 'Transport',
@@ -10,6 +18,25 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		$scope.stateToAdd = 'planned';
 
 		Transport.noSemesters = 4;
+
+		/**------------------ IVLE ---------------------------------------------------*/
+		var token = getIVLEToken();
+		console.log('tk>>', token);
+
+		if (token) {
+			var plan = {};
+			getModulesLogin(token, function(modules, states){
+				console.log('overfhere>>', modules, states);
+			/*	for (var i in modules){
+					plan[i] = array();
+					var sem = modules[i];
+					for (var j in sem){
+						var mod = sem[j];
+						plan[i][j] = getModuleByCode(mod);
+					}
+				} */
+			});
+		}
 
 		/**------------------ Modules list controller ---------------------------------*/
 
