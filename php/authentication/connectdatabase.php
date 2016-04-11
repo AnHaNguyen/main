@@ -25,7 +25,7 @@ if ($_REQUEST['cmd'] == "getModules"){
 	}else{
 		$r = mysqli_fetch_row($res);	//matric, sem1, sem2, sem3, ..., sem8
 		$returnList = array();
-		for ($i = 1; $i < totalSem; $i++){
+		for ($i = 1; $i <= totalSem; $i++){
 			$moduleList = parseModules($r[$i]);
 			array_push($returnList, $moduleList);
 		}	
