@@ -327,6 +327,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 					if (module.code === mod.code) {
 						semester.splice(i, 1);
 						$scope.save();
+						$scope.computePlannedMC();
 						return;
 					}
 				}

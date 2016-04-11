@@ -65,6 +65,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				}
 			};
 
+			service.saveSelectedModulesToDB = function(token){		//to be edited
+
+			};
 			/**
 			 * visibleModules is actually selected modules
 			 * This function calls saveSelectedModulesToCookies to save data in localStorage

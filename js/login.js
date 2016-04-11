@@ -10,13 +10,15 @@ var token;
 $("#login").on("click",function(){
     if (ivle.getToken(window.location.href) == null){
         var authUrl = ivle.login(key, redirectUrl);
+        token = ivle.getToken(authUrl);
         window.location.href = authUrl;
     }
             
 });
 
 function updateToken(){
-    return ivle.getToken(window.location.href);
+    token = ivle.getToken(window.location.href);
+    return token;
 }
 
 
@@ -119,10 +121,25 @@ function getSemester(moduleInfo, startYear){
     }
 }
 
+function getCurrentSem(startYear){
+    var year = parseInt(startYear);
+    var currentSem = 1;
+    var currentAcadYear = "2016/2017";
+    var curYear = parseInt(currentAcadYear.split("/")[0]);
+    if (currentSem == 1){
+        return (curYear - year + 1)*2 - 1;
+    } else{
+        return (curYear - year + 1)*2;
+    }   
+}
+
 
 function getIVLEToken(){
-	var token = updateToken();
-	return token;
+    if (token == null){
+        return updateToken();
+    } else{
+        return token;
+    }
 }
 
 function initializeUser(token, callback){
@@ -137,8 +154,23 @@ function getModulesLogin(token, callback){
 	var user = ivle.User(key, token);
 	user.init().done(function(){
 		getModules(user, function(modules){
-			callback(modules);
+            states = getStates(user);
+			callback(modules, states);
 		});
 		
 	});
+}
+
+
+function getStates(user){     //add state to modules
+    var startYear = user.profile('MatriculationYear');
+    var curSem = getCurrentSem(startYear);
+    var states = {};
+    for (var i = 1; i <= totalSem; i++){
+        if (i >= curSem){
+            states[i] = "planned";
+        } else{
+            states[i] = "taken";
+        }
+    }
 }
