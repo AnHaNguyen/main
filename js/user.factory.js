@@ -124,6 +124,8 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 						var admissionYear = object.findItemByCode(getAdmissionYear(user), object.admissionYearsList);
 						var focusArea = object.findItemByCode('SE', object.focusAreasList);
 						var matric = user.data.UserID;
+						localStorageService.set('user', '');
+						localStorageService.set('data', '');
 						object.matric = matric;
 
 						Transport.loadCookies();
