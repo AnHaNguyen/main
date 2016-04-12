@@ -1,4 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Indie+Flower);
+@import url(https://fonts.googleapis.com/css?family=Pinyon+Script|Annie+Use+Your+Telescope|Rochester|Open+Sans|Indie+Flower|Alegreya+Sans);
+
 #preloader  {
     z-index: 99;
     height: 100vh;
@@ -38,6 +39,7 @@ body {
 	height: auto;
 	padding: 15px 20px;
 	border-radius: 5px;
+	margin-top: 15px;
 }
 
 .start-login-div .btn:hover, #starter-confirm-btn:hover {
@@ -89,11 +91,27 @@ body {
 
 #full-name {
 	width: 80%;
+	font-weight: bold;
+	text-transform: capitalize;
+	font-size: 40px;
+	font-family: 'Pinyon Script', cursive;
+	height: auto;
+}
+
+#bachelor, #major_value, #focus_area_value, #admission_year_value {
+	color: red !important;
+	font-weight: 600;
+	font-size: 20px;
+	text-align: center;
 }
 
 .grad-cer-text {
-	color: #fb6542;
-	font-weight: bold;
+	font-weight: 500;
+	font-size: 16px;
+}
+
+.normal-certi-text {
+	font-weight: 500;
 }
 /*----------------Logo-----------------*/
 .logo {
@@ -218,6 +236,14 @@ body {
 	top: 0;
   	z-index: 100;
   	width: 83%;
+}
+
+#deg-req-title {
+	font-weight: bold;
+	margin-right: 30px;
+	font-size: 17px;
+	line-height: 45px;
+	float: right;
 }
 
 .modal {
@@ -488,8 +514,8 @@ body {
 
 ::-webkit-input-placeholder {
    color: #EEEEEE;				
-   -webkit-filter: brightness(60%);
-   filter: brightness(60%);
+   -webkit-filter: brightness(70%);
+   filter: brightness(70%);
 }
 
 	/*---------------Cancel & Ok buttons--------------*/
@@ -568,7 +594,7 @@ body {
 
 .semester-div {
 	border-bottom: 1px solid black;
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 
 .mc-div {
@@ -578,14 +604,16 @@ body {
 .semester-div, .mc-div {
 	padding: 10px !important;
 	text-align: center;
-	color: rgb(76, 147, 208);					/* darken blue color */
+	color: white;
+	background-color: rgb(76, 147, 208);		/* darken blue color */
+	font-weight: bold;
 }
 
-.selected-sem-planner {
+/*.selected-sem-planner {
 	color: white;
 	font-weight: bold;
 	background-color: rgb(76, 147, 208);		/* darken blue color */
-}
+/*}*/
 
 .close-dnd {
 	width: 10%;

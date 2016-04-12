@@ -7,7 +7,6 @@
 
 		<!-- Compiled and minified CSS -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-		<!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 
 		<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 		<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -24,8 +23,8 @@
 			 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 			 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-76015504-1', 'auto');
-ga('send', 'pageview');
+			ga('create', 'UA-76015504-1', 'auto');
+			ga('send', 'pageview');
 		</script>
 	</head>
 
@@ -102,12 +101,12 @@ ga('send', 'pageview');
 
 				<div id="grad-cer-div" class="center z-depth-2">
 					<img src="img/NUS-logo.png" alt="NUS Logo">
-					<p>This is to certify that<br></p>
+					<p class="normal-certi-text">This is to certify that<br></p>
 					<form ng-submit="user.update()">
 						<input placeholder="Your Full Name" id="full-name" type="text" class="validate center" ng-model="user.displayUsername"><br>
-						<span>having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
+						<span class="normal-certi-text">having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
 						<span class="grad-cer-text">BACHELOR OF</span>
-						<input placeholder="Your Bachelor" id="bachelor" ng-model="user.displayBachelor" type="text" class="validate center input-size"><br>
+						<input placeholder="Your Bachelor" id="bachelor" ng-model="user.displayBachelor" type="text" class="validate input-size"><br>
 						<span class="grad-cer-text">IN</span>
 						<search placeholder="Your Major" 
 						minlength="0" 
@@ -119,7 +118,7 @@ ga('send', 'pageview');
 						filter=""
 						placeholder="Your major"
 						style="display: inline-block;"
-						id="major" type="text" class="validate center input-size"> 
+						id="major" type="text" class="validate input-size"> 
 						</search> 
 						<span class="grad-cer-text">FOCUS AREA</span>
 						<search placeholder="Your Focus Area" 
@@ -131,7 +130,7 @@ ga('send', 'pageview');
 						placeholder="Your focus area"
 						init="user.displayFocusArea" 
 						style="display: inline-block; width: 300px !important;"
-						id="focus_area" type="text" class="validate center input-size"> 
+						id="focus_area" type="text" class="validate input-size"> 
 						</search><br> 
 						<span class="grad-cer-text">ADMISSION YEAR</span>
 						<search placeholder="Your Admission Year" 
@@ -144,7 +143,7 @@ ga('send', 'pageview');
 						filter=""
 						placeholder="Your admission year"
 						style="display: inline-block;"
-						id="admission_year" type="text" class="validate center input-size"> 
+						id="admission_year" type="text" class="validate input-size">
 						</search><br>
 						<input type="submit" id="starter-confirm-btn" ng-click="confirm()" class="btn" value="Confirm">
 					</form>
@@ -286,113 +285,6 @@ ga('send', 'pageview');
 
 		<!--DEGREE REQUIREMENT-->
 		<div id="deg-req-div" class="basic-padding col s12">
-			<!--Fixed Navigation Bar-->
-			<!--<div class="page-title row no-margin">
-				<div class="col s6 large-text">Degree Requirement</div>
-			</div>
-
-			<div class="container-customize">
-				<div class="main-table col s12">-->
-					<!--ULR content-->
-					<!--<div id="ulr-deg-req" class="row mod-type-table">
-						<div class="col s12 content-row">
-							<div class="col s12 header item">University Level Requirements (ULR)</div>
-						</div>
-						<div class="col s12 content-row">
-							<div class="col s2 header item">Type</div>
-							<div class="col s2 header item">Code</div>
-							<div class="col s7 header item">Title</div>
-							<div class="col s1 header item">MC</div>
-						</div>
-
-						<div class="col s12 content-row ulr-hover">
-							<div class="col s2 item">GEM</div>
-							<div class="col s2 item">GEM A / B</div>
-							<div class="col s7 item">2 GEM and at least 1 GEM B</div>
-							<div class="col s1 item">8</div>
-
-						</div>
-
-						<div class="col s12 content-row ulr-hover">
-							<div class="col s2 item">SSA</div>
-							<div class="col s2 item">SSA</div>
-							<div class="col s7 item">1 SSA</div>
-							<div class="col s1 item">4</div>
-						</div>
-
-						<div class="col s12 content-row">
-							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
-							<div class="col s1 mc-item item">20</div>
-						</div>
-					</div>-->
-
-					<!--Programme Requirements content-->
-					<!--<div id="prog-req-deg-req" class="row mod-type-table">
-						<div class="col s12 content-row">
-							<div class="col s12 header item">Programme Requirements (Programme)</div>
-						</div>
-
-						<div class="col s12 content-row">
-							<div class="col s2 header item">Type</div>
-							<div class="col s2 header item">Code</div>
-							<div class="col s7 header item">Title</div>
-							<div class="col s1 header item">MC</div>
-						</div>
-
-						<div class="col s12 content-row pr-hover">
-							<div class="col s2 item">CS Foundation</div>
-							<div class="col s2 item">CS2105</div>
-							<div class="col s7 item">Introduction to Computer Networks</div>
-							<div class="col s1 item">4</div>
-						</div>
-
-						<div class="col s12 content-row pr-hover">
-							<div class="col s2 item">CS Foundation</div>
-							<div class="col s2 item">CS2100</div>
-							<div class="col s7 item">Computer Organization</div>
-							<div class="col s1 item">4</div>
-						</div>
-
-						<div class="col s12 content-row">
-							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
-							<div class="col s1 mc-item item">120</div>
-						</div>
-					</div>-->
-
-					<!--UE content-->
-					<!--<div id="ue-deg-req" class="row mod-type-table">
-						<div class="col s12 content-row">
-							<div class="col s12 header item">Unrestricted Electives (UE)</div>
-						</div>
-
-						<div class="col s12 content-row">
-							<div class="col s2 header item">Type</div>
-							<div class="col s2 header item">Code</div>
-							<div class="col s7 header item">Title</div>
-							<div class="col s1 header item">MC</div>
-						</div>
-
-						<div class="col s12 content-row ue-hover">
-							<div class="col s2 item">UE</div>
-							<div class="col s2 item">All codes</div>
-							<div class="col s7 item">5 any modules</div>
-							<div class="col s1 item">20</div>
-						</div>
-
-						<div class="col s12 content-row">
-							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
-							<div class="col s1 mc-item item">20</div>
-						</div>
-					</div>
-
-					<div class="row mod-type-table">
-						<div class="col s12 content-row">
-							<div class="col s11 mc-item item text-mc">Total Module Credits</div>
-							<div class="col s1 mc-item item">160</div>
-						</div>
-					</div>
-				</div>
-			</div>-->
 		</div>
 
 		<!--ALL MODULES-->
@@ -623,7 +515,7 @@ ga('send', 'pageview');
 				<div class="main-table col s12">
 					<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div" ng-show="showSemester[0]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[0]}}</div>
+							<div class="col s12 semester-div">Semester {{semId[0]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[0]">
 									<div ng-repeat="mod in semester[0]" class="row no-margin">
@@ -638,7 +530,7 @@ ga('send', 'pageview');
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[0]}}</div>
+							<div class="col s12 mc-div">{{plannedMC[0]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[1]">
@@ -657,7 +549,7 @@ ga('send', 'pageview');
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[1]}}</div>
+							<div class="col s12 mc-div">{{plannedMC[1]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[2]">
@@ -676,7 +568,7 @@ ga('send', 'pageview');
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[2]}}</div>
+							<div class="col s12 mc-div">{{plannedMC[2]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[3]">
@@ -695,7 +587,7 @@ ga('send', 'pageview');
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[3]}}</div>
+							<div class="col s12 mc-div">{{plannedMC[3]}} MC</div>
 						</div>
 					</div>
 
@@ -716,7 +608,7 @@ ga('send', 'pageview');
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[4]}}</div>
+							<div class="col s12 mc-div">{{plannedMC[4]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[5]">
@@ -735,7 +627,7 @@ ga('send', 'pageview');
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[5]}}</div>
+							<div class="col s12 mc-div">{{plannedMC[5]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[6]">
@@ -754,7 +646,7 @@ ga('send', 'pageview');
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[6]}}</div>
+							<div class="col s12 mc-div">{{plannedMC[6]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[7]">
@@ -773,7 +665,7 @@ ga('send', 'pageview');
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[7]}}</div>
+							<div class="col s12 mc-div">{{plannedMC[7]}} MC</div>
 						</div>
 					</div>
 
@@ -794,7 +686,7 @@ ga('send', 'pageview');
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[8]}}</div>
+							<div class="col s12 mc-div">{{plannedMC[8]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[9]">
@@ -813,7 +705,7 @@ ga('send', 'pageview');
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[9]}}</div>
+							<div class="col s12 mc-div">{{plannedMC[9]}} MC</div>
 						</div>
 					</div>
 				</div>
