@@ -133,34 +133,34 @@ $(document).ready(function() {
 	});
 
 	/*-----------------------Drag-and-drop-item-display----------------------*/
-
+	$(".drag-drop-mc").hide();
 	$("#code-btn").on("click", function(){
 		if($(this).hasClass("selected-toggle-btn")){
 			$(this).removeClass("selected-toggle-btn");
-			$(".drag-drop-code").show();
+			$(".drag-drop-code").hide();
 		} else {
 			$(this).addClass("selected-toggle-btn");
-			$(".drag-drop-code").hide();
+			$(".drag-drop-code").show();
 		}
 	});
 
 	$("#title-btn").on("click", function(){
 		if($(this).hasClass("selected-toggle-btn")){
 			$(this).removeClass("selected-toggle-btn");
-			$(".drag-drop-title").show();
+			$(".drag-drop-title").hide();
 		} else {
 			$(this).addClass("selected-toggle-btn");
-			$(".drag-drop-title").hide();
+			$(".drag-drop-title").show();
 		}
 	});
 
 	$("#mc-btn").on("click", function(){
 		if($(this).hasClass("selected-toggle-btn")){
 			$(this).removeClass("selected-toggle-btn");
-			$(".drag-drop-mc").show();
+			$(".drag-drop-mc").hide();
 		} else {
 			$(this).addClass("selected-toggle-btn");
-			$(".drag-drop-mc").hide();
+			$(".drag-drop-mc").show();
 		}
 	});
 });
