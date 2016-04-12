@@ -363,7 +363,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					if (module.state !== newState) {
 						if (module.state === 'planned') {
 							service.removePlannedModule(module);
-						} else {
+						} else if (newState === 'planned') {
 							service.addPlannedModule(module);
 						}
 					}
