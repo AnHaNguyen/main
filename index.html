@@ -30,6 +30,20 @@ ga('send', 'pageview');
 	</head>
 
 	<body ng-app="core" id="main">
+		<!--<div class="preloader-wrapper big active">
+			<div class="spinner-layer spinner-blue">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>-->
+
 		<div id="start-page" ng-controller="mainController">
 			<div id="start-wrapper">
 				<div id="logo-div">
@@ -235,14 +249,14 @@ ga('send', 'pageview');
 		<!--DEGREE REQUIREMENT-->
 		<div id="deg-req-div" class="basic-padding col s12">
 			<!--Fixed Navigation Bar-->
-			<div class="page-title row no-margin">
+			<!--<div class="page-title row no-margin">
 				<div class="col s6 large-text">Degree Requirement</div>
 			</div>
 
 			<div class="container-customize">
-				<div class="main-table col s12">
+				<div class="main-table col s12">-->
 					<!--ULR content-->
-					<div id="ulr-deg-req" class="row mod-type-table">
+					<!--<div id="ulr-deg-req" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">University Level Requirements (ULR)</div>
 						</div>
@@ -272,10 +286,10 @@ ga('send', 'pageview');
 							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
 							<div class="col s1 mc-item item">20</div>
 						</div>
-					</div>
+					</div>-->
 
 					<!--Programme Requirements content-->
-					<div id="prog-req-deg-req" class="row mod-type-table">
+					<!--<div id="prog-req-deg-req" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">Programme Requirements (Programme)</div>
 						</div>
@@ -305,10 +319,10 @@ ga('send', 'pageview');
 							<div class="col s11 mc-item item text-mc">Subtotal Module Credits</div>
 							<div class="col s1 mc-item item">120</div>
 						</div>
-					</div>
+					</div>-->
 
 					<!--UE content-->
-					<div id="ue-deg-req" class="row mod-type-table">
+					<!--<div id="ue-deg-req" class="row mod-type-table">
 						<div class="col s12 content-row">
 							<div class="col s12 header item">Unrestricted Electives (UE)</div>
 						</div>
@@ -340,7 +354,7 @@ ga('send', 'pageview');
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>-->
 		</div>
 
 		<!--ALL MODULES-->
@@ -410,8 +424,6 @@ ga('send', 'pageview');
 							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
 							<div class="col s3 item">
-								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
-								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
@@ -463,8 +475,6 @@ ga('send', 'pageview');
 							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
 							<div class="col s3 item">
-								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
-								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
@@ -516,9 +526,6 @@ ga('send', 'pageview');
 							<div class="col s5 item">{{ module.title }}</div>
 							<div class="col s1 item">{{ module.mc }}</div>
 							<div class="col s3 item">
-								<!--	<a class="btn-floating waves-effect waves-light red">X</a>  -->
-								<!--<a class="clickable" ng-click="removeModule(module.type, module.code)">X</a>-->
-								<!--<a title="Mark as {{ (module.state==='taken' ? 'planned' : 'taken') }}" class="clickable" ng-click="changeState(module.type, module.code)">{{ (module.state==='taken' ? 'P' : 'T') }}</a>-->
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
@@ -583,9 +590,12 @@ ga('send', 'pageview');
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[0]">
 									<div ng-repeat="mod in semester[0]" class="row no-margin">
 										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
+											<div class="drag-drop-text">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
 									</div>
 								</div>
@@ -599,9 +609,12 @@ ga('send', 'pageview');
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[1]">
 									<div ng-repeat="mod in semester[1]" class="row no-margin">
 										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
+											<div class="drag-drop-text">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
 									</div>
 								</div>
@@ -615,9 +628,12 @@ ga('send', 'pageview');
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[2]">
 									<div ng-repeat="mod in semester[2]" class="row no-margin">
 										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
+											<div class="drag-drop-text">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
 									</div>
 								</div>
@@ -631,9 +647,12 @@ ga('send', 'pageview');
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[3]">
 									<div ng-repeat="mod in semester[3]" class="row no-margin">
 										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
+											<div class="drag-drop-text">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
 									</div>
 								</div>
@@ -649,9 +668,12 @@ ga('send', 'pageview');
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[4]">
 									<div ng-repeat="mod in semester[4]" class="row no-margin">
 										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
+											<div class="drag-drop-text">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
 									</div>
 								</div>
@@ -665,9 +687,12 @@ ga('send', 'pageview');
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[5]">
 									<div ng-repeat="mod in semester[5]" class="row no-margin">
 										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
+											<div class="drag-drop-text">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
 									</div>
 								</div>
@@ -681,9 +706,12 @@ ga('send', 'pageview');
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[6]">
 									<div ng-repeat="mod in semester[6]" class="row no-margin">
 										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
+											<div class="drag-drop-text">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
 									</div>
 								</div>
@@ -697,9 +725,12 @@ ga('send', 'pageview');
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[7]">
 									<div ng-repeat="mod in semester[7]" class="row no-margin">
 										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
+											<div class="drag-drop-text">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
 									</div>
 								</div>
@@ -715,9 +746,12 @@ ga('send', 'pageview');
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[8]">
 									<div ng-repeat="mod in semester[8]" class="row no-margin">
 										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
+											<div class="drag-drop-text">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
 									</div>
 								</div>
@@ -731,9 +765,12 @@ ga('send', 'pageview');
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[9]">
 									<div ng-repeat="mod in semester[9]" class="row no-margin">
 										<div class="drag-drop-item">
-											<span class="bold">{{mod.code}}</span> <br>
-											{{mod.title}} <br>
-											{{mod.mc}} MC
+											<div class="drag-drop-text">
+												<span class="bold">{{mod.code}}</span> <br>
+												{{mod.title}} <br>
+												{{mod.mc}} MC
+											</div>
+											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
 									</div>
 								</div>

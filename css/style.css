@@ -578,6 +578,7 @@ body {
 .close-dnd {
 	width: 10%;
 	float: left;
+	cursor: pointer;
 }
 
 .drag-drop-text {

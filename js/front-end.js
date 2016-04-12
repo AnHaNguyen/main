@@ -1,5 +1,3 @@
-var planTableCreated = false;
-
 function showDegReq() {
 	updateDegReq();	
 	$("#deg-req-div").show();
@@ -27,9 +25,6 @@ $("#get-started-btn").on("click", function() {
 
 $("#starter-confirm-btn").on("click", function() {
 	showMainPage();
-	if(!planTableCreated){
-		displayPlannerTable();
-	}
 });
 
 $(document).ready(function() {
