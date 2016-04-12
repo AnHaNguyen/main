@@ -27,6 +27,11 @@ $("#starter-confirm-btn").on("click", function() {
 	showMainPage();
 });
 
+/*----------Pre-loader-----------*/
+$(window).load(function(){
+	$("#preloader").delay(500).fadeOut("slow");
+});
+
 $(document).ready(function() {
 	$("#main-section").hide();
 	$("#grad-cer-div").hide();

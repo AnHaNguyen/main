@@ -1,4 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Indie+Flower);
+#preloader  {
+    z-index: 99;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+}
+
+.preloader-wrapper {
+	top: 45%;
+	position: absolute;
+}
+
 /*-------------Start Page---------------*/
 body {
 	margin: 0px !important;
