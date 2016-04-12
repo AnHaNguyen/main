@@ -49,7 +49,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 							mods[1].push(mod.code);
 						} else if (mod.state === 'exempted') {
 							mods[2].push(mod.code);
-						} else {
+						} else if (mod.state === 'taken') {
 							mods[3].push(mod.code);
 						}
 					}
@@ -335,8 +335,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 					if (module.code === modCode) {
 
-						service.visibleModules['ALL'].splice(i, 1);
-
 						// Mark this module as unselected
 						service.removePlannedModule(module);
 
@@ -348,6 +346,8 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 							'unselected': ''
 						};
 						module.selected[module.state] = 'selected-toggle-btn';
+
+						service.visibleModules['ALL'].splice(i, 1);
 					}
 				}
 

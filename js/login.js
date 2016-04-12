@@ -80,12 +80,13 @@ SemesterDisplay "Semester 2"*/
     $.ajax({
         url: "php/authentication/connectdatabase.php?cmd=getModules&matric="+matric
     }).done(function(data){
+		//console.log(data, matric);
         if (data == -1){
             alert("Error retrieving!");
             return;
         }
         if (JSON.parse(data) == ""){            //first time user, no record in DB
-			console.log('WARNING FIRST TIME LOGIN');
+			//console.log('WARNING FIRST TIME LOGIN');
             var allMods = new Array();
             user.modulesTaken(function(allMods){
                 for (var i = 0; i < allMods.length; i++){
@@ -96,6 +97,7 @@ SemesterDisplay "Semester 2"*/
                 $.ajax({
                     url: "php/authentication/connectdatabase.php?cmd=storeModules&matric="+matric+"&modules="+modsStr
                 }).done(function(_data){
+					//console.log('warning',_data);
                     if (_data == -1){
                         alert("Error inserting!");
                         return;
