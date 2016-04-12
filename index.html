@@ -512,6 +512,12 @@
 			</div>
 
 			<div class="container-customize">
+				<!--Control button-->
+				<div id="control-btn-div">
+					<div id="code-btn" class="btn waves-effect waves-light">Code</div>
+					<div id="title-btn" class="btn waves-effect waves-light">Title</div>
+					<div id="mc-btn" class="btn waves-effect waves-light">MC</div>
+				</div>
 				<div class="main-table col s12">
 					<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div" ng-show="showSemester[0]">
@@ -521,9 +527,9 @@
 									<div ng-repeat="mod in semester[0]" class="row no-margin">
 										<div class="drag-drop-item">
 											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
+												<span class="bold drag-drop-code">{{mod.code}}<br></span>
+												<span class="drag-drop-title">{{mod.title}}<br></span>
+												<span class="drag-drop-mc">{{mod.mc}} MC</span>
 											</div>
 											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
@@ -534,15 +540,15 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[1]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[1]}}</div>
+							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[1]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[1]">
 									<div ng-repeat="mod in semester[1]" class="row no-margin">
 										<div class="drag-drop-item">
 											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
+												<span class="bold drag-drop-code">{{mod.code}}<br></span>
+												<span class="drag-drop-title">{{mod.title}}<br></span>
+												<span class="drag-drop-mc">{{mod.mc}} MC</span>
 											</div>
 											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
@@ -553,15 +559,15 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[2]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[2]}}</div>
+							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[2]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[2]">
 									<div ng-repeat="mod in semester[2]" class="row no-margin">
 										<div class="drag-drop-item">
 											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
+												<span class="bold drag-drop-code">{{mod.code}}<br></span>
+												<span class="drag-drop-title">{{mod.title}}<br></span>
+												<span class="drag-drop-mc">{{mod.mc}} MC</span>
 											</div>
 											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
@@ -572,15 +578,15 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[3]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[3]}}</div>
+							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[3]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[3]">
 									<div ng-repeat="mod in semester[3]" class="row no-margin">
 										<div class="drag-drop-item">
 											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
+												<span class="bold drag-drop-code">{{mod.code}}<br></span>
+												<span class="drag-drop-title">{{mod.title}}<br></span>
+												<span class="drag-drop-mc">{{mod.mc}} MC</span>
 											</div>
 											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
@@ -593,15 +599,15 @@
 
 					<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div" ng-show="showSemester[4]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[4]}}</div>
+							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[4]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[4]">
 									<div ng-repeat="mod in semester[4]" class="row no-margin">
 										<div class="drag-drop-item">
 											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
+												<span class="bold drag-drop-code">{{mod.code}}<br></span>
+												<span class="drag-drop-title">{{mod.title}}<br></span>
+												<span class="drag-drop-mc">{{mod.mc}} MC</span>
 											</div>
 											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
@@ -612,15 +618,15 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[5]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[5]}}</div>
+							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[5]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[5]">
 									<div ng-repeat="mod in semester[5]" class="row no-margin">
 										<div class="drag-drop-item">
 											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
+												<span class="bold drag-drop-code">{{mod.code}}<br></span>
+												<span class="drag-drop-title">{{mod.title}}<br></span>
+												<span class="drag-drop-mc">{{mod.mc}} MC</span>
 											</div>
 											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
@@ -631,15 +637,15 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[6]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[6]}}</div>
+							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[6]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[6]">
 									<div ng-repeat="mod in semester[6]" class="row no-margin">
 										<div class="drag-drop-item">
 											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
+												<span class="bold drag-drop-code">{{mod.code}}<br></span>
+												<span class="drag-drop-title">{{mod.title}}<br></span>
+												<span class="drag-drop-mc">{{mod.mc}} MC</span>
 											</div>
 											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
@@ -650,15 +656,15 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[7]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[7]}}</div>
+							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[7]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[7]">
 									<div ng-repeat="mod in semester[7]" class="row no-margin">
 										<div class="drag-drop-item">
 											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
+												<span class="bold drag-drop-code">{{mod.code}}<br></span>
+												<span class="drag-drop-title">{{mod.title}}<br></span>
+												<span class="drag-drop-mc">{{mod.mc}} MC</span>
 											</div>
 											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
@@ -671,15 +677,15 @@
 
 					<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div" ng-show="showSemester[8]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[8]}}</div>
+							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[8]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[8]">
 									<div ng-repeat="mod in semester[8]" class="row no-margin">
 										<div class="drag-drop-item">
 											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
+												<span class="bold drag-drop-code">{{mod.code}}<br></span>
+												<span class="drag-drop-title">{{mod.title}}<br></span>
+												<span class="drag-drop-mc">{{mod.mc}} MC</span>
 											</div>
 											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
@@ -690,15 +696,15 @@
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[9]">
-							<div class="col s12 semester-div waves-effect waves-light" onClick="semPlanner()">Semester {{semId[9]}}</div>
+							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[9]}}</div>
 							<div class="col s12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[9]">
 									<div ng-repeat="mod in semester[9]" class="row no-margin">
 										<div class="drag-drop-item">
 											<div class="drag-drop-text">
-												<span class="bold">{{mod.code}}</span> <br>
-												{{mod.title}} <br>
-												{{mod.mc}} MC
+												<span class="bold drag-drop-code">{{mod.code}}<br></span>
+												<span class="drag-drop-title">{{mod.title}}<br></span>
+												<span class="drag-drop-mc">{{mod.mc}} MC</span>
 											</div>
 											<div class="close-dnd" ng-click="removeModule(mod.code)"><b>X</b></div>
 										</div>
@@ -715,7 +721,7 @@
 		<!--FOOTER-->
 		<div class="row">
 			<div class="col s10 offset-s1">
-				<div class="row">
+				<!--<div class="row">
 					<div class="col s6">
 						<h5>Product</h5>
 						<ul>
@@ -733,7 +739,7 @@
 							<li>Contact Us</li>
 						</ul>
 					</div>
-				</div>
+				</div>-->
 
 				<div class="row">
 					<hr>

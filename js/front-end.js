@@ -86,14 +86,14 @@ $(document).ready(function() {
 	});
 
 	/*----------------Lighten - darken color----------------*/
-	var darkenDragDropColor = LightenDarkenColor("#b3c100", -40);
+	/*var darkenDragDropColor = LightenDarkenColor("#b3c100", -40);
 	$(".drag-drop-item").on("mouseover", function() {
 		$(this).css("background-color", "" + darkenDragDropColor);
 	});
 
 	$(".drag-drop-item").on("mouseout", function() {
 		$(this).css("background-color", "#b3c100");
-	});
+	});*/
 
 	var darkenModal = LightenDarkenColor("#4cb5f5", -40);
 	$(".modal-footer div").on("mouseover", function(){
@@ -130,6 +130,38 @@ $(document).ready(function() {
 			var parent = $(this).parent().parent().find(".dropbtn").text("Waived");
 			console.log("hey, printed 33333333!!!")
 		});
+	});
+
+	/*-----------------------Drag-and-drop-item-display----------------------*/
+
+	$("#code-btn").on("click", function(){
+		if($(this).hasClass("selected-toggle-btn")){
+			$(this).removeClass("selected-toggle-btn");
+			$(".drag-drop-code").show();
+		} else {
+			$(this).addClass("selected-toggle-btn");
+			$(".drag-drop-code").hide();
+		}
+	});
+
+	$("#title-btn").on("click", function(){
+		if($(this).hasClass("selected-toggle-btn")){
+			$(this).removeClass("selected-toggle-btn");
+			$(".drag-drop-title").show();
+		} else {
+			$(this).addClass("selected-toggle-btn");
+			$(".drag-drop-title").hide();
+		}
+	});
+
+	$("#mc-btn").on("click", function(){
+		if($(this).hasClass("selected-toggle-btn")){
+			$(this).removeClass("selected-toggle-btn");
+			$(".drag-drop-mc").show();
+		} else {
+			$(this).addClass("selected-toggle-btn");
+			$(".drag-drop-mc").hide();
+		}
 	});
 });
 
