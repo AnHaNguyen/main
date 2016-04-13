@@ -1,8 +1,8 @@
 var key = "8Qrg78UktVoi1XHeTYLk1";      //need hidden
-var redirectUrl = "http://" + window.location.host + "/main/index.html"; //need hidden
+var redirectUrl = "http://" + window.location.host + "/developer/index.html"; //need hidden
 var CS = "Computer Science";
 var IS = "Information System";
-var BZA = "Business Analytic";
+var BZA = "Business Analytics";
 var CEG = "Computer Engineering";
 var totalSem = 8;
 var token;
@@ -175,9 +175,10 @@ function getStates(user){     //add state to modules
     }
 }
 
-function getRemovedMod(code){
+function getRemovedMod(code,callback){
+	var modCode = JSON.stringify(code);
 	$.ajax({
-		url: "php/getmodules.php?code="+code
+		url: "php/getmodules.php?code="+modCode
 	}).done(function(data){
 		if (data == -1){
 			alert("can't find modules");
@@ -185,17 +186,6 @@ function getRemovedMod(code){
 		}
 	
 		var moduleInfo = JSON.parse(data);
-		if (moduleInfo){
-			var module = {};
-			module['code'] = moduleInfo['code'];
-			module['type'] = "";
-			module['title'] = moduleInfo['title'];
-			module['mc'] = parseInt(moduleInfo['MC']);
-			module['semester'] = [1,2];
-			module['prerequisites'] = "";
-			return module;
-		} else {
-			return false;
-		}
+		callback(moduleInfo);
 	});
 }
