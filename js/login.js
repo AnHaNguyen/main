@@ -186,6 +186,8 @@ function getRemovedMod(code,callback){
 		}
 	
 		var moduleInfo = JSON.parse(data);
-		callback(moduleInfo);
+		if (callback){	
+			callback(moduleInfo);
+		}
 	});
 }

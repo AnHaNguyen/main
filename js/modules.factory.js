@@ -140,12 +140,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					if (module.code === modCode) {
 						/* found */
 						return module;
-					} else{
-						var info = getRemovedMod(modCode);
-						if (info){
-							return info;
-						}
-					}
+					} 
 				}
 
 				return null;
@@ -244,7 +239,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					});
 				} else {
 					var data = localStorageService.get('data');
-					var plan = localStorageService.get('plan');
+					var plan = localStorageService.get('plan');	
 
 
 					if (data) {
