@@ -140,6 +140,11 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					if (module.code === modCode) {
 						/* found */
 						return module;
+					} else{
+						var info = getRemovedMod(modCode);
+						if (info){
+							return info;
+						}
 					}
 				}
 

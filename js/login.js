@@ -174,3 +174,28 @@ function getStates(user){     //add state to modules
         }
     }
 }
+
+function getRemovedMod(code){
+	$.ajax({
+		url: "php/getmodules.php?code="+code
+	}).done(function(data){
+		if (data == -1){
+			alert("can't find modules");
+			return;
+		}
+	
+		var moduleInfo = JSON.parse(data);
+		if (moduleInfo){
+			var module = {};
+			module['code'] = moduleInfo['code'];
+			module['type'] = "";
+			module['title'] = moduleInfo['title'];
+			module['mc'] = parseInt(moduleInfo['MC']);
+			module['semester'] = [1,2];
+			module['prerequisites'] = "";
+			return module;
+		} else {
+			return false;
+		}
+	});
+}
