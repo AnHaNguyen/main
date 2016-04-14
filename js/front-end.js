@@ -61,14 +61,17 @@ $("#starter-confirm-btn").on("click", function() {
 
 	if(!major.val()){
 		$("#major-tip.tip span").css("display", "block");
+		major.addClass("missing-input");
 	}
 
 	if(!focus.val()) {
 		$("#focus-area-tip.tip span").css("display", "block");
+		focus.addClass("missing-input");
 	}
 
 	if(!admission_year.val()) {
 		$("#ay-tip.tip span").css("display", "block");
+		admission_year.addClass("missing-input");
 	}
 	
 	if(major.val() && focus.val() && admission_year.val()) {
@@ -78,12 +81,15 @@ $("#starter-confirm-btn").on("click", function() {
 	/*---------------Input on focus---------------*/
 	major.focus(function(){
 		$("#major-tip.tip span").css("display", "none");
+		major.removeClass("missing-input");
 	});
 	focus.focus(function(){
 		$("#focus-area-tip.tip span").css("display", "none");
+		focus.removeClass("missing-input");
 	});
 	admission_year.focus(function(){
 		$("#ay-tip.tip span").css("display", "none");
+		admission_year.removeClass("missing-input");
 	});
 });
 

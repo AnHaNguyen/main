@@ -58,12 +58,12 @@ function displayReq(major, year){
 							<div class="col s6"><span id="deg-req-title">Admission Year {{year}}, {{major}}</span></div> \
 						</div> \
 
-						<div class="container-customize"> \
+						<div class="container-customize" id="deg-req-container"> \
 							<div class="main-table col s12"> \
 								<div class="row mod-type-table"> \
 									<div class="col s12 content-row">  \
-										<div class="col s10 header item"> Requirement Type</div> \ 
-										<div class="col s2 header item"> MC </div> \						
+										<div class="col s11 header item"> Requirement Type</div> \ 
+										<div class="col s1 header item"> MC </div> \						
 									</div>
 								</div>`.replace("{{major}}", major).replace("{{year}}", year);
 
@@ -80,8 +80,8 @@ function displayReq(major, year){
 
 					$.each(orTable, function(index, option) {
 						newHtml += `<div class="col s12 content-row {{hoverType}}-hover"> `.replace("{{hoverType}}", hoverType["OR"]);
-						optionTemplate = `<div class="col s10 item">{{option}} </div> \
-											<div class="col s2 item">{{MC}} </div> `;
+						optionTemplate = `<div class="col s11 item">{{option}} </div> \
+											<div class="col s1 item">{{MC}} </div> `;
 
 						function orParse(codeList) {
 							if (orReplacement[codeList]!=undefined) return orReplacement[codeList];
@@ -112,8 +112,8 @@ function displayReq(major, year){
 			newHtml += '<div id="{{id}}" class="row mod-type-table">'.replace("{{id}}", getIdOf[reqType]);
 
 			template = `<div class="col s12 content-row"> \
-					<div class="col s10 header item">{{reqType}}</div> \ 
-					<div class="col s2 header item">{{totalMC}}</div> \
+					<div class="col s11 header item">{{reqType}}</div> \ 
+					<div class="col s1 header item">{{totalMC}}</div> \
 					</div>`;
 
 			newHtml += template.replace("{{reqType}}", longForm[reqType]).replace("{{totalMC}}", details.MC);
@@ -124,8 +124,8 @@ function displayReq(major, year){
 
 					if (longForm[moduleCode]==undefined) {
 						moduleTemplate = `<div class="col s2 item">{{moduleCode}} </div> \
-								<div class="col s8 item"> {{title}} </div> \
-								<div class="col s2 item"> {{MC}} </div>`;
+								<div class="col s9 item"> {{title}} </div> \
+								<div class="col s1 item"> {{MC}} </div>`;
 
 						//console.log(moduleCode);
 
@@ -136,8 +136,8 @@ function displayReq(major, year){
 						}
 						newHtml += moduleTemplate.replace("{{moduleCode}}", moduleCode).replace("{{MC}}", MC);
 					} else {
-						moduleTemplate = `<div class="col s10 item">{{description}} </div> \
-											<div class="col s2 item"> {{MC}} </div>`;
+						moduleTemplate = `<div class="col s11 item">{{description}} </div> \
+											<div class="col s1 item"> {{MC}} </div>`;
 
 						newHtml += moduleTemplate.replace("{{description}}", MC/4 + " " + longForm[moduleCode]).replace("{{MC}}", MC);
 					}

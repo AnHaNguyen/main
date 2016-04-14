@@ -111,6 +111,10 @@ body {
 	text-transform: uppercase;
 }
 
+.missing-input {
+	border-bottom: 2px solid #cb0000 !important;
+}
+
 .grad-cer-text {
 	font-weight: 500;
 	font-size: 16px;
@@ -247,10 +251,16 @@ body {
 	background-color: rgba(76, 181, 245, 1);
 }
 
+/*-----------------------Big container-----------------------------*/
 #main-section {
 	background-color: #F7F7F7;
 	padding-left: 17%;
 }
+
+#deg-req-container {
+	padding: 80px 300px 20px 60px;
+}
+
 /*---------------------------Side Bar--------------------------*/
 .side-nav {
 	width: 17%;
@@ -337,7 +347,7 @@ body {
 
 .main-table {
 	background-color: white;
-	padding: 20px;
+	padding: 30px;
 }
 
 .flex-display {
@@ -449,7 +459,7 @@ body {
 .item {
 	border-right: 1px solid black;
 	border-bottom: 1px solid black;
-	padding: 10px !important;
+	padding: 10px 10px 10px 15px !important;
 }
 
 .mod-type-table {
