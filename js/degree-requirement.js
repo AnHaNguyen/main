@@ -91,7 +91,7 @@ function displayReq(major, year){
 							if (orReplacement[codeList]!=undefined) return orReplacement[codeList];
 							splitCode = codeList.split(',');
 
-							replaceAnd = codeList.str.replace(/,(?=[^,]*$)/, " and<br>");
+							replaceAnd = codeList.replace(/,(?=[^,]*$)/, " and<br>");
 							console.log(replaceAnd);
 							description = replaceAnd.replace(",", ",<br>");
 
