@@ -17,6 +17,36 @@ function showMainPage() {
 	Materialize.fadeInImage(".main-table");
 }
 
+function loginWithIVLE() {
+	$("#start-text-div").hide();
+	$("#grad-cer-div").show();
+
+	var token = getIVLEToken();
+	initializeUser(token, function(user){
+		major = getMajor(user).toString();
+		year = getAdmissionYear(user).toString();
+
+		if(major == "CS") {
+			$("#major_value").val("Computer Science");		
+		}
+		else if(major == "IS") {
+			$("#major_value").val("Information System");		
+		}
+		else if(major == "BZA") {
+			$("#major_value").val("Business Analytics");		
+		}
+		else if(major == "CEG") {
+			$("#major_value").val("Computer Engineering");		
+		}
+
+		var AY = "20" + year.substr(0, 2) + "/20" + year.substr(2, 2);
+		$("#admission_year_value").val(AY);
+
+		$("#focus_area_value").val('');
+		$("#focus-area-tip.tip span").css("display", "block");
+	});
+}
+
 /*-----------------------Start-page--------------------------*/
 $("#get-started-btn").on("click", function() {
 	$("#start-text-div").hide();
@@ -31,6 +61,10 @@ $("#starter-confirm-btn").on("click", function() {
 
 	if(!major.val()){
 		$("#major-tip.tip span").css("display", "block");
+	}
+
+	if(!focus.val()) {
+		$("#focus-area-tip.tip span").css("display", "block");
 	}
 
 	if(!admission_year.val()) {
@@ -63,7 +97,7 @@ $(document).ready(function() {
 	$("#grad-cer-div").hide();
 
 	if(ivle.getToken(window.location.href) != null) {
-		showMainPage();
+		loginWithIVLE();
 	}
 
 	// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
