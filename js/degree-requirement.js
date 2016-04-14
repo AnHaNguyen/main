@@ -91,7 +91,7 @@ function displayReq(major, year){
 							if (orReplacement[codeList]!=undefined) return orReplacement[codeList];
 							splitCode = codeList.split(',');
 
-							description = codeList.replace(",", " and ");
+							description = codeList.replace(",", ",<br>");
 
 							for (i=0; i<splitCode.length; i++) {
 								moduleCode = splitCode[i];
