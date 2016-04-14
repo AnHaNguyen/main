@@ -51,10 +51,8 @@ function displayReq(major, year){
 	jsonFile = "req/" + major + '/' + year + ".json";
 	moduleJsonFile = "data/simplified.json";
 
-	console.log(jsonFile);
 	$.getJSON(jsonFile, function(jsonContent){
 	$.getJSON(moduleJsonFile, function(moduleTable) {
-		console.log(moduleTable);
 		newHtml = `<div class="page-title row no-margin"> \
 							<div class="col s6 large-text">Degree Requirement</div> \
 							<div class="col s6"><span id="deg-req-title">Admission Year {{year}}, {{major}}</span></div> \
@@ -68,8 +66,6 @@ function displayReq(major, year){
 										<div class="col s1 header item"> MC </div> \						
 									</div>
 								</div>`.replace("{{major}}", major).replace("{{year}}", year);
-
-		console.log(jsonContent);
 
 		$.each(jsonContent.and, function (reqType, details) {
 			//put or-table before UE
