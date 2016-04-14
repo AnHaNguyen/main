@@ -106,10 +106,12 @@
 						<input placeholder="Your Full Name" id="full-name" type="text" class="validate center" ng-model="user.displayUsername"><br>
 						<span class="normal-certi-text">having fulfilled the requirements prescribed by the University was conferred the degree of<br></span>
 						<span class="grad-cer-text">BACHELOR OF</span>
-						<input placeholder="Your Bachelor" id="bachelor" ng-model="user.displayBachelor" type="text" class="validate input-size"><br>
+						<input placeholder="Your Bachelor" id="bachelor" ng-model="user.displayBachelor" type="text" class="validate">
+						<div id="major-fa-div">
 						<span class="grad-cer-text">IN</span>
-						<search placeholder="Your Major" 
-						minlength="0" 
+						<a class="tip" id="major-tip"><span>What's your major ?</span></a>
+						<search placeholder="Your Major"
+						minlength="0"
 						titlefield="title"
 						select="changeMajor" 
 						items="user.majorsList" 
@@ -118,9 +120,10 @@
 						filter=""
 						placeholder="Your major"
 						style="display: inline-block;"
-						id="major" type="text" class="validate input-size"> 
-						</search> 
-						<span class="grad-cer-text">FOCUS AREA</span>
+						id="major" type="text" class="validate">
+						</search>
+						<span class="grad-cer-text" id="fa-text">FOCUS AREA</span>
+						<a class="tip"><span>Select your focus area</span></a>
 						<search placeholder="Your Focus Area" 
 						minlength="0" 
 						titlefield="title" 
@@ -130,9 +133,12 @@
 						placeholder="Your focus area"
 						init="user.displayFocusArea" 
 						style="display: inline-block; width: 300px !important;"
-						id="focus_area" type="text" class="validate input-size"> 
-						</search><br> 
+						id="focus_area" type="text" class="validate"> 
+						</search>
+						</div>
+						<div>
 						<span class="grad-cer-text">ADMISSION YEAR</span>
+						<a class="tip" id="ay-tip"><span>Select your admission year</span></a>
 						<search placeholder="Your Admission Year" 
 						minlength="0" 
 						titlefield="title" 
@@ -143,8 +149,9 @@
 						filter=""
 						placeholder="Your admission year"
 						style="display: inline-block;"
-						id="admission_year" type="text" class="validate input-size">
-						</search><br>
+						id="admission_year" type="text" class="validate">
+						</search>
+						</div>
 						<input type="submit" id="starter-confirm-btn" ng-click="confirm()" class="btn" value="Confirm">
 					</form>
 				</div>
@@ -339,7 +346,7 @@
 							<div class="col s10 item">Add your required module</div>
 						</div>
 
-						<div ng-repeat="module in modulesController.visibleModules['ULR']" class="col s12 content-row ue-hover {{module.new}}">
+						<div ng-repeat="module in modulesController.visibleModules['ULR']" class="col s12 content-row ulr-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
@@ -390,7 +397,7 @@
 							<div class="col s3 header item">Actions</div>
 						</div>
 
-						<div ng-repeat="module in modulesController.visibleModules['PR']" class="col s12 content-row ue-hover {{module.new}}">
+						<div ng-repeat="module in modulesController.visibleModules['PR']" class="col s12 content-row pr-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>

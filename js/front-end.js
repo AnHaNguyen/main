@@ -24,7 +24,33 @@ $("#get-started-btn").on("click", function() {
 });
 
 $("#starter-confirm-btn").on("click", function() {
-	showMainPage();
+	/*-------------Input Checking----------------*/
+	var major = $("#major_value");
+	var focus = $("#focus_area_value");
+	var admission_year = $("#admission_year_value");
+
+	if(!major.val()){
+		$("#major-tip.tip span").css("display", "block");
+	}
+
+	if(!admission_year.val()) {
+		$("#ay-tip.tip span").css("display", "block");
+	}
+	
+	if(major.val() && focus.val() && admission_year.val()) {
+		showMainPage();
+	}
+
+	/*---------------Input on focus---------------*/
+	major.focus(function(){
+		$("#major-tip.tip span").css("display", "none");
+	});
+	focus.focus(function(){
+		$("#focus-area-tip.tip span").css("display", "none");
+	});
+	admission_year.focus(function(){
+		$("#ay-tip.tip span").css("display", "none");
+	});
 });
 
 /*----------Pre-loader-----------*/

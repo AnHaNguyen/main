@@ -39,7 +39,7 @@ body {
 	height: auto;
 	padding: 15px 20px;
 	border-radius: 5px;
-	margin-top: 15px;
+	margin-top: 25px;
 }
 
 .start-login-div .btn:hover, #starter-confirm-btn:hover {
@@ -85,10 +85,6 @@ body {
 	padding: 100px 0 50px 0;
 }
 
-.input-size {
-	width: 30% !important;
-}
-
 #full-name {
 	width: 80%;
 	font-weight: bold;
@@ -98,11 +94,20 @@ body {
 	height: auto;
 }
 
+#bachelor {
+	width: 30% !important;
+}
+
+#major-fa-div {
+	text-align: center;
+}
+
 #bachelor, #major_value, #focus_area_value, #admission_year_value {
 	color: red !important;
 	font-weight: 600;
 	font-size: 20px;
 	text-align: center;
+	text-transform: uppercase;
 }
 
 .grad-cer-text {
@@ -130,7 +135,7 @@ body {
 	background-color: white !important;
 }
 
-/*-------------Basic CSS----------------*/
+/*-------------------------Basic CSS----------------------------*/
 .bold {
 	font-weight: bold;
 }
@@ -139,6 +144,101 @@ body {
 	text-transform: capitalize !important;
 }
 
+		/*---------------------Triangles of alert---------------------*/
+.tip {
+    position: relative;
+}
+
+.tip span {
+    display: none;
+    position: absolute;
+    padding: 5px;
+    z-index: 100;
+    background: #cb0000;				/*strawbery color*/
+    color: rgb(245, 245, 245);
+    -moz-border-radius: 5px; /* this works only in camino/firefox */
+    -webkit-border-radius: 5px; /* this is just for Safari */
+}
+
+#major-tip.tip span {
+	top: -45px;
+	left: -50px;
+}
+
+#focus-area-tip.tip span {
+	top: -45px;
+	left: 150px;
+}
+
+#ay-tip.tip span {
+	top: 40px;
+	left: 110px;
+}
+
+#major-tip.tip span {
+	width: 170px;
+}
+
+#focus-area-tip.tip span {
+	width: 200px;
+}
+
+#ay-tip.tip span {
+	width: 220px;
+}
+
+.tip span:before{
+    content:'';
+    display:block;
+    width:0;
+    height:0;
+    position:absolute;
+}
+
+#major-tip.tip span:before {
+	/*color of triangle*/
+    border-top: 8px solid #cb0000;		/*strawbery color*/
+    border-left: 8px solid transparent; 
+    border-right:8px solid transparent;
+    left: 120px;
+    top: 30px;
+}
+
+#focus-area-tip.tip span:before {
+	/*color of triangle*/
+    border-top: 8px solid #cb0000;		/*strawbery color*/
+    border-left: 8px solid transparent; 
+    border-right:8px solid transparent;
+    left: 30px;
+    top: 30px;
+}
+
+#ay-tip.tip span:before {
+	/*color of triangle*/
+    border-bottom: 8px solid #cb0000;		/*strawbery color*/
+    border-left: 8px solid transparent; 
+    border-right:8px solid transparent;
+    left: 40px;
+    top: -8px;
+}
+
+/*a:hover.tip {
+    font-size: 99%; /* this is just for IE */
+/*}
+
+a:hover.tip span {
+    display: block;
+}*/
+
+/*.tip {
+    font-size: 99%; /* this is just for IE */
+/*}
+
+.tip span {
+    display: block;
+}
+
+			/*--------------------------------------------------*/
 .no-margin {
 	margin: 0 !important;
 }
