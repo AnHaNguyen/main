@@ -12,7 +12,7 @@ function updateDegReq() {
 					"GET": "GEM Module(s) in Thinking and Expression"
 				};	
 
-	longForm = {"ULR": "University Level Requirements", "PR": "Program Requirements", "UE": "Unrestricted Electives",
+	longForm = {"ULR": "University Level Requirements", "PR": "Programme Requirements", "UE": "Unrestricted Electives",
 				"Lev4": "level-4 module(s)", 
 				"Focus": "Focus-area module(s)", 
 				"Focus4": "Level-4 module(s) in focus area", 
@@ -63,7 +63,7 @@ function displayReq(major, year){
 						<div class="container-customize" id="deg-req-container"> \
 							<div class="main-table col s12"> \
 								<div class="row mod-type-table"> \
-									<div class="col s12 content-row">  \
+									<div class="col s12 content-row none-hover">  \
 										<div class="col s11 header item"> Requirement Type</div> \ 
 										<div class="col s1 header item"> MC </div> \						
 									</div>
@@ -78,7 +78,7 @@ function displayReq(major, year){
 				$.each(jsonContent.or, function(index, orTable) {
 					newHtml += `<div class="row mod-type-table">`;
 
-					newHtml += `<div class="col s12 content-row"> \
+					newHtml += `<div class="col s12 content-row none-hover"> \
 									<div class="col s12 header item"> Choose one of the following options </div> \
 								</div>`;
 
@@ -91,7 +91,7 @@ function displayReq(major, year){
 							if (orReplacement[codeList]!=undefined) return orReplacement[codeList];
 							splitCode = codeList.split(',');
 
-							replaceAnd = codeList.replace(/,(?=[^,]*$)/, " and<br>");
+							replaceAnd = codeList.replace(/,(?=[^,]*$)/, " and<div class='break-div'></div>");
 							console.log(replaceAnd);
 							description = replaceAnd.replace(",", ",<br>");
 
@@ -116,7 +116,7 @@ function displayReq(major, year){
 
 			newHtml += '<div id="{{id}}" class="row mod-type-table">'.replace("{{id}}", getIdOf[reqType]);
 
-			template = `<div class="col s12 content-row"> \
+			template = `<div class="col s12 content-row none-hover"> \
 					<div class="col s11 header item">{{reqType}}</div> \ 
 					<div class="col s1 header item">{{totalMC}}</div> \
 					</div>`;

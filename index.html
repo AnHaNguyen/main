@@ -243,11 +243,11 @@
 
 		<!--SIDE BAR NAV-->
 		<ul id="nav-mobile" class="side-nav fixed">
-			<li class="none-hover no-padding center no-lineheight">
+			<li class="none-hover-sidebar no-padding center no-lineheight">
 			<img src="img/logo.png" class="logo-img-cust">
 			<hr>
 			</li>
-			<li class="no-padding none-hover">
+			<li class="no-padding none-hover-sidebar">
 			<ul class="collapsible collapsible-accordion" id="sidebar-all-items">
 				<li id="deg-req-nav">
 				<div class="collapsible-header waves-effect waves-red active">
@@ -333,7 +333,7 @@
 							University Level Requirements (ULR)
 						</div>
 
-						<div class="col s12 content-row">
+						<div class="col s12 content-row none-hover">
 							<div class="col s2 header item">Type</div>
 							<div class="col s1 header item">Code</div>
 							<div class="col s5 header item">Title</div>
@@ -372,7 +372,7 @@
 							</div>
 						</div>
 
-						<div class="col s12 content-row">
+						<div class="col s12 content-row none-hover">
 							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
 							<div class="col s4 mc-item item">
 								<span ng-bind="modulesController.remainingMC['ULR']"> </span>
@@ -385,11 +385,11 @@
 
 					<!--Programme Requirement content-->
 					<div id="all-prog-req" class="row mod-type-table">
-						<div class="col s12 content-row">
+						<div class="col s12 content-row none-hover">
 							<div class="col s12 header item">Programme Requirements</div>
 						</div>
 
-						<div class="col s12 content-row">
+						<div class="col s12 content-row none-hover">
 							<div class="col s2 header item">Type</div>
 							<div class="col s1 header item">Code</div>
 							<div class="col s5 header item">Title</div>
@@ -423,7 +423,7 @@
 							</div>
 						</div>
 
-						<div class="col s12 content-row">
+						<div class="col s12 content-row none-hover">
 							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
 							<div class="col s4 mc-item item">
 								<span ng-bind="modulesController.remainingMC['PR']"> </span>
@@ -436,11 +436,11 @@
 
 					<!--Unrestricted Elective content-->
 					<div id="all-ue" class="row mod-type-table">
-						<div class="col s12 content-row">
+						<div class="col s12 content-row none-hover">
 							<div class="col s12 header item">Unrestricted Electives</div>
 						</div>
 
-						<div class="col s12 content-row">
+						<div class="col s12 content-row none-hover">
 							<div class="col s2 header item">Type</div>
 							<div class="col s1 header item">Code</div>
 							<div class="col s5 header item">Title</div>
@@ -474,7 +474,7 @@
 							</div>
 						</div>
 
-						<div class="col s12 content-row">
+						<div class="col s12 content-row none-hover">
 							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
 							<div class="col s4 mc-item item">
 								<span ng-bind="modulesController.remainingMC['UE']"> </span>

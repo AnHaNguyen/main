@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Pinyon+Script|Annie+Use+Your+Telescope|Rochester|Open+Sans|Indie+Flower|Alegreya+Sans);
+@import url(https://fonts.googleapis.com/css?family=Martel+Sans);
 
 #preloader  {
     z-index: 99;
@@ -13,6 +14,11 @@
 }
 
 /*-------------Start Page---------------*/
+html {
+	font-size: 14px;
+	letter-spacing: 0.2px;
+}
+
 body {
 	margin: 0px !important;
 }
@@ -136,10 +142,6 @@ body {
 	cursor: pointer;
 }
 
-.none-hover:hover {
-	background-color: white !important;
-}
-
 /*-------------------------Basic CSS----------------------------*/
 .bold {
 	font-weight: bold;
@@ -243,12 +245,21 @@ body {
 	float: left !important;
 }
 
+.none-hover:hover {
+	font-size: 14px !important;
+	letter-spacing: 0.2px !important;
+}
+
 .side-nav.fixed .collapsible-body li.active {
 	background-color: #4cb5f5 !important;	/* blue sky color */
 }
 
 .waves-effect.waves-red .waves-ripple {
 	background-color: rgba(76, 181, 245, 1);
+}
+
+.break-div {
+	height: 10px;
 }
 
 /*-----------------------Big container-----------------------------*/
@@ -275,6 +286,10 @@ body {
 
 .sidebar-item {
 	margin: 0 10px 0 10px;
+}
+
+.none-hover-sidebar:hover {
+	background: white !important;
 }
 
 			/*------------Collapsible-header-----------*/
@@ -311,33 +326,48 @@ body {
 	-webkit-filter: grayscale(0%);
 	filter: grayscale(0%);	
 }
-/*------------------------------------------------------------------*/
+/*-----------------------Search bar-------------------------*/
 .page-title {
 	background-color: #4cb5f5;	/* blue sky color */
 	color: white;
 	padding: 15px 15px 10px 15px;
+	font-family: 'Open Sans', sans-serif;
 
 	/*---Fixed Nav Bar---*/
 	position: fixed;
 	top: 0;
   	z-index: 100;
   	width: 83%;
+
+  	/*---Smooth bar---*/
+  	/*-webkit-transition: -webkit-transform 1s;
+	transition: transform 1s;*/
 }
 
 #deg-req-title {
 	font-weight: bold;
 	margin-right: 30px;
-	font-size: 17px;
-	line-height: 45px;
+	font-size: 16px;
+	line-height: 42px;
 	float: right;
 }
+
+/*.smooth-bar-down {
+	-webkit-transition: translateY(-70px);
+	transition: translateY(-70px);
+}
+
+.smooth-bar-up {
+	-webkit-transition: translateY(70px);
+	transition: translateY(70px);
+}*/
 
 .modal {
 	z-index: 200;
 }
 
 .large-text {
-	font-size: 30px !important;
+	font-size: 28px !important;
 }
 
 /*---------------------Main Table-------------------------*/
@@ -472,11 +502,12 @@ body {
 .content-row {
 	padding: 0 !important;
 	display: flex;
-	background-color: white;
 }
 
 .content-row:hover{
 	font-weight: bold;
+	font-size: 14.5px;
+	letter-spacing: 0.3px;
 }
 
 .new-added-row {
@@ -515,6 +546,11 @@ body {
 .header, .mc-item {
 	font-weight: bold;
 	background-color: #EEEEEE;
+}
+
+.header {
+	text-transform: uppercase;
+	font-family: 'Martel Sans', sans-serif;
 }
 
 .text-mc {
