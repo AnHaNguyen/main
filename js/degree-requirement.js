@@ -54,8 +54,8 @@ function displayReq(major, year){
 	$.getJSON(jsonFile, function(jsonContent){
 	$.getJSON(moduleJsonFile, function(moduleTable) {
 		newHtml = `<div class="page-title row no-margin"> \
-							<div class="col s6 large-text">Degree Requirement</div> \
-							<div class="col s6"><span id="deg-req-title">Admission Year {{year}}, {{major}}</span></div> \
+							<div class="large-text">Degree Requirement</div> \
+							<div class="float-right"><span id="deg-req-title">Admission Year {{year}}, {{major}}</span></div> \
 						</div> \
 
 						<div class="container-customize" id="deg-req-container"> \

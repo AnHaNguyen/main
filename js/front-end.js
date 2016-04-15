@@ -132,7 +132,7 @@ $(document).ready(function() {
 
 
 	/*-------------Add smooth scrolling to all links---------------*/
-	$("a").on('click', function(event) {
+	$(".smooth-scroll").on('click', function(event) {
 
 	    // Prevent default anchor click behavior
 	    event.preventDefault();

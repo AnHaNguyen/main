@@ -1,6 +1,20 @@
 @import url(https://fonts.googleapis.com/css?family=Pinyon+Script|Annie+Use+Your+Telescope|Rochester|Open+Sans|Indie+Flower|Alegreya+Sans);
 @import url(https://fonts.googleapis.com/css?family=Martel+Sans);
 
+.twitter-div {
+	margin-left: 5px;
+	float: right;
+}
+
+.social-nw-div {
+	display: flex;
+	float: right;
+	background-color: white;
+	padding: 10px;
+	border-radius: 5px;
+	height: 42px;
+}
+
 #preloader  {
     z-index: 99;
     height: 100vh;
@@ -88,7 +102,7 @@ body {
 }
 
 #intro-text {
-	padding: 100px 0 50px 0;
+	padding: 90px 0 30px 0;
 }
 
 #full-name {
@@ -330,7 +344,7 @@ body {
 .page-title {
 	background-color: #4cb5f5;	/* blue sky color */
 	color: white;
-	padding: 15px 15px 10px 15px;
+	padding: 15px 30px 15px 30px;
 	font-family: 'Open Sans', sans-serif;
 
 	/*---Fixed Nav Bar---*/
@@ -368,6 +382,14 @@ body {
 
 .large-text {
 	font-size: 28px !important;
+	float: left;
+	margin-right: 20px;
+}
+
+#moduletable-search_value, #plantable-search_value {
+	border-bottom: none;
+	text-decoration: none;
+	width: 300px !important;
 }
 
 /*---------------------Main Table-------------------------*/
@@ -558,6 +580,10 @@ body {
 }
 
 /*---------------------Search----------------------*/
+.search-bar-div {
+	float: left;
+}
+
 .search-input {
 	border-radius: 4px !important;
 	background-color: white !important;
@@ -593,6 +619,7 @@ body {
 	border-radius: 4px;
 	float: left;
 	height: 41px;
+	margin-left: 10px;
 }
 
 .filter-div:hover {
@@ -681,10 +708,9 @@ body {
 		/*------Drag-drop-text-control-button-------*/
 #control-btn-div {
 	text-align: center;
-	margin-bottom: 10px;
 	overflow: auto;
 	display: table;
-	margin: 20px auto;
+	margin: 10px auto;
 }
 
 #control-btn-div .btn {
@@ -693,9 +719,7 @@ body {
 	float: left;
 	text-transform: capitalize;
 	padding: 0 !important;
-	height: auto;
-	width: 100px;
-	font-size: 16px;
+	width: 80px;
 }
 
 #code-btn {
@@ -784,4 +808,13 @@ body {
 
 .drag-drop-item {
 	overflow: auto;
+}
+
+/*------------------Footer---------------------*/
+footer a {
+	color: rgba(0, 0, 0, .87);
+}
+
+footer a:hover {
+	text-decoration: underline;
 }

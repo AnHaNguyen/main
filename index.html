@@ -84,7 +84,7 @@
 		<div id="start-page" ng-controller="mainController">
 			<div id="start-wrapper">
 				<div id="logo-div">
-					<span class="logo">SOCPlans</span>
+					<span class="logo">SoCPlanS</span>
 				</div>
 
 				<div id="start-text-div">
@@ -244,8 +244,8 @@
 		<!--SIDE BAR NAV-->
 		<ul id="nav-mobile" class="side-nav fixed">
 			<li class="none-hover-sidebar no-padding center no-lineheight">
-			<img src="img/logo.png" class="logo-img-cust">
-			<hr>
+				<img src="img/logo.png" class="logo-img-cust">
+				<hr>
 			</li>
 			<li class="no-padding none-hover-sidebar">
 			<ul class="collapsible collapsible-accordion" id="sidebar-all-items">
@@ -257,9 +257,9 @@
 				</div>
 				<div class="collapsible-body">
 					<ul>
-						<li><a href="#ulr-deg-req">ULR</a></li>
-						<li><a href="#prog-req-deg-req">Programme</a></li>
-						<li><a href="#ue-deg-req">UE</a></li>
+						<li><a href="#ulr-deg-req" class="smooth-scroll">ULR</a></li>
+						<li><a href="#prog-req-deg-req" class="smooth-scroll">Programme</a></li>
+						<li><a href="#ue-deg-req" class="smooth-scroll">UE</a></li>
 					</ul>
 				</div>
 				</li>
@@ -272,9 +272,9 @@
 				</div>
 				<div class="collapsible-body">
 					<ul>
-						<li><a href="#all-ulr">ULR</a></li>
-						<li><a href="#all-prog-req">Programme</a></li>
-						<li><a href="#all-ue">UE</a></li>
+						<li><a href="#all-ulr" class="smooth-scroll">ULR</a></li>
+						<li><a href="#all-prog-req" class="smooth-scroll">Programme</a></li>
+						<li><a href="#all-ue" class="smooth-scroll">UE</a></li>
 					</ul>
 				</div>
 				</li>
@@ -297,18 +297,13 @@
 		<!--ALL MODULES-->
 		<div id="all-mod-div" class="basic-padding col s12">
 			<!--Fixed Navigation Bar-->
-			<div class="page-title row no-margin">
-				<div class="col s6 large-text">All Modules</div>
+			<div class="page-title no-margin">
+				<div class="large-text">All Modules</div>
 				<!--Search bar-->
-				<div class="col s6 right">
+				<div class="search-bar-div">
 					<form class="col s12">
 						<div class="row no-margin">
-							<div class="filter-div">
-								<!-- Modal Trigger -->
-								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
-									href="#modal-advanced-all-mod"><img src="icon/filter-icon.png"></a>
-							</div>
-							<div class="col s10">
+							<div class="float-left">
 								<search init="" 
 								id="moduletable-search" 
 								minlength="1" 
@@ -320,8 +315,17 @@
 								items="modules">
 								</search>
 							</div>
+							<div class="filter-div">
+								<!-- Modal Trigger -->
+								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
+									href="#modal-advanced-all-mod"><img src="icon/filter-icon.png"></a>
+							</div>
 						</div>
 					</form>
+				</div>
+				<div class="social-nw-div">
+					<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+					<div class="twitter-div"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/SoCPlans" data-dnt="true">Tweet</a></div>
 				</div>
 			</div>
 
@@ -490,18 +494,13 @@
 		<!--PLANNER MODULES-->
 		<div id="plan-mod-div" class="basic-padding" ng-controller="planController">
 			<!--Fixed Navigation Bar-->
-			<div class="page-title row no-margin">
-				<div class="col s6 large-text">Modules Taken</div>
+			<div class="page-title no-margin">
+				<div class="large-text">Modules Taken</div>
 				<!--Search bar-->
-				<div class="col s6 right">
+				<div class="search-bar-div">
 					<form class="col s12">
 						<div class="row no-margin">
-							<div class="filter-div">
-								<!-- Modal Trigger -->
-								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
-									href="#modal-advanced-planner"><img src="icon/filter-icon.png"></a>
-							</div>
-							<div class="col s10">
+							<div class="float-left">
 								<search init="" 
 								id="plantable-search" 
 								minlength="1" 
@@ -513,8 +512,17 @@
 								items="modules">
 								</search>
 							</div>
+							<div class="filter-div">
+								<!-- Modal Trigger -->
+								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
+									href="#modal-advanced-planner"><img src="icon/filter-icon.png"></a>
+							</div>
 						</div>
 					</form>
+				</div>
+				<div class="social-nw-div">
+						<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+						<div class="twitter-div"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/SoCPlans" data-dnt="true">Tweet</a></div>
 				</div>
 			</div>
 
@@ -738,31 +746,50 @@
 						</ul>
 					</div>
 
-					<div class="col s6">
+					<div class="col s12 center">
 						<h5>SoCPlans</h5>
 						<ul>
-							<li>About</li>
-							<li>Out Team</li>
-							<li>Contact Us</li>
+							<li><a>About</a></li>
+							<li>Our Team</li>
+							<li><a>Contact Us</a></li>
 						</ul>
 					</div>
 				</div>-->
 
 				<div class="row">
 					<hr>
-					<footer align="center">Copyright © 2016 SOCPlans. All rights reserved</footer>
+					<footer align="center">
+						Copyright © 2016 SoCPlanS. All rights reserved.
+					</footer>
 				</div>
 				<div class="col s1"></div>
 			</div>
 		</div>
 		</main>
 
+		<!---Social Network Plugin-->
+		<script type="text/javascript" src="js/degree-requirement.js"></script>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+		</script>
+
+		<script>!function(d,s,id){
+			var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+			if(!d.getElementById(id)){js=d.createElement(s);
+				js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+				fjs.parentNode.insertBefore(js,fjs);}
+			}(document, 'script', 'twitter-wjs');
+		</script>
 
 
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-		<script type="text/javascript" src="js/degree-requirement.js"></script>
-		<script type="text/javascript" src="js/planner.js"></script>
 		<script type="text/javascript" src="js/front-end.js"></script>
 		<script type="text/javascript" src="js/login.js"></script>
 		<script type="text/javascript" src="dist/nus-ivle-api.min.js"></script>
