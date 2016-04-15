@@ -45,7 +45,6 @@ function updateDegReq() {
 	}
 }
 	
-	//alert(major + " " + year);
 
 function displayReq(major, year){
 	jsonFile = "req/" + major + '/' + year + ".json";
@@ -53,19 +52,16 @@ function displayReq(major, year){
 
 	$.getJSON(jsonFile, function(jsonContent){
 	$.getJSON(moduleJsonFile, function(moduleTable) {
-		newHtml = `<div class="page-title row no-margin"> \
-							<div class="large-text">Degree Requirement</div> \
-							<div class="float-right"><span id="deg-req-title">Admission Year {{year}}, {{major}}</span></div> \
-						</div> \
+		varHtml = `<span id="deg-req-title">Admission Year {{year}}, {{major}}</span>`.replace("{{major}}", major).replace("{{year}}", year);
+		$("#deg-req-div #deg-req-info").html(varHtml);
 
-						<div class="container-customize" id="deg-req-container"> \
-							<div class="main-table col s12"> \
-								<div class="row mod-type-table"> \
-									<div class="col s12 content-row none-hover">  \
-										<div class="col s11 header item"> Requirement Type</div> \ 
-										<div class="col s1 header item"> MC </div> \						
-									</div>
-								</div>`.replace("{{major}}", major).replace("{{year}}", year);
+		newHtml = `<div class="main-table col s12"> \
+						<div class="row mod-type-table"> \
+							<div class="col s12 content-row none-hover">  \
+								<div class="col s11 header item"> Requirement Type</div> \ 
+								<div class="col s1 header item"> MC </div> \						
+							</div>
+						</div>`;
 
 		$.each(jsonContent.and, function (reqType, details) {
 			//put or-table before UE
@@ -88,7 +84,6 @@ function displayReq(major, year){
 							splitCode = codeList.split(',');
 
 							replaceAnd = codeList.replace(/,(?=[^,]*$)/, " and<div class='break-div'></div>");
-							console.log(replaceAnd);
 							description = replaceAnd.replace(",", ",<br>");
 
 							for (i=0; i<splitCode.length; i++) {
@@ -151,8 +146,8 @@ function displayReq(major, year){
 			newHtml += `</div>`;
 		}); 
 
-		newHtml += "</div></div>";
-		$("#deg-req-div").html(newHtml);
+		newHtml += "</div>";
+		$("#deg-req-container").html(newHtml);
 	});
 	});
 }

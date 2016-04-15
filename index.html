@@ -29,6 +29,25 @@
 	</head>
 
 	<body ng-app="core" id="main">
+		<!---Social Network Plugin-->
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+		</script>
+
+		<script>!function(d,s,id){
+			var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+			if(!d.getElementById(id)){js=d.createElement(s);
+				js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
+				fjs.parentNode.insertBefore(js,fjs);}
+			}(document, 'script', 'twitter-wjs');
+		</script>
+
 		<div id="preloader">
 			<div class="preloader-wrapper big active">
 				<div class="spinner-layer spinner-blue">
@@ -292,6 +311,21 @@
 
 		<!--DEGREE REQUIREMENT-->
 		<div id="deg-req-div" class="basic-padding col s12">
+			<div class="page-title row no-margin">
+				<div class="large-text">Degree Requirement</div>
+				<div class="social-nw-div">
+					<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true">
+					</div>
+					<div class="twitter-div">
+						<a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/SoCPlans" data-dnt="true">Tweet</a>
+					</div>
+				</div>
+				<div class="float-right" id="deg-req-info">
+				</div>
+			</div>
+
+			<div class="container-customize" id="deg-req-container">
+			</div>
 		</div>
 
 		<!--ALL MODULES-->
@@ -767,30 +801,11 @@
 		</div>
 		</main>
 
-		<!---Social Network Plugin-->
-		<script type="text/javascript" src="js/degree-requirement.js"></script>
-		<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-		</script>
-
-		<script>!function(d,s,id){
-			var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-			if(!d.getElementById(id)){js=d.createElement(s);
-				js.id=id;js.src=p+'://platform.twitter.com/widgets.js';
-				fjs.parentNode.insertBefore(js,fjs);}
-			}(document, 'script', 'twitter-wjs');
-		</script>
-
 
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 		<script type="text/javascript" src="js/front-end.js"></script>
+		<script type="text/javascript" src="js/degree-requirement.js"></script>
 		<script type="text/javascript" src="js/login.js"></script>
 		<script type="text/javascript" src="dist/nus-ivle-api.min.js"></script>
 
