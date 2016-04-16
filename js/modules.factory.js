@@ -8,7 +8,7 @@
  * 			  Add Module --> Module is added to ['ALL'] --> save to localstorgae --> getType --> Module is categorized into ['ULR', 'PR', 'UE']
  * 																							 --> After getting type, verify modules
  *  					 --> Module is added to planned modules
- *    Module state is exempted(waived) when it first added
+ *    Module state is waived(waived) when it first added
  **/
 
 angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User', 'Transport', '$interval', 
@@ -44,7 +44,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					// save user's info and mods in 8 arrays
 					// array #0: tag == 'notthefirsttime' 
 					// array #1: planned modules
-					// array #2: exempted modules
+					// array #2: waived modules
 					// array #3: taken modules
 					// array #4: ulr modules
 					// array #5: pr modules
@@ -57,7 +57,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 						if (mod.state === 'planned') {
 							mods[1].push(mod.code);
-						} else if (mod.state === 'exempted') {
+						} else if (mod.state === 'waived') {
 							mods[2].push(mod.code);
 						} else if (mod.state === 'taken') {
 							mods[3].push(mod.code);
@@ -124,7 +124,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				module.selected = {
 					'taken': '',
 					'planned': '',
-					'exempted': '',
+					'waived': '',
 					'unselected': ''
 				};
 				module.selected[module.state] = 'selected-toggle-btn';
@@ -139,7 +139,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				module.selected = {
 					'taken': '',
 					'planned': '',
-					'exempted': '',
+					'waived': '',
 					'unselected': ''
 				};
 				module.selected[module.state] = 'selected-toggle-btn';
@@ -223,19 +223,22 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 							}
 						}
 
-						/* add new-added-row class */
+						// animations when user add module 
 						for(var i in service.visibleModules['ALL']) {
 							var module = service.visibleModules['ALL'][i];
 
 							module.new = '';
 						}
 						module.new = 'new-added-row';
+						if ((!origin) || (origin !== 'auto')) {
+							Materialize.toast(module.code + ' is added', 3000);
+						}
 
 						module.state = (modState ? modState : 'planned');
 						module.selected = {
 							'taken': '',
 							'planned': '',
-							'exempted': '',
+							'waived': '',
 							'unselected': ''
 						};
 						module.selected[module.state] = 'selected-toggle-btn';
@@ -269,12 +272,12 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 								var modType = 'UE';
 
 								if (s % 3 == 1) modState = 'planned', modType = 'ULR';
-								else if (s % 3 == 2) modState = 'exempted', modType = 'PR';
+								else if (s % 3 == 2) modState = 'waived', modType = 'PR';
 
 								if (s <= 3) {
-									service.addModule(modCode, modState);
+									service.addModule(modCode, modState, 'auto');
 								} else {
-									service.changeType(modCode, modType);
+									service.changeType(modCode, modType, 'auto');
 								}
 							}
 						}
@@ -286,26 +289,20 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 								var modCode = modules[j];
 
 								if (modCode) {
-									service.addModule(modCode, 'taken');
+									service.addModule(modCode, 'taken', 'auto');
 								}
 							}
 						}
 					}
 				} else {
 					var data = localStorageService.get('data');
-					var plan = localStorageService.get('plan');
-
 
 					if (data) {
 
 						for(var i in data) {
 							var module = data[i];
-							var cmd = 'auto';
 
-							/* If these modules are not saved in plan localStorage, then add them to plan table */
-							if (!plan) cmd = 'manu';
-
-							service.addModule(module.code, module.state, cmd);
+							service.addModule(module.code, module.state, 'auto');
 						}
 					}
 				}
@@ -394,10 +391,11 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						module.selected = {
 							'taken': '',
 							'planned': '',
-							'exempted': '',
+							'waived': '',
 							'unselected': ''
 						};
 						module.selected[module.state] = 'selected-toggle-btn';
+						Materialize.toast(module.code + ' is removed', 3000);
 
 						service.visibleModules['ALL'].splice(i, 1);
 					}
@@ -406,8 +404,8 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				service.updateAllSelectedModules();
 			};
 
-			// Change state between exempted, planned, taken
-			service.changeState = function (modCode, newState) {
+			// Change state between waived, planned, taken
+			service.changeState = function (modCode, newState, origin) {
 
 				var module = getModuleByCode(modCode);
 
@@ -424,9 +422,13 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					module.selected = {
 						'taken': '',
 						'planned': '',
-						'exempted': '',
+						'waived': '',
 						'unselected': ''
 					};
+					if ((!origin) || (origin !== 'auto')) {
+						Materialize.toast(module.code + ' is marked as ' + newState, 3000);
+					}
+
 					module.selected[module.state] = 'selected-toggle-btn';
 				}
 
@@ -439,13 +441,16 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			 * 			 updateAllSelectedModules in Modules factory
 			 *  Assume: 
 			 **/
-			service.changeType = function (modCode, newType) {
+			service.changeType = function (modCode, newType, origin) {
 
 				var module = getModuleByCode(modCode);
 
 				if (module) {
 					module.type = newType;
 					module.isTypeFixed = true;
+					if ((!origin) || (origin !== 'auto')) {
+						Materialize.toast(module.code + ' is moved to ' + newType, 3000);
+					}
 				}
 
 				service.updateAllSelectedModules();
@@ -640,9 +645,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				for(var i in service.visibleModules['ALL']) {
 					var module = service.visibleModules['ALL'][i];
 
-					/* If module is exempted then type of module is nil */
+					/* If module is waived then type of module is nil */
 					modules.push([
-						module.code, (module.state === 'exempted' ? 'nil' : module.type), module.mc + ''
+						module.code, (module.state === 'waived' ? 'nil' : module.type), module.mc + ''
 					]);
 				}
 
