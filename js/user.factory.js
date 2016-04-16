@@ -87,7 +87,7 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 			 *  It calls reset after user's info is updated
 			 *  It calls save to save info to localStorage
 			 **/
-			object.setInfo = function (major, focusArea, admissionYear, username, bachelor) {
+			object.setInfo = function (major, focusArea, admissionYear, username, bachelor, callback) {
 				object.major = findItemByTitle(major, object.majorsList);
 				object.focusArea = findItemByTitle(focusArea, object.focusAreasList);
 				object.admissionYear = findItemByTitle(admissionYear, object.admissionYearsList);
@@ -101,7 +101,7 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 				object.displayUsername = username;
 				object.displayBachelor = bachelor;
 
-				object.reset(object.major, object.focusArea, object.admissionYear);
+				object.reset(object.major, object.focusArea, object.admissionYear, callback);
 
 				object.save();
 			};
