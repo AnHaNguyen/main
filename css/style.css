@@ -356,6 +356,7 @@ body {
 	background-color: #4cb5f5;	/* blue sky color */
 	color: white;
 	padding: 15px 30px 15px 30px;
+	position: fixed;
 	font-family: 'Open Sans', sans-serif;
   	width: 83%;
 }
