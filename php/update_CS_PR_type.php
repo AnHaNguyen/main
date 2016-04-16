@@ -63,14 +63,14 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
     // Set type for statistics modules
     /*
      * Module codes are hard coded because the json files fail to account for the fact that even prior to AY15-16,
-     * students had the option of choosing ST2131 + ST2132 over ST2334.
+     * students had the option of choosing ST2131 + ST2132 over ST2334. Taking ST2131 and ST2334 are mutual preclusions.
      */
     if (array_key_exists("ST2131", $mods)) {
 
-        $mods["ST2132"] = [PR_TYPE,STATS_TYPE];
+        $mods["ST2131"] = [PR_TYPE,STATS_TYPE];
 
         if ($adm_year < "1516") {
-            // Going to have to take MCs required for ST2132 out from science's requirement
+            // Going to have to take MCs required for ST2132 out from science's MC requirement
             $sci_mc_req -= $all_mod_info["ST2131"]["ModuleCredit"];
         }
         if (array_key_exists("ST2132", $mods)) {
