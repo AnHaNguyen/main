@@ -55,7 +55,7 @@ function displayReq(major, year){
 		varHtml = `<span id="deg-req-title">Admission Year {{year}}, {{major}}</span>`.replace("{{major}}", major).replace("{{year}}", year);
 		$("#deg-req-div #deg-req-info").html(varHtml);
 
-		newHtml = `<div class="main-table col s12"> \
+		newHtml = `<div class="main-table col s12 z-depth-1"> \
 						<div class="row mod-type-table"> \
 							<div class="col s12 content-row none-hover">  \
 								<div class="col s11 header item"> Requirement Type</div> \ 

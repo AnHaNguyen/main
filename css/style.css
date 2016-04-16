@@ -352,10 +352,13 @@ body {
 	top: 0;
   	z-index: 100;
   	width: 83%;
+}
 
-  	/*---Smooth bar---*/
-  	/*-webkit-transition: -webkit-transform 1s;
-	transition: transform 1s;*/
+#all-mod-btn-div {
+	position: fixed;
+	top: 80px;
+	right: 0;
+  	z-index: 100;	
 }
 
 #deg-req-title {
@@ -365,16 +368,6 @@ body {
 	line-height: 42px;
 	float: right;
 }
-
-/*.smooth-bar-down {
-	-webkit-transition: translateY(-70px);
-	transition: translateY(-70px);
-}
-
-.smooth-bar-up {
-	-webkit-transition: translateY(70px);
-	transition: translateY(70px);
-}*/
 
 .modal {
 	z-index: 200;
