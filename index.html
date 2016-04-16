@@ -312,7 +312,7 @@
 
 		<!--DEGREE REQUIREMENT-->
 		<div id="deg-req-div" class="basic-padding col s12">
-			<div class="page-title row no-margin z-depth-1">
+			<div class="page-title row no-margin z-depth-1 banner">
 				<div class="large-text">Degree Requirement</div>
 				<div class="social-nw-div">
 					<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true">
@@ -331,21 +331,22 @@
 
 		<!--ALL MODULES-->
 		<div id="all-mod-div" class="basic-padding col s12">
-			<div id="all-mod-btn-div">
-				<a class="waves-effect waves-light btn" id="template-btn">Modules Template</a>
-				<a class="waves-effect waves-light btn" id="reset-btn">Reset</a>
-			</div>
 			<!--Fixed Navigation Bar-->
-			<div class="page-title no-margin z-depth-1">
+			<div class="page-title no-margin z-depth-1 banner">
 				<div class="large-text">All Modules</div>
 				<!--Search bar-->
-				<div class="search-bar-div">
+				<div>
+					<div id="all-mod-btn-div" class="banner">
+					<a class="waves-effect waves-light btn" id="template-btn">Modules Template</a>
+					<a class="waves-effect waves-light btn" id="reset-btn">Reset</a>
+				</div>
+				<div class="search-bar-div row no-margin">
 					<form class="col s12">
 						<div class="row no-margin">
 							<div class="float-left">
 								<search init="" 
 								id="moduletable-search" 
-								minlength="1" 
+								minlength="1"
 								titlefield="code,title" 
 								clearinput="true" 
 								select="addModule" 
@@ -362,6 +363,7 @@
 						</div>
 					</form>
 				</div>
+			</div>
 				<div class="social-nw-div">
 					<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
 					<div class="twitter-div"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/SoCPlans" data-dnt="true">Tweet</a></div>
@@ -533,7 +535,7 @@
 		<!--PLANNER MODULES-->
 		<div id="plan-mod-div" class="basic-padding" ng-controller="planController">
 			<!--Fixed Navigation Bar-->
-			<div class="page-title no-margin z-depth-1">
+			<div class="page-title no-margin z-depth-1 banner">
 				<div class="large-text">Modules Planner</div>
 				<!--Search bar-->
 				<div class="search-bar-div">
@@ -810,6 +812,7 @@
 
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+		<!--<script src="jquery.easing.min.js"></script>-->
 		<script type="text/javascript" src="js/front-end.js"></script>
 		<script type="text/javascript" src="js/degree-requirement.js"></script>
 		<script type="text/javascript" src="js/login.js"></script>
