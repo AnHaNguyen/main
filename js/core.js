@@ -1,6 +1,8 @@
 'use strict';
 
 /**
+ *  ---> function is called as callback
+ *  -> function is called normally
  *  IVLE user:
  		1. User.init:		
 			token exists ---> initializedUser(delay) ---> getModulesLogin(delay)
@@ -25,6 +27,9 @@
 			token dne, load modules list from cookie
 			use addModule() to add modules to modules table
 			Sync plan table with modules table
+
+	AddModule, RemoveModule, ChangeType, ChangeState -> updateAllModules -> saveAllModules
+	-> getType ---> updateType ---> verify
  **/
 
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
@@ -127,16 +132,11 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		/**------------------------- Template controller --------------------------**/
 
 		$scope.generateTemplate = function () {
-
-			$scope.displayMajor = 'Computer Science';
-			$scope.displayFocusArea = 'Software Engineering (SE)';
-			$scope.displayAdmissionYear = '2013/2014';
-
 			$scope.hardcodedModules = [];
 
-			$scope.hardcodedModules = getTemplatesMods(User.findItemByTitle($scope.displayMajor, User.majorsList).code);
+			$scope.hardcodedModules = getTemplatesMods(User.findItemByTitle(User.major.title, User.majorsList).code);
 
-			$scope.user.setInfo($scope.displayMajor, $scope.displayFocusArea, $scope.displayAdmissionYear, '', '', function () {
+			$scope.user.setInfo(User.major.title, User.focusArea.title, User.admissionYear.title, '', '', function () {
 				for(var i in $scope.hardcodedModules) {
 					var module = $scope.hardcodedModules[i];
 
@@ -206,6 +206,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			var plan = $scope.semester;
 
 			localStorageService.set('plan', plan);
+			console.log('save>>', plan);
 
 			if (User.matric) {
 				localStorageService.set('userid', User.matric);
@@ -340,6 +341,34 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		};
 
 		/**
+		 *
+		 **/
+		Transport.sync = function () {
+			for(var i in Modules.visibleModules['ALL']) {
+				var mod = Modules.visibleModules['ALL'][i];
+				
+				if (mod.state === 'planned') {
+					$scope.addPlannedModule(mod);
+				}
+			}
+
+			for(var s in $scope.semester) {
+				var sem = $scope.semester[s];
+
+				for(var i in sem) {
+					var mod = sem[i];
+					var res = Modules.getSelectedModuleByCode(mod.code);
+
+					if ((!res) || (res.state !== 'planned')) {
+						sem.splice(i, 1);
+					}
+				}
+			}
+
+			$scope.save();
+		};
+
+		/**
 		 *  Load cookies
 		 */
 		Transport.loadCookies = function () {
@@ -373,6 +402,8 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 
 				$scope.computePlannedMC();
 			}
+
+			console.log('load plan>>', $scope.semester);
 		}
 
 		/**

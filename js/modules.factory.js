@@ -8,7 +8,7 @@
  * 			  Add Module --> Module is added to ['ALL'] --> save to localstorgae --> getType --> Module is categorized into ['ULR', 'PR', 'UE']
  * 																							 --> After getting type, verify modules
  *  					 --> Module is added to planned modules
- *    Module state is exempted(waived) when it first added
+ *    Module state is waived(waived) when it first added
  **/
 
 angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User', 'Transport', '$interval', 
@@ -44,11 +44,11 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					// save user's info and mods in 8 arrays
 					// array #0: tag == 'notthefirsttime' 
 					// array #1: planned modules
-					// array #2: exempted modules
+					// array #2: waived modules
 					// array #3: taken modules
-					// array #4: planned modules with type specified by user
-					// array #5: exempted modules with type specified by user
-					// array #6: taken modules with type specified by user
+					// array #4: ulr modules
+					// array #5: pr modules
+					// array #6: ue modules
 					// array #7: user's info: focus area,
 					var mods = [[], [], [], [], [], [], [], []];
 
@@ -57,10 +57,20 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 						if (mod.state === 'planned') {
 							mods[1].push(mod.code);
-						} else if (mod.state === 'exempted') {
+						} else if (mod.state === 'waived') {
 							mods[2].push(mod.code);
-						} else {
+						} else if (mod.state === 'taken') {
 							mods[3].push(mod.code);
+						}
+
+						if (mod.isTypeFixed) {
+							if (mod.type === 'ULR') {
+								mods[4].push(mod.code);
+							} else if (mod.type === 'PR') {
+								mods[5].push(mod.code);
+							} else {
+								mods[6].push(mod.code);
+							}
 						}
 					}
 
@@ -114,7 +124,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				module.selected = {
 					'taken': '',
 					'planned': '',
-					'exempted': '',
+					'waived': '',
 					'unselected': ''
 				};
 				module.selected[module.state] = 'selected-toggle-btn';
@@ -129,7 +139,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				module.selected = {
 					'taken': '',
 					'planned': '',
-					'exempted': '',
+					'waived': '',
 					'unselected': ''
 				};
 				module.selected[module.state] = 'selected-toggle-btn';
@@ -138,6 +148,20 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					service.removePlannedModuleFromPlanTable(module);
 				}
 			}
+
+			service.getSelectedModuleByCode = function (modCode) {
+				for(var i in service.visibleModules['ALL']) {
+					/* For all modules in the list */
+					var module = service.visibleModules['ALL'][i];
+
+					if (module.code === modCode) {
+						/* found */
+						return module;
+					}
+				}
+
+				return null;
+			};
 
 			/**
 			 *  Find module by module's type and code
@@ -194,24 +218,25 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						service.visibleModules['ALL'].push(module);
 
 						if (modState === 'planned') {
-							if ((!origin) || (origin !== 'auto')) {
-								service.addPlannedModule(module);
-							}
+							service.addPlannedModule(module);
 						}
 
-						/* add new-added-row class */
+						// animations when user add module 
 						for(var i in service.visibleModules['ALL']) {
 							var module = service.visibleModules['ALL'][i];
 
 							module.new = '';
 						}
 						module.new = 'new-added-row';
+						if ((!origin) || (origin !== 'auto')) {
+							Materialize.toast(module.code + ' is added', 3000);
+						}
 
 						module.state = (modState ? modState : 'planned');
 						module.selected = {
 							'taken': '',
 							'planned': '',
-							'exempted': '',
+							'waived': '',
 							'unselected': ''
 						};
 						module.selected[module.state] = 'selected-toggle-btn';
@@ -236,20 +261,23 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					var semesters = Transport.semesters;
 
 					if (semesters[0][0] && (semesters[0][0] === 'notthefirsttime')) {
-						for(var i in semesters[1]) {
-							var modCode = semesters[1][i];
+						for(var s = 1;  s <= 6;  s++) {
+							var semester = semesters[s];
+							
+							for(var i in semester) {
+								var modCode = semester[i];
+								var modState = 'taken';
+								var modType = 'UE';
 
-							service.addModule(modCode, 'planned');
-						}
-						for(var i in semesters[2]) {
-							var modCode = semesters[2][i];
+								if (s % 3 == 1) modState = 'planned', modType = 'ULR';
+								else if (s % 3 == 2) modState = 'waived', modType = 'PR';
 
-							service.addModule(modCode, 'exempted');
-						}
-						for(var i in semesters[3]) {
-							var modCode = semesters[3][i];
-
-							service.addModule(modCode, 'taken');
+								if (s <= 3) {
+									service.addModule(modCode, modState, 'auto');
+								} else {
+									service.changeType(modCode, modType, 'auto');
+								}
+							}
 						}
 					} else {
 						for(var i in semesters) {
@@ -259,26 +287,20 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 								var modCode = modules[j];
 
 								if (modCode) {
-									service.addModule(modCode, 'taken');
+									service.addModule(modCode, 'taken', 'auto');
 								}
 							}
 						}
 					}
 				} else {
 					var data = localStorageService.get('data');
-					var plan = localStorageService.get('plan');
-
 
 					if (data) {
 
 						for(var i in data) {
 							var module = data[i];
-							var cmd = 'auto';
 
-							/* If these modules are not saved in plan localStorage, then add them to plan table */
-							if (!plan) cmd = 'manu';
-
-							service.addModule(module.code, module.state, cmd);
+							service.addModule(module.code, module.state, 'auto');
 						}
 					}
 				}
@@ -313,9 +335,20 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				service.reload();
 
 				// Sync plan table with modules table
-				if (Transport.sync) {
-					Transport.sync(service.visibleModules['ALL']);
+				if (Transport.sync && token) {
+					Transport.sync();
 				}
+			};
+
+			// Check if this module is alread added to visible list
+			User.added = function (module) {
+				for(var i in service.visibleModules['ALL']) {
+					if (service.visibleModules['ALL'][i].code === module.code) {
+						return true;
+					}
+				}
+
+				return false;
 			};
 
 			// Check if this module is alread added to visible list
@@ -349,8 +382,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 					if (module.code === modCode) {
 
-						service.visibleModules['ALL'].splice(i, 1);
-
 						// Mark this module as unselected
 						service.removePlannedModule(module);
 
@@ -358,18 +389,21 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						module.selected = {
 							'taken': '',
 							'planned': '',
-							'exempted': '',
+							'waived': '',
 							'unselected': ''
 						};
 						module.selected[module.state] = 'selected-toggle-btn';
+						Materialize.toast(module.code + ' is removed', 3000);
+
+						service.visibleModules['ALL'].splice(i, 1);
 					}
 				}
 
 				service.updateAllSelectedModules();
 			};
 
-			// Change state between exempted, planned, taken
-			service.changeState = function (modCode, newState) {
+			// Change state between waived, planned, taken
+			service.changeState = function (modCode, newState, origin) {
 
 				var module = getModuleByCode(modCode);
 
@@ -377,7 +411,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					if (module.state !== newState) {
 						if (module.state === 'planned') {
 							service.removePlannedModule(module);
-						} else {
+						} else if (newState === 'planned') {
 							service.addPlannedModule(module);
 						}
 					}
@@ -386,10 +420,35 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					module.selected = {
 						'taken': '',
 						'planned': '',
-						'exempted': '',
+						'waived': '',
 						'unselected': ''
 					};
+					if ((!origin) || (origin !== 'auto')) {
+						Materialize.toast(module.code + ' is marked as ' + newState, 3000);
+					}
+
 					module.selected[module.state] = 'selected-toggle-btn';
+				}
+
+				service.updateAllSelectedModules();
+			};
+
+			/**
+			 *  Purpose: manually change type of a module
+			 *  Require: getModulesByCode in Modules factory
+			 * 			 updateAllSelectedModules in Modules factory
+			 *  Assume: 
+			 **/
+			service.changeType = function (modCode, newType, origin) {
+
+				var module = getModuleByCode(modCode);
+
+				if (module) {
+					module.type = newType;
+					module.isTypeFixed = true;
+					if ((!origin) || (origin !== 'auto')) {
+						Materialize.toast(module.code + ' is moved to ' + newType, 3000);
+					}
 				}
 
 				service.updateAllSelectedModules();
@@ -419,7 +478,8 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						title: module.ModuleTitle,
 						mc: module.ModuleCredit,
 						semester: module.Semester,
-						prerequisites: module.Prerequisites
+						prerequisites: module.Prerequisites,
+						isTypeFixed: false
 					});
 				}
 
@@ -552,7 +612,10 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						var result = results[module.code];
 
 						if (result) {
-							module.type = result[0];
+							// Only change type if this module's type is not chosen by user
+							if (!module.isTypeFixed) {
+								module.type = result[0];
+							}
 							module.subtype = result[1];
 						}
 					}
@@ -580,9 +643,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				for(var i in service.visibleModules['ALL']) {
 					var module = service.visibleModules['ALL'][i];
 
-					/* If module is exempted then type of module is nil */
+					/* If module is waived then type of module is nil */
 					modules.push([
-						module.code, (module.state === 'exempted' ? 'nil' : module.type), module.mc + ''
+						module.code, (module.state === 'waived' ? 'nil' : module.type), module.mc + ''
 					]);
 				}
 

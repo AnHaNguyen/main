@@ -212,7 +212,7 @@
 							<label for="type2">Plan</label>
 							</p>
 							<p class="multi-choice-div">
-							<input class="with-gap" name="group1" type="radio" id="type3" ng-model="stateToAdd" value="exempted"/>
+							<input class="with-gap" name="group1" type="radio" id="type3" ng-model="stateToAdd" value="waived"/>
 							<label for="type3">Waived</label>
 							</p>
 						</div>
@@ -392,19 +392,14 @@
 							<div class="col s5 m3 l3 header item">Actions</div>
 						</div>
 
-						<div class="col s12 m12 l12 content-row ulr-hover" ng-repeat="subtype in modulesController.subtypes['ULR']" ng-hide="subtype.fulfilled">
-							<div class="col s2 m2 l2 item">{{ subtype.name }}</div>
-							<div class="col s10 m10 l10 item">Add your required module</div>
-						</div>
-
 						<div ng-repeat="module in modulesController.visibleModules['ULR']" class="col s12 m12 l12 content-row ulr-hover {{module.new}}">
 							<div class="col s4 m2 l2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
-										<a class="taken-choice">ULR</a>
-										<a class="plan-choice">PR</a>
-										<a class="waived-choice">UE</a>
+										<a class="taken-choice" ng-click="changeType(module.code, 'ULR')">ULR</a>
+										<a class="plan-choice" ng-click="changeType(module.code, 'PR')">PR</a>
+										<a class="waived-choice" ng-click="changeType(module.code, 'UE')">UE</a>
 									</div>
 								</div>
 							</div>
@@ -418,7 +413,7 @@
 								<div class="btn-group float-left">
 									<a class="left-div toggle-btn btn waves-effect waves-light {{module.selected['taken']}}" ng-click="changeState(module.code, 'taken')">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light {{module.selected['planned']}}" ng-click="changeState(module.code, 'planned')">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['exempted']}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['waived']}}" ng-click="changeState(module.code, 'waived')">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -453,9 +448,9 @@
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
-										<a class="taken-choice">ULR</a>
-										<a class="plan-choice">PR</a>
-										<a class="waived-choice">UE</a>
+										<a class="taken-choice" ng-click="changeType(module.code, 'ULR')">ULR</a>
+										<a class="plan-choice" ng-click="changeType(module.code, 'PR')">PR</a>
+										<a class="waived-choice" ng-click="changeType(module.code, 'UE')">UE</a>
 									</div>
 								</div>
 							</div>
@@ -469,7 +464,7 @@
 								<div class="btn-group float-left">
 									<a class="left-div toggle-btn btn waves-effect waves-light {{module.selected['taken']}}" ng-click="changeState(module.code, 'taken')">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light {{module.selected['planned']}}" ng-click="changeState(module.code, 'planned')">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['exempted']}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['waived']}}" ng-click="changeState(module.code, 'waived')">Waived</a>
 								</div>
 							</div>
 						</div>
@@ -504,9 +499,9 @@
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
-										<a class="taken-choice">ULR</a>
-										<a class="plan-choice">PR</a>
-										<a class="waived-choice">UE</a>
+										<a class="taken-choice" ng-click="changeType(module.code, 'ULR')">ULR</a>
+										<a class="plan-choice" ng-click="changeType(module.code, 'PR')">PR</a>
+										<a class="waived-choice" ng-click="changeType(module.code, 'UE')">UE</a>
 									</div>
 								</div>
 							</div>
@@ -520,7 +515,7 @@
 								<div class="btn-group float-left">
 									<a class="left-div toggle-btn btn waves-effect waves-light {{module.selected['taken']}}" ng-click="changeState(module.code, 'taken')">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light {{module.selected['planned']}}" ng-click="changeState(module.code, 'planned')">Plan</a>
-									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['exempted']}}" ng-click="changeState(module.code, 'exempted')">Waived</a>
+									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['waived']}}" ng-click="changeState(module.code, 'waived')">Waived</a>
 								</div>
 							</div>
 						</div>
