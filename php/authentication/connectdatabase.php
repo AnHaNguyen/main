@@ -1,10 +1,8 @@
 <?php
+session_start();
+require_once('config.php');
 // Connect to sql server
-define('DB_HOSTNAME', 'localhost');	//need hidden
-define('DB_USERID', 'root');
-define('DB_PASSWORD', 'socteamseven');
-define('DB_NAME', 'DATA');
-define('table', 'USER');
+
 define('totalSem', 8);
 
 if ($_REQUEST['cmd'] == "getModules"){
@@ -16,6 +14,7 @@ if ($_REQUEST['cmd'] == "getModules"){
 	}	
 
 	$user_id = $db->escape_string($_REQUEST['matric']);
+	$_SESSION['user_id'] = $user_id;
 
 	$query = "SELECT * FROM USER WHERE user_id = '".$user_id."'";
 	$res = $db->query($query);
@@ -42,6 +41,11 @@ if ($_REQUEST['cmd'] == "storeModules"){
 	}	
 
 	$user_id = $db->escape_string($_REQUEST['matric']);
+	
+	if (!authenticate($user_id)){
+		exit("not authenticated");
+	}
+	
 	$modules = json_decode($_REQUEST['modules'], true);
 	if (count($modules) != totalSem){
 		exit('Invalid input');
@@ -78,6 +82,8 @@ function stringifyModules($list, $db){
 	return $returnStr;
 }
 
-
+function authenticate($user_id){
+	return ($user_id === $_SESSION['user_id']);
+}
 ?>
 
