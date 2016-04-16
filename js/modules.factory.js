@@ -423,9 +423,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						'waived': '',
 						'unselected': ''
 					};
-					if ((!origin) || (origin !== 'auto')) {
-						Materialize.toast(module.code + ' is marked as ' + newState, 3000);
-					}
 
 					module.selected[module.state] = 'selected-toggle-btn';
 				}

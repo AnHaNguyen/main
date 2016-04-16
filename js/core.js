@@ -140,7 +140,7 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 				for(var i in $scope.hardcodedModules) {
 					var module = $scope.hardcodedModules[i];
 
-					Modules.addModule(module, 'taken');
+					Modules.addModule(module, 'taken', 'auto');
 				}
 			});
 		}
