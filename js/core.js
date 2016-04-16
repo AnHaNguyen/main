@@ -101,17 +101,13 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 
 		$scope.generateTemplate = function () {
 
-			$scope.displayMajor = 'Computer Science';
-			$scope.displayFocusArea = 'Software Engineering (SE)';
-			$scope.displayAdmissionYear = '2013/2014';
-
 			$scope.hardcodedModules = {
 				'taken': ['CS1231', 'CS2105', 'GER1000', 'CS3226', 'CS3233'],
 				'planned': ['CS2102'],
 				'exempted': ['CS1010', 'CS1020', 'CS2020']
 			};
 
-			$scope.user.setInfo($scope.displayMajor, $scope.displayFocusArea, $scope.displayAdmissionYear, '', '', function () {
+			$scope.user.setInfo(User.major.title, User.focusArea.title, User.admissionYear.title, '', '', function () {
 				for(var type in $scope.hardcodedModules) {
 					for(var i in $scope.hardcodedModules[type]) {
 						var module = $scope.hardcodedModules[type][i];
