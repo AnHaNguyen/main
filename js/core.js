@@ -1,7 +1,33 @@
 'use strict';
 
-angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
+/**
+ *  IVLE user:
+ 		1. User.init:		
+			token exists ---> initializedUser(delay) ---> getModulesLogin(delay)
+			-> Transport.loadCookies (in plancontroller) load plan table which is stored in localstorage
+			-> User.setInfo() -> User.reset -> main.initModules (in mainController) -> Modules.fetchData()
+		2. Modules.fetchData();
+			Modules.init() -> Modules.resetTable() -> Modules.reload();
+		3. Modules.reload();
+			token exists, but we don't need to send request for modules list
+			use addModule() to add modules to modules table
+			Sync plan table with modules table
 
+	non-IVLE user:
+		1. User.init():
+			token dne 
+			User.setInfo -> User.reset -> main.initModules (in mainController) -> Modules.fetchData();
+		2. Modules.fetchData()
+			Modules.init() -> Modules.resetTable() 
+			-> Transport.loadCookies (in plancontroller) load plan table which is stored in localstorage
+			-> Modules.reload() 
+		3. Modules.reload()
+			token dne, load modules list from cookie
+			use addModule() to add modules to modules table
+			Sync plan table with modules table
+ **/
+
+angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
 angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 'SearchFilter', 'Transport',
 	function($scope, Modules, User, SearchFilter, Transport) { 
 
@@ -43,6 +69,9 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		// Change state of module from planned to taken and vice versa
 		$scope.changeState = Modules.changeState;
 
+		// Change type of modules,
+		$scope.changeType = Modules.changeType;
+
 		// Function to add new module
 		$scope.addModule = function (item) {
 			Modules.addModule(item.code, $scope.stateToAdd);
@@ -62,13 +91,11 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		 *  Give user service the power to reset the entire universe
 		 **/
 		$scope.user.reset = function (major, focusArea, admissionYear, callback) {
+			console.log(major);
 			$scope.initModules(admissionYear.code, major.code, callback);
 		};
 
 		$scope.user.init();
-
-		$scope.confirm = function () {
-		};
 
 		/**
 		 *  These 3 functions are for updating major, focusarea, adyear
@@ -100,20 +127,15 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		/**------------------------- Template controller --------------------------**/
 
 		$scope.generateTemplate = function () {
+			$scope.hardcodedModules = [];
 
-			$scope.hardcodedModules = {
-				'taken': ['CS1231', 'CS2105', 'GER1000', 'CS3226', 'CS3233'],
-				'planned': ['CS2102'],
-				'exempted': ['CS1010', 'CS1020', 'CS2020']
-			};
+			$scope.hardcodedModules = getTemplatesMods(User.findItemByTitle(User.major.title, User.majorsList).code);
 
 			$scope.user.setInfo(User.major.title, User.focusArea.title, User.admissionYear.title, '', '', function () {
-				for(var type in $scope.hardcodedModules) {
-					for(var i in $scope.hardcodedModules[type]) {
-						var module = $scope.hardcodedModules[type][i];
+				for(var i in $scope.hardcodedModules) {
+					var module = $scope.hardcodedModules[i];
 
-						Modules.addModule(module, type);
-					}
+					Modules.addModule(module, 'taken');
 				}
 			});
 		}
@@ -214,6 +236,36 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		$scope.semId = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 		$scope.showSemester = [ true, true, true, true, false, false, false, false, false, false ];
 		$scope.plannedMC = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+		/**
+		 *  Purpose: It makes sure modules in plan table are in sync with modules in list
+		 * 			 Any module in plan table that is not found in list are to be removed
+		 *			 Any planned module in the list that is not found in plan table are to be added
+		 *  Assume:  Modules factory, Modules.visibleModules, Modules.added exists
+		 **/
+		Transport.sync = function () {
+			// add module from plan table
+			for(var i in Modules.visibleModules['ALL']) {
+				var module = Modules.visibleModules['ALL'][i];
+
+				if (module.state === 'planned') {
+					$scope.addPlannedModule(module);
+				}
+			}
+
+			// remove module from plan table
+			for(var s in $scope.semester) {
+				var modules = $scope.semester[s];
+				for(var i = modules.length - 1;  i >= 0;  i--) {
+					var module = modules[i];
+
+					// if module is not in the list or its state is not planned then remove it;
+					if (!Modules.added(module) || ((!Modules.getModuleByCode(module.code)) && (Modules.getModuleByCode(module.code).state === 'planned'))) {
+						modules.splice(i, 1);
+					}
+				}
+			}
+		};
 
 		/**
 		 *  Track the number of semesters

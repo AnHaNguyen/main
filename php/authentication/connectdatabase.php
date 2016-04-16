@@ -16,7 +16,7 @@ if ($_REQUEST['cmd'] == "getModules"){
 	$user_id = $db->escape_string($_REQUEST['matric']);
 	$_SESSION['user_id'] = $user_id;
 
-	$query = "SELECT * FROM USER WHERE user_id = '".$user_id."'";
+	$query = "SELECT * FROM ".table."  WHERE user_id = '".$user_id."'";
 	$res = $db->query($query);
 	if (!$res) exit('Error retrieving');
 	if (mysqli_num_rows($res) == 0){
@@ -56,10 +56,10 @@ if ($_REQUEST['cmd'] == "storeModules"){
 	if (!$res) exit("Error retrieving");
 	if (mysqli_num_rows($res) == 0){
 		//insert
-		$query = "INSERT INTO USER VALUES('".$user_id."','".stringifyModules($modules[0],$db)."','".stringifyModules($modules[1],$db)."','".stringifyModules($modules[2],$db)."','".stringifyModules($modules[3],$db)."','".stringifyModules($modules[4],$db)."','".stringifyModules($modules[5],$db)."','".stringifyModules($modules[6],$db)."','".stringifyModules($modules[7],$db)."')";
+		$query = "INSERT INTO ".table."  VALUES('".$user_id."','".stringifyModules($modules[0],$db)."','".stringifyModules($modules[1],$db)."','".stringifyModules($modules[2],$db)."','".stringifyModules($modules[3],$db)."','".stringifyModules($modules[4],$db)."','".stringifyModules($modules[5],$db)."','".stringifyModules($modules[6],$db)."','".stringifyModules($modules[7],$db)."')";
 	} else {
 		//update
-		$query = "UPDATE USER SET sem1='".stringifyModules($modules[0],$db)."',sem2='".stringifyModules($modules[1],$db)."',sem3='".stringifyModules($modules[2],$db)."',sem4='".stringifyModules($modules[3],$db)."',sem5='".stringifyModules($modules[4],$db)."',sem6='".stringifyModules($modules[5],$db)."',sem7='".stringifyModules($modules[6],$db)."',sem8='".stringifyModules($modules[7],$db)."' WHERE user_id = '".$user_id."'";
+		$query = "UPDATE ".table." SET sem1='".stringifyModules($modules[0],$db)."',sem2='".stringifyModules($modules[1],$db)."',sem3='".stringifyModules($modules[2],$db)."',sem4='".stringifyModules($modules[3],$db)."',sem5='".stringifyModules($modules[4],$db)."',sem6='".stringifyModules($modules[5],$db)."',sem7='".stringifyModules($modules[6],$db)."',sem8='".stringifyModules($modules[7],$db)."' WHERE user_id = '".$user_id."'";
 	}
 	$res = $db->query($query);
 	if (!$res) exit("Error updating");
