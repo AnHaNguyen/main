@@ -396,6 +396,24 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			};
 
 			/**
+			 *  Purpose: manually change type of a module
+			 *  Require: getModulesByCode in Modules factory
+			 * 			 updateAllSelectedModules in Modules factory
+			 *  Assume: 
+			 **/
+			service.changeType = function (modCode, newType) {
+
+				var module = getModuleByCode(modCode);
+
+				if (module && (module.type !== newType)) {
+					module.type = newType;
+					module.isTypeFixed = true;
+				}
+
+				service.updateAllSelectedModules();
+			};
+
+			/**
 			 *  Randomly choosing type for module
 			 **/
 			var pickType = function (s) {
@@ -419,7 +437,8 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						title: module.ModuleTitle,
 						mc: module.ModuleCredit,
 						semester: module.Semester,
-						prerequisites: module.Prerequisites
+						prerequisites: module.Prerequisites,
+						isTypeFixed: false
 					});
 				}
 
@@ -552,7 +571,10 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						var result = results[module.code];
 
 						if (result) {
-							module.type = result[0];
+							// Only change type if this module's type is not chosen by user
+							if (!module.isTypeFixed) {
+								module.type = result[0];
+							}
 							module.subtype = result[1];
 						}
 					}

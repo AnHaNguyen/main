@@ -1,6 +1,8 @@
 'use strict';
 
 /**
+ *  ---> function is called as callback
+ *  -> function is called normally
  *  IVLE user:
  		1. User.init:		
 			token exists ---> initializedUser(delay) ---> getModulesLogin(delay)
@@ -25,6 +27,9 @@
 			token dne, load modules list from cookie
 			use addModule() to add modules to modules table
 			Sync plan table with modules table
+
+	AddModule, RemoveModule, ChangeType, ChangeState -> updateAllModules -> saveAllModules
+	-> getType ---> updateType ---> verify
  **/
 
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
