@@ -398,15 +398,15 @@
 						</div>
 
 						<div ng-repeat="module in modulesController.visibleModules['ULR']" class="col s12 m12 l12 content-row ulr-hover {{module.new}}">
-							<div class="col s4 m2 l2 item">
-								<div class="dropdown">
+							<div class="col s4 m2 l2 item">{{ module.type }}
+								<!--<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
 										<a class="taken-choice">ULR</a>
 										<a class="plan-choice">PR</a>
 										<a class="waived-choice">UE</a>
 									</div>
-								</div>
+								</div>-->
 							</div>
 							<div class="col s3 m2 l1 item">{{ module.code }}</div>
 							<div class="col s0 m4 l5 item">{{ module.title }}</div>
@@ -449,15 +449,15 @@
 						</div>
 
 						<div ng-repeat="module in modulesController.visibleModules['PR']" class="col s12 m12 l12 content-row pr-hover {{module.new}}">
-							<div class="col s4 m2 l2 item">
-								<div class="dropdown">
+							<div class="col s4 m2 l2 item">{{ module.type }}
+								<!--<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
 										<a class="taken-choice">ULR</a>
 										<a class="plan-choice">PR</a>
 										<a class="waived-choice">UE</a>
 									</div>
-								</div>
+								</div>-->
 							</div>
 							<div class="col s3 m2 l1 item">{{ module.code }}</div>
 							<div class="col s0 m4 l5 item">{{ module.title }}</div>
@@ -500,15 +500,15 @@
 						</div>
 
 						<div ng-repeat="module in modulesController.visibleModules['UE']" class="col s12 m12 l12 content-row ue-hover {{module.new}}">
-							<div class="col s4 m2 l2 item">
-								<div class="dropdown">
+							<div class="col s4 m2 l2 item">{{ module.type }}
+								<!--<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
 										<a class="taken-choice">ULR</a>
 										<a class="plan-choice">PR</a>
 										<a class="waived-choice">UE</a>
 									</div>
-								</div>
+								</div>-->
 							</div>
 							<div class="col s3 m2 l1 item">{{ module.code }}</div>
 							<div class="col s0 m4 l5 item">{{ module.title }}</div>
