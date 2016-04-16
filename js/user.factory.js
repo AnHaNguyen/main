@@ -92,7 +92,6 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 			 *  It calls save to save info to localStorage
 			 **/
 			object.setInfo = function (major, focusArea, admissionYear, username, bachelor, callback) {
-				console.log(major, focusArea, admissionYear);
 				object.major = object.findItemByTitle(major, object.majorsList);
 				object.focusArea = object.findItemByTitle(focusArea, object.focusAreasList);
 				object.admissionYear = object.findItemByTitle(admissionYear, object.admissionYearsList);

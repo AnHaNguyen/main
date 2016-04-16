@@ -301,6 +301,10 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 							var module = data[i];
 
 							service.addModule(module.code, module.state, 'auto');
+
+							if (module.isTypeFixed) {
+								service.changeType(module.code, module.type, 'auto');
+							}
 						}
 					}
 				}
