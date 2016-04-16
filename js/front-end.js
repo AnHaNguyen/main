@@ -256,6 +256,11 @@ $(document).ready(function() {
 
 	// Initialize collapse button
   	$(".button-collapse").sideNav();
+
+
+  	/*----------------------Temporary hide-----------------------*/
+  	$("#reset-btn").hide();
+  	$(".filter-div").hide();
 });
 
 
