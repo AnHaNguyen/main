@@ -102,12 +102,6 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
     ];
 
     // Before AY12-13, internship modules aren't part of PR
-    // Go through all branches
-    /*
-     * We want to avoid locking the user into an incomplete internship branch. foreach traverses the array in order. hence shorter internship branches need to be inserted before longer
-     * branches.
-     */
-    // If at least one module in a branch is taken, assume user is aiming to complete that branch
     if ($adm_year >= "1213" && !$has_taken_fyp) {
 
         foreach ($intern_12MC_mod_codes as $intern_mod_code) {
@@ -123,6 +117,8 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
         // Handle cases where user decides to fulfil the internship requirement through Internship I (CP3200)
         // CP3200 can be paired with either Internship II (CP3202) or an Industry Course (e.g. CP3101A)
         // If an Industry Course is chosen, the remaining unfulfilled MCs go to UE
+        // Types the appropriate mods as internships even when the branch isn't complete
+        // So that user doesn't wonder why the first adv intern mod added isn't being considered as an intern mod
         if (!$has_taken_intern) {
             if (array_key_exists("CP3200", $mods)) {
                 $mods["CP3200"] = [PR_TYPE,INTERN_TYPE];
@@ -149,7 +145,8 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
         }
     }
 
-    // If neither FYP nor internship branches was taken, can choose to take 12 MCs of CS modules at level 4k or above (AY13-14 and prior)
+    // If neither FYP nor internship branches was taken,
+    // can choose to take 12 MCs of CS modules at level 4k or above (AY13-14 and prior)
     if ($adm_year <= "1314"
         && !$has_taken_fyp
         && !$has_taken_intern) {
@@ -169,8 +166,12 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
         // About TR3203: https://github.com/CS3226SoCFFG/main/issues/24#issuecomment-210792175
         $mods["TR3203"] = [PR_TYPE,ADV_SE_TYPE];
     } else {
+        $all_adv_se_mods = array();
+
         foreach ($adv_se_reqs as $adv_se_branch) {
             list($first_half_mod_code, $second_half_mod_code) = explode(",", $adv_se_branch[0]);
+            $all_adv_se_mods[] = $first_half_mod_code;
+            $all_adv_se_mods[] = $second_half_mod_code;
 
             // Check if both parts of the pair can be found
             if (array_key_exists($first_half_mod_code, $mods)
@@ -183,6 +184,20 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
             }
             if ($has_fulfilled_adv_se_reqs) {
                 break;
+            }
+        }
+
+        // Types one appropriate mods as adv SE even when the branch isn't complete
+        // So that user doesn't wonder why the first adv SE mod added isn't being considered as an adv SE mod
+        if (!$has_fulfilled_adv_se_reqs) {
+            foreach ($all_adv_se_mods as $adv_se_mod_code) {
+                if (array_key_exists($adv_se_mod_code, $mods)) {
+                    $mods[$adv_se_mod_code] = [PR_TYPE, ADV_SE_TYPE];
+                    $has_fulfilled_adv_se_reqs = true;
+                }
+                if ($has_fulfilled_adv_se_reqs) {
+                    break;
+                }
             }
         }
     }
