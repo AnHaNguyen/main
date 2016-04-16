@@ -165,6 +165,14 @@ body {
 	text-transform: capitalize !important;
 }
 
+		/*--------------Floating banner---------------*/
+.banner {
+  	position: absolute;
+  	z-index: 100;
+  	top: 0px;
+}
+
+.zindex { z-index: -999; }
 		/*---------------------Triangles of alert---------------------*/
 .tip {
     position: relative;
@@ -283,13 +291,13 @@ body {
 }
 
 #deg-req-container {
-	padding: 80px 300px 20px 60px;
+	padding: 100px 300px 20px 60px;
 }
 
 /*---------------------------Side Bar--------------------------*/
 .side-nav {
-	width: 17%;
-	z-index: 0!important;
+	width: 17% !important;
+	/*z-index: 0!important;*/
 }
 
 .side-nav a {
@@ -346,19 +354,31 @@ body {
 	color: white;
 	padding: 15px 30px 15px 30px;
 	font-family: 'Open Sans', sans-serif;
-
-	/*---Fixed Nav Bar---*/
-	position: fixed;
-	top: 0;
-  	z-index: 100;
   	width: 83%;
 }
 
+@media only screen and (max-width: 992px) {
+	#main-section {
+    	padding: 0;
+    }
+
+    #nav-mobile {
+    	width: auto !important;
+    }
+
+    /*---Degree Requirement---*/
+	.page-title {
+        width: 100%;
+    }
+
+    #deg-req-container {
+    	padding: 100px 0px 0px 0px;
+    }
+}
+
 #all-mod-btn-div {
-	position: fixed;
-	top: 80px;
+	top: 80px !important;
 	right: 0;
-  	z-index: 100;	
 }
 
 #deg-req-title {
@@ -387,7 +407,7 @@ body {
 
 /*---------------------Main Table-------------------------*/
 .container-customize {
-	padding: 80px 40px 20px 40px;
+	padding: 100px 40px 20px 40px;
 }
 
 .main-table {
@@ -703,7 +723,7 @@ body {
 	text-align: center;
 	overflow: auto;
 	display: table;
-	margin: 10px auto;
+	margin: 0px auto 10px auto;
 }
 
 #control-btn-div .btn {
