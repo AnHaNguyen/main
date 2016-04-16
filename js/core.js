@@ -91,6 +91,31 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 				$scope.searchFilter.set('type', type);
 			}
 		};
+
+		/**------------------------- Template controller --------------------------**/
+
+		$scope.generateTemplate = function () {
+
+			$scope.displayMajor = 'Computer Science';
+			$scope.displayFocusArea = 'Software Engineering (SE)';
+			$scope.displayAdmissionYear = '2013/2014';
+
+			$scope.user.setInfo($scope.displayMajor, $scope.displayFocusArea, $scope.displayAdmissionYear);
+
+			$scope.hardcodedModules = [
+				'taken': ['CS1231', 'CS2105', 'GER1000', 'CS3226', 'CS3233'],
+				'planned': ['CS2102'],
+				'exempted': ['CS1010', 'CS1020', 'CS2020']
+			];
+
+			for(var type in $scope.hardcodedModules) {
+				for(var i in $scope.hardcodedModules) {
+					var module = $scope.hardcodedModules[i];
+
+					Modules.addModule(module.code, type);
+				}
+			}
+		}
 	}
 ]);
 
