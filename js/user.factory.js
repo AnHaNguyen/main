@@ -62,7 +62,7 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 				localStorageService.set('user', data);
 			};
 
-			var findItemByTitle = function (title, items) {
+			object.findItemByTitle = function (title, items) {
 				for(var i in items) {
 					var item = items[i];
 
@@ -92,9 +92,10 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 			 *  It calls save to save info to localStorage
 			 **/
 			object.setInfo = function (major, focusArea, admissionYear, username, bachelor, callback) {
-				object.major = findItemByTitle(major, object.majorsList);
-				object.focusArea = findItemByTitle(focusArea, object.focusAreasList);
-				object.admissionYear = findItemByTitle(admissionYear, object.admissionYearsList);
+				console.log(major, focusArea, admissionYear);
+				object.major = object.findItemByTitle(major, object.majorsList);
+				object.focusArea = object.findItemByTitle(focusArea, object.focusAreasList);
+				object.admissionYear = object.findItemByTitle(admissionYear, object.admissionYearsList);
 				object.username = username;
 				object.bachelor = bachelor;
 

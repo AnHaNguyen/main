@@ -29,6 +29,4 @@ function getTemplatesMods(major){
 			break;
 	}
 	return modules;
-
-
 }
