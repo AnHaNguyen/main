@@ -423,9 +423,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						'waived': '',
 						'unselected': ''
 					};
-					if ((!origin) || (origin !== 'auto')) {
-						Materialize.toast(module.code + ' is marked as ' + newState, 3000);
-					}
 
 					module.selected[module.state] = 'selected-toggle-btn';
 				}
@@ -446,6 +443,13 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				if (module) {
 					module.type = newType;
 					module.isTypeFixed = true;
+					// animations when user add module 
+					for(var i in service.visibleModules['ALL']) {
+						var module = service.visibleModules['ALL'][i];
+
+						module.new = '';
+					}
+					module.new = 'new-added-row';
 					if ((!origin) || (origin !== 'auto')) {
 						Materialize.toast(module.code + ' is moved to ' + newType, 3000);
 					}
