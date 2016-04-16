@@ -101,7 +101,7 @@ function get_type_CS($adm_year, $focus_area, $mods) {
     $is_ceg_major = false;
 
     $mods = update_ULR_type($adm_year, $mods);
-    $mods = update_CS_PR_type($adm_year, $focus_area, $mods);
+    $mods = update_CS_PR_type($adm_year, $focus_area, $mods)[0];
     $mods = update_ULR_breadth_type($adm_year, $mods, $is_ceg_major);
 
     return $mods;

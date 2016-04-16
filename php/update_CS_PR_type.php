@@ -46,6 +46,9 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
     $sci_mc_req = $core_reqs["Scie"];
     $sci_mc_taken = 0;
 
+    $ue_mc_req = $grad_reqs["and"]["UE"]["MC"];
+    $ue_mc_taken = 0;
+
     // Setting up more variables
     // From AY12-13 onwards, can choose from either of two physics mods
     if ($adm_year >= "1213") {
@@ -81,68 +84,86 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
         }
     }
 
-    // Set type for FYP or internship modules
+    // Set type for FYP modules
+    $has_taken_fyp = false;
     $fyp_mod_code = "CP4101";
-    $intern_branches = [ // Hard coded because data is not in json
-        ["CP3880"],
-        ["IS4010"],
-        ["CP3200", "CP3202"],
-        ["CP3200", "CP3101A"]
-    ];
-    $has_taken_fyp_or_intern = false;
 
-    // Check if FYP was taken
     if (array_key_exists($fyp_mod_code, $mods)) {
         $mods[$fyp_mod_code] = [PR_TYPE,FYP_TYPE];
-        $has_taken_fyp_or_intern = true;
+        $has_taken_fyp = true;
     }
 
-    // Check if an internship branch was taken
-    else {
-        // Go through all branches
-        for ($i = 0; !$has_taken_fyp_or_intern && $i < count($intern_branches); $i++) {
+    // Set type for internship modules
+    $has_taken_intern = false;
+    $intern_12MC_mod_codes = [ // Hard coded because data is not in json
+        "CP3880", // ATAP
+        "IS4010", // Industry Internship Programme
+        "TR3202" // NOC/iLead Start-up Internship Programme
+    ];
 
-            $current_intern_branch = $intern_branches[$i];
+    // Before AY12-13, internship modules aren't part of PR
+    // Go through all branches
+    /*
+     * We want to avoid locking the user into an incomplete internship branch. foreach traverses the array in order. hence shorter internship branches need to be inserted before longer
+     * branches.
+     */
+    // If at least one module in a branch is taken, assume user is aiming to complete that branch
+    if ($adm_year >= "1213" && !$has_taken_fyp) {
 
-            // When branch only requires one module
-            if (count($current_intern_branch) === 1) {
+        foreach ($intern_12MC_mod_codes as $intern_mod_code) {
+            if (array_key_exists($intern_mod_code, $mods)) {
+                $mods[$intern_mod_code] = [PR_TYPE,INTERN_TYPE];
+                $has_taken_intern = true;
+            }
+            if ($has_taken_intern) {
+                break;
+            }
+        }
 
-                $intern_mod_code = $current_intern_branch[0];
+        // Handle cases where user decides to fulfil the internship requirement through Internship I (CP3200)
+        // CP3200 can be paired with either Internship II (CP3202) or an Industry Course (e.g. CP3101A)
+        // If an Industry Course is chosen, the remaining unfulfilled MCs go to UE
+        if (!$has_taken_intern) {
+            if (array_key_exists("CP3200", $mods)) {
+                $mods["CP3200"] = [PR_TYPE,INTERN_TYPE];
+                $has_taken_intern = true;
 
-                if (array_key_exists($intern_mod_code, $mods)) {
-                    $mods[$intern_mod_code] = [PR_TYPE,INTERN_TYPE];
-                    $has_taken_fyp_or_intern = true;
+                if (array_key_exists("CP3202", $mods)) {
+                    $mods["CP3202"] = [PR_TYPE,INTERN_TYPE];
+                } else if (array_key_exists("CP3101A", $mods)) {
+                    $mods["CP3101A"] = [PR_TYPE,INTERN_TYPE];
+                    $ue_mc_req += 2; // Hard coded because I haven't gotten around to dealing with Industrial Experience MC req TODO: remove hard code
                 }
             }
 
-            // When branch only requires two modules
-            else {
-                $first_intern_mod_code = $current_intern_branch[0];
-                $second_intern_mod_code = $current_intern_branch[1];
+            else if (array_key_exists("CP3202", $mods)) {
+                $mods["CP3202"] = [PR_TYPE,INTERN_TYPE];
+                $has_taken_intern = true;
+            }
 
-                if (array_key_exists($first_intern_mod_code, $mods)
-                    && array_key_exists($second_intern_mod_code, $mods)
-                ) {
-
-                    $mods[$first_intern_mod_code] = [PR_TYPE,INTERN_TYPE];
-                    $mods[$second_intern_mod_code] = [PR_TYPE,INTERN_TYPE];
-                    $has_taken_fyp_or_intern = true;
-
-                }
+            else if (array_key_exists("CP3101A", $mods)) {
+                $mods["CP3101A"] = [PR_TYPE,INTERN_TYPE];
+                $has_taken_intern = true;
+                $ue_mc_req += 2; // Hard coded because I haven't gotten around to dealing with Industrial Experience MC req TODO: remove hard code
             }
         }
     }
 
     // If neither FYP nor internship branches was taken, can choose to take 12 MCs of CS modules at level 4k or above (AY13-14 and prior)
-    if (!$has_taken_fyp_or_intern && $adm_year <= "1314") {
+    if ($adm_year <= "1314"
+        && !$has_taken_fyp
+        && !$has_taken_intern) {
+
         $cs_4k_mc_req += 12;
         $cs_breadth_depth_mc_req += 12;
+
     }
 
     // Set type for advanced software engineering modules
     // Modules have to be cleared in a pair
     $adv_se_reqs = $grad_reqs["or"][0];
     $has_fulfilled_adv_se_reqs = false;
+    // TODO: include TR3203P to replace this requirement
 
     for ($i = 0; !$has_fulfilled_adv_se_reqs && $i < count($adv_se_reqs); $i++) {
         $se_pair = explode(",", $adv_se_reqs[$i][0]);
@@ -335,5 +356,5 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
         }
     }
 
-    return $mods;
+    return [$mods, $ue_mc_req, $ue_mc_taken];
 }
