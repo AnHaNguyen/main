@@ -41,7 +41,17 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				var token = getIVLEToken();
 
 				if (token) {
+					// save user's info and mods in 8 arrays
+					// array #0: tag == 'notthefirsttime' 
+					// array #1: planned modules
+					// array #2: exempted modules
+					// array #3: taken modules
+					// array #4: planned modules with type specified by user
+					// array #5: exempted modules with type specified by user
+					// array #6: taken modules with type specified by user
+					// array #7: user's info: focus area,
 					var mods = [[], [], [], [], [], [], [], []];
+
 					for(var i in data) {
 						var mod = data[i];
 
@@ -55,6 +65,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					}
 
 					mods[0].push('notthefirsttime');
+					mods[7].push(User.focusArea.code);
 
 					var modsStr = JSON.stringify(mods);
                     var url =  "php/authentication/connectdatabase.php?cmd=storeModules&matric="+User.matric+"&modules="+modsStr;
@@ -107,7 +118,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					'unselected': ''
 				};
 				module.selected[module.state] = 'selected-toggle-btn';
-				console.log(module);
 				
 				if (service.addPlannedModuleToPlanTable) {
 					service.addPlannedModuleToPlanTable(module);
@@ -204,39 +214,39 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				var token = getIVLEToken();
 
 				if (token) {
-					getModulesLogin(token, function(semesters, states){
-						console.log('.>', semesters);
+					// No need to request for modules because we already have requested it
 
-						if (semesters[0][0] && (semesters[0][0] === 'notthefirsttime')) {
-							for(var i in semesters[1]) {
-								var modCode = semesters[1][i];
+					var semesters = Transport.semesters;
 
-								service.addModule(modCode, 'planned');
-							}
-							for(var i in semesters[2]) {
-								var modCode = semesters[2][i];
+					if (semesters[0][0] && (semesters[0][0] === 'notthefirsttime')) {
+						for(var i in semesters[1]) {
+							var modCode = semesters[1][i];
 
-								service.addModule(modCode, 'exempted');
-							}
-							for(var i in semesters[3]) {
-								var modCode = semesters[3][i];
+							service.addModule(modCode, 'planned');
+						}
+						for(var i in semesters[2]) {
+							var modCode = semesters[2][i];
 
-								service.addModule(modCode, 'taken');
-							}
-						} else {
-							for(var i in semesters) {
-								var modules = semesters[i];
+							service.addModule(modCode, 'exempted');
+						}
+						for(var i in semesters[3]) {
+							var modCode = semesters[3][i];
 
-								for(var j in modules) {
-									var modCode = modules[j];
+							service.addModule(modCode, 'taken');
+						}
+					} else {
+						for(var i in semesters) {
+							var modules = semesters[i];
 
-									if (modCode) {
-										service.addModule(modCode, 'taken');
-									}
+							for(var j in modules) {
+								var modCode = modules[j];
+
+								if (modCode) {
+									service.addModule(modCode, 'taken');
 								}
 							}
 						}
-					});
+					}
 				} else {
 					var data = localStorageService.get('data');
 					var plan = localStorageService.get('plan');
