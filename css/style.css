@@ -23,7 +23,7 @@
 }
 
 .preloader-wrapper {
-	top: 45%;
+	top: 40%;
 	position: absolute;
 }
 
@@ -843,13 +843,37 @@ footer a:hover {
 
 
 @media only screen and (max-width: 600px) {
+	html {
+		font-size: 12px !important;
+	}
+
+	/*------------Start-page-----------------*/
 	#start-wrapper {
 		margin: 0 !important;
 	}
 
-	.page-title span {
-    	font-size: 14px !important;
-    }
+	.start-login-div #get-started-btn, .start-login-div p, .start-login-div #login, #intro-text {
+		font-size: 14px !important;
+	}
+
+	/*-----------------Certi------------------*/
+	#full-name {
+		font-size: 20px !important;
+	}
+
+	#bachelor, #major_value, #focus_area_value, #admission_year_value, .page-title span, 
+	.grad-cer-text {
+		font-size: 14px !important;
+	}
+
+	.normal-certi-text {
+		font-size: 12px !important;
+	}
+
+	#grad-cer-div img {
+		height: 30px !important;
+	}
+	/*----------------------------------------*/
 
     #start-footer {
     	display: none !important;
@@ -867,9 +891,23 @@ footer a:hover {
     	width: 150px !important;
     }
 
+    /*------------------Table------------------*/
     .s0 {
     	display: none !important;
     }
+
+    .item {
+    	padding: 5px !important;
+    }
+
+    .btn {
+    	font-size: 12px !important;
+    }
+
+    .content-row:hover{
+		font-weight: 500;
+		font-size: 12.5px;
+	}
 
     .wrapper-div {
     	width: 100% !important;
