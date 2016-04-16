@@ -206,6 +206,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			var plan = $scope.semester;
 
 			localStorageService.set('plan', plan);
+			console.log('save>>', plan);
 
 			if (User.matric) {
 				localStorageService.set('userid', User.matric);
@@ -344,7 +345,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		 **/
 		Transport.sync = function () {
 			for(var i in Modules.visibleModules['ALL']) {
-				var mod = Modules.visibleModules['ALL'];
+				var mod = Modules.visibleModules['ALL'][i];
 				
 				if (mod.state === 'planned') {
 					$scope.addPlannedModule(mod);
@@ -401,6 +402,8 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 
 				$scope.computePlannedMC();
 			}
+
+			console.log('load plan>>', $scope.semester);
 		}
 
 		/**

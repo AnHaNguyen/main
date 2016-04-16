@@ -218,9 +218,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						service.visibleModules['ALL'].push(module);
 
 						if (modState === 'planned') {
-							if ((!origin) || (origin !== 'auto')) {
-								service.addPlannedModule(module);
-							}
+							service.addPlannedModule(module);
 						}
 
 						// animations when user add module 
@@ -337,8 +335,8 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				service.reload();
 
 				// Sync plan table with modules table
-				if (Transport.sync) {
-					Transport.sync(service.visibleModules['ALL']);
+				if (Transport.sync && token) {
+					Transport.sync();
 				}
 			};
 
