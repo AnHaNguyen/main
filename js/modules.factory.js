@@ -11,7 +11,7 @@
  *    Module state is exempted(waived) when it first added
  **/
 
-angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User', 'Transport', '$interval',
+angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User', 'Transport', '$interval', 
 		function ($http, localStorageService, User, Transport, $interval) {
 			var service = {
 				plannedModules: [],
@@ -294,10 +294,25 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					Transport.loadCookies();
 				}
 				service.reload();
+
+				// Sync plan table with modules table
+				if (Transport.sync) {
+					Transport.sync(service.visibleModules['ALL']);
+				}
 			};
 
 			// Check if this module is alread added to visible list
 			var added = function (module) {
+				for(var i in service.visibleModules['ALL']) {
+					if (service.visibleModules['ALL'][i].code === module.code) {
+						return true;
+					}
+				}
+
+				return false;
+			};
+
+			service.added = function(module) {
 				for(var i in service.visibleModules['ALL']) {
 					if (service.visibleModules['ALL'][i].code === module.code) {
 						return true;

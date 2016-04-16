@@ -2,15 +2,29 @@
 
 /**
  *  IVLE user:
- 		1. User.init():		
-			token exists --> initializedUser --> getModulesLogin
-			Transport.loadCookies (in plancontroller) load plan table which is stored in localstorage
-			User.setInfo() --> User.reset --> main.initModules (in mainController) --> Modules.fetchData()
+ 		1. User.init:		
+			token exists ---> initializedUser(delay) ---> getModulesLogin(delay)
+			-> Transport.loadCookies (in plancontroller) load plan table which is stored in localstorage
+			-> User.setInfo() -> User.reset -> main.initModules (in mainController) -> Modules.fetchData()
 		2. Modules.fetchData();
-			Modules.init() --> Modules.resetTable() --> Modules.reload();
+			Modules.init() -> Modules.resetTable() -> Modules.reload();
 		3. Modules.reload();
 			token exists, but we don't need to send request for modules list
 			use addModule() to add modules to modules table
+			Sync plan table with modules table
+
+	non-IVLE user:
+		1. User.init():
+			token dne 
+			User.setInfo -> User.reset -> main.initModules (in mainController) -> Modules.fetchData();
+		2. Modules.fetchData()
+			Modules.init() -> Modules.resetTable() 
+			-> Transport.loadCookies (in plancontroller) load plan table which is stored in localstorage
+			-> Modules.reload() 
+		3. Modules.reload()
+			token dne, load modules list from cookie
+			use addModule() to add modules to modules table
+			Sync plan table with modules table
  **/
 
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
@@ -229,6 +243,33 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		$scope.semId = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 		$scope.showSemester = [ true, true, true, true, false, false, false, false, false, false ];
 		$scope.plannedMC = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+		/**
+		 *  Purpose: It makes sure modules in plan table are in sync with modules in list
+		 * 			 Any module in plan table that is not found in list are to be removed
+		 *			 Any planned module in the list that is not found in plan table are to be added
+		 *  Assume:  Modules factory, Modules.visibleModules, Modules.added exists
+		 **/
+		Transport.sync = function () {
+			// add module from plan table
+			for(var i in Modules.visibleModules['ALL']) {
+				var module = Modules.visibleModules['ALL'][i];
+
+				$scope.addPlannedModule(module);
+			}
+
+			// remove module from plan table
+			for(var s in $scope.semester) {
+				var modules = $scope.semester[s];
+				for(var i = modules.length - 1;  i >= 0;  i--) {
+					var module = modules[i];
+
+					if (!Modules.added(module)) {
+						modules.splice(i, 1);
+					}
+				}
+			}
+		};
 
 		/**
 		 *  Track the number of semesters
