@@ -14,7 +14,6 @@
  **/
 
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
-
 angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 'SearchFilter', 'Transport',
 	function($scope, Modules, User, SearchFilter, Transport) { 
 
