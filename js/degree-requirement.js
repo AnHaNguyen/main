@@ -56,7 +56,7 @@ function displayReq(major, year){
 		$("#deg-req-div #deg-req-info").html(varHtml);
 
 		newHtml = `<div class="main-table col s12 z-depth-1"> \
-						<div class="row mod-type-table"> \
+						<div class="row mod-type-table no-margin"> \
 							<div class="col s12 content-row none-hover">  \
 								<div class="col s11 header item"> Requirement Type</div> \ 
 								<div class="col s1 header item"> MC </div> \						

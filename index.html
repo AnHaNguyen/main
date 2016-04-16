@@ -199,7 +199,7 @@
 					</div>
 				</div>
 				<!--Content-->
-				<form class="col s12 black-font">
+				<form class="col s12 m12 l12 black-font">
 					<div class="wrapper-input-div">
 						<div class="input-div"><input type="text" class="validate" placeholder="Search Type"></div>
 						<div>
@@ -238,7 +238,7 @@
 					</div>
 				</div>
 				<!--Content-->
-				<form class="col s12 black-font">
+				<form class="col s12 m12 l12 black-font">
 					<div class="wrapper-input-div">
 						<div class="input-div"><input type="text" class="validate" placeholder="Search Type"></div>
 						<div>
@@ -311,9 +311,12 @@
 		</ul>
 
 		<!--DEGREE REQUIREMENT-->
-		<div id="deg-req-div" class="basic-padding col s12">
+		<div id="deg-req-div" class="basic-padding col s12 m12 l12">
 			<div class="page-title row no-margin z-depth-1 banner">
-				<div class="large-text">Degree Requirement</div>
+				<div class="large-text">
+					<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
+					Degree Requirement
+				</div>
 				<div class="social-nw-div">
 					<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true">
 					</div>
@@ -330,7 +333,7 @@
 		</div>
 
 		<!--ALL MODULES-->
-		<div id="all-mod-div" class="basic-padding col s12">
+		<div id="all-mod-div" class="basic-padding col s12 m12 l12">
 			<!--Fixed Navigation Bar-->
 			<div class="page-title no-margin z-depth-1 banner">
 				<div class="large-text">All Modules</div>
@@ -341,7 +344,7 @@
 					<a class="waves-effect waves-light btn" id="reset-btn">Reset</a>
 				</div>
 				<div class="search-bar-div row no-margin">
-					<form class="col s12">
+					<form class="col s12 m12 l12">
 						<div class="row no-margin">
 							<div class="float-left">
 								<search init="" 
@@ -371,14 +374,14 @@
 			</div>
 
 			<div class="container-customize">
-				<div class="main-table col s12 z-depth-1">
+				<div class="main-table col s12 l12 m12 z-depth-1">
 					<!--ULR content-->
 					<div id="all-ulr" class="row mod-type-table">
-						<div class="col s12 header item">
+						<div class="col s12 m12 l12 header item">
 							University Level Requirements (ULR)
 						</div>
 
-						<div class="col s12 content-row none-hover">
+						<div class="col s12 m12 l12 content-row none-hover">
 							<div class="col s2 header item">Type</div>
 							<div class="col s1 header item">Code</div>
 							<div class="col s5 header item">Title</div>
@@ -386,12 +389,12 @@
 							<div class="col s3 header item">Actions</div>
 						</div>
 
-						<div class="col s12 content-row ulr-hover" ng-repeat="subtype in modulesController.subtypes['ULR']" ng-hide="subtype.fulfilled">
+						<div class="col s12 m12 l12 content-row ulr-hover" ng-repeat="subtype in modulesController.subtypes['ULR']" ng-hide="subtype.fulfilled">
 							<div class="col s2 item">{{ subtype.name }}</div>
 							<div class="col s10 item">Add your required module</div>
 						</div>
 
-						<div ng-repeat="module in modulesController.visibleModules['ULR']" class="col s12 content-row ulr-hover {{module.new}}">
+						<div ng-repeat="module in modulesController.visibleModules['ULR']" class="col s12 m12 l12 content-row ulr-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
@@ -417,7 +420,7 @@
 							</div>
 						</div>
 
-						<div class="col s12 content-row none-hover">
+						<div class="col s12 m12 l12 content-row none-hover">
 							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
 							<div class="col s4 mc-item item">
 								<span ng-bind="modulesController.remainingMC['ULR']"> </span>
@@ -430,11 +433,11 @@
 
 					<!--Programme Requirement content-->
 					<div id="all-prog-req" class="row mod-type-table">
-						<div class="col s12 content-row none-hover">
+						<div class="col s12 m12 l12 content-row none-hover">
 							<div class="col s12 header item">Programme Requirements</div>
 						</div>
 
-						<div class="col s12 content-row none-hover">
+						<div class="col s12 m12 l12 content-row none-hover">
 							<div class="col s2 header item">Type</div>
 							<div class="col s1 header item">Code</div>
 							<div class="col s5 header item">Title</div>
@@ -442,7 +445,7 @@
 							<div class="col s3 header item">Actions</div>
 						</div>
 
-						<div ng-repeat="module in modulesController.visibleModules['PR']" class="col s12 content-row pr-hover {{module.new}}">
+						<div ng-repeat="module in modulesController.visibleModules['PR']" class="col s12 m12 l12 content-row pr-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
@@ -468,7 +471,7 @@
 							</div>
 						</div>
 
-						<div class="col s12 content-row none-hover">
+						<div class="col s12 m12 l12 content-row none-hover">
 							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
 							<div class="col s4 mc-item item">
 								<span ng-bind="modulesController.remainingMC['PR']"> </span>
@@ -481,11 +484,11 @@
 
 					<!--Unrestricted Elective content-->
 					<div id="all-ue" class="row mod-type-table">
-						<div class="col s12 content-row none-hover">
+						<div class="col s12 m12 l12 content-row none-hover">
 							<div class="col s12 header item">Unrestricted Electives</div>
 						</div>
 
-						<div class="col s12 content-row none-hover">
+						<div class="col s12 m12 l12 content-row none-hover">
 							<div class="col s2 header item">Type</div>
 							<div class="col s1 header item">Code</div>
 							<div class="col s5 header item">Title</div>
@@ -493,7 +496,7 @@
 							<div class="col s3 header item">Actions</div>
 						</div>
 
-						<div ng-repeat="module in modulesController.visibleModules['UE']" class="col s12 content-row ue-hover {{module.new}}">
+						<div ng-repeat="module in modulesController.visibleModules['UE']" class="col s12 m12 l12 content-row ue-hover {{module.new}}">
 							<div class="col s2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
@@ -519,7 +522,7 @@
 							</div>
 						</div>
 
-						<div class="col s12 content-row none-hover">
+						<div class="col s12 m12 l12 content-row none-hover">
 							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
 							<div class="col s4 mc-item item">
 								<span ng-bind="modulesController.remainingMC['UE']"> </span>
@@ -539,7 +542,7 @@
 				<div class="large-text">Modules Planner</div>
 				<!--Search bar-->
 				<div class="search-bar-div">
-					<form class="col s12">
+					<form class="col s12 m12 l12">
 						<div class="row no-margin">
 							<div class="float-left">
 								<search init="" 
@@ -574,11 +577,11 @@
 					<div id="title-btn" class="btn waves-effect waves-light selected-toggle-btn">Title</div>
 					<div id="mc-btn" class="btn waves-effect waves-light">MC</div>
 				</div>
-				<div class="main-table col s12 z-depth-1">
+				<div class="main-table col s12 m12 l12 z-depth-1">
 					<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div" ng-show="showSemester[0]">
-							<div class="col s12 semester-div">Semester {{semId[0]}}</div>
-							<div class="col s12 drag-n-drop-div">
+							<div class="col s12 m12 l12 semester-div">Semester {{semId[0]}}</div>
+							<div class="col s12 m12 l12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[0]">
 									<div ng-repeat="mod in semester[0]" class="row no-margin">
 										<div class="drag-drop-item">
@@ -592,12 +595,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[0]}} MC</div>
+							<div class="col s12 m12 l12 mc-div">{{plannedMC[0]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[1]">
-							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[1]}}</div>
-							<div class="col s12 drag-n-drop-div">
+							<div class="col s12 m12 l12 semester-div" onClick="semPlanner()">Semester {{semId[1]}}</div>
+							<div class="col s12 m12 l12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[1]">
 									<div ng-repeat="mod in semester[1]" class="row no-margin">
 										<div class="drag-drop-item">
@@ -611,12 +614,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[1]}} MC</div>
+							<div class="col s12 m12 l12 mc-div">{{plannedMC[1]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[2]">
-							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[2]}}</div>
-							<div class="col s12 drag-n-drop-div">
+							<div class="col s12 m12 l12 semester-div" onClick="semPlanner()">Semester {{semId[2]}}</div>
+							<div class="col s12 m12 l12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[2]">
 									<div ng-repeat="mod in semester[2]" class="row no-margin">
 										<div class="drag-drop-item">
@@ -630,12 +633,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[2]}} MC</div>
+							<div class="col s12 m12 l12 mc-div">{{plannedMC[2]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[3]">
-							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[3]}}</div>
-							<div class="col s12 drag-n-drop-div">
+							<div class="col s12 m12 l12 semester-div" onClick="semPlanner()">Semester {{semId[3]}}</div>
+							<div class="col s12 m12 l12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[3]">
 									<div ng-repeat="mod in semester[3]" class="row no-margin">
 										<div class="drag-drop-item">
@@ -649,14 +652,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[3]}} MC</div>
+							<div class="col s12 m12 l12 mc-div">{{plannedMC[3]}} MC</div>
 						</div>
 					</div>
 
 					<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div" ng-show="showSemester[4]">
-							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[4]}}</div>
-							<div class="col s12 drag-n-drop-div">
+							<div class="col s12 m12 l12 semester-div" onClick="semPlanner()">Semester {{semId[4]}}</div>
+							<div class="col s12 m12 l12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[4]">
 									<div ng-repeat="mod in semester[4]" class="row no-margin">
 										<div class="drag-drop-item">
@@ -670,12 +673,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[4]}} MC</div>
+							<div class="col s12 m12 l12 mc-div">{{plannedMC[4]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[5]">
-							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[5]}}</div>
-							<div class="col s12 drag-n-drop-div">
+							<div class="col s12 m12 l12 semester-div" onClick="semPlanner()">Semester {{semId[5]}}</div>
+							<div class="col s12 m12 l12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[5]">
 									<div ng-repeat="mod in semester[5]" class="row no-margin">
 										<div class="drag-drop-item">
@@ -689,12 +692,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[5]}} MC</div>
+							<div class="col s12 m12 l12 mc-div">{{plannedMC[5]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[6]">
-							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[6]}}</div>
-							<div class="col s12 drag-n-drop-div">
+							<div class="col s12 m12 l12 semester-div" onClick="semPlanner()">Semester {{semId[6]}}</div>
+							<div class="col s12 m12 l12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[6]">
 									<div ng-repeat="mod in semester[6]" class="row no-margin">
 										<div class="drag-drop-item">
@@ -708,12 +711,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[6]}} MC</div>
+							<div class="col s12 m12 l12 mc-div">{{plannedMC[6]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[7]">
-							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[7]}}</div>
-							<div class="col s12 drag-n-drop-div">
+							<div class="col s12 m12 l12 semester-div" onClick="semPlanner()">Semester {{semId[7]}}</div>
+							<div class="col s12 m12 l12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[7]">
 									<div ng-repeat="mod in semester[7]" class="row no-margin">
 										<div class="drag-drop-item">
@@ -727,14 +730,14 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[7]}} MC</div>
+							<div class="col s12 m12 l12 mc-div">{{plannedMC[7]}} MC</div>
 						</div>
 					</div>
 
 					<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div" ng-show="showSemester[8]">
-							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[8]}}</div>
-							<div class="col s12 drag-n-drop-div">
+							<div class="col s12 m12 l12 semester-div" onClick="semPlanner()">Semester {{semId[8]}}</div>
+							<div class="col s12 m12 l12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[8]">
 									<div ng-repeat="mod in semester[8]" class="row no-margin">
 										<div class="drag-drop-item">
@@ -748,12 +751,12 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[8]}} MC</div>
+							<div class="col s12 m12 l12 mc-div">{{plannedMC[8]}} MC</div>
 						</div>
 
 						<div class="wrapper-div" ng-show="showSemester[9]">
-							<div class="col s12 semester-div" onClick="semPlanner()">Semester {{semId[9]}}</div>
-							<div class="col s12 drag-n-drop-div">
+							<div class="col s12 m12 l12 semester-div" onClick="semPlanner()">Semester {{semId[9]}}</div>
+							<div class="col s12 m12 l12 drag-n-drop-div">
 								<div ui-sortable="sortableOptions" class="semester" ng-model="semester[9]">
 									<div ng-repeat="mod in semester[9]" class="row no-margin">
 										<div class="drag-drop-item">
@@ -767,7 +770,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s12 mc-div">{{plannedMC[9]}} MC</div>
+							<div class="col s12 m12 l12 mc-div">{{plannedMC[9]}} MC</div>
 						</div>
 					</div>
 				</div>

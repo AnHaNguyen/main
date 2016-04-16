@@ -296,8 +296,8 @@ body {
 
 /*---------------------------Side Bar--------------------------*/
 .side-nav {
-	width: 17%;
-	z-index: 0!important;
+	width: 17% !important;
+	/*z-index: 0!important;*/
 }
 
 .side-nav a {
@@ -355,6 +355,25 @@ body {
 	padding: 15px 30px 15px 30px;
 	font-family: 'Open Sans', sans-serif;
   	width: 83%;
+}
+
+@media only screen and (max-width: 992px) {
+	#main-section {
+    	padding: 0;
+    }
+
+    #nav-mobile {
+    	width: auto !important;
+    }
+
+    /*---Degree Requirement---*/
+	.page-title {
+        width: 100%;
+    }
+
+    #deg-req-container {
+    	padding: 100px 0px 0px 0px;
+    }
 }
 
 #all-mod-btn-div {
