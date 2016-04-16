@@ -34,7 +34,8 @@
 	height: 50px;
 }
 .modholder {
-	border: 1px solid blue;
+	border: 3px solid #c6d166;		/*fields color*/
+	border-radius: 5px;
 	height: 100px;
 }
 .height100 {

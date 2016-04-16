@@ -7,6 +7,7 @@
 
 		<!-- Compiled and minified CSS -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 		<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
 		<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -311,7 +312,7 @@
 
 		<!--DEGREE REQUIREMENT-->
 		<div id="deg-req-div" class="basic-padding col s12">
-			<div class="page-title row no-margin">
+			<div class="page-title row no-margin z-depth-1">
 				<div class="large-text">Degree Requirement</div>
 				<div class="social-nw-div">
 					<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true">
@@ -330,8 +331,12 @@
 
 		<!--ALL MODULES-->
 		<div id="all-mod-div" class="basic-padding col s12">
+			<div id="all-mod-btn-div">
+				<a class="waves-effect waves-light btn" id="template-btn">Modules Template</a>
+				<a class="waves-effect waves-light btn" id="reset-btn">Reset</a>
+			</div>
 			<!--Fixed Navigation Bar-->
-			<div class="page-title no-margin">
+			<div class="page-title no-margin z-depth-1">
 				<div class="large-text">All Modules</div>
 				<!--Search bar-->
 				<div class="search-bar-div">
@@ -364,7 +369,7 @@
 			</div>
 
 			<div class="container-customize">
-				<div class="main-table col s12">
+				<div class="main-table col s12 z-depth-1">
 					<!--ULR content-->
 					<div id="all-ulr" class="row mod-type-table">
 						<div class="col s12 header item">
@@ -528,7 +533,7 @@
 		<!--PLANNER MODULES-->
 		<div id="plan-mod-div" class="basic-padding" ng-controller="planController">
 			<!--Fixed Navigation Bar-->
-			<div class="page-title no-margin">
+			<div class="page-title no-margin z-depth-1">
 				<div class="large-text">Modules Planner</div>
 				<!--Search bar-->
 				<div class="search-bar-div">
@@ -567,7 +572,7 @@
 					<div id="title-btn" class="btn waves-effect waves-light selected-toggle-btn">Title</div>
 					<div id="mc-btn" class="btn waves-effect waves-light">MC</div>
 				</div>
-				<div class="main-table col s12">
+				<div class="main-table col s12 z-depth-1">
 					<div id="plan-mod-wrapper" class="row">
 						<div class="wrapper-div" ng-show="showSemester[0]">
 							<div class="col s12 semester-div">Semester {{semId[0]}}</div>
