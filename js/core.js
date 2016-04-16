@@ -91,13 +91,11 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		 *  Give user service the power to reset the entire universe
 		 **/
 		$scope.user.reset = function (major, focusArea, admissionYear, callback) {
+			console.log(major);
 			$scope.initModules(admissionYear.code, major.code, callback);
 		};
 
 		$scope.user.init();
-
-		$scope.confirm = function () {
-		};
 
 		/**
 		 *  These 3 functions are for updating major, focusarea, adyear
@@ -255,7 +253,9 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			for(var i in Modules.visibleModules['ALL']) {
 				var module = Modules.visibleModules['ALL'][i];
 
-				$scope.addPlannedModule(module);
+				if (module.state === 'planned') {
+					$scope.addPlannedModule(module);
+				}
 			}
 
 			// remove module from plan table
@@ -264,7 +264,8 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 				for(var i = modules.length - 1;  i >= 0;  i--) {
 					var module = modules[i];
 
-					if (!Modules.added(module)) {
+					// if module is not in the list or its state is not planned then remove it;
+					if (!Modules.added(module) || ((!Modules.getModuleByCode(module.code)) && (Modules.getModuleByCode(module.code).state === 'planned'))) {
 						modules.splice(i, 1);
 					}
 				}

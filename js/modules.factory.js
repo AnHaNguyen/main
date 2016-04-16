@@ -157,6 +157,23 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			};
 
 			/**
+			 *  Find module by module's type and code
+			 **/
+			service.getModuleByCode = function(modCode) {
+				for(var i in service.modules) {
+					/* For all modules in the list */
+					var module = service.modules[i];
+
+					if (module.code === modCode) {
+						/* found */
+						return module;
+					}
+				}
+
+				return null;
+			};
+
+			/**
 			 * Search module by type and mod code and then add to selected modules
 			 * This function calls added() to avoid duplicate module
 			 * Default state of new module is planned
