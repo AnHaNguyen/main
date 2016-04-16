@@ -59,7 +59,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 							mods[1].push(mod.code);
 						} else if (mod.state === 'exempted') {
 							mods[2].push(mod.code);
-						} else {
+						} else if (mod.state === 'taken') {
 							mods[3].push(mod.code);
 						}
 
@@ -148,6 +148,20 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					service.removePlannedModuleFromPlanTable(module);
 				}
 			}
+
+			service.getSelectedModuleByCode = function (modCode) {
+				for(var i in service.visibleModules['ALL']) {
+					/* For all modules in the list */
+					var module = service.visibleModules['ALL'][i];
+
+					if (module.code === modCode) {
+						/* found */
+						return module;
+					}
+				}
+
+				return null;
+			};
 
 			/**
 			 *  Find module by module's type and code
@@ -332,6 +346,17 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			};
 
 			// Check if this module is alread added to visible list
+			User.added = function (module) {
+				for(var i in service.visibleModules['ALL']) {
+					if (service.visibleModules['ALL'][i].code === module.code) {
+						return true;
+					}
+				}
+
+				return false;
+			};
+
+			// Check if this module is alread added to visible list
 			var added = function (module) {
 				for(var i in service.visibleModules['ALL']) {
 					if (service.visibleModules['ALL'][i].code === module.code) {
@@ -362,8 +387,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 					if (module.code === modCode) {
 
-						service.visibleModules['ALL'].splice(i, 1);
-
 						// Mark this module as unselected
 						service.removePlannedModule(module);
 
@@ -375,6 +398,8 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 							'unselected': ''
 						};
 						module.selected[module.state] = 'selected-toggle-btn';
+
+						service.visibleModules['ALL'].splice(i, 1);
 					}
 				}
 
@@ -390,7 +415,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					if (module.state !== newState) {
 						if (module.state === 'planned') {
 							service.removePlannedModule(module);
-						} else {
+						} else if (newState === 'planned') {
 							service.addPlannedModule(module);
 						}
 					}

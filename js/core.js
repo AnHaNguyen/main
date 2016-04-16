@@ -340,6 +340,34 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 		};
 
 		/**
+		 *
+		 **/
+		Transport.sync = function () {
+			for(var i in Modules.visibleModules['ALL']) {
+				var mod = Modules.visibleModules['ALL'];
+				
+				if (mod.state === 'planned') {
+					$scope.addPlannedModule(mod);
+				}
+			}
+
+			for(var s in $scope.semester) {
+				var sem = $scope.semester[s];
+
+				for(var i in sem) {
+					var mod = sem[i];
+					var res = Modules.getSelectedModuleByCode(mod.code);
+
+					if ((!res) || (res.state !== 'planned')) {
+						sem.splice(i, 1);
+					}
+				}
+			}
+
+			$scope.save();
+		};
+
+		/**
 		 *  Load cookies
 		 */
 		Transport.loadCookies = function () {

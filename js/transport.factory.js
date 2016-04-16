@@ -12,6 +12,7 @@ angular.module('core').factory('Transport', ['$interval', '$http',
 					// Send only the latest request to server 
 					var url = factory.requestStack[factory.requestStack.length - 1];
 					factory.requestStack = [];
+					//console.log(url);
 
 					// Avoid sending any request at this time
 					factory.isLastRequestReceived = false;
