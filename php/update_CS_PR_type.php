@@ -187,6 +187,15 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
         }
     }
 
+    // Exceptions
+    // NOC's TR3201
+    if (array_key_exists("TR3201", $mods)) {
+        // https://github.com/CS3226SoCFFG/main/issues/22
+        $mods["TR3201"] = [PR_TYPE, CS_BREADTH_TYPE];
+        $cs_breath_depth_mc_taken += 4; // CS3882's MC, hard coded cuz it ain't in the mod db yo
+        $ue_mc_taken += 4; // TR3201's MC - CS3882's MC, hard coded cuz neither are in the mod db yo
+    }
+
     // Set type for all other modules
     foreach ($mods as $mod_code => $mod_type) {
 
