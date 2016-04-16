@@ -96,7 +96,6 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		 *  Give user service the power to reset the entire universe
 		 **/
 		$scope.user.reset = function (major, focusArea, admissionYear, callback) {
-			console.log(major);
 			$scope.initModules(admissionYear.code, major.code, callback);
 		};
 
@@ -206,7 +205,6 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 			var plan = $scope.semester;
 
 			localStorageService.set('plan', plan);
-			console.log('save>>', plan);
 
 			if (User.matric) {
 				localStorageService.set('userid', User.matric);
@@ -403,7 +401,6 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 				$scope.computePlannedMC();
 			}
 
-			console.log('load plan>>', $scope.semester);
 		}
 
 		/**
