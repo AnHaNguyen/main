@@ -287,6 +287,11 @@ body {
 .material-icons {
 	color: white;
 }
+
+#toast-container {
+	top: 200px !important;
+	max-width: 100% !important;
+}
 /*-----------------------Big container-----------------------------*/
 #main-section {
 	background-color: #F7F7F7;
