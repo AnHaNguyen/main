@@ -132,16 +132,11 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		/**------------------------- Template controller --------------------------**/
 
 		$scope.generateTemplate = function () {
-
-			$scope.displayMajor = 'Computer Science';
-			$scope.displayFocusArea = 'Software Engineering (SE)';
-			$scope.displayAdmissionYear = '2013/2014';
-
 			$scope.hardcodedModules = [];
 
-			$scope.hardcodedModules = getTemplatesMods(User.findItemByTitle($scope.displayMajor, User.majorsList).code);
+			$scope.hardcodedModules = getTemplatesMods(User.findItemByTitle(User.major.title, User.majorsList).code);
 
-			$scope.user.setInfo($scope.displayMajor, $scope.displayFocusArea, $scope.displayAdmissionYear, '', '', function () {
+			$scope.user.setInfo(User.major.title, User.focusArea.title, User.admissionYear.title, '', '', function () {
 				for(var i in $scope.hardcodedModules) {
 					var module = $scope.hardcodedModules[i];
 
