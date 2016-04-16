@@ -46,9 +46,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					// array #1: planned modules
 					// array #2: exempted modules
 					// array #3: taken modules
-					// array #4: planned modules with type specified by user
-					// array #5: exempted modules with type specified by user
-					// array #6: taken modules with type specified by user
+					// array #4: ulr modules
+					// array #5: pr modules
+					// array #6: ue modules
 					// array #7: user's info: focus area,
 					var mods = [[], [], [], [], [], [], [], []];
 
@@ -61,6 +61,16 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 							mods[2].push(mod.code);
 						} else {
 							mods[3].push(mod.code);
+						}
+
+						if (mod.isTypeFixed) {
+							if (mod.type === 'ULR') {
+								mods[4].push(mod.code);
+							} else if (mod.type === 'PR') {
+								mods[5].push(mod.code);
+							} else {
+								mods[6].push(mod.code);
+							}
 						}
 					}
 
@@ -236,20 +246,23 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					var semesters = Transport.semesters;
 
 					if (semesters[0][0] && (semesters[0][0] === 'notthefirsttime')) {
-						for(var i in semesters[1]) {
-							var modCode = semesters[1][i];
+						for(var s = 1;  s <= 6;  s++) {
+							var semester = semesters[s];
+							
+							for(var i in semester) {
+								var modCode = semester[i];
+								var modState = 'taken';
+								var modType = 'UE';
 
-							service.addModule(modCode, 'planned');
-						}
-						for(var i in semesters[2]) {
-							var modCode = semesters[2][i];
+								if (s % 3 == 1) modState = 'planned', modType = 'ULR';
+								else if (s % 3 == 2) modState = 'exempted', modType = 'PR';
 
-							service.addModule(modCode, 'exempted');
-						}
-						for(var i in semesters[3]) {
-							var modCode = semesters[3][i];
-
-							service.addModule(modCode, 'taken');
+								if (s <= 3) {
+									service.addModule(modCode, modState);
+								} else {
+									service.changeType(modCode, modType);
+								}
+							}
 						}
 					} else {
 						for(var i in semesters) {
@@ -405,7 +418,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 				var module = getModuleByCode(modCode);
 
-				if (module && (module.type !== newType)) {
+				if (module) {
 					module.type = newType;
 					module.isTypeFixed = true;
 				}
