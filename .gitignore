@@ -3,3 +3,5 @@
 moduleInformation.json
 moduleList.json
 prettify*
+.htaccess
+config.php
