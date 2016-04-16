@@ -1,5 +1,18 @@
 'use strict';
 
+/**
+ *  IVLE user:
+ 		1. User.init():		
+			token exists --> initializedUser --> getModulesLogin
+			Transport.loadCookies (in plancontroller) load plan table which is stored in localstorage
+			User.setInfo() --> User.reset --> main.initModules (in mainController) --> Modules.fetchData()
+		2. Modules.fetchData();
+			Modules.init() --> Modules.resetTable() --> Modules.reload();
+		3. Modules.reload();
+			token exists, but we don't need to send request for modules list
+			use addModule() to add modules to modules table
+ **/
+
 angular.module('core', ['angucomplete-alt', 'ngCookies', 'ui.sortable', 'LocalStorageModule']);
 
 angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User', 'SearchFilter', 'Transport',
@@ -42,6 +55,9 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 
 		// Change state of module from planned to taken and vice versa
 		$scope.changeState = Modules.changeState;
+
+		// Change type of modules,
+		$scope.changeType = Modules.changeType;
 
 		// Function to add new module
 		$scope.addModule = function (item) {
@@ -105,19 +121,15 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 			$scope.displayFocusArea = 'Software Engineering (SE)';
 			$scope.displayAdmissionYear = '2013/2014';
 
-			$scope.hardcodedModules = {
-				'taken': ['CS1231', 'CS2105', 'GER1000', 'CS3226', 'CS3233'],
-				'planned': ['CS2102'],
-				'exempted': ['CS1010', 'CS1020', 'CS2020']
-			};
+			$scope.hardcodedModules = [];
+
+			$scope.hardcodedModules = getTemplatesMods(User.findItemByTitle($scope.displayMajor, User.majorsList).code);
 
 			$scope.user.setInfo($scope.displayMajor, $scope.displayFocusArea, $scope.displayAdmissionYear, '', '', function () {
-				for(var type in $scope.hardcodedModules) {
-					for(var i in $scope.hardcodedModules[type]) {
-						var module = $scope.hardcodedModules[type][i];
+				for(var i in $scope.hardcodedModules) {
+					var module = $scope.hardcodedModules[i];
 
-						Modules.addModule(module, type);
-					}
+					Modules.addModule(module, 'taken');
 				}
 			});
 		}
