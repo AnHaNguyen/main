@@ -70,6 +70,8 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 						return item;
 					}
 				}
+
+				return null;
 			}
 
 			object.findItemByCode = function (code, items) {
@@ -80,6 +82,8 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 						return item;
 					}
 				}
+
+				return null;
 			}
 
 			/**
@@ -122,19 +126,42 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 					initializeUser(token, function (user) {
 						var major = object.findItemByCode(getMajor(user), object.majorsList);
 						var admissionYear = object.findItemByCode(getAdmissionYear(user), object.admissionYearsList);
-						var focusArea = object.findItemByCode('SE', object.focusAreasList);
-						var matric = user.data.UserID;
-						localStorageService.set('user', '');
-						localStorageService.set('data', '');
-						object.matric = matric;
 
-						Transport.loadCookies();
+						// THis requests for focusArea
+						// no need to request for modules later
+						getModulesLogin(token, function(semesters, states){
+							// default focusarea is software engineer
+							var focusArea = 'SE';
 
-						object.setInfo(major.title, focusArea.title, admissionYear.title);
+							if ((semesters[0]) && (semesters[0].length) && (semesters[0][0] === 'notthefirsttime') && (semesters[7][0])) {
+								// focusarea found
+								if (object.findItemByCode(semesters[7][0], object.focusAreasList)) {
+									focusArea = object.findItemByCode(semesters[7][0], object.focusAreasList).code;
+								}
+							}
 
-						if (callback) {
-							callback();
-						}
+							focusArea = object.findItemByCode(focusArea, object.focusAreasList);
+
+							// Delete cookied data that could be from other users or non-login users
+							localStorageService.set('user', '');
+							localStorageService.set('data', '');
+
+							// Set matriculation number
+							var matric = user.data.UserID;
+							object.matric = matric;
+
+							// Load plan table data actually
+							Transport.loadCookies();
+
+							// Save modules so that we don't have to request later
+							Transport.semesters = semesters;
+
+							object.setInfo(major.title, focusArea.title, admissionYear.title);
+
+							if (callback) {
+								callback();
+							}
+						});
 					});
 				} else {
 					if (info) {

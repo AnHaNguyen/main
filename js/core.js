@@ -66,8 +66,8 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 		};
 
 		$scope.user.init();
-		$scope.log = function () {
-			$scope.$broadcast('angucomplete-alt:changeInput', 'major', 'what');
+
+		$scope.confirm = function () {
 		};
 
 		/**
