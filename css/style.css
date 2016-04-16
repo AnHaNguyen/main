@@ -373,10 +373,6 @@ body {
 	float: right;
 }
 
-.modal {
-	z-index: 200;
-}
-
 .large-text {
 	font-size: 28px !important;
 	float: left;
@@ -839,6 +835,10 @@ footer a:hover {
     .container-customize {
     	padding: 140px 0 0 0 !important;
     }
+
+    .modal {
+    	width: 50% !important;
+    }
 }
 
 
@@ -877,5 +877,9 @@ footer a:hover {
 
     .container-customize {
     	padding: 180px 0 0 0 !important;
+    }
+
+    .modal {
+    	width: 100% !important;
     }
 }
