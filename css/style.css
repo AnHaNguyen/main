@@ -23,7 +23,7 @@
 }
 
 .preloader-wrapper {
-	top: 45%;
+	top: 40%;
 	position: absolute;
 }
 
@@ -284,6 +284,14 @@ body {
 	height: 10px;
 }
 
+.material-icons {
+	color: white;
+}
+
+#toast-container {
+	top: 200px !important;
+	max-width: 100% !important;
+}
 /*-----------------------Big container-----------------------------*/
 #main-section {
 	background-color: #F7F7F7;
@@ -353,27 +361,9 @@ body {
 	background-color: #4cb5f5;	/* blue sky color */
 	color: white;
 	padding: 15px 30px 15px 30px;
+	position: fixed;
 	font-family: 'Open Sans', sans-serif;
   	width: 83%;
-}
-
-@media only screen and (max-width: 992px) {
-	#main-section {
-    	padding: 0;
-    }
-
-    #nav-mobile {
-    	width: auto !important;
-    }
-
-    /*---Degree Requirement---*/
-	.page-title {
-        width: 100%;
-    }
-
-    #deg-req-container {
-    	padding: 100px 0px 0px 0px;
-    }
 }
 
 #all-mod-btn-div {
@@ -387,10 +377,6 @@ body {
 	font-size: 16px;
 	line-height: 42px;
 	float: right;
-}
-
-.modal {
-	z-index: 200;
 }
 
 .large-text {
@@ -830,4 +816,114 @@ footer a {
 
 footer a:hover {
 	text-decoration: underline;
+}
+
+
+/*---------------------------Media query------------------------------*/
+@media only screen and (max-width: 992px) {
+	#main-section {
+    	padding: 0;
+    }
+
+    #nav-mobile {
+    	width: auto !important;
+    }
+
+    /*---Degree Requirement---*/
+	.page-title {
+        width: 100%;
+    }
+
+    #all-mod-btn-div {
+    	top: 130px !important;
+    }
+
+    .container-customize {
+    	padding: 140px 0 0 0 !important;
+    }
+
+    .modal {
+    	width: 50% !important;
+    }
+}
+
+
+@media only screen and (max-width: 600px) {
+	html {
+		font-size: 12px !important;
+	}
+
+	/*------------Start-page-----------------*/
+	#start-wrapper {
+		margin: 0 !important;
+	}
+
+	.start-login-div #get-started-btn, .start-login-div p, .start-login-div #login, #intro-text {
+		font-size: 14px !important;
+	}
+
+	/*-----------------Certi------------------*/
+	#full-name {
+		font-size: 20px !important;
+	}
+
+	#bachelor, #major_value, #focus_area_value, #admission_year_value, .page-title span, 
+	.grad-cer-text {
+		font-size: 14px !important;
+	}
+
+	.normal-certi-text {
+		font-size: 12px !important;
+	}
+
+	#grad-cer-div img {
+		height: 30px !important;
+	}
+	/*----------------------------------------*/
+
+    #start-footer {
+    	display: none !important;
+    }
+
+    .main-table {
+    	padding: 80px 5px 20px 5px;
+    }
+
+    #all-mod-btn-div {
+    	top: 170px !important;
+    }
+
+    #moduletable-search_value, #plantable-search_value {
+    	width: 150px !important;
+    }
+
+    /*------------------Table------------------*/
+    .s0 {
+    	display: none !important;
+    }
+
+    .item {
+    	padding: 5px !important;
+    }
+
+    .btn {
+    	font-size: 12px !important;
+    }
+
+    .content-row:hover{
+		font-weight: 500;
+		font-size: 12.5px;
+	}
+
+    .wrapper-div {
+    	width: 100% !important;
+    }
+
+    .container-customize {
+    	padding: 180px 0 0 0 !important;
+    }
+
+    .modal {
+    	width: 100% !important;
+    }
 }

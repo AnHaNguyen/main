@@ -179,25 +179,6 @@ $(document).ready(function() {
 		$(this).css("background-color", "white");
 	});
 
-		/*------------Multiple-choice------------*/
-	$(".dropdown-content a").on("click", function() {
-		console.log("hey, printed111111111111 !!!")
-		$(this).find(".taken-choice").on("click", function(){
-			var parent = $(this).parent().parent().find(".dropbtn").text("Taken");
-			console.log("hey, printed !!!")
-		});
-
-		$(this).find(".plan-choice").on("click", function(){
-			var parent = $(this).parent().parent().find(".dropbtn").text("Plan");
-			console.log("hey, printed 222222222!!!")
-		});
-
-		$(this).find(".waived-choice").on("click", function(){
-			var parent = $(this).parent().parent().find(".dropbtn").text("Waived");
-			console.log("hey, printed 33333333!!!")
-		});
-	});
-
 	/*-----------------------Drag-and-drop-item-display----------------------*/
 	$(".drag-drop-mc").hide();
 	$("#code-btn").on("click", function(){
@@ -231,7 +212,7 @@ $(document).ready(function() {
 	});
 
 
-	/*--------------------Trong Hiep code - jQueryScript-----------------------*/
+	/*--------------------Trong Hiep code - jQueryScript-----------------------
 	$(document).ready(function($) {
 		var $banner = $('.banner'), $window = $(window);
 		var $topDefault = parseFloat( $banner.css('top'), 10 );
@@ -252,10 +233,15 @@ $(document).ready(function() {
 				$banner.removeClass('zindex');
 			}
 		}
-	});
+	});*/
 
 	// Initialize collapse button
   	$(".button-collapse").sideNav();
+
+
+  	/*----------------------Temporary hide-----------------------*/
+  	$("#reset-btn").hide();
+  	$(".filter-div").hide();
 });
 
 

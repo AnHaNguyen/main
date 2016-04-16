@@ -315,7 +315,7 @@
 			<div class="page-title row no-margin z-depth-1 banner">
 				<div class="large-text">
 					<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
-					Degree Requirement
+					<span>Degree Requirement</span>
 				</div>
 				<div class="social-nw-div">
 					<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true">
@@ -336,7 +336,10 @@
 		<div id="all-mod-div" class="basic-padding col s12 m12 l12">
 			<!--Fixed Navigation Bar-->
 			<div class="page-title no-margin z-depth-1 banner">
-				<div class="large-text">All Modules</div>
+				<div class="large-text">
+					<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
+					<span>All Modules</span>
+				</div>
 				<!--Search bar-->
 				<div>
 					<div id="all-mod-btn-div" class="banner">
@@ -382,15 +385,15 @@
 						</div>
 
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s2 header item">Type</div>
-							<div class="col s1 header item">Code</div>
-							<div class="col s5 header item">Title</div>
-							<div class="col s1 header item">MC</div>
-							<div class="col s3 header item">Actions</div>
+							<div class="col s4 m2 l2 header item">Type</div>
+							<div class="col s3 m2 l1 header item">Code</div>
+							<div class="col s0 m4 l5 header item">Title</div>
+							<div class="col s0 m1 l1 header item">MC</div>
+							<div class="col s5 m3 l3 header item">Actions</div>
 						</div>
 
 						<div ng-repeat="module in modulesController.visibleModules['ULR']" class="col s12 m12 l12 content-row ulr-hover {{module.new}}">
-							<div class="col s2 item">
+							<div class="col s4 m2 l2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
@@ -400,10 +403,10 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s1 item">{{ module.code }}</div>
-							<div class="col s5 item">{{ module.title }}</div>
-							<div class="col s1 item">{{ module.mc }}</div>
-							<div class="col s3 item">
+							<div class="col s3 m2 l1 item">{{ module.code }}</div>
+							<div class="col s0 m4 l5 item">{{ module.title }}</div>
+							<div class="col s0 m1 l1 item">{{ module.mc }}</div>
+							<div class="col s5 m3 l3 item">
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
@@ -416,8 +419,8 @@
 						</div>
 
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
-							<div class="col s4 mc-item item">
+							<div class="col s7 m8 l8 mc-item item text-mc">Remaining MC / MC required</div>
+							<div class="col s5 m4 l4 mc-item item">
 								<span ng-bind="modulesController.remainingMC['ULR']"> </span>
 								/
 								<span> 20 </span>
@@ -429,19 +432,19 @@
 					<!--Programme Requirement content-->
 					<div id="all-prog-req" class="row mod-type-table">
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s12 header item">Programme Requirements</div>
+							<div class="col s12 m12 l12 header item">Programme Requirements</div>
 						</div>
 
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s2 header item">Type</div>
-							<div class="col s1 header item">Code</div>
-							<div class="col s5 header item">Title</div>
-							<div class="col s1 header item">MC</div>
-							<div class="col s3 header item">Actions</div>
+							<div class="col s4 m2 l2 header item">Type</div>
+							<div class="col s3 m2 l1 header item">Code</div>
+							<div class="col s0 m4 l5 header item">Title</div>
+							<div class="col s0 m1 l1 header item">MC</div>
+							<div class="col s5 m3 l3 header item">Actions</div>
 						</div>
 
 						<div ng-repeat="module in modulesController.visibleModules['PR']" class="col s12 m12 l12 content-row pr-hover {{module.new}}">
-							<div class="col s2 item">
+							<div class="col s4 m2 l2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
@@ -451,10 +454,10 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s1 item">{{ module.code }}</div>
-							<div class="col s5 item">{{ module.title }}</div>
-							<div class="col s1 item">{{ module.mc }}</div>
-							<div class="col s3 item">
+							<div class="col s3 m2 l1 item">{{ module.code }}</div>
+							<div class="col s0 m4 l5 item">{{ module.title }}</div>
+							<div class="col s0 m1 l1 item">{{ module.mc }}</div>
+							<div class="col s5 m3 l3 item">
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
@@ -467,8 +470,8 @@
 						</div>
 
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
-							<div class="col s4 mc-item item">
+							<div class="col s7 m8 l8 mc-item item text-mc">Remaining MC / MC required</div>
+							<div class="col s5 m4 l4 mc-item item">
 								<span ng-bind="modulesController.remainingMC['PR']"> </span>
 								/
 								<span> 120 </span>
@@ -480,19 +483,19 @@
 					<!--Unrestricted Elective content-->
 					<div id="all-ue" class="row mod-type-table">
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s12 header item">Unrestricted Electives</div>
+							<div class="col s12 m12 l12 header item">Unrestricted Electives</div>
 						</div>
 
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s2 header item">Type</div>
-							<div class="col s1 header item">Code</div>
-							<div class="col s5 header item">Title</div>
-							<div class="col s1 header item">MC</div>
-							<div class="col s3 header item">Actions</div>
+							<div class="col s4 m2 l2 header item">Type</div>
+							<div class="col s3 m2 l1 header item">Code</div>
+							<div class="col s0 m4 l5 header item">Title</div>
+							<div class="col s0 m1 l1 header item">MC</div>
+							<div class="col s5 m3 l3 header item">Actions</div>
 						</div>
 
 						<div ng-repeat="module in modulesController.visibleModules['UE']" class="col s12 m12 l12 content-row ue-hover {{module.new}}">
-							<div class="col s2 item">
+							<div class="col s4 m2 l2 item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
@@ -502,10 +505,10 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s1 item">{{ module.code }}</div>
-							<div class="col s5 item">{{ module.title }}</div>
-							<div class="col s1 item">{{ module.mc }}</div>
-							<div class="col s3 item">
+							<div class="col s3 m2 l1 item">{{ module.code }}</div>
+							<div class="col s0 m4 l5 item">{{ module.title }}</div>
+							<div class="col s0 m1 l1 item">{{ module.mc }}</div>
+							<div class="col s5 m3 l3 item">
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
@@ -518,8 +521,8 @@
 						</div>
 
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s8 mc-item item text-mc">Remaining MC / MC required</div>
-							<div class="col s4 mc-item item">
+							<div class="col s7 m8 l8 mc-item item text-mc">Remaining MC / MC required</div>
+							<div class="col s5 m4 l4 mc-item item">
 								<span ng-bind="modulesController.remainingMC['UE']"> </span>
 								/
 								<span> 20 </span>
@@ -534,7 +537,10 @@
 		<div id="plan-mod-div" class="basic-padding" ng-controller="planController">
 			<!--Fixed Navigation Bar-->
 			<div class="page-title no-margin z-depth-1 banner">
-				<div class="large-text">Modules Planner</div>
+				<div class="large-text">
+					<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
+					<span>Modules Planner</span>
+				</div>
 				<!--Search bar-->
 				<div class="search-bar-div">
 					<form class="col s12 m12 l12">
