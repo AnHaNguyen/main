@@ -440,20 +440,21 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				var module = getModuleByCode(modCode);
 
 				if (module) {
-					module.type = newType;
-					module.isTypeFixed = true;
 					if (module.type !== newType) {
 						// animations when user change type
 						for(var i in service.visibleModules['ALL']) {
-							var module = service.visibleModules['ALL'][i];
+							var mod = service.visibleModules['ALL'][i];
 
-							module.new = '';
+							mod.new = '';
 						}
 						module.new = 'new-added-row';
 						if ((!origin) || (origin !== 'auto')) {
 							Materialize.toast(module.code + ' is moved to ' + newType, 3000);
 						}
 					}
+
+					module.type = newType;
+					module.isTypeFixed = true;
 				}
 
 				service.updateAllSelectedModules();
