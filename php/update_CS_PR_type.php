@@ -163,21 +163,27 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
     // Modules have to be cleared in a pair
     $adv_se_reqs = $grad_reqs["or"][0];
     $has_fulfilled_adv_se_reqs = false;
-    // TODO: include TR3203P to replace this requirement
 
-    for ($i = 0; !$has_fulfilled_adv_se_reqs && $i < count($adv_se_reqs); $i++) {
-        $se_pair = explode(",", $adv_se_reqs[$i][0]);
-        $first_half_mod_code = $se_pair[0];
-        $second_half_mod_code = $se_pair[1];
+    if (array_key_exists("TR3203", $mods)) {
+        // TR3203 is an 8MC NOC/iLead mod that can be used to replace the adv SE req
+        // About TR3203: https://github.com/CS3226SoCFFG/main/issues/24#issuecomment-210792175
+        $mods["TR3203"] = [PR_TYPE,ADV_SE_TYPE];
+    } else {
+        foreach ($adv_se_reqs as $adv_se_branch) {
+            list($first_half_mod_code, $second_half_mod_code) = explode(",", $adv_se_branch[0]);
 
-        // Check if both parts of the pair can be found
-        if (array_key_exists($first_half_mod_code, $mods)
-            && array_key_exists($second_half_mod_code, $mods)) {
+            // Check if both parts of the pair can be found
+            if (array_key_exists($first_half_mod_code, $mods)
+                && array_key_exists($second_half_mod_code, $mods)) {
 
-            $mods[$first_half_mod_code] = [PR_TYPE,ADV_SE_TYPE];
-            $mods[$second_half_mod_code] = [PR_TYPE,ADV_SE_TYPE];
-            $has_fulfilled_adv_se_reqs = true;
+                $mods[$first_half_mod_code] = [PR_TYPE, ADV_SE_TYPE];
+                $mods[$second_half_mod_code] = [PR_TYPE, ADV_SE_TYPE];
+                $has_fulfilled_adv_se_reqs = true;
 
+            }
+            if ($has_fulfilled_adv_se_reqs) {
+                break;
+            }
         }
     }
 
