@@ -107,7 +107,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					'unselected': ''
 				};
 				module.selected[module.state] = 'selected-toggle-btn';
-				console.log(module);
 				
 				if (service.addPlannedModuleToPlanTable) {
 					service.addPlannedModuleToPlanTable(module);
@@ -205,7 +204,6 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 
 				if (token) {
 					getModulesLogin(token, function(semesters, states){
-						console.log('.>', semesters);
 
 						if (semesters[0][0] && (semesters[0][0] === 'notthefirsttime')) {
 							for(var i in semesters[1]) {
