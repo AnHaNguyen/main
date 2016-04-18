@@ -8,12 +8,9 @@ var totalSem = 8;
 var token;
 
 $("#login").on("click",function(){
-    if (ivle.getToken(window.location.href) == null){
-        var authUrl = ivle.login(key, redirectUrl);
-        token = ivle.getToken(authUrl);
-        window.location.href = authUrl;
-    }
-            
+	var authUrl = ivle.login(key, redirectUrl);
+    token = ivle.getToken(authUrl);
+    window.location.href = authUrl;
 });
 
 function updateToken(){
@@ -184,6 +181,4 @@ function getStates(user){     //add state to modules
     }
 }
 
-$("#logout").on("click",function(){
-	window.location.href = 'php/authentication/logout.php';
-});
+
