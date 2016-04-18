@@ -1,5 +1,5 @@
 var key = "8Qrg78UktVoi1XHeTYLk1";      //need hidden
-var redirectUrl = "http://" + window.location.host + "/main/index.html"; //need hidden
+var redirectUrl = "http://" + window.location.host + "/developer/index.html"; //need hidden
 var CS = "Computer Science";
 var IS = "Information System";
 var BZA = "Business Analytic";
@@ -183,3 +183,7 @@ function getStates(user){     //add state to modules
         }
     }
 }
+
+$("#logout").on("click",function(){
+	window.location.href = 'php/authentication/logout.php';
+});
