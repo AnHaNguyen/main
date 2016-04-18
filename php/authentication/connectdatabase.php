@@ -5,7 +5,7 @@ require_once('config.php');
 
 define('totalSem', 8);
 
-if ($_POST['user_id'] !== null && $_SESSION['user_id'] === null){
+if ($_POST['user_id'] !== null){
 	$_SESSION['user_id'] = $_POST['user_id'];
 	echo ("Done");
 }
