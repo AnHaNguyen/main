@@ -19,11 +19,13 @@ function verifyPRIS($PRmod, $modulesMC, $prReq, $or, $specialMCs){
 	for ($i = 0; $i < count($PRmod); $i++){
 		$modName = $PRmod[$i][0];
 		$minus = $modulesMC[$modName];			//MCs
-
-		if (isInList($modName, $prReq)){		//handle Mods in PR
-			$prReq[$modName] -= $minus;
-		} 
 		
+
+		$key = isInList($modName, $prReq);
+		if ($key != ""){        //handle Mods in PR
+			$prReq[$key] -= $minus;
+			$count[$modName]++;
+		} 
 	}
 
 	$usedList = array();

@@ -49,7 +49,7 @@
 		</script>
 
 		<div class="progress preloader">
-      		<div class="indeterminate"></div>
+      		<div class="determinate"></div>
   		</div>
   		
 		<div class="start-page" ng-controller="mainController">
@@ -147,7 +147,7 @@
 		<!--Main Section-->
 		<main id="main-section" ng-controller="mainController">
 		<!-- Modal Structure Of All Modules-->
-		<div id="modal-advanced-all-mod" class="modal">
+		<!--<div id="modal-advanced-all-mod" class="modal">
 			<div class="modal-content no-padding">
 				<div class="advanced-search-title">
 					<div class="left-advanced-search-div"><span>Advanced Search</span></div>
@@ -156,9 +156,9 @@
 							<img src="icon/white-close-icon.png" class="right">
 						</a>
 					</div>
-				</div>
+				</div>-->
 				<!--Content-->
-				<form class="col s12 m12 l12 black-font">
+				<!--<form class="col s12 m12 l12 black-font">
 					<div class="wrapper-input-div">
 						<div class="input-div"><input type="text" class="validate" placeholder="Search Type"></div>
 						<div>
@@ -183,10 +183,10 @@
 				<div class="waves-effect waves-light btn"><a href="#main" class="modal-action modal-close">OK</a></div>
 				<div class="waves-effect waves-light btn"><a href="#main" class="modal-action modal-close">Cancel</a></div>
 			</div>
-		</div>
+		</div>-->
 
 		<!--Modal Structure of Planner-->
-		<div id="modal-advanced-planner" class="modal">
+		<!--<div id="modal-advanced-planner" class="modal">
 			<div class="modal-content no-padding">
 				<div class="advanced-search-title">
 					<div class="left-advanced-search-div"><span>Advanced Search</span></div>
@@ -195,9 +195,9 @@
 							<img src="icon/white-close-icon.png" class="right">
 						</a>
 					</div>
-				</div>
+				</div>-->
 				<!--Content-->
-				<form class="col s12 m12 l12 black-font">
+				<!--<form class="col s12 m12 l12 black-font">
 					<div class="wrapper-input-div">
 						<div class="input-div"><input type="text" class="validate" placeholder="Search Type"></div>
 						<div>
@@ -218,7 +218,7 @@
 				<div class="waves-effect waves-light btn"><a href="#main" class="modal-action modal-close">OK</a></div>
 				<div class="waves-effect waves-light btn"><a href="#main" class="modal-action modal-close">Cancel</a></div>
 			</div>
-		</div>
+		</div>-->
 
 		<!--SIDE BAR NAV-->
 		<ul id="nav-mobile" class="side-nav fixed">
@@ -230,7 +230,7 @@
 			<ul class="collapsible collapsible-accordion" id="sidebar-all-items">
 				<li>
 				<div class="collapsible-header waves-effect waves-red">
-					<a id="start-page-nav" class="sidebar-item" href="logout.php"><img src="icon/icon-home.png" class="gray-icon">
+					<a id="start-page-nav" class="sidebar-item" href="php/authentication/logout.php"><img src="icon/icon-home.png" class="gray-icon">
 						<span>Start Page</span>
 					</a>
 				</div>
@@ -323,7 +323,7 @@
 				</div>
 
 				<div class="logout-div float-right">
-					<a class="waves-effect waves-light btn" class="logout" href="logout.php">Logout</a>
+					<a class="waves-effect waves-light btn" class="logout" href="php/authentication/logout.php">Logout</a>
 				</div>
 
 				<div class="float-right">
@@ -351,13 +351,13 @@
 								items="modules">
 								</search>
 							</div>
-							<div class="filter-div">
+							<!--<div class="filter-div">-->
 								<!-- Modal Trigger -->
-								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
+								<!--<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
 								href="#modal-advanced-all-mod">
 								<img src="icon/filter-icon.png">
 								</a>
-							</div>
+							</div>-->
 						</div>
 					</form>
 				</div>
@@ -536,7 +536,7 @@
 				</div>
 
 				<div class="logout-div float-right">
-					<a class="waves-effect waves-light btn" class="logout" href="logout.php">Logout</a>
+					<a class="waves-effect waves-light btn" class="logout" href="php/authentication/logout.php">Logout</a>
 				</div>
 
 				<!--Search bar-->
@@ -555,11 +555,11 @@
 								items="modules">
 								</search>
 							</div>
-							<div class="filter-div">
+							<!--<div class="filter-div">-->
 								<!-- Modal Trigger -->
-								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
+								<!--<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
 									href="#modal-advanced-planner"><img src="icon/filter-icon.png"></a>
-							</div>
+							</div>-->
 						</div>
 					</form>
 				</div>

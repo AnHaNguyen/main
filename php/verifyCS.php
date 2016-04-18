@@ -20,11 +20,11 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD, $speci
 
 	for ($i = 0; $i < count($PRmod); $i++){		//popularize science and focus area mods
 
-		if (array_key_exists($PRmod[$i][0], $sci_mod)){		//mod names
+		if (array_key_exists($PRmod[$i][0], $sci_mod) && $PRmod[$i][1] != 'nil'){		//mod names
 			$sci_list[$k] = $PRmod[$i][0];			
 			$k++;
 		}
-		if (array_key_exists($PRmod[$i][0], $focus_mod)){		//mod names
+		if (array_key_exists($PRmod[$i][0], $focus_mod) && $PRmod[$i][1] != 'nil'){		//mod names
 			$focus_list[$m] = $PRmod[$i][0];			
 			$m++;
 		}
@@ -34,9 +34,10 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD, $speci
 	for ($i = 0; $i < count($PRmod); $i++){
 		$modName = $PRmod[$i][0];
 		$minus = $modulesMC[$modName];			//MCs
-
-		if (isInList($modName, $prReq)){		//handle Mods in PR
-			$prReq[$modName] -= $minus;
+	
+		$key = isInList($modName, $prReq);
+		if ($key !== ""){		//handle Mods in PR
+			$prReq[$key] -= $minus;
 			$count[$modName]++;
 		} 
 		
@@ -63,7 +64,7 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD, $speci
 			}
 		}
 	}
-	
+		
 	if (array_key_exists("Scie", $prReq)){
 		for ($j = 0; $j < count($sci_list); $j++){
 			$modName = $sci_list[$j];
@@ -88,7 +89,7 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD, $speci
 			}
 		}
 	}
-
+	
 	//handle the or cases
 	$left = array();
 	for ($i = 0; $i < count($or); $i++){
@@ -96,6 +97,7 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD, $speci
 		$min = 120 ;
 		$minMods = array();
 		for ($j = 0; $j < count($case); $j++){
+		
 			$satisfyMods = hasCompleteCS($case[$j], $PRmod, $count, $modulesMC, $sci_list);			//[0] = number of MCs not cleared, [1][2] ... list of mods used to clear 
 			
 			if ($satisfyMods[count($satisfyMods)-1] < $min){
@@ -108,19 +110,21 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD, $speci
 		for ($j = 0; $j < count($minMods); $j++){
 			$count[$minMods[$j]]++;
 		}
-		$left[$i] = $min;
+		$left[$i] = intval($min);
 	}	
-
 	$keys = array_keys($prReq);
 	$PRsum = $specialMCs;
+
 	for ($i = 0; $i < count($prReq); $i++){
 		if ($keys[$i] != "Focus4"){
 			$PRsum += $prReq[$keys[$i]];
 		}
 	}
+	
 	for ($i = 0; $i < count($left); $i++){
 		$PRsum += $left[$i];
 	}
+
 	//handle B&D + overlapping mods
 	for ($i =0; $i < count($PRmod); $i++){
 		$modName = $PRmod[$i][0];
@@ -128,7 +132,7 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD, $speci
 			$PRsum += $modulesMC[$modName];
 		}
 	}
-
+	
 	for ($i =0; $i < count($PRmod); $i++){
 		if ($BandD > 0){
 			$modName = $PRmod[$i][0];
@@ -139,6 +143,7 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD, $speci
 			}
 		}
 	}
+	
 	return $PRsum;
 }
 

@@ -18,19 +18,11 @@
 }
 
 .preloader  {
-    /*z-index: 999;
-    height: 100vh;
-    width: 100%;
-    text-align: center;*/
     margin: 0 !important;
     position: fixed;
     z-index: 999;
+    background: orange !important;
 }
-
-/*.preloader-wrapper {
-	top: 40%;
-	position: absolute;
-}*/
 
 /*-------------Start Page---------------*/
 html {

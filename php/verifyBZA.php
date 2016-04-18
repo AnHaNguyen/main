@@ -37,15 +37,17 @@ function verifyPRBZA($PRmod, $modulesMC, $prReq, $or, $specialMCs){
 			$j++;
 		}
 	}
-	
+
 	for ($i = 0; $i < count($PRmod); $i++){
 		$modName = $PRmod[$i][0];
 		$minus = $modulesMC[$modName];			//MCs
 
-		if (isInList($modName, $prReq)){		//handle Mods in PR
-			$prReq[$modName] -= $minus;
-		} 
-		
+		$key = isInList($modName, $prReq);
+		if ($key != ""){        //handle Mods in PR
+			$prReq[$key] -= $minus;
+			$count[$modName]++;
+		}      	   
+
 	}
 
 	if (array_key_exists("Elective", $prReq)){			//req has elective mod
@@ -96,15 +98,15 @@ function verifyPRBZA($PRmod, $modulesMC, $prReq, $or, $specialMCs){
 		$min = 120 ;
 		for ($j = 0; $j < count($case); $j++){
 			$satisfyMods = hasCompleteBZA($case[$j], $PRmod, $modulesMC, $elective_listA, $elective_listB, $ElectiveLev4);			//[0] = number of MCs not cleared, [1][2] ... list of mods used to clear 
-			
+
 			if ($satisfyMods < $min){
 				$min = $satisfyMods;
 			}
 		}
-		
+
 		$left[$i] = $min;
 	}
-	
+
 	$keys = array_keys($prReq);
 	$PRsum = $specialMCs;
 	for ($i = 0; $i < count($prReq); $i++){
@@ -131,7 +133,7 @@ function hasCompleteBZA($group, $PRmod, $modulesMC, $elective_listA, $elective_l
 			$total = handleElective($modName,$total,$mcArr, $modulesMC, $elective_listA, $elective_listB, $Elective4);
 		}
 	}
-	
+
 	return $total;
 }
 
