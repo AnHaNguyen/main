@@ -34,10 +34,11 @@ function verifyPRCS($PRmod, $modulesMC, $prReq, $focus_area, $or, $BandD, $speci
 	for ($i = 0; $i < count($PRmod); $i++){
 		$modName = $PRmod[$i][0];
 		$minus = $modulesMC[$modName];			//MCs
-
-		if (isInList($modName, $prReq)){		//handle Mods in PR
-			$prReq[$modName] -= $minus;
-			$count[$modName]++;
+	
+		$key = isInList($modName, $prReq);
+		if ($key !== ""){		//handle Mods in PR
+			$prReq[$key] -= $minus;
+			$count[$key]++;
 		} 
 		
 	}
