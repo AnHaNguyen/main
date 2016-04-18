@@ -173,15 +173,6 @@ $(document).ready(function() {
 	});
 
 	/*----------------Lighten - darken color----------------*/
-	/*var darkenDragDropColor = LightenDarkenColor("#b3c100", -40);
-	$(".drag-drop-item").on("mouseover", function() {
-		$(this).css("background-color", "" + darkenDragDropColor);
-	});
-
-	$(".drag-drop-item").on("mouseout", function() {
-		$(this).css("background-color", "#b3c100");
-	});*/
-
 	var darkenModal = LightenDarkenColor("#4cb5f5", -40);
 	$(".modal-footer div").on("mouseover", function(){
 		$(this).css("background-color", "" + darkenModal);
@@ -231,30 +222,6 @@ $(document).ready(function() {
 			$(".drag-drop-mc").show();
 		}
 	});
-
-
-	/*--------------------Trong Hiep code - jQueryScript-----------------------
-	$(document).ready(function($) {
-		var $banner = $('.banner'), $window = $(window);
-		var $topDefault = parseFloat( $banner.css('top'), 10 );
-			$window.on('scroll', function() {
-				var $top = $(this).scrollTop();
-				$banner.stop().animate( { top: $top + $topDefault }, 500, 'easeOutCirc' );
-			});
-
-		var $wiBanner = $banner.outerWidth() * 2;
-		zindex( $('#wrapper').outerWidth() );
-		$window.on('resize', function() {
-			zindex( $('#wrapper').outerWidth() );
-		});
-		function zindex(maxWidth){
-			if( $window.width() <= maxWidth + $wiBanner ) {
-				$banner.addClass('zindex');
-			} else {
-				$banner.removeClass('zindex');
-			}
-		}
-	});*/
 
 	// Initialize collapse button
   	$(".button-collapse").sideNav();
@@ -364,15 +331,7 @@ function toggleFunction() {
 	});
 }
 
-/*function semPlanner() {
-	$(".semester-div").on("click", function(){
-		$(this).addClass("selected-sem-planner");
-		$(this).parent().find(".mc-div").addClass("selected-sem-planner");
-		$(this).parent().find(".drag-n-drop").css("background-color", "#EEEEEE");
-	});
-}*/
-
-		/*---------Code from CSS-tricks----------*/
+/*---------Code from CSS-tricks----------*/
 function LightenDarkenColor(col, amt) { 
     var usePound = false;
     if (col[0] == "#") {
