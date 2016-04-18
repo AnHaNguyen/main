@@ -340,13 +340,13 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				}
 				service.reload();
 
+				// Only update one time after reloading
+				service.updateAllSelectedModules();
+
 				// Sync plan table with modules table
 				if (Transport.sync && token) {
 					Transport.sync();
 				}
-
-				// Only update one time after reloading
-				service.updateAllSelectedModules();
 			};
 
 			// Check if this module is alread added to visible list
@@ -495,7 +495,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						code: i,
 						type: pickType(module.code),
 						title: module.ModuleTitle,
-						mc: module.ModuleCredit,
+						mc: parseInt(module.ModuleCredit),
 						semester: module.Semester,
 						prerequisites: module.Prerequisites,
 						isTypeFixed: false
