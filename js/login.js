@@ -79,7 +79,7 @@ SemesterDisplay "Semester 2"*/
     }).done(function(data){
 		//console.log(data, matric);
         if (data == -1){
-            alert("Error retrieving!");
+			console.log('Error retrieving')
             return;
         }
         if (JSON.parse(data) == ""){            //first time user, no record in DB
@@ -96,7 +96,7 @@ SemesterDisplay "Semester 2"*/
                 }).done(function(_data){
 					//console.log('warning',_data);
                     if (_data == -1){
-                        alert("Error inserting!");
+						console.log('Error inserting');
                         return;
                     }
                 });   
