@@ -146,9 +146,17 @@ function getIVLEToken(){
 
 function initializeUser(token, callback){
 	var user = ivle.User(key, token);
-	
+	var user_id = user.profile('UserID');
+
 	user.init().done(function(){
-		callback(user);
+		$.ajax({
+			type: "POST",
+			url:"php/authentication/connectdatabase.php",
+			data: {user_id:user_id},
+			success: function(){
+				callback(user);
+			}
+		});
 	});	
 }
 

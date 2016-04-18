@@ -5,6 +5,10 @@ require_once('config.php');
 
 define('totalSem', 8);
 
+if ($_POST['user_id'] !== null && $_SESSION['user_id'] === null){
+	$_SESSION['user_id'] = $_POST['user_id'];
+}
+
 if ($_REQUEST['cmd'] == "getModules"){
 	//Connect to database
 	$db = new mysqli(DB_HOSTNAME, DB_USERID, DB_PASSWORD, DB_NAME);
@@ -14,7 +18,9 @@ if ($_REQUEST['cmd'] == "getModules"){
 	}	
 
 	$user_id = $db->escape_string($_REQUEST['matric']);
-	$_SESSION['user_id'] = $user_id;
+	if (!authenticate($user_id)){
+		exit('not authenticated');
+	}
 
 	$query = "SELECT * FROM ".table."  WHERE user_id = '".$user_id."'";
 	$res = $db->query($query);
@@ -84,6 +90,5 @@ function stringifyModules($list, $db){
 
 function authenticate($user_id){
 	return ($user_id === $_SESSION['user_id']);
-}
 ?>
 
