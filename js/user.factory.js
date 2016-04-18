@@ -105,8 +105,8 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 				object.displayMajor = major;
 				object.displayFocusArea = focusArea;
 				object.displayAdmissionYear = admissionYear;
-				object.displayUsername = username;
-				object.displayBachelor = bachelor;
+				object.displayUsername = object.username;
+				object.displayBachelor = object.bachelor;
 
 				object.reset(object.major, object.focusArea, object.admissionYear, callback);
 
