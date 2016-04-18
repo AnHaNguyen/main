@@ -146,16 +146,15 @@ function getIVLEToken(){
 
 function initializeUser(token, callback){
 	var user = ivle.User(key, token);
-	var user_id = user.profile('UserID');
-
+	
 	user.init().done(function(){
+		var user_id = user.profile('UserID');
 		$.ajax({
 			type: "POST",
 			url:"php/authentication/connectdatabase.php",
-			data: {user_id:user_id},
-			success: function(){
-				callback(user);
-			}
+			data: {user_id:user_id}
+		}).done(function(data){
+			callback(user);
 		});
 	});	
 }
