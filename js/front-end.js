@@ -36,6 +36,7 @@ function showMainPage() {
 
 	/*--------------Transitions for navigation bar----------------*/
 	Materialize.showStaggeredList("#sidebar-all-items");
+	Materialize.fadeInImage("#nav-mobile");
 	Materialize.fadeInImage(".page-title");
 	Materialize.fadeInImage(".main-table");
 }
