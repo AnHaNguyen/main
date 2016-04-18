@@ -1,10 +1,10 @@
 function showStartPage () {
 	$("#main-section").hide();
 	$("#grad-cer-div").hide();
-	$(".logout-div").hide();
 	$("#grad-cer-div").hide();
 	$("#back-div").css("display", "none");
 	$("#forward-div").css("display", "none");
+	$(".logout-div").css("display", "none");
 
 	$(".start-page").show();
 	$("#start-text-div").show();
@@ -13,7 +13,6 @@ function showStartPage () {
 function showCertiPage () {
 	$("#main-section").hide();
 	$("#grad-cer-div").hide();
-	$(".logout-div").hide();
 	$("#start-text-div").hide();
 
 	$(".start-page").show();
@@ -36,23 +35,24 @@ function showMainPage() {
 	showDegReq();
 
 	/*--------------Transitions for navigation bar----------------*/
-	Materialize.fadeInImage("#nav-mobile");
 	Materialize.showStaggeredList("#sidebar-all-items");
+	Materialize.fadeInImage("#nav-mobile");
 	Materialize.fadeInImage(".page-title");
 	Materialize.fadeInImage(".main-table");
 }
 
 function loginWithIVLE() {
 	showCertiPage();
-	$(".logout-div").show();
+	$(".logout-div").css("display", "block");
 
 	var token = getIVLEToken();
 	initializeUser(token, function(user){
 		major = getMajor(user).toString();
 		year = getAdmissionYear(user).toString();
+		alert("hello ivle");
 
 		if(major == "CS") {
-			$("#major_value").val("Computer Science");		
+			$("#major_value").val("Computer Science");
 		}
 		else if(major == "IS") {
 			$("#major_value").val("Information System");		
@@ -70,10 +70,6 @@ function loginWithIVLE() {
 		$("#focus_area_value").val('');
 		$("#focus-area-tip.tip span").css("display", "block");
 	});
-
-	/*window.location.href = 'main.html';
-	$(".start-page").hide();
-	$("#main-section").show();*/
 }
 
 function certiInputChecking () {
@@ -119,6 +115,7 @@ function certiInputChecking () {
 /*-----------------------Start-page--------------------------*/
 $("#get-started-btn").on("click", function() {
 	showCertiPage();
+	$(".logout-div").css("display", "none");
 });
 
 $("#starter-confirm-btn").on("click", function() {
@@ -140,6 +137,7 @@ $(document).ready(function() {
 
 	if(getIVLEToken() != null) {
 		loginWithIVLE();
+		$(".logout-div").css("display", "block");
 	}
 
 	// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
@@ -274,6 +272,12 @@ $(document).ready(function() {
 
   	$("#certi-page-nav").on("click", function(){
   		showCertiPage();
+
+  		if(getIVLEToken() == null) {
+  			$(".logout-div").css("display", "none");
+  		} else {
+  			$(".logout-div").css("display", "block");
+  		}
   	});
 
   	$("#forward-div").on("click", function(){

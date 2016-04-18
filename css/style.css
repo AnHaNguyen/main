@@ -19,10 +19,13 @@
 }
 
 .preloader  {
-    z-index: 999;
+    /*z-index: 999;
     height: 100vh;
     width: 100%;
-    text-align: center;
+    text-align: center;*/
+    margin: 0 !important;
+    position: fixed;
+    z-index: 999;
 }
 
 .preloader-wrapper {
@@ -53,7 +56,7 @@ body {
 }
 
 .logo-div {
-	padding: 3vh 0 1vh 0;
+	padding: 2vh 0 1vh 0;
 }
 
 .start-login-div .btn, #starter-confirm-btn {
@@ -177,7 +180,7 @@ body {
 }
 
 #logo-img-cust {
-	height: 100px !important;
+	height: 150px !important;
 	cursor: pointer;
 }
 
@@ -387,6 +390,7 @@ body {
 
 .logout-div {
 	margin-left: 20px;
+	display: none;
 }
 
 .logout-div .btn, #template-btn {

@@ -42,7 +42,7 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 			];
 
 			object.defaultUsername = 'You';
-			object.defaultBachelor = 'Bachelor of Computing';
+			object.defaultBachelor = 'Computing';
 
 			object.displayMajor = '';
 			object.displayFocusArea = '';

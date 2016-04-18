@@ -1,0 +1,9 @@
+diff a/js/front-end.js b/js/front-end.js	(rejected hunks)
+@@ -35,7 +35,6 @@
+ 	showDegReq();
+ 
+ 	/*--------------Transitions for navigation bar----------------*/
+-	Materialize.fadeInImage("#nav-mobile");
+ 	Materialize.showStaggeredList("#sidebar-all-items");
+ 	Materialize.fadeInImage(".page-title");
+ 	Materialize.fadeInImage(".main-table");
