@@ -29,7 +29,7 @@
 		</script>
 	</head>
 
-	<body ng-app="core" id="main">
+	<body ng-app="core">
 		<!---Social Network Plugin-->
 		<div id="fb-root"></div>
 		<script>(function(d, s, id) {
@@ -49,7 +49,7 @@
 			}(document, 'script', 'twitter-wjs');
 		</script>
 
-		<div id="preloader">
+		<div class="preloader">
 			<div class="preloader-wrapper big active">
 				<div class="spinner-layer spinner-blue">
 					<div class="circle-clipper left">
@@ -98,12 +98,20 @@
 						<div class="circle"></div>
 					</div>
 				</div>
-    		</div>
+			</div>
 		</div>
 
-		<div id="start-page" ng-controller="mainController">
-			<div id="start-wrapper">
-				<div id="logo-div">
+		<div class="start-page" ng-controller="mainController">
+			<div id="back-div">
+				<img src="icon/icon-back.png">
+			</div>
+
+			<div id="forward-div">
+				<img src="icon/icon-forward.png">
+			</div>
+
+			<div class="start-wrapper">
+				<div class="logo-div">
 					<span class="logo">SoCPlanS</span>
 				</div>
 
@@ -176,7 +184,7 @@
 					</form>
 				</div>
 
-				<div id="start-footer">
+				<div class="start-footer">
 					<div class="center">
 						<p>Available only to NUS's SoC Students</p>
 						<p>Proudly brought to you by <b>SoCPlans</b> team</p>
@@ -264,14 +272,30 @@
 		<!--SIDE BAR NAV-->
 		<ul id="nav-mobile" class="side-nav fixed">
 			<li class="none-hover-sidebar no-padding center no-lineheight">
-				<img src="img/logo.png" class="logo-img-cust">
+				<img src="img/logo.png" id="logo-img-cust">
 				<hr>
 			</li>
 			<li class="no-padding none-hover-sidebar">
 			<ul class="collapsible collapsible-accordion" id="sidebar-all-items">
-				<li id="deg-req-nav">
+				<li>
+				<div class="collapsible-header waves-effect waves-red">
+					<a id="start-page-nav" class="sidebar-item"><img src="icon/icon-home.png" class="gray-icon">
+						<span>Start Page</span>
+					</a>
+				</div>
+				</li>
+
+				<li>
+				<div class="collapsible-header waves-effect waves-red">
+					<a id="certi-page-nav" class="sidebar-item"><img src="icon/icon-certi.png" class="gray-icon">
+						<span>Certificate Page</span>
+					</a>
+				</div>
+				</li>
+
+				<li>
 				<div class="collapsible-header waves-effect waves-red active">
-					<a class="sidebar-item" href="#deg-req-div"><img src="icon/icon-deg-req.png" class="gray-icon">
+					<a id="deg-req-nav" class="sidebar-item" href="#deg-req-div"><img src="icon/icon-deg-req.png" class="gray-icon">
 						<span>Degree Requirement</span>
 					</a>
 				</div>
@@ -312,19 +336,25 @@
 
 		<!--DEGREE REQUIREMENT-->
 		<div id="deg-req-div" class="basic-padding col s12 m12 l12">
-			<div class="page-title row no-margin z-depth-1 banner">
+			<div class="page-title row no-margin z-depth-1">
 				<div class="large-text">
 					<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
 					<span>Degree Requirement</span>
 				</div>
-				<div class="social-nw-div">
-					<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true">
-					</div>
-					<div class="twitter-div">
-						<a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/SoCPlans" data-dnt="true">Tweet</a>
-					</div>
+
+				<div class="logout-div float-right">
+					<a class="waves-effect waves-light btn" class="logout" href="php/authentication/logout.php">Logout</a>
 				</div>
+
 				<div class="float-right" id="deg-req-info">
+				</div>
+			</div>
+
+			<div class="social-nw-div">
+				<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true">
+				</div>
+				<div class="twitter-div">
+					<a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/SoCPlans" data-dnt="true">Tweet</a>
 				</div>
 			</div>
 
@@ -335,17 +365,26 @@
 		<!--ALL MODULES-->
 		<div id="all-mod-div" class="basic-padding col s12 m12 l12">
 			<!--Fixed Navigation Bar-->
-			<div class="page-title no-margin z-depth-1 banner">
+			<div class="page-title no-margin z-depth-1">
 				<div class="large-text">
 					<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
 					<span>All Modules</span>
 				</div>
-				<!--Search bar-->
-				<div>
-					<div id="all-mod-btn-div" class="banner">
-					<a class="waves-effect waves-light btn" id="template-btn" ng-click="generateTemplate()">Modules Template</a>
-					<a class="waves-effect waves-light btn" id="reset-btn">Reset</a>
+
+				<div class="logout-div float-right">
+					<a class="waves-effect waves-light btn" class="logout" href="logout.php">Logout</a>
 				</div>
+
+				<div class="float-right">
+					<a class="waves-effect waves-light btn" id="template-btn" ng-click="generateTemplate()">
+						Modules Template
+					</a>
+					<a class="waves-effect waves-light btn" id="reset-btn">
+						Reset
+					</a>
+				</div>
+
+				<!--Search bar-->
 				<div class="search-bar-div row no-margin">
 					<form class="col s12 m12 l12">
 						<div class="row no-margin">
@@ -353,7 +392,7 @@
 								<search init="" 
 								id="moduletable-search" 
 								minlength="1"
-								titlefield="code,title" 
+								titlefield="code,title"
 								clearinput="true" 
 								select="addModule" 
 								filter="searchFilter"
@@ -364,17 +403,20 @@
 							<div class="filter-div">
 								<!-- Modal Trigger -->
 								<a class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Search filter" 
-									href="#modal-advanced-all-mod"><img src="icon/filter-icon.png"></a>
+								href="#modal-advanced-all-mod">
+								<img src="icon/filter-icon.png">
+								</a>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-				<div class="social-nw-div">
-					<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
-					<div class="twitter-div"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/SoCPlans" data-dnt="true">Tweet</a></div>
-				</div>
+
+			<div class="social-nw-div">
+				<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+				<div class="twitter-div"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/SoCPlans" data-dnt="true">Tweet</a></div>
 			</div>
+			
 
 			<div class="container-customize">
 				<div class="main-table col s12 l12 m12 z-depth-1">
@@ -536,11 +578,16 @@
 		<!--PLANNER MODULES-->
 		<div id="plan-mod-div" class="basic-padding" ng-controller="planController">
 			<!--Fixed Navigation Bar-->
-			<div class="page-title no-margin z-depth-1 banner">
+			<div class="page-title no-margin z-depth-1">
 				<div class="large-text">
-					<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
+					<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">Menu</i></a>
 					<span>Modules Planner</span>
 				</div>
+
+				<div class="logout-div float-right">
+					<a class="waves-effect waves-light btn" class="logout" href="logout.php">Logout</a>
+				</div>
+
 				<!--Search bar-->
 				<div class="search-bar-div">
 					<form class="col s12 m12 l12">
@@ -565,10 +612,11 @@
 						</div>
 					</form>
 				</div>
-				<div class="social-nw-div">
-						<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
-						<div class="twitter-div"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/SoCPlans" data-dnt="true">Tweet</a></div>
-				</div>
+			</div>
+
+			<div class="social-nw-div float-div">
+				<div class="fb-like float-right" data-href="https://www.facebook.com/SoCPlans" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+				<div class="twitter-div"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://twitter.com/SoCPlans" data-dnt="true">Tweet</a></div>
 			</div>
 
 			<div class="container-customize">
@@ -816,7 +864,6 @@
 
 		<!-- Compiled and minified JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-		<!--<script src="jquery.easing.min.js"></script>-->
 		<script type="text/javascript" src="js/front-end.js"></script>
 		<script type="text/javascript" src="js/degree-requirement.js"></script>
 		<script type="text/javascript" src="js/login.js"></script>

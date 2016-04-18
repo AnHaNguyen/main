@@ -38,7 +38,7 @@ function updateDegReq() {
 			displayReq(major,year);
 		});
 		
-	} else{
+	} else {
 		major = majorConvert[$('#major_value').val()]; 
 		year = getYear($('#admission_year_value').val());
 		displayReq(major,year);

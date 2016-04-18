@@ -1,12 +1,37 @@
+function showStartPage () {
+	$("#main-section").hide();
+	$("#grad-cer-div").hide();
+	$(".logout-div").hide();
+	$("#grad-cer-div").hide();
+	$("#back-div").css("display", "none");
+	$("#forward-div").css("display", "none");
+
+	$(".start-page").show();
+	$("#start-text-div").show();
+}
+
+function showCertiPage () {
+	$("#main-section").hide();
+	$("#grad-cer-div").hide();
+	$(".logout-div").hide();
+	$("#start-text-div").hide();
+
+	$(".start-page").show();
+	$("#grad-cer-div").show();
+	$("#back-div").css("display", "block");
+	$("#forward-div").css("display", "block");
+}
+
 function showDegReq() {
 	updateDegReq();
+	$(".start-page").hide();
 	$("#deg-req-div").show();
 	$("#all-mod-div").hide();
 	$("#plan-mod-div").hide();
 }
 
 function showMainPage() {
-	$("#start-page").hide();
+	$(".start-page").hide();
 	$("#main-section").show();
 	showDegReq();
 
@@ -18,8 +43,8 @@ function showMainPage() {
 }
 
 function loginWithIVLE() {
-	$("#start-text-div").hide();
-	$("#grad-cer-div").show();
+	showCertiPage();
+	$(".logout-div").show();
 
 	var token = getIVLEToken();
 	initializeUser(token, function(user){
@@ -45,15 +70,13 @@ function loginWithIVLE() {
 		$("#focus_area_value").val('');
 		$("#focus-area-tip.tip span").css("display", "block");
 	});
+
+	/*window.location.href = 'main.html';
+	$(".start-page").hide();
+	$("#main-section").show();*/
 }
 
-/*-----------------------Start-page--------------------------*/
-$("#get-started-btn").on("click", function() {
-	$("#start-text-div").hide();
-	$("#grad-cer-div").show();
-});
-
-$("#starter-confirm-btn").on("click", function() {
+function certiInputChecking () {
 	/*-------------Input Checking----------------*/
 	var major = $("#major_value");
 	var focus = $("#focus_area_value");
@@ -91,36 +114,36 @@ $("#starter-confirm-btn").on("click", function() {
 		$("#ay-tip.tip span").css("display", "none");
 		admission_year.removeClass("missing-input");
 	});
+}
+
+/*-----------------------Start-page--------------------------*/
+$("#get-started-btn").on("click", function() {
+	showCertiPage();
 });
+
+$("#starter-confirm-btn").on("click", function() {
+	certiInputChecking();
+});
+
 
 /*----------Pre-loader-----------*/
 $(window).load(function(){
-	$("#preloader").delay(500).fadeOut("slow");
+	$(".preloader").delay(500).fadeOut("slow");
 });
 
 $(document).ready(function() {
-	$("#main-section").hide();
-	$("#grad-cer-div").hide();
+	showStartPage();
 
-	if(ivle.getToken(window.location.href) != null) {
+	$('body').on('click','img#logo-img-cust',function(){
+		showStartPage();	
+	});
+
+	if(getIVLEToken() != null) {
 		loginWithIVLE();
 	}
 
 	// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
 	$(".modal-trigger").leanModal();
-
-	$(".search-input").focus(function(){
-	 	$(".search-input").keypress(function(e) {
-	 		if(e.which == 13) {		// pressing enter button
-	 			Materialize.toast('New module is added into ', 2000);
-	 		}
-	 	});
-	 });
-
-	 $("#homepage-btn").on("click", function() {
-	 	$("#home-page-div").hide();
-	 	$("#deg-req-div").show();
-	 });
 
 	// Highlight selected li item
 	var selector = ".collapsible-body ul li";
@@ -242,24 +265,43 @@ $(document).ready(function() {
   	/*----------------------Temporary hide-----------------------*/
   	$("#reset-btn").hide();
   	$(".filter-div").hide();
-});
 
 
-$("#deg-req-nav").on("click", function (){
-	showDegReq();
+  	/*-----------Navigation---------------*/
+  	$("#start-page-nav").on("click", function(){
+  		showStartPage();
+  	});
+
+  	$("#certi-page-nav").on("click", function(){
+  		showCertiPage();
+  	});
+
+  	$("#forward-div").on("click", function(){
+  		certiInputChecking();
+  	});
+
+	$("#back-div").on("click", function(){
+  		showStartPage();
+  	});  	
+
+  	$("#deg-req-nav").on("click", function (){
+  		showDegReq();
+  	});
+
+  	$("#all-mod-nav").on("click", function (){
+  		$("#deg-req-div").hide();
+  		$("#all-mod-div").show();
+  		$("#plan-mod-div").hide();
+  	});
+
+  	$("#plan-mod-nav").on("click", function (){
+  		$("#deg-req-div").hide();
+  		$("#all-mod-div").hide();
+  		$("#plan-mod-div").show();
+  	});
+
 });
 
-$("#all-mod-nav").on("click", function (){
-	$("#deg-req-div").hide();
-	$("#all-mod-div").show();
-	$("#plan-mod-div").hide();
-});
-
-$("#plan-mod-nav").on("click", function (){
-	$("#deg-req-div").hide();
-	$("#all-mod-div").hide();
-	$("#plan-mod-div").show();
-});
 
 /*-------------Toggle button taken/plan---------------*/
 function toggleFunction() {

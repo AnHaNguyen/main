@@ -1,5 +1,5 @@
 var key = "8Qrg78UktVoi1XHeTYLk1";      //need hidden
-var redirectUrl = "http://" + window.location.host + "/developer/index.html"; //need hidden
+var redirectUrl = "http://" + window.location.host + "/main/index.html"; //need hidden
 var CS = "Computer Science";
 var IS = "Information System";
 var BZA = "Business Analytic";
@@ -8,12 +8,9 @@ var totalSem = 8;
 var token;
 
 $("#login").on("click",function(){
-    if (ivle.getToken(window.location.href) == null){
-        var authUrl = ivle.login(key, redirectUrl);
-        token = ivle.getToken(authUrl);
-        window.location.href = authUrl;
-    }
-            
+	var authUrl = ivle.login(key, redirectUrl);
+    token = ivle.getToken(authUrl);
+    window.location.href = authUrl;
 });
 
 function updateToken(){
@@ -184,6 +181,4 @@ function getStates(user){     //add state to modules
     }
 }
 
-$("#logout").on("click",function(){
-	window.location.href = 'php/authentication/logout.php';
-});
+
