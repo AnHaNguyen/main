@@ -6,7 +6,7 @@ function showDegReq() {
 }
 
 function showMainPage() {
-	$("#start-page").hide();
+	$(".start-page").hide();
 	$("#main-section").show();
 	showDegReq();
 
@@ -45,6 +45,10 @@ function loginWithIVLE() {
 		$("#focus_area_value").val('');
 		$("#focus-area-tip.tip span").css("display", "block");
 	});
+
+	/*window.location.href = 'main.html';
+	$(".start-page").hide();
+	$("#main-section").show();*/
 }
 
 /*-----------------------Start-page--------------------------*/
@@ -93,16 +97,24 @@ $("#starter-confirm-btn").on("click", function() {
 	});
 });
 
+
 /*----------Pre-loader-----------*/
 $(window).load(function(){
-	$("#preloader").delay(500).fadeOut("slow");
+	$(".preloader").delay(500).fadeOut("slow");
 });
 
 $(document).ready(function() {
 	$("#main-section").hide();
 	$("#grad-cer-div").hide();
 
-	if(ivle.getToken(window.location.href) != null) {
+	$('body').on('click','img#logo-img-cust',function(){
+		$("#main-section").hide();
+		$("#grad-cer-div").hide();
+		$(".start-page").show();
+		$("#start-text-div").show();	
+	});
+
+	if(getIVLEToken() != null) {
 		loginWithIVLE();
 	}
 
@@ -115,11 +127,6 @@ $(document).ready(function() {
 	 			Materialize.toast('New module is added into ', 2000);
 	 		}
 	 	});
-	 });
-
-	 $("#homepage-btn").on("click", function() {
-	 	$("#home-page-div").hide();
-	 	$("#deg-req-div").show();
 	 });
 
 	// Highlight selected li item

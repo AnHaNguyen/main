@@ -8,15 +8,18 @@
 
 .social-nw-div {
 	display: flex;
-	float: right;
 	background-color: white;
 	padding: 10px;
 	border-radius: 5px;
-	height: 42px;
+
+	position: fixed;
+	top: 80px;
+	right: 30px;
+	z-index: 99;	
 }
 
-#preloader  {
-    z-index: 99;
+.preloader  {
+    z-index: 999;
     height: 100vh;
     width: 100%;
     text-align: center;
@@ -37,7 +40,7 @@ body {
 	margin: 0px !important;
 }
 
-#start-page {
+.start-page {
 	/*-----------Fit in 1 page, no scrolling---------*/
     height: 100vh;
     width: 100%;
@@ -49,7 +52,7 @@ body {
     background: linear-gradient(#0F398B, #E5FEFF 100%, #CDFFDC); 			/* Standard syntax (must be last) */
 }
 
-#logo-div {
+.logo-div {
 	padding: 3vh 0 1vh 0;
 }
 
@@ -72,7 +75,7 @@ body {
 	margin: 0 2% 0 2%;
 }
 
-#start-wrapper {
+.start-wrapper {
 	margin: 0 20% 0 20%;
 	height: 100vh;
 }
@@ -151,7 +154,7 @@ body {
 	text-shadow: 2px 2px black;
 }
 
-.logo-img-cust {
+#logo-img-cust {
 	height: 100px !important;
 	cursor: pointer;
 }
@@ -165,14 +168,6 @@ body {
 	text-transform: capitalize !important;
 }
 
-		/*--------------Floating banner---------------*/
-.banner {
-  	position: absolute;
-  	z-index: 100;
-  	top: 0px;
-}
-
-.zindex { z-index: -999; }
 		/*---------------------Triangles of alert---------------------*/
 .tip {
     position: relative;
@@ -364,16 +359,28 @@ body {
 	position: fixed;
 	font-family: 'Open Sans', sans-serif;
   	width: 83%;
+  	top: 0;
+  	z-index: 100;
 }
 
-#all-mod-btn-div {
-	top: 80px !important;
-	right: 0;
+.logout-div {
+	margin-left: 20px;
+}
+
+.logout-div .btn, #template-btn {
+	font-size: 14px;
+	line-height: normal;
+	height: auto;
+	padding: 11px 15px;
+	border-radius: 5px;
+}
+
+.logout-div .btn:hover, #template-btn:hover {
+	font-weight: 500;
 }
 
 #deg-req-title {
 	font-weight: bold;
-	margin-right: 30px;
 	font-size: 16px;
 	line-height: 42px;
 	float: right;
@@ -834,7 +841,7 @@ footer a:hover {
         width: 100%;
     }
 
-    #all-mod-btn-div {
+    .social-nw-div {
     	top: 130px !important;
     }
 
@@ -854,7 +861,7 @@ footer a:hover {
 	}
 
 	/*------------Start-page-----------------*/
-	#start-wrapper {
+	.start-wrapper {
 		margin: 0 !important;
 	}
 
@@ -881,20 +888,24 @@ footer a:hover {
 	}
 	/*----------------------------------------*/
 
-    #start-footer {
+    .start-footer {
     	display: none !important;
     }
 
     .main-table {
-    	padding: 80px 5px 20px 5px;
+    	padding: 40px 5px 20px 5px;
     }
 
-    #all-mod-btn-div {
-    	top: 170px !important;
+    .social-nw-div {
+    	top: 120px !important;
     }
 
     #moduletable-search_value, #plantable-search_value {
     	width: 150px !important;
+    }
+
+    #deg-req-info {
+    	float: left !important;
     }
 
     /*------------------Table------------------*/
@@ -920,10 +931,14 @@ footer a:hover {
     }
 
     .container-customize {
-    	padding: 180px 0 0 0 !important;
+    	padding: 120px 0 0 0 !important;
     }
 
     .modal {
     	width: 100% !important;
+    }
+
+    .social-nw-div {
+    	display: none;
     }
 }
