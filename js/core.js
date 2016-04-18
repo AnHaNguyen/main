@@ -141,6 +141,8 @@ angular.module('core').controller('mainController', [ '$scope', 'Modules', 'User
 
 					Modules.addModule(module, 'taken', 'auto');
 				}
+
+				Modules.updateAllSelectedModules();
 			});
 		}
 	}
