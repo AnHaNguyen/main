@@ -375,10 +375,6 @@ body {
 	border-radius: 5px;
 }
 
-.logout-div .btn:hover, #template-btn:hover {
-	font-weight: 500;
-}
-
 #deg-req-title {
 	font-weight: bold;
 	font-size: 16px;

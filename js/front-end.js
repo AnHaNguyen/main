@@ -1,3 +1,21 @@
+function showStartPage () {
+	$("#main-section").hide();
+	$("#grad-cer-div").hide();
+	$(".logout-div").hide();
+	$("#grad-cer-div").hide();
+	$(".start-page").show();
+	$("#start-text-div").show();
+}
+
+function showCertiPage () {
+	$("#main-section").hide();
+	$("#grad-cer-div").hide();
+	$(".logout-div").hide();
+	$("#start-text-div").hide();
+	$(".start-page").show();
+	$("#grad-cer-div").show();
+}
+
 function showDegReq() {
 	updateDegReq();
 	$("#deg-req-div").show();
@@ -18,8 +36,8 @@ function showMainPage() {
 }
 
 function loginWithIVLE() {
-	$("#start-text-div").hide();
-	$("#grad-cer-div").show();
+	showCertiPage();
+	$(".logout-div").show();
 
 	var token = getIVLEToken();
 	initializeUser(token, function(user){
@@ -53,8 +71,7 @@ function loginWithIVLE() {
 
 /*-----------------------Start-page--------------------------*/
 $("#get-started-btn").on("click", function() {
-	$("#start-text-div").hide();
-	$("#grad-cer-div").show();
+	showCertiPage();
 });
 
 $("#starter-confirm-btn").on("click", function() {
@@ -104,14 +121,10 @@ $(window).load(function(){
 });
 
 $(document).ready(function() {
-	$("#main-section").hide();
-	$("#grad-cer-div").hide();
+	showStartPage();
 
 	$('body').on('click','img#logo-img-cust',function(){
-		$("#main-section").hide();
-		$("#grad-cer-div").hide();
-		$(".start-page").show();
-		$("#start-text-div").show();	
+		showStartPage();	
 	});
 
 	if(getIVLEToken() != null) {
@@ -120,14 +133,6 @@ $(document).ready(function() {
 
 	// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
 	$(".modal-trigger").leanModal();
-
-	$(".search-input").focus(function(){
-	 	$(".search-input").keypress(function(e) {
-	 		if(e.which == 13) {		// pressing enter button
-	 			Materialize.toast('New module is added into ', 2000);
-	 		}
-	 	});
-	 });
 
 	// Highlight selected li item
 	var selector = ".collapsible-body ul li";
@@ -249,24 +254,35 @@ $(document).ready(function() {
   	/*----------------------Temporary hide-----------------------*/
   	$("#reset-btn").hide();
   	$(".filter-div").hide();
-});
 
 
-$("#deg-req-nav").on("click", function (){
-	showDegReq();
+  	/*-----------Navigation---------------*/
+  	$("#start-page-nav").on("click", function(){
+  		showStartPage();
+  	});
+
+  	$("#certi-page-nav").on("click", function(){
+  		showCertiPage();
+  	});
+
+  	$("#deg-req-nav").on("click", function (){
+  		showDegReq();
+  	});
+
+  	$("#all-mod-nav").on("click", function (){
+  		$("#deg-req-div").hide();
+  		$("#all-mod-div").show();
+  		$("#plan-mod-div").hide();
+  	});
+
+  	$("#plan-mod-nav").on("click", function (){
+  		$("#deg-req-div").hide();
+  		$("#all-mod-div").hide();
+  		$("#plan-mod-div").show();
+  	});
+
 });
 
-$("#all-mod-nav").on("click", function (){
-	$("#deg-req-div").hide();
-	$("#all-mod-div").show();
-	$("#plan-mod-div").hide();
-});
-
-$("#plan-mod-nav").on("click", function (){
-	$("#deg-req-div").hide();
-	$("#all-mod-div").hide();
-	$("#plan-mod-div").show();
-});
 
 /*-------------Toggle button taken/plan---------------*/
 function toggleFunction() {
