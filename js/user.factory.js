@@ -41,11 +41,14 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 				{ title: '2010/2011', code: '1011' }
 			];
 
+			object.defaultUsername = 'You';
+			object.defaultBachelor = 'Bachelor of Computing';
+
 			object.displayMajor = '';
 			object.displayFocusArea = '';
 			object.displayAdmissionYear = '';
-			object.displayUsername = '';
-			object.displayBachelor = '';
+			object.displayUsername = object.defaultUsername;
+			object.displayBachelor = object.defaultBachelor;
 
 			/**
 			 *  Save user's data to cookie 
@@ -95,8 +98,8 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 				object.major = object.findItemByTitle(major, object.majorsList);
 				object.focusArea = object.findItemByTitle(focusArea, object.focusAreasList);
 				object.admissionYear = object.findItemByTitle(admissionYear, object.admissionYearsList);
-				object.username = username;
-				object.bachelor = bachelor;
+				object.username = ( username ? username : object.defaultUsername );
+				object.bachelor = ( bachelor ? bachelor : object.defaultBachelor );
 
 
 				object.displayMajor = major;
