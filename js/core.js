@@ -231,7 +231,7 @@ angular.module('core').controller('planController', [ '$scope', 'Modules', 'loca
 				for(var j in sem) {
 					var mod = sem[j];
 
-					$scope.plannedMC[i] += mod.mc;
+					$scope.plannedMC[i] += parseInt(mod.mc);
 				}
 			}
 		};
