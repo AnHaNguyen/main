@@ -7,6 +7,7 @@ define('totalSem', 8);
 
 if ($_POST['user_id'] !== null && $_SESSION['user_id'] === null){
 	$_SESSION['user_id'] = $_POST['user_id'];
+	echo ("Done");
 }
 
 if ($_REQUEST['cmd'] == "getModules"){
@@ -90,5 +91,6 @@ function stringifyModules($list, $db){
 
 function authenticate($user_id){
 	return ($user_id === $_SESSION['user_id']);
+}
 ?>
 
