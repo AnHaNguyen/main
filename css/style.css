@@ -387,6 +387,7 @@ body {
 
 .logout-div {
 	margin-left: 20px;
+	display: none;
 }
 
 .logout-div .btn, #template-btn {
