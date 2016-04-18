@@ -3,6 +3,9 @@ function showStartPage () {
 	$("#grad-cer-div").hide();
 	$(".logout-div").hide();
 	$("#grad-cer-div").hide();
+	$("#back-div").css("display", "none");
+	$("#forward-div").css("display", "none");
+
 	$(".start-page").show();
 	$("#start-text-div").show();
 }
@@ -12,12 +15,16 @@ function showCertiPage () {
 	$("#grad-cer-div").hide();
 	$(".logout-div").hide();
 	$("#start-text-div").hide();
+
 	$(".start-page").show();
 	$("#grad-cer-div").show();
+	$("#back-div").css("display", "block");
+	$("#forward-div").css("display", "block");
 }
 
 function showDegReq() {
 	updateDegReq();
+	$(".start-page").hide();
 	$("#deg-req-div").show();
 	$("#all-mod-div").hide();
 	$("#plan-mod-div").hide();
@@ -69,12 +76,7 @@ function loginWithIVLE() {
 	$("#main-section").show();*/
 }
 
-/*-----------------------Start-page--------------------------*/
-$("#get-started-btn").on("click", function() {
-	showCertiPage();
-});
-
-$("#starter-confirm-btn").on("click", function() {
+function certiInputChecking () {
 	/*-------------Input Checking----------------*/
 	var major = $("#major_value");
 	var focus = $("#focus_area_value");
@@ -112,6 +114,15 @@ $("#starter-confirm-btn").on("click", function() {
 		$("#ay-tip.tip span").css("display", "none");
 		admission_year.removeClass("missing-input");
 	});
+}
+
+/*-----------------------Start-page--------------------------*/
+$("#get-started-btn").on("click", function() {
+	showCertiPage();
+});
+
+$("#starter-confirm-btn").on("click", function() {
+	certiInputChecking();
 });
 
 
@@ -264,6 +275,14 @@ $(document).ready(function() {
   	$("#certi-page-nav").on("click", function(){
   		showCertiPage();
   	});
+
+  	$("#forward-div").on("click", function(){
+  		certiInputChecking();
+  	});
+
+	$("#back-div").on("click", function(){
+  		showStartPage();
+  	});  	
 
   	$("#deg-req-nav").on("click", function (){
   		showDegReq();

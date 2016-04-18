@@ -80,6 +80,28 @@ body {
 	height: 100vh;
 }
 
+#back-div {
+	display: none;
+	top: 40vh;
+	left: 10vh;
+	position: absolute;
+	cursor: pointer;
+}
+
+#forward-div {
+	display: none;
+	top: 40vh;
+	right: 10vh;
+	position: absolute;
+	cursor: pointer;
+}
+
+#back-div:hover, #forward-div:hover {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	opacity: 0.8;
+}
+
 #grad-cer-div {
 	border: 1px solid black;
 	padding: 20px;
