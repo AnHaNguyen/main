@@ -1,10 +1,15 @@
 <?php
 function isLev4($modName){		//check a mod is lev4 or higher
 	for ($i = 0; $i < strlen($modName) -1;$i++){
-		$char = substr($modName, $i, $i+1);
+		
+		$char = substr($modName, $i, 1);
 		if (intval($char) != 0){
-			return (intval($char) >= 4);
-		}
+			if (intval($char) >= 4){
+				return true;
+			} else{
+				return false;
+			}
+		} 
 	}
 	return false;
 }
@@ -12,7 +17,7 @@ function isLev4($modName){		//check a mod is lev4 or higher
 function isLev4Prefix($modName, $prefix){
 	for ($i = 0; $i < count($prefix); $i++){
 		if (strpos($modName, $prefix[$i]) !== false){
-			$lev = substr($modName, strlen($prefix[$i]));
+			$lev = substr($modName, strlen($prefix[$i]),1);
 			if (intval($lev) >= 4){
 				return true;
 			}
