@@ -503,7 +503,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			service.fetchData = function (admissionYear, major, callback) {
 				$http({
 					method: 'GET',
-					url: '/main/data/simplified.json',
+					url: '/main/data/newmodules.json',
 					params: {
 						adm_year: admissionYear,
 						major: major,
