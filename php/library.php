@@ -33,10 +33,10 @@ function isInList($mod, $list){
 	for ($i = 0; $i < count($key);$i++){
 		$pos = strpos($key[$i],$modName);
 		if ($pos !== false && $pos == 0){
-			return true;
+			return $key[$i];
 		}
 	}
-	return false;
+	return "";
 }
 
 function extractMod($mod){
