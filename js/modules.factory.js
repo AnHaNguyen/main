@@ -244,7 +244,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 						service.changeState(modCode, modState);
 					}
 
-					service.updateAllSelectedModules();
+					if ((!origin) || (origin !== 'auto')) {
+						service.updateAllSelectedModules();
+					}
 				}
 			}
 
@@ -342,6 +344,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 				if (Transport.sync && token) {
 					Transport.sync();
 				}
+
+				// Only update one time after reloading
+				service.updateAllSelectedModules();
 			};
 
 			// Check if this module is alread added to visible list
@@ -430,7 +435,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					module.selected[module.state] = 'selected-toggle-btn';
 				}
 
-				service.updateAllSelectedModules();
+				if ((!origin) || (origin !== 'auto')) {
+					service.updateAllSelectedModules();
+				}
 			};
 
 			/**
@@ -461,7 +468,9 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 					module.isTypeFixed = true;
 				}
 
-				service.updateAllSelectedModules();
+				if ((!origin) || (origin !== 'auto')) {
+					service.updateAllSelectedModules();
+				}
 			};
 
 			/**
@@ -503,7 +512,7 @@ angular.module('core').factory('Modules', ['$http', 'localStorageService', 'User
 			service.fetchData = function (admissionYear, major, callback) {
 				$http({
 					method: 'GET',
-					url: '/main/data/simplified.json',
+					url: '/main/data/newmodules.json',
 					params: {
 						adm_year: admissionYear,
 						major: major,

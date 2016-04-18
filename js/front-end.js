@@ -49,7 +49,7 @@ function loginWithIVLE() {
 	initializeUser(token, function(user){
 		major = getMajor(user).toString();
 		year = getAdmissionYear(user).toString();
-		alert("hello ivle");
+		console.log('hello ivle');
 
 		if(major == "CS") {
 			$("#major_value").val("Computer Science");

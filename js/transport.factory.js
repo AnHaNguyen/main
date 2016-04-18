@@ -25,6 +25,7 @@ angular.module('core').factory('Transport', ['$interval', '$http',
 						factory.isLastRequestReceived = true;
 					}, function (err) {
 						console.log('ERROR: Saving modules list' + err);
+						factory.isLastRequestReceived = true;
 					});
 				}
 			}, 10);
