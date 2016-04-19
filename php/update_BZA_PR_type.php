@@ -10,7 +10,7 @@ define("LIST_B_TYPE", "LIST_B");
 
 
 function update_BZA_PR_type($adm_year, $mods) {
-    $all_mod_info_string = file_get_contents('../data/simplified.json');
+    $all_mod_info_string = file_get_contents('../data/modules_min.json');
     $grad_reqs_string = file_get_contents('../req/BZA/' . $adm_year . '.json');
     $elective_reqs_string = file_get_contents('../req/BZA/elective.json');
 

@@ -11,7 +11,7 @@ define("IS_4K_TYPE", "IS_4K");
 
 
 function update_IS_PR_type($adm_year, $mods) {
-    $all_mod_info_string = file_get_contents('../data/simplified.json');
+    $all_mod_info_string = file_get_contents('../data/modules_min.json');
     $grad_reqs_string = file_get_contents('../req/IS/' . $adm_year . '.json');
     $elective_reqs_string = file_get_contents('../req/IS/elective.json');
 
@@ -60,7 +60,7 @@ function update_IS_PR_type($adm_year, $mods) {
 
         // AY14-15 and onwards, if FYP is taken, number of elective MCs and level 4k elective MCs required are reduced
         if ($adm_year >= "1415") {
-            $fyp_mod_credit = $all_mod_info[$fyp_mod_code]["ModuleCredit"];
+            $fyp_mod_credit = $all_mod_info[$fyp_mod_code]["MC"];
             $electives_mc_req -= $fyp_mod_credit;
             $electives_4k_mc_req -= $fyp_mod_credit;
         }
@@ -78,7 +78,7 @@ function update_IS_PR_type($adm_year, $mods) {
 
         if (!$mod_type) { // Skip if module type is already set
 
-            $mod_credit = $all_mod_info[$mod_code]["ModuleCredit"];
+            $mod_credit = $all_mod_info[$mod_code]["MC"];
             $is_IS_mod = strpos($mod_code, "IS") === 0;
             $is_lvl_4k = $mod_code[2] === "4";
 
