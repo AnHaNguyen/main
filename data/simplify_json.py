@@ -1,16 +1,17 @@
-"""
-TODO:
-- Deal with "strings or lists or dictionaries" issue. Standardize data structure across prerequisites and corequisites?
-- Add documentation to minify dictionary
-- Update documentation (outdated)
-"""
-
 import json
 import re
 import os
+import sys
+import getopt
+
+"""
+TODO:
+- Deal with "strings or lists or dictionaries" issue. Standardize data structure across prerequisites and corequisites?
+- Update documentation (outdated)
+"""
 
 
-debug_mode = True
+debug_mode = False
 
 
 def console_print(txt):
@@ -18,27 +19,40 @@ def console_print(txt):
 		print(txt)
 
 
-# Translates original key value in json file to shorter key
-minify = {
-	"ModuleTitle": "ModuleTitle",
-	"ModuleCredit": "ModuleCredit",
-	"Semester": "Semester",
-	"Preclusion": "Preclusion",
-	"Prerequisite": "Prerequisites",
-	"Corequisite": "Corequisites",
-	"ParsedPreclusion": "ParsedPreclusion",
-	"ParsedPrerequisite": "ParsedPrerequisites",
-	"ParsedCorequisite": "ParsedCorequisites"
-}
-
-
 def main():
-	module_file, semester_file = load_args()
-	mod_dict = simplify(module_file)
-	# mod_dict = parse_prerequisites(mod_dict)
-	# mod_dict = parse_corequisites(mod_dict)
-	mod_dict = include_semester_info(mod_dict, semester_file)
-	create_json_file(mod_dict)
+	module_file, semester_file, min_mode = load_args()
+
+	# Translates original key value in json file to shorter key
+	if min_mode:
+		minify = {
+			"ModuleTitle": "MT"
+			, "ModuleCredit": "MC"
+			, "Semester": "SM"
+			#, "Preclusion": "PC"
+			#, "Prerequisite": "PR"
+			#, "Corequisite": "CR"
+			#, "ParsedPreclusion": "PPC"
+			#, "ParsedPrerequisite": "PPR"
+			#, "ParsedCorequisite": "PCR"
+		}
+	else :
+		minify = {
+			"ModuleTitle": "ModuleTitle"
+			, "ModuleCredit": "ModuleCredit"
+			, "Semester": "Semester"
+			, "Preclusion": "Preclusion"
+			, "Prerequisite": "Prerequisites"
+			, "Corequisite": "Corequisites"
+			, "ParsedPreclusion": "ParsedPreclusion"
+			, "ParsedPrerequisite": "ParsedPrerequisites"
+			, "ParsedCorequisite": "ParsedCorequisites"
+		}
+
+	mod_dict = simplify(module_file, minify)
+	# mod_dict = parse_prerequisites(mod_dic, minify)
+	# mod_dict = parse_corequisites(mod_dict, minify)
+	mod_dict = include_semester_info(mod_dict, semester_file, minify)
+	create_json_file(mod_dict, min_mode)
 
 	if debug_mode:
 		print len(mod_dict)
@@ -49,8 +63,8 @@ def load_args():
 
 	:return: module_file and semester_file variables
 	"""
-	module_file = "moduleInformation.json"
-	semester_file = "moduleList.json"
+	module_file = "nusmods_api/moduleInformation.json"
+	semester_file = "nusmods_api/moduleList.json"
 
 	try:
 		if os.stat(module_file).st_size > 0 and os.stat(semester_file).st_size > 0:
@@ -60,12 +74,17 @@ def load_args():
 		else:
 			console_print("'" + semester_file + "'is empty or missing")
 	except OSError:
-		print "No files found"
+		sys.exit("No files found")
 
-	return module_file, semester_file
+	try:
+		arg = sys.argv[1:]
+	except getopt.GetoptError, err:
+		sys.exit("Error in getting arguments")
+
+	return module_file, semester_file, arg == ["-min"]
 
 
-def simplify(module_file):
+def simplify(module_file, minify):
 	""" Removes redundant fields (such as CORS bidding stats and timetables) from the modules.json file, and also shortens
 	the names of keys to reduce the file size. Returns a dictionary, that uses module codes as keys, of dictionaries
 	containing other information about that module, which is elaborated below.
@@ -73,12 +92,13 @@ def simplify(module_file):
 	Each module dictionary has the following information:
 	- ModuleTitle (NM) = Name of this module.
 	- ModuleCredit (MC) = No. of credits this module is worth.
-	- ParsedPreclusion (PC) = List of modules that cannot be taken together with this module.
+	- ParsedPreclusion (PPC) = List of modules that cannot be taken together with this module.
 	- Prerequisite (PR) = Plaintext information detailing prerequisites for this module.
-	- ParsedPrerequisite (PP) = String or list or dictionary of modules that are prerequisites for this module.
+	- ParsedPrerequisite (PPR) = String or list or dictionary of modules that are prerequisites for this module.
 	- Corequisite (CR) = Plaintext information detailing corequisites for this module.
 
 	:param module_file: File containing module details, kindly provided by NUSMods' API.
+	:param minify: Dictionary that translates long parameter names into shorter ones.
 	:return: A dictionary (that uses module codes as keys) of dictionaries (containing certain module information).
 	"""
 	with open(module_file) as json_file:
@@ -99,22 +119,22 @@ def simplify(module_file):
 
 			mod_dict[module_code] = simplified_info
 
-
 		# Handle exceptions
-		mod_dict["CS2020"].pop(minify["Corequisite"], None) # Incorrectly listed corequisite
+		#mod_dict["CS2020"].pop(minify["Corequisite"], None) # Incorrectly listed corequisite
 
 		return mod_dict
 
 
-def parse_prerequisites(mod_dict):
+def parse_prerequisites(mod_dict, minify):
 	return None
 
 
-def parse_corequisites(mod_dict):
+def parse_corequisites(mod_dict, minify):
 	"""Parses plaintext information detailing corequisites for each module, into lists or dictionaries containing
 	corequisite modules.
 
 	:param mod_dict: A dictionary (that uses module codes as keys) of dictionaries (containing certain module information).
+	:param minify: Dictionary that translates long parameter names into shorter ones.
 	:return: mod_dict updated with corequisite modules parsed into lists or dictionaries
 	"""
 	mod_string = "[A-Z]{2,3}\d{4}[A-Z]*"
@@ -146,11 +166,12 @@ def parse_corequisites(mod_dict):
 	return mod_dict
 
 
-def include_semester_info(mod_dict, semester_file):
+def include_semester_info(mod_dict, semester_file, minify):
 	"""Extracts info about which semesters modules are offered in, and includes this info in the dictionary of modules
 
 	:param mod_dict: A dictionary (that uses module codes as keys) of dictionaries (containing certain module information).
 	:param semester_file: File containing info about which semesters modules are offered in, kindly provided by NUSMods' API.
+	:param minify: Dictionary that translates long parameter names into shorter ones.
 	:return: mod_dict updated with info about which semesters modules are offered in
 	"""
 	with open(semester_file) as json_file:
@@ -162,13 +183,19 @@ def include_semester_info(mod_dict, semester_file):
 		return mod_dict
 
 
-def create_json_file(mod_dict):
+def create_json_file(mod_dict, min_mode):
 	"""Writes the dictionary (that uses module codes as keys) of dictionaries (containing certain module information),
 	to a JSON file on disk.
 
 	:param mod_dict: A dictionary (that uses module codes as keys) of dictionaries (containing certain module information).
+	:param min_mode: Boolean value, tells function if mod_dict was written in minimized mode
 	"""
-	module_file = file("simplified.json", 'w')
+	if min_mode:
+		filename = "modules_min.json"
+	else:
+		filename = "modules.json";
+
+	module_file = file(filename, 'w')
 	json.dump(mod_dict, module_file)
 	module_file.close()
 
