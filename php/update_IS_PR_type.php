@@ -32,6 +32,7 @@ function update_IS_PR_type($adm_year, $mods) {
     // Flatten 2d array containing module code and MC into 1d array containing only module codes
     foreach ($calculus_reqs_2d_array as $calculus_mod_code_and_mc) {
         $calculus_reqs[] = $calculus_mod_code_and_mc[0]; // Just extract the module codes
+        echo $calculus_mod_code_and_mc[0];
     }
 
     // Set type for FYP or internship modules
@@ -88,7 +89,7 @@ function update_IS_PR_type($adm_year, $mods) {
             }
 
             // Set type for calculus modules
-            else if (array_key_exists($mod_code, $calculus_reqs)) {
+            else if (in_array($mod_code, $calculus_reqs)) {
                 $mods[$mod_code] = [PR_TYPE,CORE_TYPE];
             }
 
