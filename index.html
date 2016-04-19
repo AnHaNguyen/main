@@ -378,15 +378,20 @@
 						</div>
 
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s4 m2 l2 header item">Type</div>
-							<div class="col s3 m2 l1 header item">Code</div>
+							<div class="col s7 m4 l3 common-type-code-div no-padding flex-display">
+								<!--<div class="col s4 m2 l2 header item">Type</div>
+								<div class="col s3 m2 l1 header item">Code</div>-->
+								<div class="header item">Type</div>
+								<div class="header item">Code</div>
+							</div>
 							<div class="col s0 m4 l5 header item">Title</div>
 							<div class="col s0 m1 l1 header item">MC</div>
 							<div class="col s5 m3 l3 header item">Actions</div>
 						</div>
 
 						<div ng-repeat="module in modulesController.visibleModules['ULR']" class="col s12 m12 l12 content-row ulr-hover {{module.new}}">
-							<div class="col s4 m2 l2 item">
+							<div class="col s7 m4 l3 common-type-code-div no-padding flex-display">
+							<div class="item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
@@ -396,14 +401,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s3 m2 l1 item">{{ module.code }}</div>
+							<div class="item">{{ module.code }}</div>
+						</div>
 							<div class="col s0 m4 l5 item">{{ module.title }}</div>
 							<div class="col s0 m1 l1 item">{{ module.mc }}</div>
 							<div class="col s5 m3 l3 item">
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
-								<div class="btn-group float-left">
+								<div class="btn-group float-right">
 									<a class="left-div toggle-btn btn waves-effect waves-light {{module.selected['taken']}}" ng-click="changeState(module.code, 'taken')">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light {{module.selected['planned']}}" ng-click="changeState(module.code, 'planned')">Plan</a>
 									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['waived']}}" ng-click="changeState(module.code, 'waived')">Waived</a>
@@ -429,15 +435,18 @@
 						</div>
 
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s4 m2 l2 header item">Type</div>
-							<div class="col s3 m2 l1 header item">Code</div>
+							<div class="col s7 m4 l3 common-type-code-div no-padding flex-display">
+								<div class="header item">Type</div>
+								<div class="header item">Code</div>
+							</div>
 							<div class="col s0 m4 l5 header item">Title</div>
 							<div class="col s0 m1 l1 header item">MC</div>
 							<div class="col s5 m3 l3 header item">Actions</div>
 						</div>
 
 						<div ng-repeat="module in modulesController.visibleModules['PR']" class="col s12 m12 l12 content-row pr-hover {{module.new}}">
-							<div class="col s4 m2 l2 item">
+							<div class="col s7 m4 l3 common-type-code-div no-padding flex-display">
+							<div class="item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
@@ -447,14 +456,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s3 m2 l1 item">{{ module.code }}</div>
+							<div class="item">{{ module.code }}</div>
+						</div>
 							<div class="col s0 m4 l5 item">{{ module.title }}</div>
 							<div class="col s0 m1 l1 item">{{ module.mc }}</div>
 							<div class="col s5 m3 l3 item">
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
-								<div class="btn-group float-left">
+								<div class="btn-group float-right">
 									<a class="left-div toggle-btn btn waves-effect waves-light {{module.selected['taken']}}" ng-click="changeState(module.code, 'taken')">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light {{module.selected['planned']}}" ng-click="changeState(module.code, 'planned')">Plan</a>
 									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['waived']}}" ng-click="changeState(module.code, 'waived')">Waived</a>
@@ -480,15 +490,18 @@
 						</div>
 
 						<div class="col s12 m12 l12 content-row none-hover">
-							<div class="col s4 m2 l2 header item">Type</div>
-							<div class="col s3 m2 l1 header item">Code</div>
+							<div class="col s7 m4 l3 common-type-code-div no-padding flex-display">
+								<div class="header item">Type</div>
+								<div class="header item">Code</div>
+							</div>
 							<div class="col s0 m4 l5 header item">Title</div>
 							<div class="col s0 m1 l1 header item">MC</div>
 							<div class="col s5 m3 l3 header item">Actions</div>
 						</div>
 
 						<div ng-repeat="module in modulesController.visibleModules['UE']" class="col s12 m12 l12 content-row ue-hover {{module.new}}">
-							<div class="col s4 m2 l2 item">
+							<div class="col s7 m4 l3 common-type-code-div no-padding flex-display">
+							<div class="item">
 								<div class="dropdown">
 									<a class="dropbtn z-depth-1 btn">{{ module.type }}</a>
 									<div class="dropdown-content">
@@ -498,14 +511,15 @@
 									</div>
 								</div>
 							</div>
-							<div class="col s3 m2 l1 item">{{ module.code }}</div>
+							<div class="item">{{ module.code }}</div>
+						</div>
 							<div class="col s0 m4 l5 item">{{ module.title }}</div>
 							<div class="col s0 m1 l1 item">{{ module.mc }}</div>
 							<div class="col s5 m3 l3 item">
 								<div class="float-left">
 									<a ng-click="removeModule(module.code)"><img class="close-btn" src="icon/close-icon.png"></a>
 								</div>
-								<div class="btn-group float-left">
+								<div class="btn-group float-right">
 									<a class="left-div toggle-btn btn waves-effect waves-light {{module.selected['taken']}}" ng-click="changeState(module.code, 'taken')">Taken</a>
 									<a class="middle-div toggle-btn btn waves-effect waves-light {{module.selected['planned']}}" ng-click="changeState(module.code, 'planned')">Plan</a>
 									<a class="right-div toggle-btn btn waves-effect waves-light {{module.selected['waived']}}" ng-click="changeState(module.code, 'waived')">Waived</a>
@@ -531,7 +545,7 @@
 			<!--Fixed Navigation Bar-->
 			<div class="page-title no-margin z-depth-1">
 				<div class="large-text">
-					<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">Menu</i></a>
+					<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a>
 					<span>Modules Planner</span>
 				</div>
 

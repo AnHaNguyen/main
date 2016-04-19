@@ -425,6 +425,11 @@ body {
 	display: flex !important;
 }
 
+.common-type-code-div div {
+	width: 50%;
+	float: left;
+}
+
 .status-item {
 	background-color: orange;
 }
@@ -439,10 +444,6 @@ body {
 }
 
 		/*-----------Button toggle-----------*/
-.btn-group {
-	margin-left: 5px;
-}
-
 .toggle-btn {
 	border: 1px solid black; 
 	background-color: orange; 
@@ -899,6 +900,10 @@ footer a:hover {
 	#grad-cer-div img {
 		height: 30px !important;
 	}
+
+	#forward-div, #back-div {
+		display: none !important;
+	}
 	/*----------------------------------------*/
 
     .start-footer {
@@ -932,6 +937,10 @@ footer a:hover {
 
     .btn {
     	font-size: 12px !important;
+    }
+
+    .dropbtn {
+    	width: 60px !important;
     }
 
     .content-row:hover{
