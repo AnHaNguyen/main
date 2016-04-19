@@ -26,7 +26,7 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
     $sci_reqs = json_decode($sci_reqs_string, true);
     $phy_reqs = [];
 
-    // Requirement exceptions not covered in json
+    // Exceptions: Requirement not covered in json
     // Preclusions are not dealt with in this program
     $core_reqs["CS1101S"] = "4"; // CS1010 can be replaced with CS1101S
     $core_reqs["CS2020"] = "4"; // CS1020 and CS2010 can be replaced with CS2020

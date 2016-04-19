@@ -48,8 +48,7 @@ require_once "update_CEG_PR_type.php";
 // @TODO: Refactor
 // @TODO: Deal with IEM1201x and IEM2201x modules in CS PR (in place of CS2101)
 // @TODO: Deal with USP programmes in CS, IS
-// @TODO: Deal with NOC programmes in CS, IS
-// @TODO: Deal with specializations in IS??
+// @TODO: Deal with NOC programmes in IS
 
 // Module main types
 define("ULR_TYPE", "ULR");
@@ -74,6 +73,15 @@ if (!isset($_GET["major"])) {
 
 
 function check_module_type($major, $adm_year, $mods) {
+
+    // Normalize Flipped Classroom (FC) mod codes
+    // https://github.com/AnHaNguyen/main/issues/31
+    foreach ($mods as $key => $mod_code) {
+        if (stringEndsWith($mod_code, "FC")) {
+            $mods[$key] = substr($mod_code, 0, -2); // Strips mod code of FC affix
+        }
+    }
+
     $mods_with_types = array_fill_keys($mods, "");
 
     switch($major) {
@@ -140,3 +148,10 @@ function get_type_CEG($adm_year, $mods) {
 
     return $mods;
 }*/
+
+
+function stringEndsWith($whole, $end) {
+    return (strpos($whole, $end, strlen($whole) - strlen($end)) !== false);
+}
+
+
