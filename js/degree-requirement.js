@@ -1,5 +1,10 @@
 function updateDegReq() {
-	orReplacement = {"Lev4": "3 level-4 modules"};
+	orReplacement = {"Lev4": "3 level-4 modules",
+					"Scie": "Science module(s)",
+					"Elective": "Elective module(s)",
+					"Elective4": "Elective module(s) of level 4",
+					"ListA": "Elective module(s) in list A",
+					"ListB": "Elective module(s) in list B"};
 
 	descriptionOf ={"GEMA": "GEM Module(s) in Mathematics and Science", 
 					"GEMB": "GEM Module(s) in Social Science", 
@@ -48,7 +53,8 @@ function updateDegReq() {
 
 function displayReq(major, year){
 	jsonFile = "req/" + major + '/' + year + ".json";
-	moduleJsonFile = "data/simplified.json";
+	//moduleJsonFile = "data/simplified.json";
+	moduleJsonFile = "data/newmodules.json";
 
 	$.getJSON(jsonFile, function(jsonContent){
 	$.getJSON(moduleJsonFile, function(moduleTable) {
@@ -84,19 +90,54 @@ function displayReq(major, year){
 							splitCode = codeList.split(',');
 
 							replaceAnd = codeList.replace(/,(?=[^,]*$)/, " and<div class='break-div'></div>");
-							description = replaceAnd.replace(",", ",<br>");
+							var description = "";
 
+							description = replaceAnd.replace(",", ",<br>");
+								
 							for (i=0; i<splitCode.length; i++) {
 								moduleCode = splitCode[i];
+
+								var secondSplit = moduleCode.split(";");
+								if (secondSplit.length > 1){
+								
+									var str = orReplacement[secondSplit[0]] + " including:";
+									for (var k = 1; k < secondSplit.length; k++){
+										str += "<br>"+ orReplacement[secondSplit[k]];
+									}
+									description = description.replace(moduleCode,str);
+								}
+								if (orReplacement[moduleCode]!=undefined) {
+								//	console.log(description);
+									description = description.replace(moduleCode,orReplacement[moduleCode]);
+									console.log(description);
+								}
 								title = "";
-								if (moduleTable[moduleCode]!=undefined) title = moduleTable[moduleCode].ModuleTitle;
-								description = description.replace(moduleCode, moduleCode + " " + title);
+								if (moduleTable[moduleCode]!=undefined){
+									title = moduleTable[moduleCode].ModuleTitle;
+									description = description.replace(moduleCode, moduleCode + " " + title);
+								}
 							}
 							
 							return description;
 						}
-
-						newHtml += optionTemplate.replace("{{option}}", orParse(option[0])).replace("{{MC}}", option[1]);
+					function parseMC(mcString, mod){
+						mcArr = mcString.split(";");
+						var str = "";
+						if (mcArr.length > 1){
+							str = mcArr[0];
+							if (mod.split(",").length > 1){
+								str += "<div class='break-div'></div>";
+							}
+							for (var k = 1; k < mcArr.length; k++){
+								str += "<br>"+mcArr[k];
+							}
+							return str;
+						}
+						else {
+							return mcString;
+						}
+					}
+						newHtml += optionTemplate.replace("{{option}}", orParse(option[0])).replace("{{MC}}", parseMC(option[1], option[0]));
 						newHtml += `</div>`;
 					})
 
