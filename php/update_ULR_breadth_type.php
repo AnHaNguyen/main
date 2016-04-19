@@ -13,7 +13,7 @@ function update_ULR_breadth_type($adm_year, $mods, $is_ceg_major) {
     // Old ULR system, prior to 15-16 batch
     if ($adm_year < "1516") {
 
-        $all_mod_info_string = file_get_contents('../data/simplified.json');
+        $all_mod_info_string = file_get_contents('../data/modules_min.json');
         $all_mod_info = json_decode($all_mod_info_string, true);
 
         $breadth_mc__req = 8;
@@ -38,7 +38,7 @@ function update_ULR_breadth_type($adm_year, $mods, $is_ceg_major) {
 
             $is_soc_mod = preg_match(SOC_MODS_REGEX, $mod_code);
             $is_foe_mod = preg_match(FOE_MODS_REGEX, $mod_code);
-            $mod_credit = $all_mod_info[$mod_code]["ModuleCredit"];
+            $mod_credit = $all_mod_info[$mod_code]["MC"];
 
             // Set type for breadth, using modules previously typed as UE
             // Avoid setting 0 MC modules as breadth

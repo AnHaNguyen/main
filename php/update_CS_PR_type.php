@@ -14,7 +14,7 @@ define("STATS_TYPE", "STATS");
 
 
 function update_CS_PR_type($adm_year, $focus_area, $mods) {
-    $all_mod_info_string = file_get_contents('../data/simplified.json');
+    $all_mod_info_string = file_get_contents('../data/modules_min.json');
     $grad_reqs_string = file_get_contents('../req/CS/' . $adm_year . '.json');
     $sci_reqs_string = file_get_contents('../req/CS/science.json');
     $fa_reqs_string = file_get_contents('../req/CS/fa.json');
@@ -71,7 +71,7 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
 
         if ($adm_year < "1516") {
             // Going to have to take MCs required for ST2132 out from science's MC requirement
-            $sci_mc_req -= $all_mod_info["ST2131"]["ModuleCredit"];
+            $sci_mc_req -= $all_mod_info["ST2131"]["MC"];
         }
         if (array_key_exists("ST2132", $mods)) {
             $mods["ST2132"] = [PR_TYPE,STATS_TYPE];
@@ -80,7 +80,7 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
         // Take ST2334 to be the default choice, and ST2132 to fulfil the science requirement
         if ($adm_year >= "1516") {
             // Going to have to add MCs required for ST2132 to science's requirement
-            $sci_mc_req += $all_mod_info["ST2132"]["ModuleCredit"];
+            $sci_mc_req += $all_mod_info["ST2132"]["MC"];
         }
     }
 
@@ -216,7 +216,7 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
 
         if (!$mod_type) { // Skip if module type is already set
 
-            $mod_credit = $all_mod_info[$mod_code]["ModuleCredit"];
+            $mod_credit = $all_mod_info[$mod_code]["MC"];
             $is_cs_mod = strpos($mod_code, "CS") === 0;
             $is_lvl_4k_or_above = $mod_code[2] >= "4";
 

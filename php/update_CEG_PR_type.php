@@ -12,7 +12,7 @@ define("PE_DEPTH_TYPE", "CEG_PE_DEPTH");
 
 
 function update_CEG_PR_type($adm_year, $mods) {
-    $all_mod_info_string = file_get_contents('../data/simplified.json');
+    $all_mod_info_string = file_get_contents('../data/modules_min.json');
     $grad_reqs_string = file_get_contents('../req/CEG/' . $adm_year . '.json');
     $elective_reqs_string = file_get_contents('../req/CEG/elective.json');
 
@@ -54,7 +54,7 @@ function update_CEG_PR_type($adm_year, $mods) {
 
         if (!$mod_type) { // Skip if module type is already set
 
-            $mod_credit = $all_mod_info[$mod_code]["ModuleCredit"];
+            $mod_credit = $all_mod_info[$mod_code]["MC"];
 
             // Set type for core CEG modules
             if (array_key_exists($mod_code, $core_reqs)) {

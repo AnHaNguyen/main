@@ -13,7 +13,7 @@ require_once "update_CEG_PR_type.php";
  * ("type" here refers to the type of graduation requirement that the respective key's module fulfils)
  *
  * This program is tightly coupled with the formatting defined in following json files:
- * - ../data/simplified.json (For module's module credit value)
+ * - ../data/modules_min.json (For module's module credit value)
  * - ../req/<major>/<adm_year>.json (For graduation requirements based on year of matriculation)
  * - ../req/CS/science.json (For the list of modules that can be used to fulfil the science requirement in CS)
  * - ../req/CS/fa.json (For the list of modules that can be used to fulfil a given focus area requirement in CS)
