@@ -49,14 +49,52 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
     $ue_mc_req = $grad_reqs["and"]["UE"]["MC"];
     $ue_mc_taken = 0;
 
-    // Setting up more variables
     // From AY12-13 onwards, can choose from either of two physics mods
     if ($adm_year >= "1213") {
+
         $phy_reqs_2d_array = $grad_reqs["or"][1];
 
         // Flatten 2d array containing module code and MC into 1d array containing only module codes
         foreach ($phy_reqs_2d_array as $phy_mod_code_and_mc) {
             $phy_reqs[] = $phy_mod_code_and_mc[0]; // Just extract the module codes
+        }
+
+        $taken_phy_req = false;
+
+        // Set type for physics requirement modules (AY12-13 onwards)
+        foreach ($phy_reqs as $mod_code) {
+            if (array_key_exists($mod_code, $mods)) {
+                $mods[$mod_code] = [PR_TYPE, CORE_TYPE];
+                $taken_phy_req = true;
+                break;
+            }
+        }
+
+        // Students who have not taken 'O'-level Physics may replace PC1221 or PC1222 by a life-science module
+        // If student has not taken module to fulfil this req, assume user has not taken 'O'-level Physics
+        if (!$taken_phy_req) {
+
+            $fulfilled_with_LSM_mod = false;
+            $LSM_mod_from_sci_req = null;
+
+            // Try to fulfil with LSM modules not within listed in Science requirements
+            foreach ($mods as $mod_code => $mod_type) {
+                if (strpos($mod_code, "LSM") === 0) {
+                    if (array_key_exists($mod_code, $sci_reqs)) {
+                        $LSM_mod_from_sci_req = $mod_code;
+                    } else {
+                        $mods[$mod_code] = [PR_TYPE, CORE_TYPE];
+                        $fulfilled_with_LSM_mod = true;
+                        break;
+                    }
+
+                }
+            }
+
+            if (!$fulfilled_with_LSM_mod) {
+                // Fulfil requirement using LSM module from Science requirements
+                $mods[$LSM_mod_from_sci_req] = [PR_TYPE, CORE_TYPE];
+            }
         }
     }
 
@@ -223,14 +261,6 @@ function update_CS_PR_type($adm_year, $focus_area, $mods) {
             // Set type for core CS modules
             if (array_key_exists($mod_code, $core_reqs)) {
                 $mods[$mod_code] = [PR_TYPE,CORE_TYPE];
-            }
-
-            // Set type for physics requirement modules (AY12-13 onwards)
-            else if ($adm_year >= "1213"
-                && in_array($mod_code, $phy_reqs)) {
-
-                $mods[$mod_code] = [PR_TYPE,CORE_TYPE];
-
             }
 
             // Set type for science requirement modules
