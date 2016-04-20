@@ -29,7 +29,7 @@ angular.module('core').factory('User', ['$http', 'localStorageService', 'Transpo
 				{ title: 'Programming Languages (PL)', code: 'PL' },
 				{ title: 'Software Engineering (SE)', code: 'SE' },
 				{ title: 'Interactive Media (IM)', code: 'IM' },
-				{ title: '12. Visual Computing (VC)', code: 'VC' }
+				{ title: 'Visual Computing (VC)', code: 'VC' }
 			];
 
 			object.admissionYearsList = [
