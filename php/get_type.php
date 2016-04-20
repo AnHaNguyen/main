@@ -72,13 +72,26 @@ if (!isset($_GET["major"])) {
 }
 
 
+function replace_FC_code($mods, $FC_mods) {
+    foreach ($FC_mods as $mod_code_without_FC => $mod_code_with_FC) {
+        $mod_type = $mods[$mod_code_without_FC];
+        unset($mods[$mod_code_without_FC]);
+        $mods[$mod_code_with_FC] = $mod_type;
+    }
+    return $mods;
+}
+
+
 function check_module_type($major, $adm_year, $mods) {
 
+    $FC_mods = [];
     // Normalize Flipped Classroom (FC) mod codes
     // https://github.com/AnHaNguyen/main/issues/31
     foreach ($mods as $key => $mod_code) {
         if (stringEndsWith($mod_code, "FC")) {
-            $mods[$key] = substr($mod_code, 0, -2); // Strips mod code of FC affix
+            $mod_code_without_FC = substr($mod_code, 0, -2);
+            $FC_mods[$mod_code_without_FC] = $mod_code;
+            $mods[$key] = $mod_code_without_FC; // Strips mod code of FC affix
         }
     }
 
@@ -89,7 +102,10 @@ function check_module_type($major, $adm_year, $mods) {
             if (!isset($_GET["focus_area"])) {
                 return "focus_area is not set, exiting";
             } else {
-                return get_type_CS($adm_year, $_GET["focus_area"], $mods_with_types);
+                $mods = get_type_CS($adm_year, $_GET["focus_area"], $mods_with_types);
+                $mods = replace_FC_code($mods, $FC_mods);
+
+                return $mods;
             }
         case 'IS':
             return get_type_IS($adm_year, $mods_with_types);
